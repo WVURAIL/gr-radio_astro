@@ -1,16 +1,14 @@
 title: The RADIO_ASTRO OOT Module
-brief: Short description of gr-radio_astro
-tags: # Tags are arbitrary, but look at CGRAN what other authors are using
+brief: Blocks to aid in radio astronomy with SDR
+tags: 
   - sdr
+  - Radio Astronomy
 author:
-  - Author Name <authors@email.address>
+  - Author Name <kbandura@gmail.com>
 copyright_owner:
   - Copyright Owner 1
 license:
-#repo: # Put the URL of the repository here, or leave blank for default
-#website: <module_website> # If you have a separate project website, put it here
-#icon: <icon_url> # Put a URL to a square image here that will be used as an icon on CGRAN
+#repo: 
+#website: http://wvurail.org
+#icon:
 ---
-A longer, multi-line description of gr-radio_astro.
-You may use some *basic* Markdown here.
-If left empty, it will try to find a README file instead.
