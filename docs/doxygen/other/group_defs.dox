@@ -1,0 +1,7 @@
+/*!
+ * \defgroup block GNU Radio RADIO_ASTRO C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the RADIO_ASTRO GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */
+
