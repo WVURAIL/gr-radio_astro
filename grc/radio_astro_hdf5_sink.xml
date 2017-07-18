@@ -4,7 +4,7 @@
   <key>radio_astro_hdf5_sink</key>
   <category>[radio_astro]</category>
   <import>import radio_astro</import>
-  <make>radio_astro.hdf5_sink($vec_length, $fname)</make>
+  <make>radio_astro.hdf5_sink($vec_length, $fname, $pointing, $notes)</make>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
@@ -19,6 +19,18 @@
   <param>
     <name>filename</name>
     <key>fname</key>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>pointing</name>
+    <key>pointing</key>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>notes</name>
+    <key>notes</key>
     <type>string</type>
   </param>
 
