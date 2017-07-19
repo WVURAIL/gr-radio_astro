@@ -29,4 +29,5 @@ Modules and blocks here to help create a grc flowchart for use in radio astronom
 Blocks should now be available in gnuradio-companion.
  
  **Additionally install h5py**
- ``sudo pip install h5py
+ 
+ ``sudo pip install h5py``
