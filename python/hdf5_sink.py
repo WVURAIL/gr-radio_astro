@@ -28,7 +28,7 @@ class hdf5_sink(gr.sync_block):
     """
     docstring for block hdf5_sink
     """
-    def __init__(self, vec_length, fname='default.h5', notes = 'default', pointing = "AZ,EL"):
+    def __init__(self, vec_length, fname='default.h5',freq_start=1419.0, freq_step=0.002 , notes = 'default', pointing = "AZ,EL"):
         current_time = time.time()
         gr.sync_block.__init__(self,
             name="hdf5_sink",
@@ -39,6 +39,8 @@ class hdf5_sink(gr.sync_block):
         self.h5.attrs["notes"] = notes
         self.h5.attrs["start_time"] = current_time
         self.h5.attrs["pointing"] = pointing
+        self.h5.attrs['freq_start'] = freq_start
+        self.h5.attrs["freq_step"] = freq_step
         self.timeDataset = self.h5.create_dataset('timestamp', (1,1), dtype=np.float64, maxshape=(None,1))
         self.spectrumDataset = self.h5.create_dataset('spectrum', (1,vec_length), dtype=np.float32, maxshape=(None,vec_length))
         self.n_times = 1
