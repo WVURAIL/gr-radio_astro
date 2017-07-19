@@ -13,7 +13,9 @@ Modules and blocks here to help create a grc flowchart for use in radio astronom
 2.) Go to the ``gr-radio_astro.git`` folder/repository, create a build directory inside the repository:
 
 ``
-cd gr-radio_astro.git
+cd gr-radio_astro.git;
+``
+``
 mkdir build
 `` 
 
