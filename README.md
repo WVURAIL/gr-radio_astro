@@ -6,19 +6,27 @@ Modules and blocks here to help create a grc flowchart for use in radio astronom
 
 ## Installation
 
-1.) Clone the repository: 
-git clone https://github.com/WVURAIL/gr-radio_astro.git
+1.) Clone the repository into an appropriate folder/repository: 
 
-2.) create a build directory inside the repository:
-mkdir build
+``git clone https://github.com/WVURAIL/gr-radio_astro.git``
+
+2.) Go to the ``gr-radio_astro.git`` folder/repository, create a build directory inside the repository:
+
+``mkdir build`` 
 
 3.)  run cmake inside the build directory:
-cd build;  cmake ..
+
+``cd build;  cmake ..``
 
 4.) run make inside build directory
-make
+
+``make``
 
 5.)  If no errors, install
-make install
+
+``make install``
 
 Blocks should now be available in gnuradio-companion.
+ 
+ **Additionally install h5py**
+ ``sudo pip install h5py
