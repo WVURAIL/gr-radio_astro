@@ -28,7 +28,7 @@ class hdf5_sink(gr.sync_block):
     """
     docstring for block hdf5_sink
     """
-    def __init__(self, vec_length, fname='default.h5',freq_start=1419.0, freq_step=0.002 , notes = 'default', pointing = "AZ,EL"):
+    def __init__(self, vec_length, fname='default.h5', pointing = "AZ,EL", freq_start=1419.0, freq_step=0.002 , notes = 'default' ):
         current_time = time.time()
         gr.sync_block.__init__(self,
             name="hdf5_sink",
