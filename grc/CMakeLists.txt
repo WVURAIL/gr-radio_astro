@@ -18,5 +18,7 @@
 # Boston, MA 02110-1301, USA.
 install(FILES
     radio_astro_powerSpectrum.xml
-    radio_astro_hdf5_sink.xml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_hdf5_sink.xml
+    radio_astro_vector_sum.xml
+    radio_astro_dedisperse.xml DESTINATION share/gnuradio/grc/blocks
 )
