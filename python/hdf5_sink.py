@@ -32,7 +32,7 @@ class hdf5_sink(gr.sync_block):
         current_time = time.time()
         gr.sync_block.__init__(self,
             name="hdf5_sink",
-            in_sig=[(np.float32, vec_length)],
+            in_sig=[(np.complex64, vec_length)],
             out_sig=None)
         self.h5 = h5py.File(fname, 'w')
         self.h5.attrs["file_name"] = fname
@@ -42,7 +42,7 @@ class hdf5_sink(gr.sync_block):
         self.h5.attrs['freq_start'] = freq_start
         self.h5.attrs["freq_step"] = freq_step
         self.timeDataset = self.h5.create_dataset('timestamp', (1,1), dtype=np.float64, maxshape=(None,1))
-        self.spectrumDataset = self.h5.create_dataset('spectrum', (1,vec_length), dtype=np.float32, maxshape=(None,vec_length))
+        self.spectrumDataset = self.h5.create_dataset('spectrum', (1,vec_length), dtype=np.complex64, maxshape=(None,vec_length))
         self.n_times = 1
         self.n = 0
         self.vec_size = vec_length
