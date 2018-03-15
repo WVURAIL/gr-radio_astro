@@ -22,5 +22,5 @@
 ########################################################################
 install(FILES
     api.h
-    DESTINATION include/radio_astro
+    dedispersion.h DESTINATION include/radio_astro
 )
