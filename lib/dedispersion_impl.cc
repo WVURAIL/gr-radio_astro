@@ -74,7 +74,7 @@ namespace gr {
     {
       const float *in = (const float *) input_items[0];
       float *out = (float *) output_items[0];
-      out[0] = dedisperse(in[0]);
+      success = dedisperse(in, out);
       // Do <+signal processing+>
       // Tell runtime system how many input items we consumed on
       // each input stream.
@@ -84,10 +84,10 @@ namespace gr {
       return noutput_items;
     }
     
-    float *
-    dedispersion_impl::dedisperse(const float &sample)
+    int
+    dedispersion_impl::dedisperse(const float *input, float *output)
     {
-      outbuf = (float *) //Malloc or whatever
+      //outbuf = (float *) //create fresh one if necessary
       dmk = float 4148808/d_t_int;
       int shift;
       f_low = float f_f_obs - d_bw/2;
@@ -97,11 +97,11 @@ namespace gr {
             shift = round( dmk * i * (inv_f_low_sq - 1/((d_bw*j/nf + f_low)*(d_bw*j/nf + f_low) )))
             for(unsigned int k=0; k<d_nt; k++){
               y = (k-shift) % d_nt;
-              outbuf[k,i] += sample[y,j];
+              output[k,i] += input[y,j];
             }
           }
       }
-    return outbuf;
+    return 0;
     }
 
   } /* namespace radio_astro */
