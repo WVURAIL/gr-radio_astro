@@ -30,13 +30,21 @@ namespace gr {
     {
      private:
       // Nothing to declare in this block.
+      int d_vec_length;
+      int d_dms;
+      float d_f_obs;
+      float d_bw;
+      float d_t_int;
+      int d_nt;
 
      public:
-      dedispersion_impl(vec_length, dms, f_obs, bw, t_int, nt);
+      dedispersion_impl(int vec_length,int dms, float f_obs, float bw, float t_int, int nt);
       ~dedispersion_impl();
 
       // Where all the action really happens
       void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+
+      int dedisperse(const float *input, float *output);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,

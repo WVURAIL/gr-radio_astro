@@ -24,6 +24,7 @@
 
 #include <gnuradio/io_signature.h>
 #include "dedispersion_impl.h"
+#include <iostream>
 
 namespace gr {
   namespace radio_astro {
@@ -38,13 +39,13 @@ namespace gr {
     /*
      * The private constructor
      */
-    dedispersion_impl::dedispersion_impl(int vec_length, int dms, float f_obs, float bw, float t_int, float nt)
+    dedispersion_impl::dedispersion_impl(int vec_length, int dms, float f_obs, float bw, float t_int, int nt)
       : gr::block("dedispersion",
               gr::io_signature::make(1, 1, sizeof(float)*vec_length*nt),
               gr::io_signature::make(1, 1, sizeof(float)*nt*dms)),
         d_vec_length(vec_length),
         d_dms(dms),
-        d_f_obs(fobs),
+        d_f_obs(f_obs),
         d_bw(bw),
         d_t_int(t_int),
         d_nt(nt)
@@ -74,11 +75,13 @@ namespace gr {
     {
       const float *in = (const float *) input_items[0];
       float *out = (float *) output_items[0];
+      int success;
       success = dedisperse(in, out);
+      std::cout << success;
       // Do <+signal processing+>
       // Tell runtime system how many input items we consumed on
       // each input stream.
-      consume_each (noutput_items);
+      consume_each (ninput_items[0]);
 
       // Tell runtime system how many output items we produced.
       return noutput_items;
@@ -88,20 +91,27 @@ namespace gr {
     dedispersion_impl::dedisperse(const float *input, float *output)
     {
       //outbuf = (float *) //create fresh one if necessary
-      dmk = float 4148808/d_t_int;
+      float dmk = 4148808/d_t_int;
       int shift;
-      f_low = float f_f_obs - d_bw/2;
-      inf_f_low_sq = float 1/(f_low*f_low);
+      unsigned int y;
+      float f_low = d_f_obs - d_bw/2;
+      float inv_f_low_sq = 1/(f_low*f_low);
+      std::cout << input[20*d_vec_length + 10] << " " << input[0*d_vec_length + 31] <<"\n";
       for(unsigned int i=0; i < d_dms; i++){
-          for(unsigned int j=0; j < d_nf; j++){
-            shift = round( dmk * i * (inv_f_low_sq - 1/((d_bw*j/nf + f_low)*(d_bw*j/nf + f_low) )))
-            for(unsigned int k=0; k<d_nt; k++){
+          //need to zero outbuf
+          for (unsigned int k=0; k < d_nt; k++){
+            output[k*d_dms+i] = 0;
+          }
+          for(unsigned int j=0; j < d_vec_length; j++){
+            shift = round( dmk * i * (inv_f_low_sq - 1/((d_bw*j/d_vec_length + f_low)*(d_bw*j/d_vec_length + f_low) )));
+            for(unsigned int k=0; k < d_nt; k++){
               y = (k-shift) % d_nt;
-              output[k,i] += input[y,j];
+              output[k*d_dms+i] += input[y*d_vec_length+j];
             }
           }
       }
-    return 0;
+      std::cout << output[0*d_dms+ 0] << " " << output[31*d_dms+49] <<"\n";
+      return 0;
     }
 
   } /* namespace radio_astro */

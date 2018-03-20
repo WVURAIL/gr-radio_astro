@@ -46,7 +46,7 @@ namespace gr {
        * class. radio_astro::dedispersion::make is the public interface for
        * creating new instances.
        */
-      static sptr make(vec_length, dms, f_obs, bw, t_int, nt);
+      static sptr make(int vec_length, int dms, float f_obs, float bw, float t_int, int nt);
     };
 
   } // namespace radio_astro

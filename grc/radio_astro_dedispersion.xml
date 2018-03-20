@@ -11,11 +11,40 @@
        * key (makes the value accessible as $keyname, e.g. in the make node)
        * type -->
   <param>
-    <name>...</name>
-    <key>...</key>
-    <type>...</type>
+    <name>vec_length</name>
+    <key>vec_length</key>
+    <type>int</type>
   </param>
 
+  <param>
+    <name>dms</name>
+    <key>dms</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>f_obs</name>
+    <key>f_obs</key>
+    <type>float</type>
+  </param>
+  
+  <param>
+    <name>bw</name>
+    <key>bw</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>t_int</name>
+    <key>t_int</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>nt</name>
+    <key>nt</key>
+    <type>int</type>
+  </param>
   <!-- Make one 'sink' node per input. Sub-nodes:
        * name (an identifier for the GUI)
        * type
@@ -23,7 +52,8 @@
        * optional (set to 1 for optional inputs) -->
   <sink>
     <name>in</name>
-    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+    <type>float</type>
+    <vlen>$vec_length*$nt</vlen>
   </sink>
 
   <!-- Make one 'source' node per output. Sub-nodes:
@@ -33,6 +63,7 @@
        * optional (set to 1 for optional inputs) -->
   <source>
     <name>out</name>
-    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+    <type>float</type>
+    <vlen>$dms*$nt</vlen>
   </source>
 </block>

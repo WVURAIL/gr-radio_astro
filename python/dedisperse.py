@@ -58,21 +58,25 @@ class dedisperse(gr.basic_block):
         dmk = 4148808.0/(self.t_int)
         de_dis_ar = np.zeros((nt,ndm))
         #indecies = np.arange(nt)
-        print(img.shape)
+        #print(img.shape)
         img = img.reshape((nt,self.vec_length))
+        print(img[10,20])
+        print(img[31,0])
         f_low = self.f_obs - self.bw/2
         inv_flow_sq = 1/(f_low)**2
         for i in range(ndm):
             for j in range(nf):
                 #ys = indecies.copy()
                 #shift = int(round(dmk*self.dms[i] * (inv_flow_sq -1/((self.bw*(nf-j))/nf + f_low)**2 )) )  #nf-j if freq inverted.
-                shift = int(round(dmk*self.dms[i] * (inv_flow_sq -1/((self.bw*(j))/nf + f_low)**2 )) )
+                shift = int(round(dmk*self.dms[i] * (inv_flow_sq -1/( (self.bw*(j))/nf + f_low)**2 )) )
                 for k in range(nt):
                     y = (k - shift ) % nt
                     de_dis_ar[k,i] += img[y,j]
         new_time = time.time()
         time_difference = new_time-current_time
         print(time_difference)
+        print(de_dis_ar[0,0])
+        print(de_dis_ar[31,49])
         return de_dis_ar.flatten()
 
 
