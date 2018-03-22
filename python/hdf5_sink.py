@@ -52,15 +52,20 @@ class hdf5_sink(gr.sync_block):
     def work(self, input_items, output_items):
         in0 = input_items[0]
         current_time = time.time()
-        if self.n == self.n_times:
-            self.n_times = self.n+1
-            self.timeDataset.resize((self.n_times,1))
-            self.spectrumDataset.resize((self.n_times,self.vec_size))
-        else:
-            pass
-        print self.n_times #debugging.  remove
-        self.timeDataset[self.n] = current_time
-        self.spectrumDataset[self.n] = in0
-        self.n += 1
+        #oversized = in0.size/self.vec_size
+        #print(in0.shape)
+        ### Seems can actually get a bunch of vectors as the input piled up.
+        #this doesn't seem to break if only have one.
+        for inp0 in in0:
+            if self.n == self.n_times:
+                self.n_times = self.n+1
+                self.timeDataset.resize((self.n_times,1))
+                self.spectrumDataset.resize((self.n_times,self.vec_size))
+            else:
+                pass
+            print( self.n_times) #debugging.  remove
+            self.timeDataset[self.n] = current_time
+            self.spectrumDataset[self.n] = inp0
+            self.n += 1
         return len(input_items[0])
 
