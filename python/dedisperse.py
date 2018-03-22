@@ -24,13 +24,13 @@ from gnuradio import gr
 from numba import jit
 import time
 
-class dedisperse(gr.basic_block):
+class dedisperse(gr.sync_block):
     """
     dedisperse block.  Limited to sqare sizes right now
     """
     def __init__(self, vec_length, dms, f_obs, bw, t_int, nt):
         self.ndm = len(dms)
-        gr.basic_block.__init__(self,
+        gr.sync_block.__init__(self,
             name="dedisperse",
             in_sig=[(np.float32, vec_length*nt)],
             out_sig=[(np.float32, nt*self.ndm)])
@@ -42,10 +42,10 @@ class dedisperse(gr.basic_block):
         self.t_int = t_int
 
 
-    def forecast(self, noutput_items, ninput_items_required):
-        #setup size of input_items[i] for work call
-        for i in range(len(ninput_items_required)):
-            ninput_items_required[i] = 1
+    # def forecast(self, noutput_items, ninput_items_required):
+    #     #setup size of input_items[i] for work call
+    #     for i in range(len(ninput_items_required)):
+    #         ninput_items_required[i] = 1
 
     #@jit
     def dedisperse(self, img):
@@ -80,10 +80,10 @@ class dedisperse(gr.basic_block):
         return de_dis_ar.flatten()
 
 
-    def general_work(self, input_items, output_items):
+    def work(self, input_items, output_items):
         in0 = input_items[0]
         out = output_items[0]
         out[:] = self.dedisperse(in0)
-        self.consume(0, len(input_items[0]))
+        #self.consume(0, len(input_items[0]))
         #self.consume_each(len(input_items[0]))
         return len(output_items[0])

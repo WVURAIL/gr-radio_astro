@@ -64,7 +64,7 @@ namespace gr {
       /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
       unsigned ninputs = ninput_items_required.size();
       for(unsigned int i = 0; i < ninputs; i++)
-       	    ninput_items_required[i] = 1;
+       	    ninput_items_required[i] = noutput_items;
     }
 
     int
@@ -78,10 +78,12 @@ namespace gr {
       int success;
       success = dedisperse(in, out);
       std::cout << success;
+      //std::cout << out[0*d_dms+ 0] << " " << out[31*d_dms+49] <<"\n";
+
       // Do <+signal processing+>
       // Tell runtime system how many input items we consumed on
       // each input stream.
-      consume_each (ninput_items[0]);
+      consume_each (noutput_items);
 
       // Tell runtime system how many output items we produced.
       return noutput_items;
@@ -96,7 +98,7 @@ namespace gr {
       unsigned int y;
       float f_low = d_f_obs - d_bw/2;
       float inv_f_low_sq = 1/(f_low*f_low);
-      std::cout << input[20*d_vec_length + 10] << " " << input[0*d_vec_length + 31] <<"\n";
+      //std::cout << input[10*d_vec_length + 20] << " " << input[31*d_vec_length + 0] <<"\n";
       for(unsigned int i=0; i < d_dms; i++){
           //need to zero outbuf
           for (unsigned int k=0; k < d_nt; k++){
@@ -110,7 +112,6 @@ namespace gr {
             }
           }
       }
-      std::cout << output[0*d_dms+ 0] << " " << output[31*d_dms+49] <<"\n";
       return 0;
     }
 
