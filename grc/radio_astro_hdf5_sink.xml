@@ -53,7 +53,8 @@
        * optional (set to 1 for optional inputs) -->
   <sink>
     <name>in</name>
-    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+    <type>complex</type>
+    <vlen>$vec_length</vlen>
   </sink>
 
   <!-- Make one 'source' node per output. Sub-nodes:
