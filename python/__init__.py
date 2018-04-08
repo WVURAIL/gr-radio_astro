@@ -34,7 +34,6 @@ except ImportError:
 
 from powerSpectrum import powerSpectrum
 from hdf5_sink import hdf5_sink
-from vector_sum import vector_sum
 from dedisperse import dedisperse
 
 #

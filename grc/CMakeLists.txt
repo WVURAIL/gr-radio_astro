@@ -19,7 +19,6 @@
 install(FILES
     radio_astro_powerSpectrum.xml
     radio_astro_hdf5_sink.xml
-    radio_astro_vector_sum.xml
     radio_astro_dedisperse.xml
     radio_astro_dedispersion.xml DESTINATION share/gnuradio/grc/blocks
 )

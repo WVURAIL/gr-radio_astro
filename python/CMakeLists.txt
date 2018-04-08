@@ -33,7 +33,6 @@ GR_PYTHON_INSTALL(
     __init__.py
     powerSpectrum.py
     hdf5_sink.py
-    vector_sum.py
     dedisperse.py DESTINATION ${GR_PYTHON_DIR}/radio_astro
 )
 
@@ -46,6 +45,5 @@ set(GR_TEST_TARGET_DEPS gnuradio-radio_astro)
 set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
 GR_ADD_TEST(qa_powerSpectrum ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_powerSpectrum.py)
 GR_ADD_TEST(qa_hdf5_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_hdf5_sink.py)
-GR_ADD_TEST(qa_vector_sum ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_vector_sum.py)
 GR_ADD_TEST(qa_dedisperse ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dedisperse.py)
 GR_ADD_TEST(qa_dedispersion ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dedispersion.py)
