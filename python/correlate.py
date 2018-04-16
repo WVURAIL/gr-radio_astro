@@ -24,7 +24,9 @@ from gnuradio import gr
 
 class correlate(gr.sync_block):
     """
-    docstring for block correlate
+    takes n vector inputs and correlates all pairs of products producing a 'matrix'
+    of size (n(n+1)/2, vector_length) on the output.  Output pairs are ordered top to bottom, (0,0), (0,1), 
+    (0,2),...(1,1), (1,2)...(n-1,n-1).  
     """
     def __init__(self, n_inputs, vec_length):
         gr.sync_block.__init__(self,
@@ -41,11 +43,7 @@ class correlate(gr.sync_block):
         out_size = in1_indices.size
         out_arr = np.zeros((out_size, self.vec_length), dtype=np.complex64)
         for i in range(in1_indices.size):
-            #print(input_items[in1_indices[i]][0].shape)
-            #print(input_items[in1_indices[i]][0].dtype)
-            #print(input_items[in1_indices[i]][0,1], input_items[in1_indices[i]][1,1])
             out_arr[i] = input_items[in1_indices[i]][0]*input_items[in2_indices[i]][0].conjugate()
-            print(out_arr[i][4])
         out[:] = out_arr.flatten()
         return len(output_items[0])
 
