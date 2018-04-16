@@ -35,5 +35,6 @@ except ImportError:
 from powerSpectrum import powerSpectrum
 from hdf5_sink import hdf5_sink
 from dedisperse import dedisperse
+from correlate import correlate
 
 #
