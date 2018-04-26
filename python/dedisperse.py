@@ -24,6 +24,40 @@ from gnuradio import gr
 from numba import jit
 import time
 
+
+@jit
+def _dedisperse( img, vec_length, nt, ndm, t_int, dms, bw, f_obs):
+    '''Takes in 2d freq vs time and de-disperses it for all the dm in dms
+    f_low is the lower frequency.  bw is the total passed bandwidth in mhz. t_bin is the size of a time bin in milliseconds'''
+    current_time = time.time()
+    nf = vec_length
+    nt = nt
+    ndm = ndm
+    dmk = 4148808.0/(t_int)
+    de_dis_ar = np.zeros((nt,ndm))
+    #indecies = np.arange(nt)
+    #print(img.shape)
+    img = img.reshape((nt,vec_length))
+    #print(img[10,20])
+    #print(img[31,0])
+    f_low = f_obs - bw/2
+    inv_flow_sq = 1/(f_low)**2
+    for i in range(ndm):
+        for j in range(nf):
+            #ys = indecies.copy()
+            #shift = int(round(dmk*self.dms[i] * (inv_flow_sq -1/((self.bw*(nf-j))/nf + f_low)**2 )) )  #nf-j if freq inverted.
+            shift = int(round(dmk*dms[i] * (inv_flow_sq -1/( (bw*(j))/nf + f_low)**2 )) )
+            for k in range(nt):
+                y = (k - shift ) % nt
+                de_dis_ar[k,i] += img[y,j]
+    new_time = time.time()
+    time_difference = new_time-current_time
+    print(time_difference)
+    #print(de_dis_ar[0,0])
+    #print(de_dis_ar[31,49])
+    return de_dis_ar.flatten()
+
+
 class dedisperse(gr.sync_block):
     """
     dedisperse block.  Limited to sqare sizes right now
@@ -51,33 +85,8 @@ class dedisperse(gr.sync_block):
     def dedisperse(self, img):
         '''Takes in 2d freq vs time and de-disperses it for all the dm in dms
         f_low is the lower frequency.  bw is the total passed bandwidth in mhz. t_bin is the size of a time bin in milliseconds'''
-        current_time = time.time()
-        nf = self.vec_length
-        nt = self.nt
-        ndm = self.ndm
-        dmk = 4148808.0/(self.t_int)
-        de_dis_ar = np.zeros((nt,ndm))
-        #indecies = np.arange(nt)
-        #print(img.shape)
-        img = img.reshape((nt,self.vec_length))
-        print(img[10,20])
-        print(img[31,0])
-        f_low = self.f_obs - self.bw/2
-        inv_flow_sq = 1/(f_low)**2
-        for i in range(ndm):
-            for j in range(nf):
-                #ys = indecies.copy()
-                #shift = int(round(dmk*self.dms[i] * (inv_flow_sq -1/((self.bw*(nf-j))/nf + f_low)**2 )) )  #nf-j if freq inverted.
-                shift = int(round(dmk*self.dms[i] * (inv_flow_sq -1/( (self.bw*(j))/nf + f_low)**2 )) )
-                for k in range(nt):
-                    y = (k - shift ) % nt
-                    de_dis_ar[k,i] += img[y,j]
-        new_time = time.time()
-        time_difference = new_time-current_time
-        print(time_difference)
-        print(de_dis_ar[0,0])
-        print(de_dis_ar[31,49])
-        return de_dis_ar.flatten()
+        de_dis_ar = _dedisperse( img, self.vec_length, self.nt, self.ndm, self.t_int, self.dms, self.bw, self.f_obs)
+        return de_dis_ar
 
 
     def work(self, input_items, output_items):
