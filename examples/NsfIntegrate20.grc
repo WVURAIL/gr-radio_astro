@@ -277,7 +277,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(800, 944)</value>
+      <value>(800, 956)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -402,7 +402,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(536, 872)</value>
+      <value>(216, 868)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -531,7 +531,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(840, 188)</value>
+      <value>(896, 32)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -574,7 +574,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(880, 312)</value>
+      <value>(920, 260)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -617,7 +617,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(864, 188)</value>
+      <value>(896, 176)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -660,7 +660,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(912, 312)</value>
+      <value>(856, 372)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -703,7 +703,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 188)</value>
+      <value>(872, 416)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -773,7 +773,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(272, 632)</value>
+      <value>(168, 636)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -872,7 +872,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(800, 872)</value>
+      <value>(800, 884)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1057,7 +1057,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1064, 320)</value>
+      <value>(1064, 340)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1225,7 +1225,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(928, 124)</value>
+      <value>(1040, 52)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1256,7 +1256,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(800, 792)</value>
+      <value>(800, 796)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1287,11 +1287,11 @@
     </param>
     <param>
       <key>config_file</key>
-      <value>Watch.conf</value>
+      <value>/home/dspradio/git/gr-radio_astro/examples/Watch.conf</value>
     </param>
     <param>
       <key>value</key>
-      <value>Katherine, Nathaniel, Glen</value>
+      <value>Radio Observer</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1299,7 +1299,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(904, 452)</value>
+      <value>(832, 480)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1437,7 +1437,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>Bubble Wrap Horn</value>
+      <value>paint thinner horn</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1488,7 +1488,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1160, 712)</value>
+      <value>(1144, 612)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3249,7 +3249,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(160, 0)</value>
+      <value>(176, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3380,7 +3380,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(576, 372)</value>
+      <value>(648, 400)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3647,7 +3647,7 @@
     </param>
     <param>
       <key>device</key>
-      <value>rtlsdr,bias=1</value>
+      <value>device_save</value>
     </param>
     <param>
       <key>elevation</key>
@@ -3699,11 +3699,11 @@
     </param>
     <param>
       <key>setup</key>
-      <value>/home/dspradio/git/gr-radio_astro/examples/Watch.not</value>
+      <value>Watch.not</value>
     </param>
     <param>
       <key>site</key>
-      <value>Moumau House</value>
+      <value>telescope_save</value>
     </param>
     <param>
       <key>vlen</key>
@@ -3742,7 +3742,7 @@
     </param>
     <param>
       <key>count</key>
-      <value>(4**5)</value>
+      <value>int(4**5)</value>
     </param>
     <param>
       <key>elevation</key>
@@ -3758,7 +3758,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(368, 372)</value>
+      <value>(360, 376)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3782,7 +3782,7 @@
     </param>
     <param>
       <key>observers</key>
-      <value>Science Afficionados</value>
+      <value>observers_save</value>
     </param>
     <param>
       <key>obstype</key>
@@ -3790,7 +3790,7 @@
     </param>
     <param>
       <key>setup</key>
-      <value>/home/dspradio/git/gr-radio_astro/examples/Watch.not</value>
+      <value>Watch.not</value>
     </param>
     <param>
       <key>tcold</key>

@@ -3380,7 +3380,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(712, 384)</value>
+      <value>(696, 392)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3699,7 +3699,7 @@
     </param>
     <param>
       <key>setup</key>
-      <value>/home/dspradio/git/gr-radio_astro/examples/Watch.not</value>
+      <value>Watch.not</value>
     </param>
     <param>
       <key>site</key>
@@ -3790,7 +3790,7 @@
     </param>
     <param>
       <key>setup</key>
-      <value>/home/dspradio/git/gr-radio_astro/examples/Watch.not</value>
+      <value>Watch.not</value>
     </param>
     <param>
       <key>tcold</key>

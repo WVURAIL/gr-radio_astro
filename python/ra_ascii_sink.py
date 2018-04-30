@@ -70,6 +70,7 @@ class ra_ascii_sink(gr.sync_block):
         self.obs.utc = now
         self.setupdir = ""#"./"
         self.notesName = noteName
+        self.obstype = int( obstype)
         print 'Setup File       : ',self.noteName
         if not os.path.exists(self.obs.datadir):
             os.makedirs(self.obs.datadir)
@@ -133,6 +134,7 @@ class ra_ascii_sink(gr.sync_block):
 
     def set_nmedian( self, nmedian, dosave = True):
         self.obs.nmedian = int( nmedian)
+        self.obs.count = int( nmedian )
         print 'Median N Spectra : %d' % (self.obs.nmedian)
         t = self.obs.nmedian * self.nave * self.vlen / self.obs.bandwidthHz
 #        print 'Average time     : %8.3f s' % (t)
