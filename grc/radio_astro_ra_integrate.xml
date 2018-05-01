@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<block>
+  <name>ra_integrate</name>
+  <key>radio_astro_ra_integrate</key>
+  <category>[radio_astro]</category>
+  <import>import radio_astro</import>
+  <make>radio_astro.ra_integrate($setup, $observers, $vlen, $frequency, $bandwidth, $azimuth, $elevation, $inttype, $obstype, $count, $units, $thot, $tcold)</make>
+  <callback>set_setup( $setup)</callback>
+  <callback>set_observers( $observers)</callback>
+  <callback>set_frequency( $frequency)</callback>
+  <callback>set_bandwidth( $bandwidth)</callback>
+  <callback>set_azimuth( $azimuth)</callback>
+  <callback>set_elevation( $elevation)</callback>
+  <callback>set_inttype( $inttype)</callback>
+  <callback>set_obstype( $obstype)</callback>
+  <callback>set_count( $count)</callback>
+  <callback>set_tcold( $tcold)</callback>
+  <callback>set_thot( $thot)</callback>
+  <callback>set_units( $units)</callback>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+  <param>
+    <name>Setup File</name>
+    <key>setup</key>
+    <value>Watch.not</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Observers</name>
+    <key>observers</key>
+    <value>Science Afficionados</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Frequency (Hz)</name>
+    <key>frequency</key>
+    <value>1420.406E6</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Bandwidth (Hz)</name>
+    <key>bandwidth</key>
+    <value>3.E6</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Azimuth (d)</name>
+    <key>azimuth</key>
+    <value>180.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Elevation (d)</name>
+    <key>elevation</key>
+    <value>90.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Inttype</name>
+    <key>inttype</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Obstype</name>
+    <key>obstype</key>
+    <value>1</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Count</name>
+    <key>count</key>
+    <value>1</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Units</name>
+    <key>units</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>T_hot</name>
+    <key>thot</key>
+    <value>295.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>T_cold</name>
+    <key>tcold</key>
+    <value>10.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Vec Length</name>
+    <key>vlen</key>
+    <value>128</value>
+    <type>int</type>
+  </param>
+
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>in</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </sink>
+
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <source>
+    <name>out</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </source>
+  <source>
+    <name>ave</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </source>
+  <source>
+    <name>hot</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </source>
+  <source>
+    <name>cold</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </source>
+  <source>
+    <name>ref</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </source>
+</block>
