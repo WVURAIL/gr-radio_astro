@@ -1,0 +1,23 @@
+#!/bin/bash
+# Script to summarizes a set of Science Aficionado spectra
+# Glen Langston, National Science Foundation
+# HISTORY
+# 18MAY01 Version that searches for executable s.py
+
+# find the summarizing program
+if [ -e s.py ]
+then
+    python s.py "$@"
+else
+    if [ -e ~/bin/s.py ]
+    then
+       python ~/bin/s.py "$@"
+    else  
+       if [ -e ../s.py ]
+       then
+       	  python ../s.py "$@"
+       else  
+           print "Can not file Summarizing python program: s.py" 
+       fi
+    fi
+fi  # end else not in current directory

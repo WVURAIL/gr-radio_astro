@@ -1,0 +1,24 @@
+#!/bin/bash
+# Script to plot Tsys Calibrated  Science Aficionado spectra
+# A median filterd baseline is subtracted
+# Glen Langston, National Science Foundation
+# HISTORY
+# 18MAY01 Version that searches for executable m.py
+
+# find the plotting program
+if [ -e m.py ]
+then
+    python m.py "$@"
+else
+    if [ -e ~/bin/m.py ]
+    then
+       python ~/bin/m.py "$@"
+    else  
+       if [ -e ../m.py ]
+       then
+       	  python ../m.py "$@"
+       else  
+           print "Can not file Raw plotting python program: m.py" 
+       fi
+    fi
+fi  # end else not in current directory
