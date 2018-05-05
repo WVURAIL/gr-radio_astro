@@ -108,7 +108,7 @@ class ra_vave(gr.decim_block):
         self.oneovern = 1./float( self.vdecimate)
         print "V_ave decimate   : %d" % (self.vdecimate)
         
-class vmedian(gr.decim_block):
+class ra_vmedian(gr.decim_block):
     """
     Vector Median with Decimation.   Only one vector is returned for N input.
     The highest and lowest values in each channel are discard and the remainder averaged.
