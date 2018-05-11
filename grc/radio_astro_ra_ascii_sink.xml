@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<block>
+  <name>ra_ascii_sink</name>
+  <key>radio_astro_ra_ascii_sink</key>
+  <category>[radio_astro]</category>
+  <import>import radio_astro</import>
+  <make>radio_astro.ra_ascii_sink($setup, $observers, $vlen, $frequency, $bandwidth, $azimuth, $elevation, $record, 
+    $obstype, $nmedian, $nave, $site, $device, $gain1, $gain2, $gain3)</make>
+  <callback>set_setup( $setup)</callback>
+  <callback>set_observers( $observers)</callback>
+  <callback>set_site( $site)</callback>
+  <callback>set_device( $device)</callback>
+  <callback>set_frequency( $frequency)</callback>
+  <callback>set_bandwidth( $bandwidth)</callback>
+  <callback>set_azimuth( $azimuth)</callback>
+  <callback>set_elevation( $elevation)</callback>
+  <callback>set_record( $record)</callback>
+  <callback>set_obstype( $obstype)</callback>
+  <callback>set_nmedian( $nmedian)</callback>
+  <callback>set_nave( $nave)</callback>
+  <callback>set_gain1( $gain1)</callback>
+  <callback>set_gain2( $gain2)</callback>
+  <callback>set_gain3( $gain3)</callback>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+  <param>
+    <name>Setup File</name>
+    <key>setup</key>
+    <value>Watch.not</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Observers</name>
+    <key>observers</key>
+    <value>Science Afficionados</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Telescope</name>
+    <key>site</key>
+    <value>Moumau House</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Device</name>
+    <key>device</key>
+    <value>rtlsdr,bias=1</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Frequency (Hz)</name>
+    <key>frequency</key>
+    <value>1420.406E6</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Bandwidth (Hz)</name>
+    <key>bandwidth</key>
+    <value>3.E6</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Azimuth (d)</name>
+    <key>azimuth</key>
+    <value>180.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Elevation (d)</name>
+    <key>elevation</key>
+    <value>90.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Record</name>
+    <key>record</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Obstype</name>
+    <key>obstype</key>
+    <value>1</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>nMedian</name>
+    <key>nmedian</key>
+    <value>4096</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>nAve</name>
+    <key>nave</key>
+    <value>10</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Gain1</name>
+    <key>gain1</key>
+    <value>14</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Gain2</name>
+    <key>gain2</key>
+    <value>11</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Gain3</name>
+    <key>gain3</key>
+    <value>11</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Vec Length</name>
+    <key>vlen</key>
+    <value>10</value>
+    <type>int</type>
+  </param>
+
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>in</name>
+    <type>float</type>
+    <vlen>$vlen</vlen>
+  </sink>
+</block>

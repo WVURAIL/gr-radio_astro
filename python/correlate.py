@@ -48,6 +48,7 @@ class correlate(gr.sync_block):
         self.out_size = self.in1_indices.size
 
 
+
     def work(self, input_items, output_items):
         out = output_items[0]
         #current_time = time.time()
