@@ -21,11 +21,11 @@
 
 import numpy as np
 from gnuradio import gr
-from numba import jit
+#from numba import jit
 import time
 
 
-@jit
+#@jit
 def _dedisperse( img, vec_length, nt, ndm, t_int, dms, bw, f_obs):
     '''Takes in 2d freq vs time and de-disperses it for all the dm in dms
     f_low is the lower frequency.  bw is the total passed bandwidth in mhz. t_bin is the size of a time bin in milliseconds'''
