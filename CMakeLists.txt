@@ -113,6 +113,12 @@ set(GRC_BLOCKS_DIR      ${GR_PKG_DATA_DIR}/grc/blocks)
 # On Apple only, set install name and use rpath correctly, if not already set
 ########################################################################
 if(APPLE)
+    #Assume using default macports install. 
+    #Should do this a better way...
+    set(CMAKE_INSTALL_PREFIX /opt/local/)
+    SET (PYTHON_LIBRARY "-framework Python" CACHE FILEPATH "Python 
+Framework" FORCE)
+    set(GR_PYTHON_DIR Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/)
     if(NOT CMAKE_INSTALL_NAME_DIR)
         set(CMAKE_INSTALL_NAME_DIR
             ${CMAKE_INSTALL_PREFIX}/${GR_LIBRARY_DIR} CACHE
