@@ -29,14 +29,14 @@ import datetime
 import copy
 from gnuradio import gr
 import radioastronomy
-try:
-    import statistics
-except ImportError:
-    print 'Statistics Python Code needed!'
-    print 'In Linux type:'
-    print '       sudo pip install statistics'
-    print ''
-    exit()
+# try:
+import statistics
+# except ImportError:
+#     print 'Statistics Python Code needed!'
+#     print 'In Linux type:'
+#     print '       sudo pip install statistics'
+#     print ''
+#     exit()
 
 # this block has 5 output spectra:
 # 1st is just the input spectrum
