@@ -30,7 +30,7 @@ import copy
 from gnuradio import gr
 import radioastronomy
 # try:
-import statistics
+# import statistics
 # except ImportError:
 #     print 'Statistics Python Code needed!'
 #     print 'In Linux type:'
@@ -443,7 +443,7 @@ class ra_integrate(gr.sync_block):
                 oneMZ = np.maximum( oneMZ, self.epsilons)
                 tsys =  ((Z*self.thot) - self.tcold)/oneMZ
                 # now compute center scalar value
-                TSYS = statistics.median(tsys[n6:n56])
+                TSYS = np.median(tsys[n6:n56])
                 oneoverhot = np.full(self.vlen, 1.) / self.hot.ydataA
                 out[nout] = TSYS * spec * oneoverhot
                 ave[nout] = TSYS * self.ave.ydataA * oneoverhot
@@ -464,7 +464,7 @@ class ra_integrate(gr.sync_block):
             avespec = avespec[n6:n56]
             vmin = min ( avespec)
             vmax = max ( avespec)
-            vmed = statistics.median( avespec)
+            vmed = np.median( avespec)
 
             label = radioastronomy.unitlabels[self.units]
             if self.nave % 5 == 0:

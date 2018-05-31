@@ -25,7 +25,7 @@ import datetime
 import copy
 from gnuradio import gr
 import radioastronomy
-import statistics
+#import statistics
 
 class ra_ascii_sink(gr.sync_block):
     """
@@ -256,7 +256,7 @@ class ra_ascii_sink(gr.sync_block):
         for i in range(nv):
             # get the length of one input
             spec = inn[i]
-            endvalue = statistics.median( spec[(ncp-7):(ncp-1)])
+            endvalue = np.median( spec[(ncp-7):(ncp-1)])
             # remove dc bias, measured at end of spectrum
             spec = spec - np.full( self.vlen, endvalue)
             # if just starting a sum
@@ -314,7 +314,7 @@ class ra_ascii_sink(gr.sync_block):
                 n56 = 5*n6
                 vmin = min ( spec[n6:n56])
                 vmax = max ( spec[n6:n56])
-                vmed = statistics.median( spec[n6:n56])
+                vmed = np.median( spec[n6:n56])
                 print "%s:  Max %9.3f Min: %9.3f Median: %9.3f " % (yymmdd, vmax, vmin, vmed)
                 self.obs.writecount = 0 
             # if here data written, restart sum
