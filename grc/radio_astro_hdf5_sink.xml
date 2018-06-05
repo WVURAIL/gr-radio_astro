@@ -4,12 +4,41 @@
   <key>radio_astro_hdf5_sink</key>
   <category>[radio_astro]</category>
   <import>import radio_astro</import>
-  <make>radio_astro.hdf5_sink($vec_length, $fname, $pointing, $freq_start, $freq_step, $notes)</make>
+  <make>radio_astro.hdf5_sink($type, $n_inputs, $vec_length, $fname, $pointing, $freq_start, $freq_step, $notes)</make>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
        * key (makes the value accessible as $keyname, e.g. in the make node)
        * type -->
+  <param>
+		<name>IO Type</name>
+		<key>type</key>
+		<type>enum</type>
+		<option>
+			<name>Complex</name>
+			<key>complex</key>
+			<opt>fcn:complex</opt>
+		</option>
+		<option>
+			<name>Float</name>
+			<key>float</key>
+			<opt>fcn:float</opt>
+		</option>
+		<option>
+			<name>Int</name>
+			<key>int</key>
+			<opt>fcn:int</opt>
+		</option>
+  </param>
+
+  
+  <param>
+    <name>n_inputs</name>
+    <key>n_inputs</key>
+    <value>1</value>
+    <type>int</type>
+  </param>
+  
   <param>
     <name>vec_length</name>
     <key>vec_length</key>
@@ -53,8 +82,9 @@
        * optional (set to 1 for optional inputs) -->
   <sink>
     <name>in</name>
-    <type>complex</type>
+    <type>$type</type>
     <vlen>$vec_length</vlen>
+    <nports>$n_inputs</nports>
   </sink>
 
   <!-- Make one 'source' node per output. Sub-nodes:
