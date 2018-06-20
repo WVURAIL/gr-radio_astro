@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.7.12'?>
+<?grc format='1' created='3.7.11'?>
 <flow_graph>
   <timestamp>Thu Feb 26 17:53:52 2015</timestamp>
   <block>
@@ -73,20 +73,12 @@
       <value>True</value>
     </param>
     <param>
-      <key>sizing_mode</key>
-      <value>fixed</value>
-    </param>
-    <param>
       <key>thread_safe_setters</key>
       <value></value>
     </param>
     <param>
       <key>title</key>
       <value>testing</value>
-    </param>
-    <param>
-      <key>placement</key>
-      <value>(0,0)</value>
     </param>
   </block>
   <block>
@@ -848,7 +840,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(752, 168)</value>
+      <value>(768, 184)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1068,7 +1060,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>:[1,0]</value>
+      <value></value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1339,7 +1331,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>:[2,0]</value>
+      <value></value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1610,7 +1602,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>:[6,0]</value>
+      <value></value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1881,7 +1873,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>:[4,0]</value>
+      <value></value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2152,7 +2144,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>:[5,0]</value>
+      <value></value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2423,7 +2415,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>:[3,0]</value>
+      <value></value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2666,7 +2658,7 @@
     <key>qtgui_vector_sink_f</key>
     <param>
       <key>autoscale</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>average</key>
@@ -2694,7 +2686,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>:[0,0]</value>
+      <value></value>
     </param>
     <param>
       <key>_rotation</key>

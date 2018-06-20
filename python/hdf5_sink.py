@@ -52,7 +52,7 @@ class hdf5_sink(gr.sync_block):
         self.h5.attrs["freq_step"] = freq_step
         self.timeDataset = self.h5.create_dataset('timestamp', (1,1), dtype=np.float64, maxshape=(None,1))
         self.inputDataset = self.h5.create_dataset('input', (1,1), dtype=np.float64, maxshape=(None,1))
-        self.spectrumDataset = self.h5.create_dataset('spectrum', (1,n_inputs*vec_length), dtype=datatype, maxshape=(None,vec_length))
+        self.spectrumDataset = self.h5.create_dataset('spectrum', (1,vec_length), dtype=datatype, maxshape=(None,vec_length))
         self.n_times = 1
         self.n = 0
         self.vec_size = vec_length
