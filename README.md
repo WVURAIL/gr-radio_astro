@@ -36,4 +36,10 @@ Blocks should now be available in gnuradio-companion.
  
  **Additionally install h5py**
  
+ On Ubuntu can run:
+ 
+ ``sudo apt install python-h5py``
+ 
+ Generic linux can try:
+ 
  ``sudo pip install h5py``
