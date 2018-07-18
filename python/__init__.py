@@ -40,5 +40,6 @@ from ra_integrate import ra_integrate
 from ra_vave import ra_vave
 from ra_ascii_sink import ra_ascii_sink
 from ra_vmedian import ra_vmedian
+from systemp_calibration import systemp_calibration
 
 #

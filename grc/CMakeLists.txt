@@ -26,5 +26,6 @@ install(FILES
     radio_astro_ra_vave.xml
     radio_astro_ra_ascii_sink.xml
     radio_astro_ra_vmedian.xml
-    radio_astro_ra_vmedian.xml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_ra_vmedian.xml
+    radio_astro_systemp_calibration.xml DESTINATION share/gnuradio/grc/blocks
 )
