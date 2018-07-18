@@ -35,7 +35,7 @@ class systemp_calibration(gr.sync_block):
     
     Parameters:
     (1) Vector length in Channels
-    (2) Collect: controlled by Chooser block, where the user indicates choice of live display: uncalibrated spectrum, calibrated spectrum, hot calibration run, cold calibration run
+    (2) Collect: controlled by Chooser block, which needs 4 options with the variables: nocal, cal, hot, cold
 
     """
     def __init__(self, vec_length, collect):
