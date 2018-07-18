@@ -28,7 +28,7 @@ class hdf5_sink(gr.sync_block):
     """
     docstring for block hdf5_sink
     """
-    def __init__(self, intype, n_inputs, vec_length, fname='default.h5', pointing = "AZ,EL", freq_start=1419.0, freq_step=0.002 , notes = 'default' ):
+    def __init__(self, intype, n_inputs, vec_length, save_toggle, fname='default.h5', pointing = "AZ,EL", freq_start=1419.0, freq_step=0.002, notes = 'default' ):
         current_time = time.time()
         if intype == complex:
             datatype = np.complex64
@@ -50,6 +50,7 @@ class hdf5_sink(gr.sync_block):
         self.h5.attrs["pointing"] = pointing
         self.h5.attrs['freq_start'] = freq_start
         self.h5.attrs["freq_step"] = freq_step
+        self.save_toggle = save_toggle
         self.timeDataset = self.h5.create_dataset('timestamp', (1,1), dtype=np.float64, maxshape=(None,1))
         self.inputDataset = self.h5.create_dataset('input', (1,1), dtype=np.float64, maxshape=(None,1))
         self.spectrumDataset = self.h5.create_dataset('spectrum', (1,vec_length), dtype=datatype, maxshape=(None,vec_length))
@@ -64,24 +65,29 @@ class hdf5_sink(gr.sync_block):
         #makes a kind of 'flat' file instead of a matrix for inputs.  
         #all inputs must be same datatype.
         current_time = time.time()
-        for in_num, in0 in enumerate(input_items):
-            #in0 = input_items[0]
-            #oversized = in0.size/self.vec_size
-            #print(in0.shape)
-            ### Seems can actually get a bunch of vectors as the input piled up.
-            #this doesn't seem to break if only have one.
-            for inp0 in in0:
-                if self.n == self.n_times:
-                    self.n_times = self.n+1
-                    self.timeDataset.resize((self.n_times,1))
-                    self.inputDataset.resize((self.n_times, 1))
-                    self.spectrumDataset.resize((self.n_times,self.vec_size))
-                else:
-                    pass
-                print( self.n_times) #debugging.  remove
-                self.timeDataset[self.n] = current_time
-                self.inputDataset[self.n] = in_num
-                self.spectrumDataset[self.n] = inp0
-                self.n += 1
+        if self.save_toggle == "True":
+            for in_num, in0 in enumerate(input_items):
+                #in0 = input_items[0]
+                #oversized = in0.size/self.vec_size
+                #print(in0.shape)
+                ### Seems can actually get a bunch of vectors as the input piled up.
+                #this doesn't seem to break if only have one.
+                for inp0 in in0:
+                    if self.n == self.n_times:
+                        self.n_times = self.n+1
+                        self.timeDataset.resize((self.n_times,1))
+                        self.inputDataset.resize((self.n_times, 1))
+                        self.spectrumDataset.resize((self.n_times,self.vec_size))
+                    else:
+                        pass
+                    print( self.n_times) #debugging.  remove
+                    self.timeDataset[self.n] = current_time
+                    self.inputDataset[self.n] = in_num
+                    self.spectrumDataset[self.n] = inp0
+                    self.n += 1
+        
         return len(input_items[0])
+
+    def set_save_toggle(self, save_toggle):
+        self.save_toggle = save_toggle
 

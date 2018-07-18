@@ -4,12 +4,15 @@
   <key>radio_astro_hdf5_sink</key>
   <category>[radio_astro]</category>
   <import>import radio_astro</import>
-  <make>radio_astro.hdf5_sink($type, $n_inputs, $vec_length, $fname, $pointing, $freq_start, $freq_step, $notes)</make>
+  <make>radio_astro.hdf5_sink($type, $n_inputs, $vec_length, $save_toggle, $fname, $pointing, $freq_start, $freq_step, $notes)</make>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
        * key (makes the value accessible as $keyname, e.g. in the make node)
        * type -->
+  
+  <callback>set_save_toggle($save_toggle)</callback>
+  
   <param>
 		<name>IO Type</name>
 		<key>type</key>
@@ -43,6 +46,12 @@
     <name>vec_length</name>
     <key>vec_length</key>
     <type>int</type>
+  </param>
+
+  <param>
+    <name>save_toggle</name>
+    <key>save_toggle</key>
+    <type>string</type>
   </param>
 
   <param>
