@@ -4385,7 +4385,7 @@
     </param>
   </block>
   <block>
-    <key>spectrometer_output_systemp_calibration</key>
+    <key>radio_astro_systemp_calibration</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -4400,11 +4400,11 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(936, 560)</value>
+      <value>(936, 568)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4412,7 +4412,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>spectrometer_output_systemp_calibration_0</value>
+      <value>radio_astro_systemp_calibration_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -4475,7 +4475,7 @@
   </connection>
   <connection>
     <source_block_id>blocks_integrate_xx_0_0</source_block_id>
-    <sink_block_id>spectrometer_output_systemp_calibration_0</sink_block_id>
+    <sink_block_id>radio_astro_systemp_calibration_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -4576,19 +4576,19 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>spectrometer_output_systemp_calibration_0</source_block_id>
+    <source_block_id>radio_astro_systemp_calibration_0</source_block_id>
     <sink_block_id>qtgui_vector_sink_f_0_0_0</sink_block_id>
     <source_key>1</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>spectrometer_output_systemp_calibration_0</source_block_id>
+    <source_block_id>radio_astro_systemp_calibration_0</source_block_id>
     <sink_block_id>qtgui_vector_sink_f_0_0_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>spectrometer_output_systemp_calibration_0</source_block_id>
+    <source_block_id>radio_astro_systemp_calibration_0</source_block_id>
     <sink_block_id>qtgui_vector_sink_f_0_0</sink_block_id>
     <source_key>2</source_key>
     <sink_key>0</sink_key>
