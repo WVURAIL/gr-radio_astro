@@ -27,6 +27,7 @@ import time
 class hdf5_sink(gr.sync_block):
     """
     docstring for block hdf5_sink
+    Writing to the file is controlled by the string variable save_toggle: if save_toggle = "True" (a string, not boolean), the data is written to the file; otherwise writing to the file stops.
     """
     def __init__(self, intype, n_inputs, vec_length, save_toggle, fname='default.h5', pointing = "AZ,EL", freq_start=1419.0, freq_step=0.002, notes = 'default' ):
         current_time = time.time()
