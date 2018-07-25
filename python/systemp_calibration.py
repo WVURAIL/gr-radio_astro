@@ -20,7 +20,8 @@
 # 
 
 import numpy as np
-import datetime
+from datetime import datetime
+import time
 import h5py
 from gnuradio import gr
 
@@ -34,11 +35,12 @@ class systemp_calibration(gr.sync_block):
         out2: System Temperature - updated when "hot" or "cold" calibrations are done
     
     Parameters:
-    (1) Vector length in Channels
-    (2) Collect: controlled by Chooser block, which needs 4 options with the variables: nocal, cal, hot, cold
-
+    (1) vec_length - vector length in channels
+    (2) collect - controlled by Chooser block, which needs 4 options with the variables: nocal, cal, hot, cold
+    (3) samp_rate - used to calculate frequency values for spectrum output
+    (4) freq - center frequency used to calculate frequency values for spectrum output
     """
-    def __init__(self, vec_length, collect):
+    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle):
         gr.sync_block.__init__(self,
             name="systemp_calibration",
             in_sig=[(np.float32, int(vec_length))],
@@ -46,14 +48,21 @@ class systemp_calibration(gr.sync_block):
         
         self.vec_length = int(vec_length)
         self.collect = collect
+        self.spectrumcapture_toggle = False
+        self.samp_rate = samp_rate
+        self.freq = freq
+        self.prefix = prefix
 
-        # Define vectors and constants:
+         # Define vectors and constants:
+        self.spectrum = np.zeros(vec_length)
         self.hot = 2*np.ones(vec_length)   
         self.cold = 1*np.ones(vec_length)
         self.gain = np.ones(vec_length)
         self.tsys = 50*np.ones(vec_length)
         self.thot = 300
         self.tcold = 10
+        self.frequencies = np.arange(freq - samp_rate/2, freq + samp_rate/2, samp_rate/vec_length)
+        self.data_array = np.zeros((vec_length,2))
     
     def work(self, input_items, output_items):
         in0 = input_items[0]
@@ -61,7 +70,8 @@ class systemp_calibration(gr.sync_block):
         out1 = output_items[1]
         out2 = output_items[2]
 
-        # Check if the "collect" Chooser is changed. If "hot" or "cold" are selected, the gain and tsys are updated.
+         # Check if the "collect" Chooser is changed. If "hot" or "cold" are selected, the gain and tsys are updated.
+        
         if self.collect == "cal":
             out0[:] = in0/(self.gain) - self.tsys
         elif self.collect == "hot":
@@ -83,12 +93,26 @@ class systemp_calibration(gr.sync_block):
             self.gain[self.gain <= 0] = 1
         else:
             out0[:] = in0 
-        
+        float
         out1[:] = self.gain
         out2[:] = self.tsys
 
-        return len(output_items[0])
+        if self.spectrumcapture_toggle == True:
+            current_time = time.time()
+            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
+            #write (freq, output) in a column to a text file, titled e. "2018-07-24_15.15.49_spectrum.txt"
+            self.textfilename = self.prefix + self.timenow + "_spectrum.csv"
+            self.data_array[:,0] = self.frequencies
+            self.data_array[:,1] = self.spectrum
+            np.savetxt(self.textfilename, self.data_array, delimiter=',')
+            self.spectrumcapture_toggle = False
+        
+        self.spectrum[:] = in0
 
+        return len(output_items[0])
+    
     #Check if collect Chooser block is changed.
-    def set_parameters(self, collect):
+    def set_parameters(self, collect, spectrumcapture_toggle):
         self.collect = collect
+        if self.spectrumcapture_toggle == False:
+            self.spectrumcapture_toggle = True
