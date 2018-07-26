@@ -10,7 +10,7 @@
     </param>
     <param>
       <key>window_size</key>
-      <value></value>
+      <value>(1600,1200)</value>
     </param>
     <param>
       <key>category</key>
@@ -97,11 +97,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(352, 732)</value>
+      <value>(256, 748)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>3,0,1,1</value>
+      <value>0,2,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -219,7 +219,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(392, 12)</value>
+      <value>(408, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -231,46 +231,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>5</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_entry</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>"filename"</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(8, 740)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>filename</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>string</value>
+      <value>1</value>
     </param>
   </block>
   <block>
@@ -308,11 +269,65 @@
     </param>
     <param>
       <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(56, 668)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>freq_start</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>freq - samp_rate/2</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(48, 740)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>freq_step</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>samp_rate/vec_length</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(264, 8)</value>
+      <value>(288, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -324,46 +339,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>4</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_entry</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>"notes"</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(24, 676)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>notes</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>string</value>
+      <value>40</value>
     </param>
   </block>
   <block>
@@ -378,7 +354,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(648, 8)</value>
+      <value>(664, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -390,7 +366,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/dspira/dspira_2018/horndata_2018/"</value>
+      <value>"/home/dspira/dspira_2018/horndata_2018/LNA_cal_data/"</value>
     </param>
   </block>
   <block>
@@ -405,7 +381,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(960, 8)</value>
+      <value>(992, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -417,7 +393,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>prefix + timenow + "_testruns.h5"</value>
+      <value>prefix + timenow + "_ymethod_cal.h5"</value>
     </param>
   </block>
   <block>
@@ -463,11 +439,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(408, 556)</value>
+      <value>(264, 580)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>3,2,1,1</value>
+      <value>1,4,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -601,6 +577,53 @@
     </param>
   </block>
   <block>
+    <key>variable_qtgui_push_button</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(248, 980)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>1,2,1,1</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>spectrumcapture_toggle</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Capture Latest Spectrum</value>
+    </param>
+    <param>
+      <key>pressed</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>released</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>bool</value>
+    </param>
+  </block>
+  <block>
     <key>variable</key>
     <param>
       <key>comment</key>
@@ -612,7 +635,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(808, 8)</value>
+      <value>(832, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -639,7 +662,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(176, 4)</value>
+      <value>(184, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -655,92 +678,14 @@
     </param>
   </block>
   <block>
-    <key>variable_qtgui_entry</key>
+    <key>variable_qtgui_range</key>
     <param>
       <key>comment</key>
       <value></value>
     </param>
     <param>
       <key>value</key>
-      <value>5000</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(144, 860)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>xmax</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>int</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_entry</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(24, 860)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>xmin</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value></value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>int</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_entry</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>40000</value>
+      <value>200000</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -748,7 +693,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(144, 932)</value>
+      <value>(48, 940)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -764,15 +709,39 @@
     </param>
     <param>
       <key>label</key>
-      <value></value>
+      <value>ymax</value>
     </param>
     <param>
-      <key>type</key>
-      <value>int</value>
+      <key>min_len</key>
+      <value>200</value>
+    </param>
+    <param>
+      <key>orient</key>
+      <value>Qt.Horizontal</value>
+    </param>
+    <param>
+      <key>start</key>
+      <value>50</value>
+    </param>
+    <param>
+      <key>step</key>
+      <value>50</value>
+    </param>
+    <param>
+      <key>stop</key>
+      <value>300000</value>
+    </param>
+    <param>
+      <key>rangeType</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>widget</key>
+      <value>counter</value>
     </param>
   </block>
   <block>
-    <key>variable_qtgui_entry</key>
+    <key>variable_qtgui_range</key>
     <param>
       <key>comment</key>
       <value></value>
@@ -787,7 +756,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(24, 932)</value>
+      <value>(48, 804)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -803,11 +772,35 @@
     </param>
     <param>
       <key>label</key>
-      <value></value>
+      <value>ymin</value>
     </param>
     <param>
-      <key>type</key>
-      <value>int</value>
+      <key>min_len</key>
+      <value>200</value>
+    </param>
+    <param>
+      <key>orient</key>
+      <value>Qt.Horizontal</value>
+    </param>
+    <param>
+      <key>start</key>
+      <value>-100</value>
+    </param>
+    <param>
+      <key>step</key>
+      <value>50</value>
+    </param>
+    <param>
+      <key>stop</key>
+      <value>5000</value>
+    </param>
+    <param>
+      <key>rangeType</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>widget</key>
+      <value>counter</value>
     </param>
   </block>
   <block>
@@ -830,7 +823,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(904, 192)</value>
+      <value>(904, 176)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -881,7 +874,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(264, 448)</value>
+      <value>(304, 448)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -924,11 +917,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1108, 224)</value>
+      <value>(1112, 364)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>270</value>
+      <value>180</value>
     </param>
     <param>
       <key>id</key>
@@ -971,7 +964,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(320, 180)</value>
+      <value>(304, 180)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1026,7 +1019,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(320, 260)</value>
+      <value>(312, 260)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1081,7 +1074,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 332)</value>
+      <value>(304, 332)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1136,7 +1129,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(956, 384)</value>
+      <value>(932, 424)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1183,7 +1176,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1200, 192)</value>
+      <value>(1280, 192)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1230,7 +1223,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 316)</value>
+      <value>(632, 324)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1281,7 +1274,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 244)</value>
+      <value>(632, 252)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1383,7 +1376,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 92)</value>
+      <value>(632, 100)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1418,7 +1411,7 @@
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>strean</value>
     </param>
     <param>
       <key>affinity</key>
@@ -1430,7 +1423,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(320, 100)</value>
+      <value>(304, 108)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1481,7 +1474,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(448, 180)</value>
+      <value>(456, 180)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1532,7 +1525,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(464, 324)</value>
+      <value>(464, 332)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1583,7 +1576,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(456, 252)</value>
+      <value>(464, 260)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1642,7 +1635,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1032, 64)</value>
+      <value>(1088, 76)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1693,7 +1686,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(536, 12)</value>
+      <value>(544, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1755,7 +1748,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(72, 812)</value>
+      <value>(8, 1092)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3532,7 +3525,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(644, 736)</value>
+      <value>(716, 992)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3760,7 +3753,7 @@
     </param>
     <param>
       <key>ymax</key>
-      <value>500</value>
+      <value>400</value>
     </param>
     <param>
       <key>ymin</key>
@@ -3803,7 +3796,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(892, 784)</value>
+      <value>(884, 992)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -4074,7 +4067,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1084, 752)</value>
+      <value>(1060, 992)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -4337,7 +4330,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1088, 468)</value>
+      <value>(1256, 836)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4345,7 +4338,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_hdf5_sink_0</value>
+      <value>radio_astro_hdf5_sink_0_0_0</value>
     </param>
     <param>
       <key>type</key>
@@ -4353,7 +4346,7 @@
     </param>
     <param>
       <key>fname</key>
-      <value>recfile</value>
+      <value>recfile+"_3LNA17"</value>
     </param>
     <param>
       <key>freq_start</key>
@@ -4369,7 +4362,7 @@
     </param>
     <param>
       <key>notes</key>
-      <value>test run of new hdf5 file</value>
+      <value></value>
     </param>
     <param>
       <key>pointing</key>
@@ -4404,7 +4397,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(936, 568)</value>
+      <value>(900, 624)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4425,6 +4418,22 @@
     <param>
       <key>collect</key>
       <value>collect</value>
+    </param>
+    <param>
+      <key>freq</key>
+      <value>freq</value>
+    </param>
+    <param>
+      <key>prefix</key>
+      <value>prefix</value>
+    </param>
+    <param>
+      <key>samp_rate</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
+      <key>spectrumcapture_toggle</key>
+      <value>spectrumcapture_toggle</value>
     </param>
     <param>
       <key>vec_length</key>
@@ -4464,12 +4473,6 @@
   <connection>
     <source_block_id>blocks_delay_0_0_0_0</source_block_id>
     <sink_block_id>blocks_stream_to_vector_0_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_integrate_xx_0_0</source_block_id>
-    <sink_block_id>radio_astro_hdf5_sink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -4584,6 +4587,12 @@
   <connection>
     <source_block_id>radio_astro_systemp_calibration_0</source_block_id>
     <sink_block_id>qtgui_vector_sink_f_0_0_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_systemp_calibration_0</source_block_id>
+    <sink_block_id>radio_astro_hdf5_sink_0_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
