@@ -31,14 +31,16 @@ class systemp_calibration(gr.sync_block):
         In:  Data stream of spectra
         Several vectors are output:
         out0: Latest Spectrum - either raw or with calibration, depending on user's choice.
-        out1: Gain - updated when "hot" or "cold" calibrations are done
-        out2: System Temperature - updated when "hot" or "cold" calibrations are done
+        out1: Gain - updated whenever "hot" or "cold" calibrations are done.
+        out2: System Temperature - updated whenever "hot" or "cold" calibrations are done.
     
     Parameters:
     (1) vec_length - vector length in channels
-    (2) collect - controlled by Chooser block, which needs 4 options with the variables: nocal, cal, hot, cold
-    (3) samp_rate - used to calculate frequency values for spectrum output
-    (4) freq - center frequency used to calculate frequency values for spectrum output
+    (2) collect - controlled by a Chooser block, which needs 4 options with the variables: nocal (= raw spectrum), cal (= spectrum with calibrations), hot (= hot calibration), cold (= cold calibration)
+    (3) samp_rate - used to calculate frequency values for spectrum output; set in a Variable box.
+    (4) freq - center frequency used to calculate frequency values for spectrum output; set in a Variable box.
+    (5) prefix - used in the filename to describe the pathlength; set in a Variable box. 
+    (6) spectrumcapture_toggle - determines whether the spectrum is captured to a file written to the pathlength described by the prefix variable, and written with the filename = prefix + timenow + "_spectrum.csv".
     """
     def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle):
         gr.sync_block.__init__(self,
@@ -107,7 +109,7 @@ class systemp_calibration(gr.sync_block):
             np.savetxt(self.textfilename, self.data_array, delimiter=',')
             self.spectrumcapture_toggle = False
         
-        self.spectrum[:] = in0
+        self.spectrum[:] = out0
 
         return len(output_items[0])
     
