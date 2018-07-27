@@ -30,7 +30,7 @@ namespace gr {
   namespace radio_astro {
 
     dedispersion::sptr
-    dedispersion::make(int vec_length, int dms, float f_obs, float bw, float t_int, int nt)
+    dedispersion::make(int vec_length, float dms, float f_obs, float bw, float t_int, int nt)
     {
       return gnuradio::get_initial_sptr
         (new dedispersion_impl(vec_length, dms, f_obs, bw, t_int, nt));
@@ -39,10 +39,10 @@ namespace gr {
     /*
      * The private constructor
      */
-    dedispersion_impl::dedispersion_impl(int vec_length, int dms, float f_obs, float bw, float t_int, int nt)
+    dedispersion_impl::dedispersion_impl(int vec_length, float dms, float f_obs, float bw, float t_int, int nt)
       : gr::block("dedispersion",
               gr::io_signature::make(1, 1, sizeof(float)*vec_length*nt),
-              gr::io_signature::make(1, 1, sizeof(float)*nt*dms)),
+              gr::io_signature::make(1, 1, sizeof(float)*nt)),
         d_vec_length(vec_length),
         d_dms(dms),
         d_f_obs(f_obs),
@@ -99,19 +99,19 @@ namespace gr {
       float f_low = d_f_obs - d_bw/2;
       float inv_f_low_sq = 1/(f_low*f_low);
       //std::cout << input[10*d_vec_length + 20] << " " << input[31*d_vec_length + 0] <<"\n";
-      for(unsigned int i=0; i < d_dms; i++){
+      //for(unsigned int i=0; i < d_dms; i++){
           //need to zero outbuf
           for (unsigned int k=0; k < d_nt; k++){
-            output[k*d_dms+i] = 0;
+            output[k] = 0;
           }
           for(unsigned int j=0; j < d_vec_length; j++){
-            shift = round( dmk * i * (inv_f_low_sq - 1/((d_bw*j/d_vec_length + f_low)*(d_bw*j/d_vec_length + f_low) )));
+            shift = round( dmk * d_dms * (inv_f_low_sq - 1/((d_bw*j/d_vec_length + f_low)*(d_bw*j/d_vec_length + f_low) )));
             for(unsigned int k=0; k < d_nt; k++){
               y = (k-shift) % d_nt;
-              output[k*d_dms+i] += input[y*d_vec_length+j];
+              output[k] += input[y*d_vec_length+j];
             }
           }
-      }
+      //}
       return 0;
     }
 
