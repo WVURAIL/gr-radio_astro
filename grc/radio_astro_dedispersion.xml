@@ -19,7 +19,7 @@
   <param>
     <name>dms</name>
     <key>dms</key>
-    <type>int</type>
+    <type>float</type>
   </param>
 
   <param>

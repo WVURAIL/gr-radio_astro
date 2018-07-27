@@ -31,14 +31,14 @@ namespace gr {
      private:
       // Nothing to declare in this block.
       int d_vec_length;
-      int d_dms;
+      float d_dms;
       float d_f_obs;
       float d_bw;
       float d_t_int;
       int d_nt;
 
      public:
-      dedispersion_impl(int vec_length,int dms, float f_obs, float bw, float t_int, int nt);
+      dedispersion_impl(int vec_length,float dms, float f_obs, float bw, float t_int, int nt);
       ~dedispersion_impl();
 
       // Where all the action really happens
