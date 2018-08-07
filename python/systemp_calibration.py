@@ -65,6 +65,8 @@ class systemp_calibration(gr.sync_block):
         self.tcold = 10
         self.frequencies = np.arange(freq - samp_rate/2, freq + samp_rate/2, samp_rate/vec_length)
         self.data_array = np.zeros((vec_length,2))
+        self.x_arr = np.arange(vec_length)
+        self.num_components = 100
     
     def work(self, input_items, output_items):
         in0 = input_items[0]
@@ -79,20 +81,12 @@ class systemp_calibration(gr.sync_block):
         elif self.collect == "hot":
             out0[:] = in0
             self.hot[:] = in0
-            self.y = self.hot/self.cold
-            self.y[self.y == 1] = 2
-            self.tsys = (self.thot - self.y*self.tcold)/(self.y-1)
-            self.gain = self.cold/(self.tcold + self.tsys)
-            self.gain[self.gain <= 0] = 1
-            
+            self.calc_gain_tsys()
+
         elif self.collect == "cold":
             out0[:] = in0
             self.cold[:] = in0
-            self.y = self.hot/self.cold
-            self.y[self.y == 1] = 2
-            self.tsys = (self.thot - self.y*self.tcold)/(self.y-1)
-            self.gain = self.cold/(self.tcold + self.tsys)
-            self.gain[self.gain <= 0] = 1
+            self.calc_gain_tsys()
         else:
             out0[:] = in0 
         float
@@ -113,6 +107,31 @@ class systemp_calibration(gr.sync_block):
 
         return len(output_items[0])
     
+    def calc_gain_tsys(self):
+            self.y = self.hot/self.cold
+            self.y[self.y == 1] = 2
+            self.tsys = (self.thot - self.y*self.tcold)/(self.y-1)
+            self.gain = self.cold/(self.tcold + self.tsys)
+            self.gain[self.gain <= 0] = 1
+            #Fourier filter to fit gain function
+            f_signal = np.fft.fft(np.r_[self.gain[self.vec_length/2:0:-1],self.gain,self.gain[-1:-self.vec_length/2:-1]])
+            #Zero higher frequencies
+            f_signal[self.num_components:-self.num_components] = 0
+            #multiply lower by hanning window
+            filtered_f = np.fft.fftshift(np.fft.fftshift(f_signal)[self.vec_length - self.num_components : self.vec_length + self.num_components]*np.hanning(self.num_components*2))
+            f_signal[:self.num_components] = filtered_f[:self.num_components]
+            f_signal[-self.num_components:] = filtered_f[-self.num_components:]
+            self.gain = np.abs(np.fft.ifft(np.fft.fftshift(f_signal))[self.vec_length/2:-self.vec_length/2+1])
+            #z = np.polyfit(self.x_arr, self.gain, 30)
+            #p = np.poly1d(z)
+            #self.gain = p(self.x_arr)
+            #Use polyfit for system temperature.  Should just be line really
+            z = np.polyfit(self.x_arr, self.tsys, 15)
+            p = np.poly1d(z)
+            self.tsys = p(self.x_arr)
+
+
+
     #Check if collect Chooser block is changed.
     def set_parameters(self, collect, spectrumcapture_toggle):
         self.collect = collect

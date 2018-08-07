@@ -29,7 +29,7 @@ import time
 def _dedisperse( img, vec_length, nt, ndm, t_int, dms, bw, f_obs):
     '''Takes in 2d freq vs time and de-disperses it for all the dm in dms
     f_low is the lower frequency.  bw is the total passed bandwidth in mhz. t_bin is the size of a time bin in milliseconds'''
-    current_time = time.time()
+    #current_time = time.time()
     nf = vec_length
     nt = nt
     ndm = ndm
@@ -50,9 +50,9 @@ def _dedisperse( img, vec_length, nt, ndm, t_int, dms, bw, f_obs):
             for k in range(nt):
                 y = (k - shift ) % nt
                 de_dis_ar[k,i] += img[y,j]
-    new_time = time.time()
-    time_difference = new_time-current_time
-    print(time_difference)
+    #new_time = time.time()
+    #time_difference = new_time-current_time
+    #print(time_difference)
     #print(de_dis_ar[0,0])
     #print(de_dis_ar[31,49])
     return de_dis_ar.flatten()
@@ -60,7 +60,10 @@ def _dedisperse( img, vec_length, nt, ndm, t_int, dms, bw, f_obs):
 
 class dedisperse(gr.sync_block):
     """
-    dedisperse block.  Limited to sqare sizes right now
+    Takes in 2d freq vs time and de-disperses it for all the dm in dms.  
+    bw is the total passed bandwidth in mhz. t_int is the size of a time bin in milliseconds
+    f_obs is center frequency in MHz.   Nt is the number of times in matrix input.  vec_length is the number of frequencies 
+    of the input matrix.  
     """
     def __init__(self, vec_length, dms, f_obs, bw, t_int, nt):
         self.ndm = len(dms)
