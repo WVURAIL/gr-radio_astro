@@ -231,7 +231,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>1</value>
+      <value>12</value>
     </param>
   </block>
   <block>
@@ -366,7 +366,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/dspira/dspira_2018/horndata_2018/LNA_cal_data/"</value>
+      <value>"/home/dspradio/grc_data/gbo_mapping/"</value>
     </param>
   </block>
   <block>
@@ -393,7 +393,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>prefix + timenow + "_ymethod_cal.h5"</value>
+      <value>prefix + timenow + "_driftscan.h5"</value>
     </param>
   </block>
   <block>
@@ -3505,7 +3505,7 @@
     </param>
     <param>
       <key>average</key>
-      <value>0.2</value>
+      <value>1.0</value>
     </param>
     <param>
       <key>alias</key>
@@ -4346,7 +4346,7 @@
     </param>
     <param>
       <key>fname</key>
-      <value>recfile+"_3LNA17"</value>
+      <value>recfile</value>
     </param>
     <param>
       <key>freq_start</key>
@@ -4362,11 +4362,11 @@
     </param>
     <param>
       <key>notes</key>
-      <value></value>
+      <value>gbo driftscan</value>
     </param>
     <param>
       <key>pointing</key>
-      <value>A180E55</value>
+      <value>A180E67</value>
     </param>
     <param>
       <key>save_toggle</key>

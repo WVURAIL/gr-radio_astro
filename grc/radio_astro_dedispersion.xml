@@ -64,6 +64,6 @@
   <source>
     <name>out</name>
     <type>float</type>
-    <vlen>$dms*$nt</vlen>
+    <vlen>$nt</vlen>
   </source>
 </block>

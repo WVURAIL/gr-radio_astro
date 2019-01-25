@@ -114,21 +114,21 @@ class systemp_calibration(gr.sync_block):
             self.gain = self.cold/(self.tcold + self.tsys)
             self.gain[self.gain <= 0] = 1
             #Fourier filter to fit gain function
-            f_signal = np.fft.fft(np.r_[self.gain[self.vec_length/2:0:-1],self.gain,self.gain[-1:-self.vec_length/2:-1]])
+            ###f_signal = np.fft.fft(np.r_[self.gain[self.vec_length/2:0:-1],self.gain,self.gain[-1:-self.vec_length/2:-1]])
             #Zero higher frequencies
-            f_signal[self.num_components:-self.num_components] = 0
+            ###f_signal[self.num_components:-self.num_components] = 0
             #multiply lower by hanning window
-            filtered_f = np.fft.fftshift(np.fft.fftshift(f_signal)[self.vec_length - self.num_components : self.vec_length + self.num_components]*np.hanning(self.num_components*2))
-            f_signal[:self.num_components] = filtered_f[:self.num_components]
-            f_signal[-self.num_components:] = filtered_f[-self.num_components:]
-            self.gain = np.abs(np.fft.ifft(np.fft.fftshift(f_signal))[self.vec_length/2:-self.vec_length/2+1])
+            ###filtered_f = np.fft.fftshift(np.fft.fftshift(f_signal)[self.vec_length - self.num_components : self.vec_length + self.num_components]*np.hanning(self.num_components*2))
+            ###f_signal[:self.num_components] = filtered_f[:self.num_components]
+            ###f_signal[-self.num_components:] = filtered_f[-self.num_components:]
+            ###self.gain = np.abs(np.fft.ifft(np.fft.fftshift(f_signal))[self.vec_length/2:-self.vec_length/2+1])
             #z = np.polyfit(self.x_arr, self.gain, 30)
             #p = np.poly1d(z)
             #self.gain = p(self.x_arr)
             #Use polyfit for system temperature.  Should just be line really
-            z = np.polyfit(self.x_arr, self.tsys, 15)
-            p = np.poly1d(z)
-            self.tsys = p(self.x_arr)
+            ###z = np.polyfit(self.x_arr, self.tsys, 15)
+            ###p = np.poly1d(z)
+            ###self.tsys = p(self.x_arr)
 
 
 
