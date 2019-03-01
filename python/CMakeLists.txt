@@ -61,3 +61,4 @@ GR_ADD_TEST(qa_ra_vave ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_va
 GR_ADD_TEST(qa_ra_ascii_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_ascii_sink.py)
 GR_ADD_TEST(qa_ra_vmedian ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_vmedian.py)
 GR_ADD_TEST(qa_systemp_calibration ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_systemp_calibration.py)
+GR_ADD_TEST(qa_detect ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_detect.py)

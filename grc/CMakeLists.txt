@@ -27,5 +27,6 @@ install(FILES
     radio_astro_ra_ascii_sink.xml
     radio_astro_ra_vmedian.xml
     radio_astro_ra_vmedian.xml
-    radio_astro_systemp_calibration.xml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_systemp_calibration.xml
+    radio_astro_detect.xml DESTINATION share/gnuradio/grc/blocks
 )
