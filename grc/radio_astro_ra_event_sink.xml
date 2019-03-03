@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<block>
+  <name>ra_event_sink</name>
+  <key>radio_astro_ra_event_sink</key>
+  <category>[radio_astro]</category>
+  <import>import radio_astro</import>
+  <make>radio_astro.ra_event_sink($setup, $vlen, $sample_rate, $record)</make>
+<callback>set_setup( $setup)</callback>
+  <callback>set_vlen( $vlen)</callback>
+  <callback>set_sample_rate( $sample_rate)</callback>
+  <callback>set_record( $record)</callback>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+    <param>
+    <name>Setup File</name>
+    <key>setup</key>
+    <value>Watch.not</value>
+    <type>string</type>
+  </param>
+<param>
+    <name>Record</name>
+    <key>record</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Sample Rate (MHz)</name>
+    <key>sample_rate</key>
+    <value>1.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Vec Length</name>
+    <key>vlen</key>
+    <value>128</value>
+    <type>int</type>
+  </param>
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>in</name>
+    <type>complex</type>
+    <vlen>$vlen</vlen>
+  </sink>
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+</block>
