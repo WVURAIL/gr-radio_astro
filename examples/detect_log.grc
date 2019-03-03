@@ -1169,53 +1169,6 @@
     </param>
   </block>
   <block>
-    <key>ra_event_log</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(656, 456)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ra_event_log_0</value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>logname</key>
-      <value></value>
-    </param>
-    <param>
-      <key>note</key>
-      <value>Event Detection</value>
-    </param>
-    <param>
-      <key>sample_rate</key>
-      <value>samp_rate*1.E-6</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>vec_length</value>
-    </param>
-  </block>
-  <block>
     <key>radio_astro_detect</key>
     <param>
       <key>alias</key>
@@ -1275,6 +1228,53 @@
     </param>
     <param>
       <key>vec_length</key>
+      <value>vec_length</value>
+    </param>
+  </block>
+  <block>
+    <key>radio_astro_ra_event_log</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(672, 436)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_ra_event_log_0</value>
+    </param>
+    <param>
+      <key>logname</key>
+      <value></value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>Event Detection</value>
+    </param>
+    <param>
+      <key>sample_rate</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
+      <key>vlen</key>
       <value>vec_length</value>
     </param>
   </block>
@@ -1340,7 +1340,7 @@
   </connection>
   <connection>
     <source_block_id>radio_astro_detect_0</source_block_id>
-    <sink_block_id>ra_event_log_0</sink_block_id>
+    <sink_block_id>radio_astro_ra_event_log_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
