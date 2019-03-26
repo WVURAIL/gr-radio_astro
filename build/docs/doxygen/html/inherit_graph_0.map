@@ -1,6 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classgr_1_1radio__astro_1_1dedispersion.html" title="&lt;+description of block+&gt; " alt="" coords="5,31,196,57"/>
-<area shape="rect" id="node2" href="$classgr_1_1radio__astro_1_1dedispersion__impl.html" title="gr::radio_astro::dedispersion_impl" alt="" coords="244,5,467,32"/>
-<area shape="rect" id="node3" href="$classgr_1_1radio__astro_1_1detect.html" title="Event Detection by comparison of signal to RMS Noise level. event detection: fill a circular buffer w..." alt="" coords="279,56,431,83"/>
-<area shape="rect" id="node4" href="$classgr_1_1radio__astro_1_1detect__impl.html" title="gr::radio_astro::detect_impl" alt="" coords="515,56,699,83"/>
-</map>
