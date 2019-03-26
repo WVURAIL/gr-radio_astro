@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 19MAR26 GIL take observers, telescope, gain1, azimuth, elevation as inputs
 # 19MAR26 GIL record event peak and rms
 # 19FEB14 GIL make tags more compatible with C++ tags
 # 19JAN15 GIL initial version based on ra_ascii_sink
@@ -45,11 +46,13 @@ class ra_event_sink(gr.sync_block):
     Parameters are
     1) ConfigFileName
     2) Vector length in Channels
-    3) Bandwidth (MHz)
-    4) Record Flag
+    3) Frequency (MHz)
+    4) Bandwidth (MHz)
+    5) Record Flag
     This block is intended to reduce the downstream CPU load.
     """
-    def __init__(self, noteName, vlen, bandwidth, record):
+    def __init__(self, noteName, vlen, frequency, bandwidth, record, note, observer, telescope, device,
+                 gain1, azimuth, elevation):
         gr.sync_block.__init__(self,
                                name="ra_event_sink",              
                                # inputs: time sequence of I,Q values,
@@ -60,8 +63,122 @@ class ra_event_sink(gr.sync_block):
         self.vlen = vlen
         self.ecount = 1
         self.record = int(record)
+        noteName = str(noteName)
+        # first keep setup info in class header
+        self.observer = str( observer)
+        self.site = str( telescope)
+        self.noteA = str( note)
+        self.device = str( device)
+        self.gains = np.zeros(3)
+        self.gains[0] = float(gain1)
+        self.telaz = float(azimuth)
+        self.telel = float(elevation)
+        self.bandwidthMHz = float(bandwidth)
+        self.frequencyMHz = float(frequency)
         self.obs = radioastronomy.Spectrum()
         self.setupdir = "./"
+        # read all generic setup info in the note file
+        self.set_setup( noteName, doSave = True)
+        # now transfere items directly setup in event sink
+
+    def forecast(self, noutput_items, ninput_items): #forcast is a no op
+        """
+        The work block always processes all inputs
+        """
+        ninput_items = noutput_items
+        return ninput_items
+
+    def set_sample_rate(self, bandwidthMHz, doSave=True):
+        self.bandwidthMHz = np.float(bandwidthMHz)
+        if self.bandwidthMHz <= 0.0001:
+            print "Invalid Bandwidth: ", self.bandwidthMHz
+            self.bandwidthMHz = 1.
+        if self.bandwidthMHz >= 1000.:
+            print "Invalid Bandwidth: ", self.bandwidthMHz
+            self.bandwidthMHz = 1.
+        self.obs.bandwidthHz = self.bandwidthMHz*1.E6  # observation units Hz
+        print "Setting Bandwidth: %10.6f MHz" % (1.E-6*self.obs.bandwidthHz)
+        self.obs.dt = 1./np.fabs(self.obs.bandwidthHz)
+        t = -self.obs.dt * self.obs.refSample
+        for iii in range(self.vlen):
+            self.obs.xdata[iii] = t
+            t = t + self.obs.dt
+        if doSave:
+            self.obs.write_ascii_file( self.setupdir, self.noteName);
+
+    def set_frequency(self, frequencyMHz, doSave=True):
+        self.frequencyMHz = np.float(frequencyMHz)
+        self.obs.centerFreqHz = self.frequencyMHz*1.E6  # observation units Hz
+        if doSave:
+            self.obs.write_ascii_file( self.setupdir, self.noteName);
+
+    def set_device(self, device, doSave = True):
+        """
+        Record the software defined radio device type and setup
+        """
+        self.obs.device = str(device)
+        if doSave:
+            self.obs.write_ascii_spec(self.setupdir, self.noteName)    # read the parameters 
+
+    def set_observer(self, observer, doSave = True):
+        """
+        Save Observer Names
+        """
+        self.observer = str(observer)
+        self.obs.observer = self.observer
+        if doSave:
+            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+
+    def set_telescope(self, telescope, doSave = True):
+        """
+        Save Telescope Names
+        """
+        self.site = str(telescope)
+        self.obs.site = self.site
+        if doSave:
+            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+
+    def set_note(self, noteA, doSave = True):
+        """
+        Save Note decribing the observations
+        """
+        self.noteA = str( noteA)
+        self.obs.noteA = self.noteA
+        if doSave:
+            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+
+    def set_gain1(self, gain1, doSave = True):
+        """
+        Save SDR Gain parameter (dB)
+        """
+        self.gains[0] = float(gain1)
+        self.obs.gains[0] = self.gains[0]
+        if doSave:
+            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+
+    def set_telaz(self, telaz, doSave = True):
+        """
+        Save Telescope Azimuth
+        """
+        self.telaz = float(telaz)
+        self.obs.telaz = self.telaz
+        if doSave:
+            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+
+    def set_telel(self, telel, doSave = True):
+        """
+        Save Telescope Elevation
+        """
+        self.telel = float(telel)
+        self.obs.telel = self.telel
+        if doSave:
+            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+
+    def set_setup(self, noteName, doSave=True):
+        """
+        Read the setup files and initialize all values
+        """
+        self.noteName = str(noteName)
         noteParts = noteName.split('.')
         self.noteName = noteParts[0]+'.not'
         if len(noteParts) > 2:
@@ -79,13 +196,27 @@ class ra_event_sink(gr.sync_block):
                     except:
                         pformat = "! Create the Note file %s, and try again !" 
                         print pformat % (self.noteName)
-        self.obs.read_spec_ast(self.noteName)    # read the parameters
-
-        # prepare to Event get messages
-#        print 'Registered event on input port of sink'
-
-#        self.set_tag_propagation_policy(gr.TPP_ALL_TO_ALL)
-#        self.set_msg_handler(pmt.intern('in_port'), self.event_handler)
+        self.obs.read_spec_ast(self.setupdir + self.noteName)    # read the parameters 
+        self.obs.datadir = "../events/"          # writing events not spectra
+        self.obs.nSpec = 0             # not working with spectra
+        self.obs.nChan = self.vlen
+        self.obs.nTime = 1             # working with time series
+        self.obs.refSample = self.vlen/2    # event is in middle of time sequence
+        self.obs.nSamples = self.vlen
+        self.obs.ydataA = np.zeros(self.vlen, dtype=np.complex64)
+        self.obs.xdata = np.zeros(self.vlen)
+        now = datetime.datetime.utcnow()
+        self.eventutc = now
+        self.emjd = 0.
+        self.lastmjd = 0.
+        self.obs.utc = now
+        self.obs.site = self.site
+        self.obs.noteA = self.noteA
+        self.obs.device = self.device
+        self.obs.gains[0] = self.gains[0]
+        self.obs.telaz = self.telaz
+        self.obs.telel = self.telel
+        self.obs.centerFreqHz = self.frequencyMHz*1.E6
 
         self.obs.datadir = "../events/"          # writing events not spectra
         self.obs.noteB = "Event Detection"
@@ -95,76 +226,7 @@ class ra_event_sink(gr.sync_block):
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
             print 'DataDir          : ', self.obs.datadir
-        self.obs.nSpec = 0             # not working with spectra
-        self.obs.nChan = vlen
-        self.obs.nTime = 1             # working with time series
-        self.obs.nSamples = vlen
-        vlen2 = int(vlen/2)
-        self.obs.refSample = vlen2     # event is in middle of time sequence
-        self.obs.ydataA = np.zeros(vlen, dtype=np.complex64)
-        self.obs.xdata = np.zeros(vlen)
-        now = datetime.datetime.utcnow()
-        self.eventutc = now
-        self.obs.utc = now
-        self.emjd = jdutil.datetime_to_mjd( now)
-        self.lastmjd = self.emjd
-        self.epeak = 0.
-        self.erms = 0.
-        self.set_sample_rate( bandwidth)
-
-    def event_handler(self, msg):
-        """
-        Receive the Peak, RMS and MJD on the input stream
-        """
-        print 'Event Message received: '
-        # Grab packet PDU data                                                                                                     
-        self.emjd = pmt.from_float(msg)
-        print 'MJD: %15.6f ' % (self.emjd)
-        return
-
-    def forecast(self, noutput_items, ninput_items): #forcast is a no op
-        """
-        The work block always processes all inputs
-        """
-        ninput_items = noutput_items
-        return ninput_items
-
-    def set_sample_rate(self, bandwidthMHz):
-        bandwidthMHz = np.float(bandwidthMHz)
-        if bandwidthMHz <= 0.0001:
-            print "Invalid Bandwidth: ", bandwidthMHz
-            bandwidthMHz = 1.
-        if bandwidthMHz >= 1000.:
-            print "Invalid Bandwidth: ", bandwidthMHz
-            bandwidthMHz = 1.
-        self.bandwidth = bandwidthMHz         # header units MHz
-        self.obs.bandwidthHz = bandwidthMHz*1.E6  # observation units Hz
-        print "Setting Bandwidth: %10.6f MHz" % (1.E-6*self.obs.bandwidthHz)
-        self.obs.dt = 1./np.fabs(self.obs.bandwidthHz)
-        t = -self.obs.dt * self.obs.refSample
-        for iii in range(self.vlen):
-            self.obs.xdata[iii] = t
-            t = t + self.obs.dt
-
-    def set_setup(self, noteName):
-        """
-        Read the setup files and initialize all values
-        """
-        self.noteName = str(noteName)
-        self.obs.read_spec_ast(self.noteName)    # read the parameters 
-        self.obs.datadir = "../events/"          # writing events not spectra
-        self.obs.nSpec = 0             # not working with spectra
-        self.obs.nChan = vlen
-        self.obs.nTime = 1             # working with time series
-        self.obs.refSample = vlen/2    # event is in middle of time sequence
-        self.obs.nSamples = vlen
-        self.obs.ydataA = np.zeros(vlen, dtype=np.complex64)
-        self.obs.xdata = np.zeros(vlen)
-        now = datetime.datetime.utcnow()
-        self.eventutc = now
-        self.obs.utc = now
-        self.setupdir = "./"
-        self.set_sample_rate( self.bandwidthMHz)
+        self.set_sample_rate( self.bandwidthMHz, doSave=doSave)
     
     def set_record(self, record):
         """ 

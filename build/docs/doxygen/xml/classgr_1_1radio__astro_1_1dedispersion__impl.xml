@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="classgr_1_1radio__astro_1_1dedispersion__impl" kind="class" language="C++" prot="public">
+    <compoundname>gr::radio_astro::dedispersion_impl</compoundname>
+    <basecompoundref refid="classgr_1_1radio__astro_1_1dedispersion" prot="public" virt="non-virtual">gr::radio_astro::dedispersion</basecompoundref>
+    <includes refid="dedispersion__impl_8h" local="no">dedispersion_impl.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1dedispersion__impl_1ab9f1728660104da263847e8c5354e9e5" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::dedispersion_impl::d_vec_length</definition>
+        <argsstring></argsstring>
+        <name>d_vec_length</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="33" column="1" bodyfile="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1dedispersion__impl_1ad4a28af9247eb2941ab6cd7a090e579a" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::dedispersion_impl::d_dms</definition>
+        <argsstring></argsstring>
+        <name>d_dms</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="34" column="1" bodyfile="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1dedispersion__impl_1a52cff54f6bd8b80c2fdc7ef76266bab3" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::dedispersion_impl::d_f_obs</definition>
+        <argsstring></argsstring>
+        <name>d_f_obs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="35" column="1" bodyfile="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1dedispersion__impl_1aa9bfaad424c13cdac7bcce821d92af6e" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::dedispersion_impl::d_bw</definition>
+        <argsstring></argsstring>
+        <name>d_bw</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="36" column="1" bodyfile="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1dedispersion__impl_1a6879e0ec479859037937f990fc26496a" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::dedispersion_impl::d_t_int</definition>
+        <argsstring></argsstring>
+        <name>d_t_int</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="37" column="1" bodyfile="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1dedispersion__impl_1aed44db24a34e3ef428dd2b9e1ea34110" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::dedispersion_impl::d_nt</definition>
+        <argsstring></argsstring>
+        <name>d_nt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="38" column="1" bodyfile="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1dedispersion__impl_1a9cc40f280ee001787608478b77422fb0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gr::radio_astro::dedispersion_impl::dedispersion_impl</definition>
+        <argsstring>(int vec_length, float dms, float f_obs, float bw, float t_int, int nt)</argsstring>
+        <name>dedispersion_impl</name>
+        <param>
+          <type>int</type>
+          <declname>vec_length</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>dms</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>f_obs</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>bw</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>t_int</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>nt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="41" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1dedispersion__impl_1ada875f919bad8641bdcd4c23445e5f6b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gr::radio_astro::dedispersion_impl::~dedispersion_impl</definition>
+        <argsstring>()</argsstring>
+        <name>~dedispersion_impl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="42" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1dedispersion__impl_1ac6b4f9f7d429c82ac6ad70357e63ee86" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gr::radio_astro::dedispersion_impl::forecast</definition>
+        <argsstring>(int noutput_items, gr_vector_int &amp;ninput_items_required)</argsstring>
+        <name>forecast</name>
+        <param>
+          <type>int</type>
+          <declname>noutput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_int &amp;</type>
+          <declname>ninput_items_required</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="45" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1dedispersion__impl_1a3890361c125ffeb6a8221a4410f2e753" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gr::radio_astro::dedispersion_impl::dedisperse</definition>
+        <argsstring>(const float *input, float *output)</argsstring>
+        <name>dedisperse</name>
+        <param>
+          <type>const float *</type>
+          <declname>input</declname>
+        </param>
+        <param>
+          <type>float *</type>
+          <declname>output</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="47" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1dedispersion__impl_1a499f716bf99700a5a211a997cd070b1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gr::radio_astro::dedispersion_impl::general_work</definition>
+        <argsstring>(int noutput_items, gr_vector_int &amp;ninput_items, gr_vector_const_void_star &amp;input_items, gr_vector_void_star &amp;output_items)</argsstring>
+        <name>general_work</name>
+        <param>
+          <type>int</type>
+          <declname>noutput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_int &amp;</type>
+          <declname>ninput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_const_void_star &amp;</type>
+          <declname>input_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_void_star &amp;</type>
+          <declname>output_items</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="49" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="5">
+        <label>gr::radio_astro::dedispersion_impl</label>
+        <link refid="classgr_1_1radio__astro_1_1dedispersion__impl"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>block</label>
+      </node>
+      <node id="6">
+        <label>gr::radio_astro::dedispersion</label>
+        <link refid="classgr_1_1radio__astro_1_1dedispersion"/>
+        <childnode refid="7" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="8">
+        <label>gr::radio_astro::dedispersion_impl</label>
+        <link refid="classgr_1_1radio__astro_1_1dedispersion__impl"/>
+        <childnode refid="9" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>block</label>
+      </node>
+      <node id="9">
+        <label>gr::radio_astro::dedispersion</label>
+        <link refid="classgr_1_1radio__astro_1_1dedispersion"/>
+        <childnode refid="10" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" line="30" column="1" bodyfile="/Users/glangsto/Research/gr-radio_astro/lib/dedispersion_impl.h" bodystart="29" bodyend="53"/>
+    <listofallmembers>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1aa9bfaad424c13cdac7bcce821d92af6e" prot="private" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>d_bw</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ad4a28af9247eb2941ab6cd7a090e579a" prot="private" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>d_dms</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a52cff54f6bd8b80c2fdc7ef76266bab3" prot="private" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>d_f_obs</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1aed44db24a34e3ef428dd2b9e1ea34110" prot="private" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>d_nt</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a6879e0ec479859037937f990fc26496a" prot="private" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>d_t_int</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ab9f1728660104da263847e8c5354e9e5" prot="private" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>d_vec_length</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a3890361c125ffeb6a8221a4410f2e753" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>dedisperse</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a9cc40f280ee001787608478b77422fb0" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>dedispersion_impl</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ac6b4f9f7d429c82ac6ad70357e63ee86" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>forecast</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a499f716bf99700a5a211a997cd070b1b" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>general_work</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion_1a5a9f9d3dd4f9f65e937bd1529517431a" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>make</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion_1a8645b10a0038eda7aea1d5837d1e73b8" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>sptr</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ada875f919bad8641bdcd4c23445e5f6b" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion_impl</scope><name>~dedispersion_impl</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

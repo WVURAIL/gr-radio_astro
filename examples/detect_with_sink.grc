@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.7.11'?>
+<?grc format='1' created='3.7.12'?>
 <flow_graph>
   <timestamp>Thu Feb 26 17:53:52 2015</timestamp>
   <block>
@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>detect_log</value>
+      <value>detect_with_sink</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -73,12 +73,20 @@
       <value>True</value>
     </param>
     <param>
+      <key>sizing_mode</key>
+      <value>fixed</value>
+    </param>
+    <param>
       <key>thread_safe_setters</key>
       <value></value>
     </param>
     <param>
       <key>title</key>
       <value>Event Detect</value>
+    </param>
+    <param>
+      <key>placement</key>
+      <value>(0,0)</value>
     </param>
   </block>
   <block>
@@ -106,6 +114,45 @@
     <param>
       <key>value</key>
       <value>705e6</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1420.406</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(32, 552)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>frequency</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Frequency (MHz)</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
     </param>
   </block>
   <block>
@@ -268,6 +315,45 @@
     <param>
       <key>widget</key>
       <value>counter</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>Science Aficionados</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(32, 464)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>observer</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Observer</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>string</value>
     </param>
   </block>
   <block>
@@ -642,7 +728,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(792, 12)</value>
+      <value>(856, 16)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1312,6 +1398,14 @@
   <block>
     <key>radio_astro_ra_event_sink</key>
     <param>
+      <key>azimuth</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>sample_rate</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
       <key>alias</key>
       <value></value>
     </param>
@@ -1324,8 +1418,20 @@
       <value></value>
     </param>
     <param>
+      <key>device</key>
+      <value></value>
+    </param>
+    <param>
+      <key>elevation</key>
+      <value>90</value>
+    </param>
+    <param>
       <key>_enabled</key>
       <value>True</value>
+    </param>
+    <param>
+      <key>frequency</key>
+      <value>frequency</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1336,20 +1442,32 @@
       <value>0</value>
     </param>
     <param>
+      <key>gain1</key>
+      <value>14.</value>
+    </param>
+    <param>
       <key>id</key>
       <value>radio_astro_ra_event_sink_0</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>Event Detection</value>
+    </param>
+    <param>
+      <key>observer</key>
+      <value>observer</value>
     </param>
     <param>
       <key>record</key>
       <value>1</value>
     </param>
     <param>
-      <key>sample_rate</key>
-      <value>samp_rate</value>
+      <key>setup</key>
+      <value>WatchDetect.not</value>
     </param>
     <param>
-      <key>setup</key>
-      <value>Watch.not</value>
+      <key>telescope</key>
+      <value>My Horn</value>
     </param>
     <param>
       <key>vlen</key>

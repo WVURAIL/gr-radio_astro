@@ -1,0 +1,15 @@
+Performing C++ SOURCE FILE Test HAVE_WNO_UNUSED_BUT_SET_VARIABLE failed with the following output:
+Change Dir: /Users/glangsto/Research/gr-radio_astro/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c36b0/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_c36b0.dir/build.make CMakeFiles/cmTC_c36b0.dir/build
+Building CXX object CMakeFiles/cmTC_c36b0.dir/src.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -DHAVE_WNO_UNUSED_BUT_SET_VARIABLE   -Wno-unused-but-set-variable -o CMakeFiles/cmTC_c36b0.dir/src.cxx.o -c /Users/glangsto/Research/gr-radio_astro/build/CMakeFiles/CMakeTmp/src.cxx
+warning: unknown warning option '-Wno-unused-but-set-variable'; did you mean '-Wno-unused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+Linking CXX executable cmTC_c36b0
+/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c36b0.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -DHAVE_WNO_UNUSED_BUT_SET_VARIABLE -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_c36b0.dir/src.cxx.o  -o cmTC_c36b0 
+
+Source file was:
+int main() { return 0; }

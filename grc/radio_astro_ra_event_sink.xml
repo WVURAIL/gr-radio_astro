@@ -4,30 +4,86 @@
   <key>radio_astro_ra_event_sink</key>
   <category>[radio_astro]</category>
   <import>import radio_astro</import>
-  <make>radio_astro.ra_event_sink($setup, $vlen, $sample_rate, $record)</make>
-<callback>set_setup( $setup)</callback>
+  <make>radio_astro.ra_event_sink($setup, $vlen, $frequency, $sample_rate, $record, $note, $observer, $telescope, $device, $gain1, $azimuth, $elevation)</make>
+  <callback>set_setup( $setup)</callback>
   <callback>set_vlen( $vlen)</callback>
   <callback>set_sample_rate( $sample_rate)</callback>
   <callback>set_record( $record)</callback>
+  <callback>set_note( $note)</callback>
+  <callback>set_observer( $observer)</callback>
+  <callback>set_telescope( $telescope)</callback>
+  <callback>set_device( $device)</callback>
+  <callback>set_frequency( $frequency)</callback>
+  <callback>set_gain( $gain)</callback>
+  <callback>set_telaz( $azimuth)</callback>
+  <callback>set_telel( $elevation)</callback>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
        * key (makes the value accessible as $keyname, e.g. in the make node)
        * type -->
-    <param>
+  <param>
     <name>Setup File</name>
     <key>setup</key>
-    <value>Watch.not</value>
+    <value>WatchDetect.not</value>
     <type>string</type>
   </param>
-<param>
+  <param>
+    <name>Note</name>
+    <key>note</key>
+    <value>Event Detection</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Observers</name>
+    <key>observer</key>
+    <value>Science Aficionados</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Telescope</name>
+    <key>telescope</key>
+    <value>My Horn</value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Device</name>
+    <key>device</key>
+    <value></value>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Gain (dB)</name>
+    <key>gain1</key>
+    <value>14.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Azimuth (d)</name>
+    <key>azimuth</key>
+    <value>0.</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Elevation (d)</name>
+    <key>elevation</key>
+    <value>90.</value>
+    <type>float</type>
+  </param>
+  <param>
     <name>Record</name>
     <key>record</key>
     <value>0</value>
     <type>int</type>
   </param>
   <param>
-    <name>Sample Rate (MHz)</name>
+    <name>Frequency (MHz)</name>
+    <key>frequency</key>
+    <value>1420.406</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Bandwidth (MHz)</name>
     <key>sample_rate</key>
     <value>1.</value>
     <type>float</type>

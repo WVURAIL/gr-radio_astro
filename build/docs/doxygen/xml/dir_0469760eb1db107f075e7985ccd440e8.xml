@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="dir_0469760eb1db107f075e7985ccd440e8" kind="dir">
+    <compoundname>radio_astro</compoundname>
+    <innerfile refid="api_8h">api.h</innerfile>
+    <innerfile refid="dedispersion_8h">dedispersion.h</innerfile>
+    <innerfile refid="detect_8h">detect.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/glangsto/Research/gr-radio_astro/include/radio_astro/"/>
+  </compounddef>
+</doxygen>

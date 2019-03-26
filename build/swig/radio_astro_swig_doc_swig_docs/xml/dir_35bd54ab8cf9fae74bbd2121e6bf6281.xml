@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="dir_35bd54ab8cf9fae74bbd2121e6bf6281" kind="dir">
+    <compoundname>/Users/glangsto/Research</compoundname>
+    <innerdir refid="dir_0dec8efd5c4a589033c9005ec1a5bc04">/Users/glangsto/Research/gr-radio_astro</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/glangsto/Research/"/>
+  </compounddef>
+</doxygen>
