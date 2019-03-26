@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 19MAR26 GIL record event peak and rms
 # 19FEB14 GIL make tags more compatible with C++ tags
 # 19JAN15 GIL initial version based on ra_ascii_sink
 
@@ -105,9 +106,9 @@ class ra_event_sink(gr.sync_block):
         now = datetime.datetime.utcnow()
         self.eventutc = now
         self.obs.utc = now
-        self.eventmjd = jdutil.datetime_to_mjd( now)
-        self.lastmjd = self.eventmjd
-        self.emagnitude = 0.
+        self.emjd = jdutil.datetime_to_mjd( now)
+        self.lastmjd = self.emjd
+        self.epeak = 0.
         self.erms = 0.
         self.set_sample_rate( bandwidth)
 
@@ -117,8 +118,8 @@ class ra_event_sink(gr.sync_block):
         """
         print 'Event Message received: '
         # Grab packet PDU data                                                                                                     
-        self.eventmjd = pmt.from_float(msg)
-        print 'MJD: %15.6f ' % (self.eventmjd)
+        self.emjd = pmt.from_float(msg)
+        print 'MJD: %15.6f ' % (self.emjd)
         return
 
     def forecast(self, noutput_items, ninput_items): #forcast is a no op
@@ -204,11 +205,11 @@ class ra_event_sink(gr.sync_block):
                 key = pmt.to_python(tag.key)
                 value = pmt.to_python(tag.value)
                 if key == 'MJD':
-                    self.eventmjd = value
-#                    print 'Tag MJD : %15.9f' % (self.eventmjd)
+                    self.emjd = value
+#                    print 'Tag MJD : %15.9f' % (self.emjd)
                 elif key == 'PEAK':
-                    self.emagnitude = value
-#                    print 'Tag PEAK: %7.4f' % (self.emagnitude)
+                    self.epeak = value
+#                    print 'Tag PEAK: %7.4f' % (self.epeak)
                 elif key == 'RMS':
                     self.erms = value
 #                    print 'Tag RMs : %7.4f' % (self.erms)
@@ -219,25 +220,34 @@ class ra_event_sink(gr.sync_block):
             # get the length of one input
             samples = inn[i]
             # if new mjd 
-            if self.eventmjd > self.lastmjd:
-                self.lastmjd = self.eventmjd
+            if self.emjd > self.lastmjd:
+                self.lastmjd = self.emjd
                 self.obs.ydataA = samples.real
                 self.obs.ydataB = samples.imag
-                utc = jdutil.mjd_to_datetime( self.eventmjd)
+                utc = jdutil.mjd_to_datetime( self.emjd)
                 self.obs.utc = utc
+                self.obs.emjd = self.emjd
+                self.obs.epeak = self.epeak
+                self.obs.erms = self.erms
                 # create file name from event time
                 strnow = utc.isoformat()
                 datestr = strnow.split('.')
                 daypart = datestr[0]
+                if len( datestr) > 1:
+                    milliseconds = datestr[1]            # need to add milliseconds to file name
+                else:
+                    milliseconds = "000"                 # rare case of no milliseconds
+                milliseconds = milliseconds[0:3]
                 yymmdd = daypart[2:19]
 #                print 'Sink Event: ', self.ecount
 #                print 'Sink Utc : ', self.obs.utc
-#                print 'Sink MJD : %15.9f' % (self.eventmjd)
+#                print 'Sink MJD : %15.9f' % (self.emjd)
 #                print 'Sink days: %12.6f + %12.6f ' % (fdays, hours)
 #                print 'Sink Magnitude: ', peaks, ' +/- ', rmss
                 if self.record == radioastronomy.INTRECORD:
                     #remove : from time
                     yymmdd = yymmdd.replace(":", "")
+                    yymmdd = yymmdd + "_" + milliseconds
                     outname = yymmdd + '.eve'   # tag as an event
                     self.obs.writecount = self.obs.writecount + 1
                     # need to keep track of total number of spectra averaged

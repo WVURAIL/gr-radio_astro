@@ -251,7 +251,7 @@ namespace gr {
       else if (i < 0)
 	{ i += MAX_BUFF;
 	  length = MAX_BUFF - i;
-       	  printf("Two part - shift; Move 1: i=%ld, length=%ld\n", i, length);
+       	  // printf("Two part - shift; Move 1: i=%ld, length=%ld\n", i, length);
 	  for (long j = 0; j < length; j++)
 	    { samples[j] = circular[i];
 	      i++;
@@ -259,7 +259,7 @@ namespace gr {
 	  i = 0; 
 	  jstart = length;
 	  length = vlen - length;
-       	  printf("Two part - shift; Move 2: i=%ld, length=%ld\n", i, length);
+       	  // printf("Two part - shift; Move 2: i=%ld, length=%ld\n", i, length);
 	  for (long j = jstart; j < vlen; j++)
 	    { samples[j] = circular[i];
 	      i++;
@@ -270,7 +270,7 @@ namespace gr {
 	  length = MAX_BUFF - i;
 	  if (length > vlen)
 	    length = vlen;
-	  printf("Two part + shift; Move 1: i=%ld, length=%ld\n", i, length);  
+	  // printf("Two part + shift; Move 1: i=%ld, length=%ld\n", i, length);  
 	  for (long j = 0; j < length; j++) 
 	    {
 	      samples[j] = circular[i];
@@ -279,7 +279,7 @@ namespace gr {
 	  i = 0;
 	  jstart = length;
 	  length = vlen - length;
-	  printf("Two part + shift; Move 2: i=%ld, shift=%ld\n", i, length);
+	  // printf("Two part + shift; Move 2: i=%ld, shift=%ld\n", i, length);
 	  for (long j = jstart; j < vlen; j++)
 	    {
 	      samples[j] = circular[i];
@@ -346,7 +346,7 @@ namespace gr {
 
 		  update_buffer();
 		} // end if an event found
-	    } // end if buffere full
+	    } // end ifb uffere full
 	} // end for all samples
 	      
       if (! initialized) {
