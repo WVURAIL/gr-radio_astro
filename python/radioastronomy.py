@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+19MAR28 GIL clean up creation of time series versus channel series
 19MAR25 GIL remove duplicate __init__
 19FEB21 GIL copy data without interpreting
 19JAN16 GIL add Event Reading and Writing
@@ -252,21 +253,43 @@ class Spectrum(object):
     Define a Radio Spectrum/Event class for processing, reading and
     writing astronomical data.   Also used for Events
     """
-    def __init__(self):
+    def __init__(self, nChan = MAXCHAN, nSamples = 0):
         """
         initialize all spectrum class values
         many will be overwritten laters
+        By default; spectra are assumed.   
+        To change to a time series set nSamples > 0, nChan = 0
         """
         noteA = ""
         noteB = ""
         gains = [0., 0., 0., 0., 0.] # gains are in dB
         utc = datetime.datetime.utcnow()
         telType = "Bubble Wrap Horn"
-        refChan = 0
         observer = "Glen Langston"
-        xdata = np.zeros(MAXCHAN)
-        ydataA = np.zeros(MAXCHAN)
-        ydataB = np.zeros(MAXCHAN)
+        nChan = int(nChan)
+        nSamples = int(nSamples)
+        self.nChan = nChan
+        self.nSamples = nSamples
+        
+        if self.nChan > self.nSamples:
+            self.nSamples = 0
+            self.nSpec = 1
+            self.nTime = 0
+            nData = max(self.nChan, 2)   # must have at least 2 channeles
+            self.nChan = nData
+            self.refChan = self.nChan/2
+            self.refSample = 0
+        else:
+            self.nChan = 0
+            self.nSpec = 0
+            self.nTime = 1
+            self.refChan = 0
+            nData = max( self.nSamples, 2) # must have at least 2 samples
+            self.nSamples = nData
+            self.refSample = self.nSamples/2
+        xdata = np.zeros(nData)
+        ydataA = np.zeros(nData)
+        ydataB = np.zeros(nData)
         #now fill out the spectrum structure.
         self.writecount = 0
         self.count = int(0)          # count of spectra summed
@@ -302,8 +325,6 @@ class Spectrum(object):
         self.etaA = .8 # antenna efficiency (range 0 to 1)
         self.etaB = .99 # efficiency main beam (range 0 to 1)
         self.bunit = 'Counts'       # brightness units
-        self.refChan= refChan
-        self.refSample = 0          # identify reference sample in event stream
         self.version = str("2.0.1")
         self.polA = str("X")        # polariation of A ydata: X, Y, R, L,
         self.polB = str("Y")        # polariation of B ydata: X, Y, R, L,
@@ -324,17 +345,10 @@ class Spectrum(object):
         self.xdata = xdata
         self.ydataA = ydataA
         self.ydataB = ydataB
-        self.nChan = len(ydataA)
-        self.nSpec = 1
-# finally the spectrum data
-        self.deltaFreq = 1.0   # frequency interval between channels
-        self.xdata = xdata
 # or the event; will reset nTime and nSamples to match event size
-        self.nTime = 0
         self.epeak = 0.        # event peak
         self.erms = 0.         # event RMS
         self.emjd = 0.         # event Modified Julian Day
-        self.nSamples = len(xdata)
 
     def __str__(self):
         """
@@ -502,17 +516,13 @@ class Spectrum(object):
         outfile.write(outline)
         outline = '# BUNIT     = '  + str(self.bunit).strip() + '\n'
         outfile.write(outline)
-        nChan = len(self.ydataA)
-        outline = '# NCHAN     = '  + str(nChan) + '\n'
+        outline = '# NCHAN     = '  + str(self.nChan) + '\n'
         outfile.write(outline)
-        nSpec = self.nSpec
-        outline = '# NSPEC     = '  + str(nSpec) + '\n'
+        outline = '# NSPEC     = '  + str(self.nSpec) + '\n'
         outfile.write(outline)
-        nTime = self.nTime
-        outline = '# NTIME     = '  + str(nTime) + '\n'
+        outline = '# NTIME     = '  + str(self.nTime) + '\n'
         outfile.write(outline)
-        nSamples = self.nSamples
-        outline = '# NSAMPLES  = '  + str(nSamples) + '\n'
+        outline = '# NSAMPLES  = '  + str(self.nSamples) + '\n'
         outfile.write(outline)
         outline = '# EPEAK     = '  + str(self.epeak) + '\n'
         outfile.write(outline)
@@ -588,25 +598,36 @@ class Spectrum(object):
         if self.nSpec > 0:
             dx = self.bandwidthHz/float(self.nChan)
             x = self.centerFreqHz - (self.bandwidthHz/2.) + (dx/2.)
-            yv = self.ydataA
             leny = len(yv)
-            for i in range(min(self.nChan, leny)):
-                outline = str(i).zfill(4) + ' ' + str(long(x)) + ' ' + str(yv[i]) + '\n'
-                outfile.write(outline)
-                x = x + dx
+            if self.nSpec > 1:
+                for i in range(min(self.nChan, leny)):
+                    outline = str(i).zfill(4) + ' ' + str(long(x)) + ' ' + str(self.ydataA) + str(self.ydataB[i]) + '\n'
+                    outfile.write(outline)
+                    x = x + dx
+            else:
+                for i in range(min(self.nChan, leny)):
+                    outline = str(i).zfill(4) + ' ' + str(long(x)) + ' ' + str(self.ydataA[i]) + '\n'
+                    outfile.write(outline)
+                    x = x + dx
             del outline
         if self.nTime > 0:
             dt = 1./self.bandwidthHz       # sample rate is inverse bandwidth
             t = -dt * self.refSample       # time tag relative to event sample
-            yvI = self.ydataA # time samples are I/Q (complex) values
-            yvQ = self.ydataB # time samples are I/Q (complex) values
-            leny = len(yvI)
+            leny = len(self.ydataA)
+            self.nChan = 0                 # cannot be both samples and spectra
+            if leny > self.nSamples:
+                self.nSamples = leny
+                print "Y array length and N Sample miss match:", leny, self.nSamples
             if TIMEPARTS == 2:             # if not writing time
                 outline = "#   I       Q\n"
                 outfile.write(outline)
                 pformat = "%.5f %.5f\n"
-                for i in range(min(self.nSamples, leny)):
-                    outline = pformat % (yvI[i], yvQ[i])
+                if self.nSamples < 2:
+                    print "Very small number of samples: ",self.nSamples
+                    print "N Chan: %5d; N  x: %5d " % (self.nChan, len(self.xdata))
+                    print "N y1  : %5d; N y2: %5d " % (len(self.ydataA), len(self.ydataB))
+                for i in range(self.nSamples):
+                    outline = pformat % (self.ydataA[i], self.ydataB[i])
                     outline = outline.replace(' 0.', ' .')
                     outline = outline.replace('-0.', '-.')
                     outfile.write(outline)
@@ -614,14 +635,15 @@ class Spectrum(object):
                 outline = "#       dt     I        Q\n"
                 outfile.write(outline)
                 pformat = "%04d %11.9f %7.5f %7.5f\n"
-                for i in range(min(self.nSamples, leny)):
-                    outline = pformat % (i, t, yvI[i], yvQ[i])
+                for i in range(self.nSamples):
+                    outline = pformat % (i, t, self.ydataA[i], self.ydataB[i])
                     outline = outline.replace(' 0.', ' .')
                     outline = outline.replace('-0.', '-.')
                     outfile.write(outline)
                     t = t + dt
             del outline
         outfile.close()
+        # end of write_ascii_file()
 
     def write_ascii_ast(self, dirname):
         """
@@ -715,6 +737,18 @@ class Spectrum(object):
                     self.count = int(parts[3])
                 if parts[1] == 'NCHAN':
                     self.nChan = int(parts[3])
+                    if self.nChan > self.nSamples:
+                        nData = max( self.nChan, self.nSamples)
+                        self.xdata = np.zeros(nData)
+                        self.ydataA = np.zeros(nData)
+                        self.ydataB = np.zeros(nData)
+                if parts[1] == 'NSAMPLES':
+                    self.nSamples = int(parts[3])
+                    if self.nChan < self.nSamples:
+                        nData = max( self.nChan, self.nSamples)
+                        self.xdata = np.zeros(nData)
+                        self.ydataA = np.zeros(nData)
+                        self.ydataB = np.zeros(nData)
                 if parts[1] == 'BUNIT':
                     otherparts = line.split('=')
                     self.bunit = str(otherparts[1]).strip()
@@ -937,31 +971,26 @@ class Spectrum(object):
                         y2.append(0.0)
 
         # at this point all data and header keywords are read
-        self.xdata = np.array(x1)            # transfer x axis; channels or time
+        self.ydataA = np.array(y1)           # always transfer values series
+        nData = len(self.ydataA)
         if self.nSpec > 0:
-            self.ydataA = np.array(y1)       # always transfer 1 spectrum
+            self.xdata = np.array(x1)        # transfer x axis; channels or time
             if self.nSpec > 1:               # if more than one spectrum
                 self.ydataB = np.array(y2)   # transfer it too
-
-            ndata = len(self.xdata)
-            if self.nChan != ndata:
-                print "File header Miss-match and number of channels in data"
-                print ": %f != %f" % (self.nChan, ndata)
-                self.nChan = int(ndata)
+            self.nChan = nData
+            self.nSamples = 0
         if self.nTime > 0:
-            self.ydataA = np.array(y1)       # transfer I samples
+            self.nSamples = nData
+            self.nChan = 0
             self.ydataB = np.array(y2)       # transfer Q samples
-            self.nSamples = len(self.ydataA)                
-            self.nChan = self.nSamples
-            if nparts == 2:                  # if time not with sample
-                dt = 1./(self.bandwidthHz)     # compute time per sample
-                t = -dt * self.refSample     # time tag relative to reference sample
-                if verbose:
-                    print "Time Offset of First Sample (%d): %15.9f (s)" % ( self.refSample, t)
-                self.xdata = np.zeros(self.nSamples)
-                for iii in range( self.nSamples):
-                    self.xdata[iii] = t
-                    t += dt
+            dt = 1./(self.bandwidthHz)     # compute time per sample
+            t = -dt * self.refSample     # time tag relative to reference sample
+            if verbose:
+                print "Time Offset of First Sample (%d): %15.9f (s)" % ( self.refSample, t)
+            self.xdata = np.zeros(self.nSamples)
+            for iii in range( self.nSamples):
+                self.xdata[iii] = t
+                t += dt
 
         if self.refChan == 0:
             self.refChan = self.nChan/2

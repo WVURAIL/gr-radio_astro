@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 19APR02 GIL cleanup typos
 # 19MAR26 GIL take observers, telescope, gain1, azimuth, elevation as inputs
 # 19MAR26 GIL record event peak and rms
 # 19FEB14 GIL make tags more compatible with C++ tags
@@ -75,7 +76,7 @@ class ra_event_sink(gr.sync_block):
         self.telel = float(elevation)
         self.bandwidthMHz = float(bandwidth)
         self.frequencyMHz = float(frequency)
-        self.obs = radioastronomy.Spectrum()
+        self.obs = radioastronomy.Spectrum( nChan=0, nSamples=vlen)
         self.setupdir = "./"
         # read all generic setup info in the note file
         self.set_setup( noteName, doSave = True)
@@ -100,6 +101,8 @@ class ra_event_sink(gr.sync_block):
         print "Setting Bandwidth: %10.6f MHz" % (1.E-6*self.obs.bandwidthHz)
         self.obs.dt = 1./np.fabs(self.obs.bandwidthHz)
         t = -self.obs.dt * self.obs.refSample
+        print "NChan = %5d; NSamples = %5d" % (self.obs.nChan,self.obs.nSamples)
+        print "N x   = %5d; N y      = %5d" % (len(self.obs.xdata), len(self.obs.ydataA))
         for iii in range(self.vlen):
             self.obs.xdata[iii] = t
             t = t + self.obs.dt
@@ -118,7 +121,7 @@ class ra_event_sink(gr.sync_block):
         """
         self.obs.device = str(device)
         if doSave:
-            self.obs.write_ascii_spec(self.setupdir, self.noteName)    # read the parameters 
+            self.obs.write_ascii_file(self.setupdir, self.noteName)    # read the parameters 
 
     def set_observer(self, observer, doSave = True):
         """
@@ -127,7 +130,7 @@ class ra_event_sink(gr.sync_block):
         self.observer = str(observer)
         self.obs.observer = self.observer
         if doSave:
-            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
     def set_telescope(self, telescope, doSave = True):
         """
@@ -136,7 +139,7 @@ class ra_event_sink(gr.sync_block):
         self.site = str(telescope)
         self.obs.site = self.site
         if doSave:
-            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
     def set_note(self, noteA, doSave = True):
         """
@@ -145,7 +148,7 @@ class ra_event_sink(gr.sync_block):
         self.noteA = str( noteA)
         self.obs.noteA = self.noteA
         if doSave:
-            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
     def set_gain1(self, gain1, doSave = True):
         """
@@ -154,7 +157,7 @@ class ra_event_sink(gr.sync_block):
         self.gains[0] = float(gain1)
         self.obs.gains[0] = self.gains[0]
         if doSave:
-            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
     def set_telaz(self, telaz, doSave = True):
         """
@@ -163,7 +166,7 @@ class ra_event_sink(gr.sync_block):
         self.telaz = float(telaz)
         self.obs.telaz = self.telaz
         if doSave:
-            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
     def set_telel(self, telel, doSave = True):
         """
@@ -172,7 +175,7 @@ class ra_event_sink(gr.sync_block):
         self.telel = float(telel)
         self.obs.telel = self.telel
         if doSave:
-            self.obs.write_ascii_spec(self.setupdir, self.noteName)
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
     def set_setup(self, noteName, doSave=True):
         """
@@ -199,11 +202,12 @@ class ra_event_sink(gr.sync_block):
         self.obs.read_spec_ast(self.setupdir + self.noteName)    # read the parameters 
         self.obs.datadir = "../events/"          # writing events not spectra
         self.obs.nSpec = 0             # not working with spectra
-        self.obs.nChan = self.vlen
+        self.obs.nChan = 0
         self.obs.nTime = 1             # working with time series
         self.obs.refSample = self.vlen/2    # event is in middle of time sequence
         self.obs.nSamples = self.vlen
-        self.obs.ydataA = np.zeros(self.vlen, dtype=np.complex64)
+        self.obs.ydataA = np.zeros(self.vlen)
+        self.obs.ydataB = np.zeros(self.vlen)
         self.obs.xdata = np.zeros(self.vlen)
         now = datetime.datetime.utcnow()
         self.eventutc = now
@@ -217,6 +221,9 @@ class ra_event_sink(gr.sync_block):
         self.obs.telaz = self.telaz
         self.obs.telel = self.telel
         self.obs.centerFreqHz = self.frequencyMHz*1.E6
+        self.xdata = np.zeros(self.vlen)
+        self.ydataA = np.zeros(self.vlen)
+        self.ydataB = np.zeros(self.vlen)
 
         self.obs.datadir = "../events/"          # writing events not spectra
         self.obs.noteB = "Event Detection"
