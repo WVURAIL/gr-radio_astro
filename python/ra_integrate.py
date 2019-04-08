@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 19APR08 GIL enforce writing spectra
 # 18AUG17 GIL allow note file to have any extension on input
 # 18JUN13 GIL remove subtraction of signals
 # 18MAY20 GIL code cleanup
@@ -108,6 +109,13 @@ class ra_integrate(gr.sync_block):
         self.inttype = inttype
         self.obs = radioastronomy.Spectrum()
         self.obs.read_spec_ast(self.noteName)    # read the parameters
+        self.obs.nspec = 1                       # make sure we're working with spectra
+        self.obs.ntime = 0                       # not events
+        self.obs.nchan = self.vlen
+        self.obs.refchan = self.vlen/2.
+        self.obs.xdata = np.zeros(self.vlen)
+        self.obs.ydataA = np.zeros(self.vlen)
+        self.obs.ydataB = np.zeros(self.vlen)
         self.obs.observer = observers
         self.ave = radioastronomy.Spectrum()
         self.ave.read_spec_ast(self.noteName)    # read the parameters

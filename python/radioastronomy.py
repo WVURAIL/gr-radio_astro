@@ -598,7 +598,7 @@ class Spectrum(object):
         if self.nSpec > 0:
             dx = self.bandwidthHz/float(self.nChan)
             x = self.centerFreqHz - (self.bandwidthHz/2.) + (dx/2.)
-            leny = len(yv)
+            leny = len(self.ydataA)
             if self.nSpec > 1:
                 for i in range(min(self.nChan, leny)):
                     outline = str(i).zfill(4) + ' ' + str(long(x)) + ' ' + str(self.ydataA) + str(self.ydataB[i]) + '\n'

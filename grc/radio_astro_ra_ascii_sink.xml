@@ -35,7 +35,7 @@
   <param>
     <name>Observers</name>
     <key>observers</key>
-    <value>Science Afficionados</value>
+    <value>Science Aficionados</value>
     <type>string</type>
   </param>
   <param>
@@ -119,7 +119,7 @@
   <param>
     <name>Vec Length</name>
     <key>vlen</key>
-    <value>10</value>
+    <value>fftsize</value>
     <type>int</type>
   </param>
 
@@ -133,4 +133,14 @@
     <type>float</type>
     <vlen>$vlen</vlen>
   </sink>
+  <source>
+    <name>Time_Remaining</name>
+    <type>float</type>
+    <vlen>1</vlen>
+  </source>    
+    <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
 </block>
