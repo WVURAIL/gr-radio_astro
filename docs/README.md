@@ -22,14 +22,14 @@ The observer must provide the special name used to configure the Device, the hor
 
 ![Observer Inteface](NsfDetect30+RtlSdrDongleOnly.png)
 
-The much of the plot above is similar to the spectral line plot.  The histograph of noiesThe plot at left,
-showing a red peak shows the distribution of input samples.  In this case, with no input signal, the samples are
-all near zero.  The plot at right shows the time series of samples.  The "step" function shows the digital
-noise of the inputs.   The samples in this plot are scaled, ranging from -1 to 1.   The input signal must be much stronger
-to avoid too much digital noise from the sampler.   When a horn and amplifiers are attached, the input signal level should be at leasts 10 times higher, roughtly with peak values ranging between -0.2 and 0.2.
+The much of the plot above is similar to the spectral line plot.  The histogram plot at left,
+again shows all the samples are near zero (the red peak).   The plot at right shows the time series of samples.  
+The "step" function shows the digital noise of the inputs.   
+The samples in this plot are scaled, with minimum and maximum ranging from -1 to 1.  To make astronomical observations, 
+the signal must be much stronger to avoid too much digital noise.   When your horn and amplifiers are attached, the input signal level should be at leasts 10 times higher, roughtly with peak values ranging between -0.2 and 0.2.
 
 After getting a horn and amplifiers attached to the input of the SDR dongle, use the _Gain_ parameter to adjust the signal level.
-Then adjust the _sigma_ level so that a few events are detected in a minute.  The peak event should be in the middle of the plot if all is working well.   The _sigma_ level indicates how extreme a voltage peak must be to be declared an event.  The lower the sigma level, the more events will be identified.   Setting the Sigma level below 3 will cause many, many events to be detected.   This will fill up your disk very quickly.   Setting sigma around 4 will give a few events a minute.
+Then adjust the _sigma_ level so that a few events are detected in a minute.  The peak event should be in the middle of the plot if all is working well.   The _sigma_ level indicates how extreme a voltage peak must be to be declared an event.  The lower the sigma level, the more events will be identified.   Setting the Sigma level below 3 will cause many, many events to be detected.   This will fill up your disk very quickly.   Setting _sigma_ around 4 will give a few events a minute.
 
 ### Executable Graphs
 
