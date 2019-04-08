@@ -13,7 +13,9 @@ The figure above shows an observation with an RTLSDR dongle (3 MHz, bandwidth) t
 With the gain turned up sufficiently high, the internal noise of the device is visible.    
 
 The plot on the left shows the histogram of samples for the weak, internal, noise of the dongle.  
-The plot at right shows the spectrum of the noise in the dongle.
+The plot at right shows the spectrum of the noise in the dongle.  
+
+The observer must provide the special name used to configure the Device, the horn Azimuth and Elevation. The observer can set the observing frequency and bandwidth also, but might want to create a new graph with gnuradio-companion if making many changes.
 
 
 ### Observer Interface: NsfDetect30.grc
@@ -23,14 +25,13 @@ The plot at right shows the spectrum of the noise in the dongle.
 The much of the plot above is similar to the spectral line plot.  The histograph of noiesThe plot at left,
 showing a red peak shows the distribution of input samples.  In this case, with no input signal, the samples are
 all near zero.  The plot at right shows the time series of samples.  The "step" function shows the digital
-noise of the inputs.
+noise of the inputs.   The samples in this plot are scaled, ranging from -1 to 1.   The input signal must be much stronger
+to avoid too much digital noise from the sampler.   When a horn and amplifiers are attached, the input signal level should be at leasts 10 times higher, roughtly with peak values ranging between -0.2 and 0.2.
 
-The plot 
-### Executables
 
-The executables are in the _examples_ directory.
+### Executable Graphs
 
-The GRC files are:
+The executables are in the _examples_ directory.  The GRC files are:
 
 1. NsfDetect30.grc - Detect events (C++ version) at 3 MHz sample rate (both I+Q) using an RTL SDR dongle.
 
