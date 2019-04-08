@@ -21,9 +21,9 @@ Use the _Who_ field to record who made the observations.   Use the _Tel_ field t
 
 ![Observer Interface](NooElecHotColdLoadTest105K.png)
 
-Another graph is setup for observations with an Airspy-mini and 6 MHz bandwidth.  The plot histogram plot (above left) shows the signal level set for a strong input signal.  The samples range roughly between -0.15 and 0.15, so that events with peaks as high as .99 can be detected.
+Another graph is setup for observations with an Airspy-mini and 6 MHz bandwidth.  The histogram plot (above left) shows the signal level set for a strong input signal.  The samples range roughly between -0.15 and 0.15, so that events with peaks as high as .99 can be detected.
 In this example, the horn had a NooElec HI amplifier, which is intended for Science Aficionados to observe the Milky Way.
-The spectrum at right shows the observations calibrated in Kelvin units.  The galactic hydrogen signal has a peak 1420.4 MHz.
+The spectrum, at right, shows the observations calibrated in Kelvin units.  The galactic hydrogen signal has a peak 1420.4 MHz.
 
 ### Observer Interface: NsfDetect30.grc
 
