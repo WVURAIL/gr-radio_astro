@@ -15,7 +15,7 @@ With the gain turned up sufficiently high, the internal noise of the device is v
 The plot on the left shows the histogram of samples for the weak, internal, noise of the dongle.  
 The plot at right shows the spectrum of the noise in the dongle.  
 
-The observer must provide the special name used to configure the Device, the horn Azimuth and Elevation. The observer can set the observing frequency and bandwidth also, but might want to create a new graph with gnuradio-companion if making many changes.
+The observer must provide the special name used to configure their _device_, the software defined radio.  The observer must also note the horn Azimuth and Elevation (in degrees). The observer can set the observing frequency (Hz) and bandwidth (Hz) also, but might want to create a new graph with gnuradio-companion if making many changes.
 
 
 ### Observer Interface: NsfDetect30.grc
