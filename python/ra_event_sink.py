@@ -168,6 +168,23 @@ class ra_event_sink(gr.sync_block):
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
+    def set_vlen(self, vlen, doSave = True):
+        """
+        Save Telescope Elevation
+        """
+        self.vlen = int(vlen)
+        if self.vlen < 16:
+            self.vlen = 16
+            print "Vector Length too small: %3d, using %3d" % (int(vlen),self.vlen)
+        self.obs.nSamples = self.vlen
+        self.obs.xdata = np.zeros( self.vlen)
+        self.obs.ydataA = np.zeros( self.vlen)
+        self.obs.ydataB = np.zeros( self.vlen)
+        self.obs.refsample = self.vlen/2.
+        self.obs.count = 1
+        if doSave:
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
+
     def set_telel(self, telel, doSave = True):
         """
         Save Telescope Elevation

@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: RTL SDR Dongle
-# Generated: Mon Apr  8 11:39:17 2019
+# Generated: Mon Apr  8 14:02:36 2019
 ##################################################
 
 if __name__ == '__main__':

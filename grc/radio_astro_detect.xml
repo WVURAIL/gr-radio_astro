@@ -8,7 +8,7 @@
   <callback>set_dms( $dms)</callback>
   <callback>set_vlen( $vec_length)</callback>
   <callback>set_bw( $bw)</callback>
-  <callback>set_f_obs( $f_obs)</callback>
+  <callback>set_freq( $f_obs)</callback>
   <callback>set_mode( $mode)</callback>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
