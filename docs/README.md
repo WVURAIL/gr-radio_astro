@@ -17,7 +17,7 @@ The plot at right shows the spectrum of the noise in the dongle.
 
 The observer must provide the special name used to configure their _device_, the software defined radio.  The observer must also note the horn Azimuth and Elevation (in degrees). The observer can set the observing frequency (Hz) and bandwidth (Hz) also, but might want to create a new graph with gnuradio-companion if making many changes.
 
-Use the _Observer_ field to record who made the observations.   Use the _Tel_ field to describe the telescope and purpose of the observations.  You can also increase the accuracy of your spectrum by setting the Fast Fourier Transform (FFT) size.  Increasing the FFT size increases the load on your computer.  This value must be a multiple of 2 (i.e.  64, 128, 256, 512, 1024, 2048 or 4096).
+Use the _Who_ field to record who made the observations.   Use the _Tel_ field to describe the telescope and purpose of the observations.  You can also increase the accuracy of your spectrum by setting the Fast Fourier Transform (FFT) size.  Increasing the FFT size increases the load on your computer.  This value must be a multiple of 2 (i.e.  64, 128, 256, 512, 1024, 2048 or 4096).
 
 ### Observer Interface: NsfDetect30.grc
 
