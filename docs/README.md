@@ -28,6 +28,8 @@ all near zero.  The plot at right shows the time series of samples.  The "step" 
 noise of the inputs.   The samples in this plot are scaled, ranging from -1 to 1.   The input signal must be much stronger
 to avoid too much digital noise from the sampler.   When a horn and amplifiers are attached, the input signal level should be at leasts 10 times higher, roughtly with peak values ranging between -0.2 and 0.2.
 
+After getting a horn and amplifiers attached to the input of the SDR dongle, use the _Gain_ parameter to adjust the signal level.
+Then adjust the _sigma_ level so that a few events are detected in a minute.  The peak event should be in the middle of the plot if all is working well.   The _sigma_ level indicates how extreme a voltage peak must be to be declared an event.  The lower the sigma level, the more events will be identified.   Setting the Sigma level below 3 will cause many, many events to be detected.   This will fill up your disk very quickly.   Setting sigma around 4 will give a few events a minute.
 
 ### Executable Graphs
 
