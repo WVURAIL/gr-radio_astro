@@ -2,20 +2,30 @@
 There are two main classes of observations described here:
 1) Spectral Line observations, where Intensity versus Frequency Spectra are averaged to detect the structure of the Milky Way.
 2) Event Detection, where very short duration (< 10 micro-seconds) time series are detected and recorded.
-## gr-detect_cc
 
-This repository contains both Python and C++ versions of the event capture software.
-The blocks with _detect_ names are the C++ versions.   The blocks with _event_ are the python versions.  Both
-versions are prepared and installed using _cmake_.
 
 ### Observer Interface: NsfIntegrate30.grc
 
 ![Observer Inteface](NsfIntegrate30+RtlSdrDongleOnly.png)
 
+The spectra are obtained using the _integrate_ graphs, which average many spectra (in a very short time).
+The figure above shows an observation with an RTLSDR dongle (3 MHz, bandwidth) that has no input signal connected.
+With the gain turned up sufficiently high, the internal noise of the device is visible.    
+
+The plot on the left shows the histogram of samples for the weak, internal, noise of the dongle.  
+The plot at right shows the spectrum of the noise in the dongle.
+
+
 ### Observer Interface: NsfDetect30.grc
 
 ![Observer Inteface](NsfDetect30+RtlSdrDongleOnly.png)
 
+The much of the plot above is similar to the spectral line plot.  The histograph of noiesThe plot at left,
+showing a red peak shows the distribution of input samples.  In this case, with no input signal, the samples are
+all near zero.  The plot at right shows the time series of samples.  The "step" function shows the digital
+noise of the inputs.
+
+The plot 
 ### Executables
 
 The executables are in the _examples_ directory.
@@ -48,3 +58,8 @@ Configuration files are used to record some input parameters and allow restartin
 
 1. Integrate30.conf - configuration file for the NsfIntegrate30.grc RTLSDR 3.0 MHz observing graph
 
+### Installation notes
+
+This repository contains both Python and C++ versions of the event capture software.
+The blocks with _detect_ names are the C++ versions.   The blocks with _event_ are the python versions.  Both
+versions are prepared and installed using _cmake_.
