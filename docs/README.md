@@ -1,8 +1,7 @@
 ### Radio Astronomy Gnuradio 
 There are two main classes of observations described here:
 1) Spectral Line observations, where Intensity versus Frequency Spectra are averaged to detect the structure of the Milky Way.
-2) Event Detection, where very short duration (< 10 micro-seconds) time series are detected and recorded.
-
+2) Event Detection, where very short duration (< 10 micro-seconds) evenst are found in the time series and recorded.
 
 ### Observer Interface: NsfIntegrate30.grc
 
