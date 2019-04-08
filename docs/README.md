@@ -19,6 +19,12 @@ The observer must provide the special name used to configure their _device_, the
 
 Use the _Who_ field to record who made the observations.   Use the _Tel_ field to describe the telescope and purpose of the observations.  You can also increase the accuracy of your spectrum by setting the Fast Fourier Transform (FFT) size.  Increasing the FFT size increases the load on your computer.  This value must be a multiple of 2 (i.e.  64, 128, 256, 512, 1024, 2048 or 4096).
 
+![Observer Interface](NooElecHotColdLoadTest105K.png)
+
+Another graph is setup for observations with an Airspy-mini and 6 MHz bandwidth.  The plot histogram plot (above left) shows the signal level set for a strong input signal.  The samples range roughly between -0.15 and 0.15, so that events with peaks as high as .99 can be detected.
+In this example, the horn had a NooElec HI amplifier, which is intended for Science Aficionados to observe the Milky Way.
+The spectrum at right shows the observations calibrated in Kelvin units.  The galactic hydrogen signal has a peak 1420.4 MHz.
+
 ### Observer Interface: NsfDetect30.grc
 
 ![Observer Inteface](NsfDetect30+RtlSdrDongleOnly.png)
