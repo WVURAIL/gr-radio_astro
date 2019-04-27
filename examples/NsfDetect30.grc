@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.7.12'?>
+<?grc format='1' created='3.7.9'?>
 <flow_graph>
   <timestamp>Sun Mar 11 16:57:49 2018</timestamp>
   <block>
@@ -73,20 +73,12 @@
       <value>True</value>
     </param>
     <param>
-      <key>sizing_mode</key>
-      <value>fixed</value>
-    </param>
-    <param>
       <key>thread_safe_setters</key>
       <value></value>
     </param>
     <param>
       <key>title</key>
       <value>Nsf RTLSDR Event Detect: 3MHz</value>
-    </param>
-    <param>
-      <key>placement</key>
-      <value>(0,0)</value>
     </param>
   </block>
   <block>
@@ -1198,7 +1190,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 272)</value>
+      <value>(296, 239)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1334,10 +1326,6 @@
       <value>True</value>
     </param>
     <param>
-      <key>axislabels</key>
-      <value>True</value>
-    </param>
-    <param>
       <key>alias</key>
       <value></value>
     </param>
@@ -1355,7 +1343,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(488, 252)</value>
+      <value>(488, 225)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1654,10 +1642,6 @@
     <key>qtgui_time_sink_x</key>
     <param>
       <key>autoscale</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>axislabels</key>
       <value>True</value>
     </param>
     <param>
@@ -1965,10 +1949,6 @@
       <value>Bandwidth</value>
     </param>
     <param>
-      <key>stemplot</key>
-      <value>False</value>
-    </param>
-    <param>
       <key>tr_chan</key>
       <value>0</value>
     </param>
@@ -2175,7 +2155,7 @@
     </param>
     <param>
       <key>bw0</key>
-      <value>Bandwidth*1e6</value>
+      <value>float(Bandwidth*1e6)</value>
     </param>
     <param>
       <key>dc_offset_mode0</key>
@@ -2187,7 +2167,7 @@
     </param>
     <param>
       <key>freq0</key>
-      <value>Frequency*1e6</value>
+      <value>float(Frequency*1e6)</value>
     </param>
     <param>
       <key>gain_mode0</key>
@@ -3559,7 +3539,7 @@
     </param>
     <param>
       <key>sample_rate</key>
-      <value>Bandwidth*1e6</value>
+      <value>float(Bandwidth*1e6)</value>
     </param>
     <param>
       <key>sync</key>
