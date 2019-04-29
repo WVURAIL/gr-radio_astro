@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 19APR29 GIL allow baseline subtracted Tsys
 # 19APR08 GIL enforce writing spectra
 # 18AUG17 GIL allow note file to have any extension on input
 # 18JUN13 GIL remove subtraction of signals
@@ -153,6 +154,12 @@ class ra_integrate(gr.sync_block):
         self.obs.utc = now
         self.printutc = now
         self.printinterval = 5.  # print averages every few seconds
+        n32 = int(self.vlen/32)
+        xa = np.arange(n32)+n32
+        xb = np.arange(n32)+(n32*30)        
+        self.xfit = np.concatenate((xa,xb))
+        self.yfit = self.obs.ydataA[self.xfit]
+        self.allchan  = np.array(range(self.vlen))
         print 'Setup File       : ', self.noteName
         self.obs.read_spec_ast(self.noteName)    # read the parameters
         self.obs.observer = observers
@@ -491,12 +498,6 @@ class ra_integrate(gr.sync_block):
             now = datetime.datetime.utcnow()
             # get the length of one input
             spec = inn[i]
-#           attempt to remove DC bias, but seems to be more due to insufficient gain
-#            beginvalue = np.min(spec[li2:li20])
-#            endvalue = np.min(spec[li1920:linm2])
-#            minvalue = (beginvalue+endvalue)*.5
-            # now subtract the DC bias
-#            spec = spec - np.full(self.vlen, minvalue)
             # deal with average state
             if self.inttype == radioastronomy.INTWAIT:
                 self.ave.ydataB = spec
@@ -576,7 +577,7 @@ class ra_integrate(gr.sync_block):
                 hot[nout] = 10. * np.log10(self.hot.ydataA)
                 cold[nout] = 10. * np.log10(self.cold.ydataA)
                 ref[nout] = 10. * np.log10(self.ref.ydataA)
-            elif self.units == radioastronomy.UNITKELVIN:
+            else:
                 hv = self.hot.ydataA[0:self.vlen] 
                 hv = np.maximum(hv, self.epsilons[0:self.vlen])
                 cv = self.cold.ydataA[0:self.vlen]
@@ -588,11 +589,23 @@ class ra_integrate(gr.sync_block):
                 # now compute center scalar value
                 oneoverhot = np.full(self.vlen, 1.)
                 oneoverhot = oneoverhot / hv
-                out[nout] = TSYS * spec * oneoverhot
-                ave[nout] = tsys
+                outs = TSYS * spec * oneoverhot
+                aves = tsys
                 hot[nout] = np.full(self.vlen, TSYS+self.thot)
                 cold[nout] = TSYS * self.cold.ydataA * oneoverhot
                 ref[nout] = TSYS * self.ref.ydataA * oneoverhot
+                if self.units == radioastronomy.UNITBASELINE: # if subtracting a baseline
+                    # select the channels at the edges
+                    self.yfit = outs[self.xfit]
+                    thefit = np.polyfit( self.xfit, self.yfit, 1)
+                    # first try, just subtract offset
+                    outs = outs - thefit[1]
+                    self.yfit = aves[self.xfit]
+                    thefit = np.polyfit( self.xfit, self.yfit, 1)
+                    # first try, just subtract offset
+                    aves = aves - thefit[1]
+                out[nout] = outs
+                ave[nout] = aves
 
             # completed calibration, update count of output vectors
             nout = nout + 1
