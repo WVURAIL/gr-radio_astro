@@ -155,9 +155,10 @@ class ra_integrate(gr.sync_block):
         self.printutc = now
         self.printinterval = 5.  # print averages every few seconds
         n32 = int(self.vlen/32)
-        xa = np.arange(n32)+n32
-        xb = np.arange(n32)+(n32*30)        
+        xa = np.arange(n32)+(2*n32)
+        xb = np.arange(n32)+(n32*29)        
         self.xfit = np.concatenate((xa,xb))
+        self.xindex = np.arange(self.vlen)
         self.yfit = self.obs.ydataA[self.xfit]
         self.allchan  = np.array(range(self.vlen))
         print 'Setup File       : ', self.noteName
@@ -599,11 +600,11 @@ class ra_integrate(gr.sync_block):
                     self.yfit = outs[self.xfit]
                     thefit = np.polyfit( self.xfit, self.yfit, 1)
                     # first try, just subtract offset
-                    outs = outs - thefit[1]
+                    outs = outs - ((self.xindex*thefit[0]) + thefit[1])
                     self.yfit = aves[self.xfit]
                     thefit = np.polyfit( self.xfit, self.yfit, 1)
                     # first try, just subtract offset
-                    aves = aves - thefit[1]
+                    aves = aves - ((self.xindex*thefit[0]) + thefit[1])
                 out[nout] = outs
                 ave[nout] = aves
 
