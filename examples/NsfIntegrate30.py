@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: RTL SDR Dongle
-# Generated: Mon Apr  8 14:02:36 2019
+# Generated: Tue Apr 30 16:16:03 2019
 ##################################################
 
 if __name__ == '__main__':
@@ -78,7 +78,7 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'Bandwidth')
-        except: Bandwidths = 2.e6
+        except: Bandwidths = 3.e6
         self.Bandwidths = Bandwidths
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(ConfigFile)
@@ -135,11 +135,11 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         try: Azimuth_save = self._Azimuth_save_config.getfloat('main', 'azimuth')
         except: Azimuth_save = 90.
         self.Azimuth_save = Azimuth_save
-        self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)"]
-        self.ymins = ymins = [ 0.01,  -20,  90.]
-        self.ymaxs = ymaxs = [1., 10., 180.]
+        self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)", "Intensity (K)"]
+        self.ymins = ymins = [ 0.01,  -22,  90., -5.]
+        self.ymaxs = ymaxs = [3., 10., 180., 50.]
         self.xsteps = xsteps = [Bandwidth*1.E-6/fftsize, -Bandwidth*3.E5/(H1*fftsize), 1]
-        self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]
+        self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0 , -5.]
         self._xaxis_save_0_config = ConfigParser.ConfigParser()
         self._xaxis_save_0_config.read(ConfigFile)
         try: xaxis_save_0 = self._xaxis_save_0_config.getint('main', 'Xaxis')
@@ -161,8 +161,8 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self._units_options = (0, 1, 2, )
-        self._units_labels = ('Counts', 'dB', 'Kelvins', )
+        self._units_options = (0, 1, 2, 3, )
+        self._units_labels = ('Counts', 'dB', 'Kelvins', 'Kelvins-Fit', )
         self._units_tool_bar = Qt.QToolBar(self)
         self._units_tool_bar.addWidget(Qt.QLabel('Units'+": "))
         self._units_combo_box = Qt.QComboBox()
@@ -340,12 +340,11 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         (self.rtlsdr_source_0).set_processor_affinity([3])
         self.radio_astro_ra_vmedian_0_1_0 = radio_astro.ra_vmedian(fftsize, 4)
         self.radio_astro_ra_vmedian_0_1 = radio_astro.ra_vmedian(fftsize, 4)
-        self.radio_astro_ra_vmedian_0_0_0 = radio_astro.ra_vmedian(fftsize, 4)
         self.radio_astro_ra_vmedian_0_0 = radio_astro.ra_vmedian(fftsize, 4)
         self.radio_astro_ra_vmedian_0 = radio_astro.ra_vmedian(fftsize, 4)
-        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observers_save, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, int(4**5), units, 295., 10.)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record,
-            obstype, 4**5, nAve, telescope_save, device_save, 14, 11, 11)
+        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observers_save, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, int(4**4), units, 295., 10.)
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record,
+            obstype, 4**4, nAve, telescope_save, device_save, Gain1, 11, 11)
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             xmins[Xaxis],
@@ -518,8 +517,7 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
         self.connect((self.radio_astro_ra_vmedian_0, 0), (self.radio_astro_ra_vmedian_0_0, 0))
         self.connect((self.radio_astro_ra_vmedian_0_0, 0), (self.radio_astro_ra_vmedian_0_1, 0))
-        self.connect((self.radio_astro_ra_vmedian_0_0_0, 0), (self.radio_astro_ra_vmedian_0_1_0, 0))
-        self.connect((self.radio_astro_ra_vmedian_0_1, 0), (self.radio_astro_ra_vmedian_0_0_0, 0))
+        self.connect((self.radio_astro_ra_vmedian_0_1, 0), (self.radio_astro_ra_vmedian_0_1_0, 0))
         self.connect((self.radio_astro_ra_vmedian_0_1_0, 0), (self.radio_astro_ra_ascii_sink_0, 0))
         self.connect((self.radio_astro_ra_vmedian_0_1_0, 0), (self.radio_astro_ra_integrate_1, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
@@ -562,18 +560,6 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         	self._device_save_config.add_section('main')
         self._device_save_config.set('main', 'device', str(self.Device))
         self._device_save_config.write(open(self.ConfigFile, 'w'))
-        self._Frequencys_config = ConfigParser.ConfigParser()
-        self._Frequencys_config.read(self.ConfigFile)
-        if not self._Frequencys_config.has_section('main'):
-        	self._Frequencys_config.add_section('main')
-        self._Frequencys_config.set('main', 'Frequency', str(self.Frequency))
-        self._Frequencys_config.write(open(self.ConfigFile, 'w'))
-        self._Bandwidths_config = ConfigParser.ConfigParser()
-        self._Bandwidths_config.read(self.ConfigFile)
-        if not self._Bandwidths_config.has_section('main'):
-        	self._Bandwidths_config.add_section('main')
-        self._Bandwidths_config.set('main', 'Bandwidth', str(self.Bandwidth))
-        self._Bandwidths_config.write(open(self.ConfigFile, 'w'))
         self._xaxis_save_0_config = ConfigParser.ConfigParser()
         self._xaxis_save_0_config.read(self.ConfigFile)
         if not self._xaxis_save_0_config.has_section('main'):
@@ -610,12 +596,24 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         	self._Gain1s_config.add_section('main')
         self._Gain1s_config.set('main', 'gain1', str(self.Gain1))
         self._Gain1s_config.write(open(self.ConfigFile, 'w'))
+        self._Frequencys_config = ConfigParser.ConfigParser()
+        self._Frequencys_config.read(self.ConfigFile)
+        if not self._Frequencys_config.has_section('main'):
+        	self._Frequencys_config.add_section('main')
+        self._Frequencys_config.set('main', 'Frequency', str(self.Frequency))
+        self._Frequencys_config.write(open(self.ConfigFile, 'w'))
         self._Elevation_save_config = ConfigParser.ConfigParser()
         self._Elevation_save_config.read(self.ConfigFile)
         if not self._Elevation_save_config.has_section('main'):
         	self._Elevation_save_config.add_section('main')
         self._Elevation_save_config.set('main', 'elevation', str(self.Elevation))
         self._Elevation_save_config.write(open(self.ConfigFile, 'w'))
+        self._Bandwidths_config = ConfigParser.ConfigParser()
+        self._Bandwidths_config.read(self.ConfigFile)
+        if not self._Bandwidths_config.has_section('main'):
+        	self._Bandwidths_config.add_section('main')
+        self._Bandwidths_config.set('main', 'Bandwidth', str(self.Bandwidth))
+        self._Bandwidths_config.write(open(self.ConfigFile, 'w'))
         self._Azimuth_save_config = ConfigParser.ConfigParser()
         self._Azimuth_save_config.read(self.ConfigFile)
         if not self._Azimuth_save_config.has_section('main'):
@@ -629,8 +627,6 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
     def set_Frequencys(self, Frequencys):
         self.Frequencys = Frequencys
         self.set_Frequency(self.Frequencys)
-        self.radio_astro_ra_integrate_1.set_frequency( self.Frequencys)
-        self.radio_astro_ra_ascii_sink_0.set_frequency( self.Frequencys)
 
     def get_Bandwidths(self):
         return self.Bandwidths
@@ -638,8 +634,6 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
     def set_Bandwidths(self, Bandwidths):
         self.Bandwidths = Bandwidths
         self.set_Bandwidth(self.Bandwidths)
-        self.radio_astro_ra_integrate_1.set_bandwidth( self.Bandwidths)
-        self.radio_astro_ra_ascii_sink_0.set_bandwidth( self.Bandwidths)
 
     def get_fftsize_save(self):
         return self.fftsize_save
@@ -653,15 +647,17 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
 
     def set_Frequency(self, Frequency):
         self.Frequency = Frequency
+        Qt.QMetaObject.invokeMethod(self._Frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Frequency)))
+        self.rtlsdr_source_0.set_center_freq(self.Frequency, 0)
+        self.radio_astro_ra_integrate_1.set_frequency( self.Frequency)
+        self.radio_astro_ra_ascii_sink_0.set_frequency( self.Frequency)
+        self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(self.ConfigFile)
         if not self._Frequencys_config.has_section('main'):
         	self._Frequencys_config.add_section('main')
         self._Frequencys_config.set('main', 'Frequency', str(self.Frequency))
         self._Frequencys_config.write(open(self.ConfigFile, 'w'))
-        Qt.QMetaObject.invokeMethod(self._Frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Frequency)))
-        self.rtlsdr_source_0.set_center_freq(self.Frequency, 0)
-        self.set_numin((self.Frequency - (self.Bandwidth/2.)))
 
     def get_Bandwidth(self):
         return self.Bandwidth
@@ -669,16 +665,18 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
     def set_Bandwidth(self, Bandwidth):
         self.Bandwidth = Bandwidth
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
+        Qt.QMetaObject.invokeMethod(self._Bandwidth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Bandwidth)))
+        self.rtlsdr_source_0.set_sample_rate(self.Bandwidth)
+        self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
+        self.radio_astro_ra_integrate_1.set_bandwidth( self.Bandwidth)
+        self.radio_astro_ra_ascii_sink_0.set_bandwidth( self.Bandwidth)
+        self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(self.ConfigFile)
         if not self._Bandwidths_config.has_section('main'):
         	self._Bandwidths_config.add_section('main')
         self._Bandwidths_config.set('main', 'Bandwidth', str(self.Bandwidth))
         self._Bandwidths_config.write(open(self.ConfigFile, 'w'))
-        Qt.QMetaObject.invokeMethod(self._Bandwidth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Bandwidth)))
-        self.rtlsdr_source_0.set_sample_rate(self.Bandwidth)
-        self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
-        self.set_numin((self.Frequency - (self.Bandwidth/2.)))
 
     def get_xaxis_save(self):
         return self.xaxis_save
@@ -708,7 +706,7 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
 
     def set_numin(self, numin):
         self.numin = numin
-        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 ])
+        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 , -5.])
 
     def get_nAves(self):
         return self.nAves
@@ -752,7 +750,7 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
     def set_H1(self, H1):
         self.H1 = H1
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
-        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 ])
+        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 , -5.])
 
     def get_Gain1s(self):
         return self.Gain1s
@@ -926,6 +924,7 @@ class NsfIntegrate30(gr.top_block, Qt.QWidget):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
         self.rtlsdr_source_0.set_gain(self.Gain1, 0)
+        self.radio_astro_ra_ascii_sink_0.set_gain1( self.Gain1)
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):

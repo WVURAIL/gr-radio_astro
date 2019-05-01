@@ -54,9 +54,9 @@ intlabels = ['WAIT', 'RECORD', 'SAVE']
 UNITCOUNTS = 0
 UNITDB = 1
 UNITKELVIN = 2
-UNITJANSKY = 3
+UNITBASELINE = 3  # kelvin units with baseline subtracted
 NUNITTYPES = 4
-units = [UNITCOUNTS, UNITDB, UNITKELVIN, UNITJANSKY]
+units = [UNITCOUNTS, UNITDB, UNITKELVIN, UNITBASELINE]
 unitlabels = ['Counts', 'Power (dB)', 'Kelvin', 'Jansky']
 clight = 299792458. # speed of light in m/sec
 #
