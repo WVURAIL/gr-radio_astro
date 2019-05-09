@@ -80,7 +80,8 @@ class ra_event_sink(gr.sync_block):
         self.setupdir = "./"
         # read all generic setup info in the note file
         self.set_setup( noteName, doSave = True)
-        # now transfere items directly setup in event sink
+        # report newly discovered tags once
+        self.lasttag = ""
 
     def forecast(self, noutput_items, ninput_items): #forcast is a no op
         """
@@ -299,8 +300,9 @@ class ra_event_sink(gr.sync_block):
                 elif key == 'RMS':
                     self.erms = value
 #                    print 'Tag RMs : %7.4f' % (self.erms)
-                else:
-                    print 'Unknown Tag: ', value
+                elif key != self.lasttag:
+                    print 'Unknown Tag: ', key, value
+                    self.lasttag = key
         nout = 0
         for i in range(nv):
             # get the length of one input
