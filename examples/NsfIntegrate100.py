@@ -4,8 +4,8 @@
 # GNU Radio Python Flow Graph
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
-# Description: AIRSPY-mini Dongle
-# Generated: Thu May  9 10:29:37 2019
+# Description: Astronomy with AIRSPY Dongle
+# Generated: Thu May  9 10:51:20 2019
 ##################################################
 
 from distutils.version import StrictVersion
@@ -41,7 +41,7 @@ import time
 from gnuradio import qtgui
 
 
-class NsfIntegrate60(gr.top_block, Qt.QWidget):
+class NsfIntegrate100(gr.top_block, Qt.QWidget):
 
     def __init__(self):
         gr.top_block.__init__(self, "NsfIntegrate: Average+Record Astronomical Obs.")
@@ -64,7 +64,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate60")
+        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate100")
 
         if StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
             self.restoreGeometry(self.settings.value("geometry").toByteArray())
@@ -74,7 +74,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.ObsName = ObsName = "Integrate60"
+        self.ObsName = ObsName = "Integrate100"
         self.ConfigFile = ConfigFile = ObsName+".conf"
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(ConfigFile)
@@ -84,7 +84,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'Bandwidth')
-        except: Bandwidths = 6.e6
+        except: Bandwidths = 10.e6
         self.Bandwidths = Bandwidths
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(ConfigFile)
@@ -129,7 +129,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(ConfigFile)
         try: Gain1s = self._Gain1s_config.getfloat('main', 'gain1')
-        except: Gain1s = 14
+        except: Gain1s = 49.
         self.Gain1s = Gain1s
         self._Elevation_save_config = ConfigParser.ConfigParser()
         self._Elevation_save_config.read(ConfigFile)
@@ -141,9 +141,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         try: Azimuth_save = self._Azimuth_save_config.getfloat('main', 'azimuth')
         except: Azimuth_save = 90.
         self.Azimuth_save = Azimuth_save
-        self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)"]
-        self.ymins = ymins = [ 0.01,  -20,  90.]
-        self.ymaxs = ymaxs = [1., 10., 180.]
+        self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)", "Intensity (K)"]
+        self.ymins = ymins = [ 0.01,  -20,  90.,-5.]
+        self.ymaxs = ymaxs = [1., 10., 180., 80.]
         self.xsteps = xsteps = [Bandwidth*1.E-6/fftsize, -Bandwidth*3.E5/(H1*fftsize), 1]
         self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]
         self._xaxis_save_0_config = ConfigParser.ConfigParser()
@@ -159,7 +159,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.VelFrame = VelFrame = frame_save
         self.Telescope = Telescope = telescope_save
         self.Record = Record = 0
-        self.Gain2 = Gain2 = 12
+        self.Gain2 = Gain2 = 12.
         self.Gain1 = Gain1 = Gain1s
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
@@ -168,8 +168,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self._units_options = (0, 1, 2, )
-        self._units_labels = ('Counts', 'dB', 'Kelvins', )
+        self._units_options = (0, 1, 2, 3, )
+        self._units_labels = ('Counts', 'dB', 'Kelvins', 'K - Fit', )
         self._units_tool_bar = Qt.QToolBar(self)
         self._units_tool_bar.addWidget(Qt.QLabel('Units'+": "))
         self._units_combo_box = Qt.QComboBox()
@@ -234,9 +234,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._Xaxis_callback(self.Xaxis)
         self._Xaxis_combo_box.currentIndexChanged.connect(
         	lambda i: self.set_Xaxis(self._Xaxis_options[i]))
-        self.top_grid_layout.addWidget(self._Xaxis_tool_bar, 9, 3, 1, 3)
-        [self.top_grid_layout.setRowStretch(r,1) for r in range(9,10)]
-        [self.top_grid_layout.setColumnStretch(c,1) for c in range(3,6)]
+        self.top_grid_layout.addWidget(self._Xaxis_tool_bar, 8, 5, 1, 3)
+        [self.top_grid_layout.setRowStretch(r,1) for r in range(8,9)]
+        [self.top_grid_layout.setColumnStretch(c,1) for c in range(5,8)]
         self._Record_options = (0, 1, 2, )
         self._Record_labels = ('! ! Wait ! !', 'AVERAGE', 'Save', )
         self._Record_tool_bar = Qt.QToolBar(self)
@@ -346,7 +346,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
         labels = ['Latest', 'Median', 'Hot', 'Cold', 'Ref',
                   '', '', '', '', '']
-        widths = [1, 2, 1, 1, 2,
+        widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
         colors = ["black", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
@@ -395,9 +395,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
         self.qtgui_number_sink_0.enable_autoscale(False)
         self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 9, 6, 1, 2)
-        [self.top_grid_layout.setRowStretch(r,1) for r in range(9,10)]
-        [self.top_grid_layout.setColumnStretch(c,1) for c in range(6,8)]
+        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 8, 8, 1, 2)
+        [self.top_grid_layout.setRowStretch(r,1) for r in range(8,9)]
+        [self.top_grid_layout.setColumnStretch(c,1) for c in range(8,10)]
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
         	fftsize,
         	100,
@@ -440,9 +440,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.qtgui_histogram_sink_x_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_histogram_sink_x_0_win = sip.wrapinstance(self.qtgui_histogram_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_histogram_sink_x_0_win, 4, 0, 2, 1)
+        self.top_grid_layout.addWidget(self._qtgui_histogram_sink_x_0_win, 4, 0, 2, 2)
         [self.top_grid_layout.setRowStretch(r,1) for r in range(4,6)]
-        [self.top_grid_layout.setColumnStretch(c,1) for c in range(0,1)]
+        [self.top_grid_layout.setColumnStretch(c,1) for c in range(0,2)]
         self.fft_vxx_0 = fft.fft_vcc(fftsize, True, (window.hamming(fftsize)), True, 1)
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
@@ -495,7 +495,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate60")
+        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate100")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -957,7 +957,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._Azimuth_save_config.write(open(self.ConfigFile, 'w'))
 
 
-def main(top_block_cls=NsfIntegrate60, options=None):
+def main(top_block_cls=NsfIntegrate100, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')

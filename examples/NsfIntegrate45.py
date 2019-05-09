@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: PlutoSDR Dongle
-# Generated: Thu May  9 09:45:48 2019
+# Generated: Thu May  9 10:48:34 2019
 ##################################################
 
 from distutils.version import StrictVersion
@@ -140,9 +140,9 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
         try: Azimuth_save = self._Azimuth_save_config.getfloat('main', 'azimuth')
         except: Azimuth_save = 90.
         self.Azimuth_save = Azimuth_save
-        self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)"]
-        self.ymins = ymins = [ 0.01,  -20,  90.]
-        self.ymaxs = ymaxs = [1., 10., 180.]
+        self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)", "Intensity(K)"]
+        self.ymins = ymins = [ 0.01,  -20,  90.,-.5]
+        self.ymaxs = ymaxs = [1., 10., 180., 80.]
         self.xsteps = xsteps = [Bandwidth*1.E-6/fftsize, -Bandwidth*3.E5/(H1*fftsize), 1]
         self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]
         self._xaxis_save_0_config = ConfigParser.ConfigParser()
@@ -322,7 +322,7 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
 
         labels = ['Latest', 'Median', 'Hot', 'Cold', 'Ref',
                   '', '', '', '', '']
-        widths = [1, 2, 1, 1, 2,
+        widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
         colors = ["black", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
