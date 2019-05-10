@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+19MAY10 GIL slight code cleanup
 19MAR28 GIL clean up creation of time series versus channel series
 19MAR25 GIL remove duplicate __init__
 19FEB21 GIL copy data without interpreting
@@ -55,6 +56,7 @@ UNITCOUNTS = 0
 UNITDB = 1
 UNITKELVIN = 2
 UNITBASELINE = 3  # kelvin units with baseline subtracted
+UNITJANSKY = 3    # Baslne used to be Janskys; keep from braking old code
 NUNITTYPES = 4
 units = [UNITCOUNTS, UNITDB, UNITKELVIN, UNITBASELINE]
 unitlabels = ['Counts', 'Power (dB)', 'Kelvin', 'Jansky']
