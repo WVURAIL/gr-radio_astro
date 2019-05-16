@@ -2,6 +2,11 @@
 
 ##
 
+See additional documentation here:
+https://github.com/WVURAIL/gr-radio_astro/docs
+
+##
+
 Modules and blocks here to help create a grc flowchart for use in radio astronomy.  
 
 ## Installation
