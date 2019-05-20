@@ -69,6 +69,7 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     #http://gcc.gnu.org/wiki/Visibility
     add_definitions(-fvisibility=hidden)
+    set(CMAKE_CXX_STANDARD 11)
 endif()
 
 ########################################################################
