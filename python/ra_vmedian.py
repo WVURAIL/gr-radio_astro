@@ -20,6 +20,8 @@ Radio Astronomy Vector Median
 # along with this software; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
+# HISTORY
+# 19JUN20 GIL try to optimize 
 #
 
 import numpy
@@ -71,9 +73,6 @@ class ra_vmedian(gr.decim_block):
         li = len(ini)          # length of first input vector
         ncp = min(li, self.vlen) # get length to copy
 
-        noutports = len(output_items)
-        if noutports != 1:
-            print '!!!!!!! Unexpected number of output ports: ', noutports
         out = output_items[0]  # all vectors in PORT 0
 
         iout = 0 # count the number of output vectors
@@ -87,20 +86,18 @@ class ra_vmedian(gr.decim_block):
                 self.vsum[0:ncp] = ini[0:ncp]
                 self.vmin[0:ncp] = ini[0:ncp]
                 self.vmax[0:ncp] = ini[0:ncp]
+                self.count = 1
             else:
                 self.vsum[0:ncp] = self.vsum[0:ncp] + ini[0:ncp]
-#                self.vmin = numpy.fmin(self.vmin, ini)
-#                self.vmax = numpy.fmax(self.vmax, ini)
                 self.vmin = numpy.minimum(self.vmin, ini)
                 self.vmax = numpy.maximum(self.vmax, ini)
-            self.count = self.count + 1
+                self.count = self.count + 1
 
             # if time to mornalize sum and output
             if self.count >= self.vdecimate:
                 # normalize output average removing min and max
                 self.vsum = self.vsum - (self.vmin + self.vmax)
                 self.vsum = self.oneovern * self.vsum
-#                outi = out[iout]  # get pointer to ith output
                 outi = self.vsum  # copy vector to output
                 out[iout] = outi  # put a vector in list
                 iout = iout+1     # move to next item in list
@@ -108,7 +105,7 @@ class ra_vmedian(gr.decim_block):
                 self.count = 0
         # end for all input vectors
         output_items[0] = out  # put all vectors in output port 0
-        return len(output_items[0])
+        return iout
     # end vmedian()
 
     def set_decimate(self, decimate):
