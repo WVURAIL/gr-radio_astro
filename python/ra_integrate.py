@@ -19,6 +19,9 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 19JUN21 GIL more code cleanup
+# 19JUN20 GIL subtract baseline from ref.   Integrate ref for 5 seconds
+# 19JUN19 GIL subtract baseline from ref.   Integrate ref for 30 seconds
 # 19APR29 GIL allow baseline subtracted Tsys
 # 19APR08 GIL enforce writing spectra
 # 18AUG17 GIL allow note file to have any extension on input
@@ -33,7 +36,7 @@ import sys
 import datetime
 import numpy as np
 from gnuradio import gr
-
+import copy
 import radioastronomy
 
 # this block has 5 output spectra:
@@ -112,11 +115,16 @@ class ra_integrate(gr.sync_block):
         self.obs.read_spec_ast(self.noteName)    # read the parameters
         self.obs.nspec = 1                       # make sure we're working with spectra
         self.obs.ntime = 0                       # not events
-        self.obs.nchan = self.vlen
-        self.obs.refchan = self.vlen/2.
         self.obs.xdata = np.zeros(self.vlen)
         self.obs.ydataA = np.zeros(self.vlen)
         self.obs.ydataB = np.zeros(self.vlen)
+        self.shortave = np.zeros(self.vlen)
+        self.shortlast = np.zeros(self.vlen)
+        self.nshort=0
+        self.maxshort=30                         # count before restart sum
+        self.oneovermax = float(1./self.maxshort)# normalization factor
+        self.obs.nchan = self.vlen
+        self.obs.refchan = self.vlen/2.
         self.obs.observer = observers
         self.ave = radioastronomy.Spectrum()
         self.ave.read_spec_ast(self.noteName)    # read the parameters
@@ -154,12 +162,12 @@ class ra_integrate(gr.sync_block):
         self.obs.utc = now
         self.printutc = now
         self.printinterval = 5.  # print averages every few seconds
-        n32 = int(self.vlen/32)
-        xa = np.arange(n32)+(2*n32)
-        xb = np.arange(n32)+(n32*29)        
-        self.xfit = np.concatenate((xa,xb))
-        self.xindex = np.arange(self.vlen)
-        self.yfit = self.obs.ydataA[self.xfit]
+        n32 = int(self.vlen/32)  # make an array of indices for baseline fitting
+        xa = np.arange(n32)+(3*n32)
+        xb = np.arange(n32)+(n32*28)        
+        self.xfit = np.concatenate((xa,xb))      # indicies for fit 
+        self.xindex = np.arange(self.vlen)       # array of integers
+        self.yfit = self.obs.ydataA[self.xfit]   # sub-array of fittable data
         self.allchan  = np.array(range(self.vlen))
         print 'Setup File       : ', self.noteName
         self.obs.read_spec_ast(self.noteName)    # read the parameters
@@ -195,6 +203,18 @@ class ra_integrate(gr.sync_block):
         spectrum.ydataB = np.zeros(self.vlen)
         spectrum.xdata = np.zeros(self.vlen)
         spectrum.nChan = self.vlen
+        n32 = int(self.vlen/32)  # make an array of indices for baseline fitting
+        xa = np.arange(n32)+(3*n32)
+        xb = np.arange(n32)+(n32*28)        
+        self.xfit = np.concatenate((xa,xb))      # indicies for fit 
+        self.xindex = np.arange(self.vlen)       # array of integers
+        self.yfit = self.obs.ydataA[self.xfit]   # sub-array of fittable data
+        self.allchan  = np.array(range(self.vlen))
+        self.shortave = np.zeros(self.vlen)
+        self.shortlast = np.zeros(self.vlen)
+        self.nshort=0
+        self.obs.nchan = self.vlen
+        self.obs.refchan = self.vlen/2.
 
     def forecast(self, noutput_items, ninput_items): #forcast is a no-op
         """
@@ -479,10 +499,6 @@ class ra_integrate(gr.sync_block):
             self.set_bandwidth(self.obs.bandwidthHz)
             return 1
 
-        noutports = len(output_items)
-        if noutports != NSPEC:
-            print '!!!!!!! Unexpected number of output ports: ', noutports
-
         # define output vectors
         out = output_items[0]
         ave = output_items[1]
@@ -491,10 +507,6 @@ class ra_integrate(gr.sync_block):
         ref = output_items[4]
 
         nout = 0
-        li2 = 2
-        li20 = int(li/20)
-        li1920 = 19*li20
-        linm2 = li - li2
         for i in range(nv):
             now = datetime.datetime.utcnow()
             # get the length of one input
@@ -533,18 +545,21 @@ class ra_integrate(gr.sync_block):
                     self.hot.count = self.ave.count
                     self.hot.utc = self.ave.utc
                     self.hot.durationsec = self.ave.durationsec
+                    self.hot.ydataA[0:1] = self.hot.ydataA[2]
                 elif self.obstype == radioastronomy.OBSCOLD:
                     self.cold.ydataA = np.maximum(self.ave.ydataA[0:self.vlen], self.epsilons[0:self.vlen])
                     self.cold.nave = self.nintegrate
                     self.cold.count = self.ave.count
                     self.cold.utc = self.ave.utc
                     self.cold.durationsec = self.ave.durationsec
+                    self.cold.ydataA[0:1] = self.cold.ydataA[2]
                 elif self.obstype == radioastronomy.OBSREF:
                     self.ref.ydataA = np.maximum(self.ave.ydataA[0:self.vlen], self.epsilons[0:self.vlen])
                     self.ref.nave = self.nintegrate
                     self.ref.count = self.ave.count
                     self.ref.utc = self.ave.utc
                     self.ref.durationsec = self.ave.durationsec
+                    self.ref.ydataA[0:1] = self.ref.ydataA[2]
                 # if writing files, reduce write rate
                 if (self.inttype == radioastronomy.INTSAVE) and (self.nintegrate % 20 == 1):
                     if self.obstype == radioastronomy.OBSHOT:
@@ -553,17 +568,12 @@ class ra_integrate(gr.sync_block):
                         self.cold.write_ascii_file("./", COLDFILE)
                     elif self.obstype == radioastronomy.OBSREF:
                         self.ref.write_ascii_file("./", REFFILE)
-#                    else:
-#                        self.ave.write_ascii_file( "./", AVEFILE)
             # after flip, the first couple channels are anomoulusly large
             spec[0:1] = spec[2]
             self.ave.ydataA[0:1] = self.ave.ydataA[2]
-            self.hot.ydataA[0:1] = self.hot.ydataA[2]
-            self.cold.ydataA[0:1] = self.cold.ydataA[2]
-            self.ref.ydataA[0:1] = self.ref.ydataA[2]
             self.ave.nave = self.nintegrate
             # since the data rate should be low, nout will usually be 0
-            # now have all spectra, decide plot format
+            # have all spectra, decide plot format
             if self.units == radioastronomy.UNITCOUNTS:
                 out[nout] = spec
                 ave[nout] = self.ave.ydataA
@@ -578,55 +588,85 @@ class ra_integrate(gr.sync_block):
                 hot[nout] = 10. * np.log10(self.hot.ydataA)
                 cold[nout] = 10. * np.log10(self.cold.ydataA)
                 ref[nout] = 10. * np.log10(self.ref.ydataA)
-            else:
+            else:           # else need Kelvins
                 hv = self.hot.ydataA[0:self.vlen] 
                 hv = np.maximum(hv, self.epsilons[0:self.vlen])
                 cv = self.cold.ydataA[0:self.vlen]
                 cv = np.maximum(cv, self.epsilons[0:self.vlen])
                 yv = self.ave.ydataA[0:self.vlen]
                 yv = np.maximum(yv, self.epsilons[0:self.vlen])
+                # compute Kelvings per count factor
                 tsys, trx = self.compute_thotcold(yv, hv, cv, self.thot, self.tcold)
                 TSYS = trx + self.thot
                 # now compute center scalar value
                 oneoverhot = np.full(self.vlen, 1.)
                 oneoverhot = oneoverhot / hv
+                # compute short term Tsys value
                 outs = TSYS * spec * oneoverhot
                 aves = tsys
                 hot[nout] = np.full(self.vlen, TSYS+self.thot)
+                colds = TSYS * self.cold.ydataA * oneoverhot
                 cold[nout] = TSYS * self.cold.ydataA * oneoverhot
-                ref[nout] = TSYS * self.ref.ydataA * oneoverhot
+                refs = TSYS * self.ref.ydataA * oneoverhot
                 if self.units == radioastronomy.UNITBASELINE: # if subtracting a baseline
                     # select the channels at the edges
                     self.yfit = outs[self.xfit]
                     thefit = np.polyfit( self.xfit, self.yfit, 1)
-                    # first try, just subtract offset
                     outs = outs - ((self.xindex*thefit[0]) + thefit[1])
+                    # now subtract fit from average
                     self.yfit = aves[self.xfit]
                     thefit = np.polyfit( self.xfit, self.yfit, 1)
-                    # first try, just subtract offset
                     aves = aves - ((self.xindex*thefit[0]) + thefit[1])
+                    # now subtract fit from cold
+                    self.yfit = colds[self.xfit]
+                    thefit = np.polyfit( self.xfit, self.yfit, 1)
+                    colds = colds - ((self.xindex*thefit[0]) + thefit[1])
+                    # if subtracting fit, change reference role to
+                    # short duration average; must recalculate
+                    if self.nshort <= 0:
+                        self.shortave = spec
+                        self.nshort = 1
+                    else:
+                        self.shortave = self.shortave + spec
+                        self.nshort = self.nshort + 1
+                    if self.nshort >= self.maxshort:
+                        self.shortlast = self.oneovermax * self.shortave
+                        self.shortlast = TSYS * self.shortlast * oneoverhot
+                        self.yfit = self.shortlast[self.xfit]
+                        thefit = np.polyfit( self.xfit, self.yfit, 1)
+                        refs = self.shortlast - ((self.xindex*thefit[0]) + thefit[1])
+                        # will keep showing last short reference until next is ready
+                        self.shortlast = refs
+                        self.nshort = 0   # restart sum on next cycle
+                        print ""
+                        print "New Ref"
+                        print ""
+                    else:
+                        refs = self.shortlast
+                    # end if subtracting baseline
                 out[nout] = outs
                 ave[nout] = aves
-
+                ref[nout] = refs
+                cold[nout] = colds
             # completed calibration, update count of output vectors
             nout = nout + 1
 
-            # update length to copy
             self.stoputc = now
-            strnow = now.isoformat()
-            datestr = strnow.split('.')
-            daypart = datestr[0]
-            yymmdd = daypart[2:19]
-            avespec = ave[0]
-            avespec = avespec[n6:n56]
-            vmin = min(avespec)
-            vmax = max(avespec)
-            vmed = np.median(avespec)
-
-            label = radioastronomy.unitlabels[self.units]
             dt = now - self.printutc
+            # if time to print
             if dt.total_seconds() > self.printinterval:
 
+                strnow = now.isoformat()
+                datestr = strnow.split('.')
+                daypart = datestr[0]
+                yymmdd = daypart[2:19]
+                avespec = ave[0]
+                avespec = avespec[n6:n56]
+                vmin = min(avespec)
+                vmax = max(avespec)
+                vmed = np.median(avespec)
+
+                label = radioastronomy.unitlabels[self.units]
                 if self.units == 0:
                     print "%s Max %9.3f Min: %9.3f Median: %9.3f %s " % (yymmdd, vmax, vmin, vmed, label)
                 elif self.units == 1:
