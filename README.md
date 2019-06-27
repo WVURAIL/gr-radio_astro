@@ -2,8 +2,11 @@
 
 ##
 
+![Observer Interface](NooElecHotColdLoadTest105K.png)
+<a href="https://github.com/WVURAIL/gr-radio_astro/tree/master/docs"> <img src="https://raw.githubusercontent.com/WVURAIL/gr-radio_astro/master/docs/NooElecHotColdLoadTest105K.png" width=200
 See additional documentation here:
-https://github.com/WVURAIL/gr-radio_astro/docs
+                                                                        
+https://github.com/WVURAIL/gr-radio_astro/tree/master/docs
 
 ##
 
@@ -51,4 +54,4 @@ Blocks should now be available in gnuradio-companion.
 
 <a href="http://www.gb.nrao.edu/~glangsto/LightWorkMemo014r9.pdf"> <img src="https://raw.githubusercontent.com/glangsto/analyze/master/images/NathanielReginaHornObs.png" width=200 
 alt="Horn, Nathaniel and Regina" align="right"></a>
-For documentation on observing see:https://github.com/glangsto/analyze
+For documentation on observing and data reduction see: https://github.com/glangsto/analyze
