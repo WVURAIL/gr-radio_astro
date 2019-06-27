@@ -2,7 +2,8 @@
 
 ##  
 
-Modules and blocks here to help create a grc flowchart for use in radio astronomy.  
+Modules and blocks include here create a Gnuradio-Companion flowchart for use in radio astronomy.  
+
 This graph allows astronomical observations with home built radio telescopes.  
 With this software and your radio telescope you can find Spiral Arms of our Milky Way
 galaxy from your own back yard.
