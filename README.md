@@ -49,6 +49,6 @@ Blocks should now be available in gnuradio-companion.
  
  ``sudo pip install h5py``
 
-<a href="http://www.gb.nrao.edu/~glangsto/LightWorkMemo014r9.pdf"> <img src="http://www.github.com/glangsto/analyze/images/NathanielReginaHornObs.png" width=200 
+<a href="http://www.gb.nrao.edu/~glangsto/LightWorkMemo014r9.pdf"> <img src="http://www.github.com/glangsto/analyze/master/images/NathanielReginaHornObs.png" width=200 
 alt="Horn, Nathaniel and Regina" align="right"></a>
 For documentation on observing see:https://github.com/glangsto/analyze
