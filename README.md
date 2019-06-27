@@ -2,8 +2,8 @@
 
 ##
 
-<a href="https://github.com/WVURAIL/gr-radio_astro/tree/master/docs"> <img src="https://raw.githubusercontent.com/WVURAIL/gr-radio_astro/master/docs/NooElecHotColdLoadTest105K.png" width=200></a>
-See additional documentation here:
+<a href="https://github.com/WVURAIL/gr-radio_astro/tree/master/docs"> <img src="https://raw.githubusercontent.com/WVURAIL/gr-radio_astro/master/docs/NooElecHotColdLoadTest105K.png" alt="Observer Interface" align="right"width=200></a>
+Find additional documentation on the observer interface here:
                                                                         
 https://github.com/WVURAIL/gr-radio_astro/tree/master/docs
 
