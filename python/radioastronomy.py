@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+19JUN26 GIL fix error for smaller spectra introduced when adding events
 19MAY10 GIL slight code cleanup
 19MAR28 GIL clean up creation of time series versus channel series
 19MAR25 GIL remove duplicate __init__
@@ -279,7 +280,7 @@ class Spectrum(object):
             self.nTime = 0
             nData = max(self.nChan, 2)   # must have at least 2 channeles
             self.nChan = nData
-            self.refChan = self.nChan/2
+            self.refChan = 0
             self.refSample = 0
         else:
             self.nChan = 0
@@ -1049,9 +1050,15 @@ class Spectrum(object):
 
         # convert to an array of floats
         freq = np.array( freq)
-        chan = freq - self.centerFreqHz
-        chan = chan/dx
-        chan = chan + self.refChan
+        # compute frequency offset from reference
+        dfreq = freq - self.centerFreqHz
+        # comppute number of channels from middle
+        dchan = dfreq/dx
+        # must include reference channel in offset 
+        chan = dchan + self.refChan
+#        print "freq2chan: dx, ndata: ", dx, ndata
+#        print "freq2chan: nChan, refChan: ", self.nChan, self.refChan
+#        print "freq2chan: freq, dfreq, chan, dchan:", freq, dfreq, chan, dchan
         return chan
     #end of freq2chan
 
@@ -1060,11 +1067,14 @@ class Spectrum(object):
         Compute channels for an input (array of velocities in km/sec
         """
         
-        vel = np.array( vel) * 1000.  # convert to m/sec
-        freq = vel * nureference / clight
-        freq = nureference - freq 
+        velms = np.array( vel) * 1000.  # convert to m/sec
+        # compute doppler shift adujustment of frequency
+        dfreq = velms * nureference / clight
+        # negative velocity corresponds to higher frequency
+        freq = nureference - dfreq 
+        # now convert new frequency to channel
         chan = self.freq2chan( freq)
-
+#        print 'vel2chan freq: ',freq, chan
         return chan
     #end of vel2chan
 
