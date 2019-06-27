@@ -1,15 +1,18 @@
 # gr-radio_astro
 
-##
+##  
+
+Modules and blocks here to help create a grc flowchart for use in radio astronomy.  
+This graph allows astronomical observations with home built radio telescopes.  
+With this software and your radio telescope you can find Spiral Arms of our Milky Way
+galaxy from your own back yard.
 
 <a href="https://github.com/WVURAIL/gr-radio_astro/tree/master/docs"> <img src="https://raw.githubusercontent.com/WVURAIL/gr-radio_astro/master/docs/NooElecHotColdLoadTest105K.png" alt="Observer Interface" align="right" width=200></a>
 Find additional documentation on the observer interface here:
                                                                         
 https://github.com/WVURAIL/gr-radio_astro/tree/master/docs
 
-##
-
-Modules and blocks here to help create a grc flowchart for use in radio astronomy.  
+  
 
 ## Installation
 
