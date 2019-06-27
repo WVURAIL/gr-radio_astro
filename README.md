@@ -56,4 +56,5 @@ Blocks should now be available in gnuradio-companion.
 
 <a href="http://www.gb.nrao.edu/~glangsto/LightWorkMemo014r9.pdf"> <img src="https://raw.githubusercontent.com/glangsto/analyze/master/images/NathanielReginaHornObs.png" width=200 
 alt="Horn, Nathaniel and Regina" align="right"></a>
-For documentation on observing and data reduction see: https://github.com/glangsto/analyze
+For documentation on understanding the data you've takena and making a map of th e
+Milky Way see: https://github.com/glangsto/analyze
