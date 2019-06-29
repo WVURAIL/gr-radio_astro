@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+19JUN29 GIL diagnose errors in vel2chan
 19JUN26 GIL fix error for smaller spectra introduced when adding events
 19MAY10 GIL slight code cleanup
 19MAR28 GIL clean up creation of time series versus channel series
@@ -995,7 +996,7 @@ class Spectrum(object):
                 self.xdata[iii] = t
                 t += dt
 
-        if self.refChan == 0:
+        if self.refChan <= 1.:
             self.refChan = self.nChan/2
         return #end of read_spec_ascii
 
