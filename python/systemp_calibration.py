@@ -22,7 +22,15 @@
 import numpy as np
 from datetime import datetime
 import time
-import h5py
+try:
+    import h5py
+except:
+    print "Python package:"
+    print "   h5py"
+    print "Not found.  If needed, at the command line type:"
+    print "pip install h5py"
+    print ""
+    
 from gnuradio import gr
 
 class systemp_calibration(gr.sync_block):
