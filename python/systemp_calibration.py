@@ -71,7 +71,8 @@ class systemp_calibration(gr.sync_block):
         self.tsys = 50*np.ones(vec_length)
         self.thot = 300
         self.tcold = 10
-        self.frequencies = np.arange(freq - samp_rate/2, freq + samp_rate/2, samp_rate/vec_length)
+        self.frequencies = np.zeros(vec_length)
+        self.frequencies = np.arange(freq - samp_rate/2, freq + samp_rate/2, samp_rate/vec_length)[:vec_length]
         self.data_array = np.zeros((vec_length,2))
     
     def work(self, input_items, output_items):
