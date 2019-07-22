@@ -89,7 +89,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"nocal"</value>
+      <value>"nocal_nofilter"</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -97,7 +97,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(256, 748)</value>
+      <value>(432, 764)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -113,7 +113,7 @@
     </param>
     <param>
       <key>label0</key>
-      <value>"Spectrum with no calibration"</value>
+      <value>"Filtered spectrum with no calibration"</value>
     </param>
     <param>
       <key>label1</key>
@@ -129,7 +129,7 @@
     </param>
     <param>
       <key>label4</key>
-      <value></value>
+      <value>"Unfiltered spectrum with no calibration"</value>
     </param>
     <param>
       <key>label</key>
@@ -141,7 +141,7 @@
     </param>
     <param>
       <key>num_opts</key>
-      <value>4</value>
+      <value>5</value>
     </param>
     <param>
       <key>option0</key>
@@ -161,7 +161,7 @@
     </param>
     <param>
       <key>option4</key>
-      <value>4</value>
+      <value>"nocal_nofilter"</value>
     </param>
     <param>
       <key>options</key>
