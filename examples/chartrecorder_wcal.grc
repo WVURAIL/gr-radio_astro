@@ -395,132 +395,6 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(432, 12)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>integration</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>2</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_chooser</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(488, 548)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>integration_time</value>
-    </param>
-    <param>
-      <key>label0</key>
-      <value>1 sec</value>
-    </param>
-    <param>
-      <key>label1</key>
-      <value>2 sec</value>
-    </param>
-    <param>
-      <key>label2</key>
-      <value>5 sec</value>
-    </param>
-    <param>
-      <key>label3</key>
-      <value>10 sec</value>
-    </param>
-    <param>
-      <key>label4</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>integration_time</value>
-    </param>
-    <param>
-      <key>labels</key>
-      <value>[]</value>
-    </param>
-    <param>
-      <key>num_opts</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>option0</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>option1</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>option2</key>
-      <value>5</value>
-    </param>
-    <param>
-      <key>option3</key>
-      <value>10</value>
-    </param>
-    <param>
-      <key>option4</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>options</key>
-      <value>[0, 1, 2]</value>
-    </param>
-    <param>
-      <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>real</value>
-    </param>
-    <param>
-      <key>widget</key>
-      <value>combo_box</value>
-    </param>
-  </block>
-  <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
@@ -537,7 +411,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>.2</value>
+      <value>1</value>
     </param>
   </block>
   <block>
@@ -552,7 +426,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(888, 4)</value>
+      <value>(568, 1092)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -564,34 +438,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/john/DSPIRA_2019/Horn_Spectra_2019/"</value>
-    </param>
-  </block>
-  <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1072, 4)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>recfile</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>prefix + timenow + "_demo.h5"</value>
+      <value>"/home/dspradio/grc_data/"</value>
     </param>
   </block>
   <block>
@@ -619,105 +466,6 @@
     <param>
       <key>value</key>
       <value>10e6</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_chooser</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>"False"</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(248, 508)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value>1,4,1,1</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>save_to_file</value>
-    </param>
-    <param>
-      <key>label0</key>
-      <value>Write to File</value>
-    </param>
-    <param>
-      <key>label1</key>
-      <value>Not writing to file</value>
-    </param>
-    <param>
-      <key>label2</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label3</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label4</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Save To File</value>
-    </param>
-    <param>
-      <key>labels</key>
-      <value>[]</value>
-    </param>
-    <param>
-      <key>num_opts</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>option0</key>
-      <value>"True"</value>
-    </param>
-    <param>
-      <key>option1</key>
-      <value>"False"</value>
-    </param>
-    <param>
-      <key>option2</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>option3</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option4</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>options</key>
-      <value>[0, 1, 2]</value>
-    </param>
-    <param>
-      <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>string</value>
-    </param>
-    <param>
-      <key>widget</key>
-      <value>combo_box</value>
     </param>
   </block>
   <block>
@@ -2107,7 +1855,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1280, 1140)</value>
+      <value>(1280, 1156)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2136,65 +1884,6 @@
     <param>
       <key>vlen</key>
       <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>chart_recorder_chart_recorder</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1272, 980)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>chart_recorder_chart_recorder_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>chart_run</key>
-      <value>chart_run</value>
-    </param>
-    <param>
-      <key>integration_time</key>
-      <value>integration_time</value>
-    </param>
-    <param>
-      <key>prefix</key>
-      <value>prefix</value>
-    </param>
-    <param>
-      <key>save_to_file</key>
-      <value>save_to_file</value>
-    </param>
-    <param>
-      <key>scan_length</key>
-      <value>scan_length</value>
     </param>
   </block>
   <block>
@@ -2369,7 +2058,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(792, 1044)</value>
+      <value>(712, 1044)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -5299,7 +4988,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_hdf5_sink</key>
+    <key>radio_astro_chart_recorder</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -5314,55 +5003,47 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1304, 708)</value>
+      <value>(1264, 980)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>0</value>
+      <value>180</value>
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_hdf5_sink_0_0_0</value>
+      <value>radio_astro_chart_recorder_0</value>
     </param>
     <param>
-      <key>type</key>
-      <value>float</value>
+      <key>maxoutbuf</key>
+      <value>0</value>
     </param>
     <param>
-      <key>fname</key>
-      <value>recfile</value>
+      <key>minoutbuf</key>
+      <value>0</value>
     </param>
     <param>
-      <key>freq_start</key>
-      <value>freq - samp_rate/2</value>
+      <key>chart_run</key>
+      <value>chart_run</value>
     </param>
     <param>
-      <key>freq_step</key>
-      <value>samp_rate/vec_length</value>
+      <key>integration_time</key>
+      <value>integration_time</value>
     </param>
     <param>
-      <key>n_inputs</key>
-      <value>1</value>
+      <key>prefix</key>
+      <value>prefix</value>
     </param>
     <param>
-      <key>notes</key>
-      <value></value>
+      <key>save_to_file</key>
+      <value>save_to_file</value>
     </param>
     <param>
-      <key>pointing</key>
-      <value>A180E55</value>
-    </param>
-    <param>
-      <key>save_toggle</key>
-      <value>save_toggle</value>
-    </param>
-    <param>
-      <key>vec_length</key>
-      <value>vec_length</value>
+      <key>scan_length</key>
+      <value>scan_length</value>
     </param>
   </block>
   <block>
@@ -5466,7 +5147,7 @@
   </connection>
   <connection>
     <source_block_id>blocks_integrate_xx_0</source_block_id>
-    <sink_block_id>chart_recorder_chart_recorder_0</sink_block_id>
+    <sink_block_id>radio_astro_chart_recorder_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -5543,12 +5224,6 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>chart_recorder_chart_recorder_0</source_block_id>
-    <sink_block_id>blocks_vector_to_stream_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
     <source_block_id>fft_vxx_0</source_block_id>
     <sink_block_id>blocks_multiply_conjugate_cc_0</sink_block_id>
     <source_key>0</source_key>
@@ -5587,6 +5262,12 @@
   <connection>
     <source_block_id>osmosdr_source_0</source_block_id>
     <sink_block_id>blocks_stream_to_vector_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_chart_recorder_0</source_block_id>
+    <sink_block_id>blocks_vector_to_stream_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
