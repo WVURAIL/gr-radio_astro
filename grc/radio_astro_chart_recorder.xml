@@ -4,16 +4,45 @@
   <key>radio_astro_chart_recorder</key>
   <category>[radio_astro]</category>
   <import>import radio_astro</import>
-  <make>radio_astro.chart_recorder($vec_length)</make>
+  <make>radio_astro.chart_recorder($scan_length, $chart_run, $save_to_file, $prefix, $integration_time)</make>
+ 
+  <callback>save_file($save_to_file)</callback>
+  <callback>start_run($chart_run)</callback>
+
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
        * key (makes the value accessible as $keyname, e.g. in the make node)
        * type -->
+ 
   <param>
-    <name>vec_length</name>
-    <key>vec_length</key>
+    <name>scan_length</name>
+    <key>scan_length</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>chart_run</name>
+    <key>chart_run</key>
     <type>int</type>
+  </param>
+
+  <param>
+    <name>save_to_file</name>
+    <key>save_to_file</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>prefix</name>
+    <key>prefix</key>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>integration_time</name>
+    <key>integration_time</key>
+    <type>float</type>
   </param>
 
   <!-- Make one 'sink' node per input. Sub-nodes:
@@ -34,6 +63,6 @@
   <source>
     <name>out</name>
     <type>float</type>
-    <vlen>$vec_length</vlen>
+    <vlen>$scan_length</vlen>
   </source>
 </block>

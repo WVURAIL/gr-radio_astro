@@ -44,7 +44,8 @@ GR_PYTHON_INSTALL(
     ra_vmedian.py
     systemp_calibration.py
     ra_event_log.py
-    ra_event_sink.py DESTINATION ${GR_PYTHON_DIR}/radio_astro
+    ra_event_sink.py
+    chart_recorder.py DESTINATION ${GR_PYTHON_DIR}/radio_astro
 )
 
 ########################################################################
@@ -67,3 +68,4 @@ GR_ADD_TEST(qa_systemp_calibration ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_D
 GR_ADD_TEST(qa_detect ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_detect.py)
 GR_ADD_TEST(qa_ra_event_log ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_event_log.py)
 GR_ADD_TEST(qa_ra_event_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_event_sink.py)
+GR_ADD_TEST(qa_chart_recorder ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_chart_recorder.py)
