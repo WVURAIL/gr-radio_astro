@@ -366,7 +366,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/dspira/dspira_2018/horndata_2018/LNA_cal_data/"</value>
+      <value>"/home/john/DSPIRA_2019/Horn_Spectra_2019"</value>
     </param>
   </block>
   <block>
@@ -685,7 +685,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>200000</value>
+      <value>20000</value>
     </param>
     <param>
       <key>_enabled</key>

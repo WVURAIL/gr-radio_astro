@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/john/gr_repositories/gr-radio_astro/lib/qa_radio_astro.cc
+qa_radio_astro.h
+/home/john/gr_repositories/gr-radio_astro/lib/qa_radio_astro.h
+
+/home/john/gr_repositories/gr-radio_astro/lib/qa_radio_astro.h
+gnuradio/attributes.h
+-
+cppunit/TestSuite.h
+-
+
+/home/john/gr_repositories/gr-radio_astro/lib/test_radio_astro.cc
+config.h
+/home/john/gr_repositories/gr-radio_astro/lib/config.h
+cppunit/TextTestRunner.h
+-
+cppunit/XmlOutputter.h
+-
+gnuradio/unittests.h
+-
+qa_radio_astro.h
+/home/john/gr_repositories/gr-radio_astro/lib/qa_radio_astro.h
+iostream
+-
+fstream
+-
+

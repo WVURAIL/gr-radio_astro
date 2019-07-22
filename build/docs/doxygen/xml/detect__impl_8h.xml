@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="detect__impl_8h" kind="file" language="C++">
+    <compoundname>detect_impl.h</compoundname>
+    <includes refid="detect_8h" local="no">radio_astro/detect.h</includes>
+    <incdepgraph>
+      <node id="28">
+        <label>gnuradio/attributes.h</label>
+      </node>
+      <node id="26">
+        <label>radio_astro/detect.h</label>
+        <link refid="detect_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>detect_impl.h</label>
+        <link refid="detect__impl_8h"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>radio_astro/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>gnuradio/block.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="classgr_1_1radio__astro_1_1detect__impl" prot="public">gr::radio_astro::detect_impl</innerclass>
+    <innernamespace refid="namespacegr">gr</innernamespace>
+    <innernamespace refid="namespacegr_1_1radio__astro">gr::radio_astro</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="detect__impl_8h_1aa43107f3cb85397223bf6d40be480480" prot="public" static="no">
+        <name>TIME_UTC</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="27" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1a41c234a9b5961736ef38546445835d65" prot="public" static="no">
+        <name>MAX_VLEN</name>
+        <initializer>16384</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="30" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1a4b70916bdf28ed7afd94e4fb98230a90" prot="public" static="no">
+        <name>MAX_BUFF</name>
+        <initializer>(2L*MAX_VLEN)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="31" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1ab9d85bb422f784e7e4d24b90c5b48c57" prot="public" static="no">
+        <name>DaysPer400Years</name>
+        <initializer>(365L*400 + 97)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="34" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1acea8f36a72770e873c7d6af02eefeb16" prot="public" static="no">
+        <name>DaysPer100Years</name>
+        <initializer>(365L*100 + 24)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="35" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1aeee4360772d29c86f960ff8786f8c192" prot="public" static="no">
+        <name>DaysPer4Years</name>
+        <initializer>(365*4    +  1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="36" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1a9e1d22d90ec522ab7462f9c8cff40a5d" prot="public" static="no">
+        <name>DaysPer1Year</name>
+        <initializer>365</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="37" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1aa861dca2a3f975872be6d63fca6efb86" prot="public" static="no">
+        <name>MonthsPerYear</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="38" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1aa449e838934e670f91520651a2466934" prot="public" static="no">
+        <name>MonthsPer400Years</name>
+        <initializer>(12*400)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="39" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1ab5ff1557b2743fbdf6687a646a55c54e" prot="public" static="no">
+        <name>MonthMarch</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="40" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="detect__impl_8h_1ad31ab66258dd4f013eb1c1a460a11cf6" prot="public" static="no">
+        <name>mjdOffset</name>
+        <initializer>(678881  /* Epoch Nov 17, 1858 */)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="41" column="9" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="detect__impl_8h_1a0ef6815a0973fe3b8f63c0d4379fe6e3" prot="public" static="yes" mutable="no">
+        <type>const short</type>
+        <definition>const short DaysMarch1ToBeginingOfMonth[12]</definition>
+        <argsstring>[12]</argsstring>
+        <name>DaysMarch1ToBeginingOfMonth</name>
+        <initializer>= { 
+  0, 
+  31, 
+  31 + 30, 
+  31 + 30 + 31, 
+  31 + 30 + 31 + 30, 
+  31 + 30 + 31 + 30 + 31, 
+  31 + 30 + 31 + 30 + 31 + 31,
+  31 + 30 + 31 + 30 + 31 + 31 + 30,
+  31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
+  31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30, 
+  31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31,
+  31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31 + 31 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" line="43" column="1" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.h"/>
+  </compounddef>
+</doxygen>
