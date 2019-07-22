@@ -139,6 +139,8 @@ class systemp_calibration(gr.sync_block):
 
             # The output is calibrated using the gain and Tsys:
             out0[:] = self.filtered_out0/(self.gain) - self.tsys
+            self.spectrum[:] = self.filtered_out0/(self.gain) - self.tsys
+
             
         elif self.collect == "hot":
                         
