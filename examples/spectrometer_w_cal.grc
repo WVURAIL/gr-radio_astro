@@ -366,7 +366,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/john/DSPIRA_2019/Horn_Spectra_2019"</value>
+      <value>"/home/john/DSPIRA_2019/Horn_Spectra_2019/"</value>
     </param>
   </block>
   <block>
@@ -4330,7 +4330,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1256, 836)</value>
+      <value>(1256, 788)</value>
     </param>
     <param>
       <key>_rotation</key>

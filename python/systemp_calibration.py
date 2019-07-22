@@ -65,8 +65,8 @@ class systemp_calibration(gr.sync_block):
 
          # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)
-        self.filtered_out0 = np.zeros(vec_length)
-        self.filtered_spike = np.zeros(vec_length)
+        self.filtered_out0 = np.ones(vec_length)
+        self.filtered_spike = np.ones(vec_length)
         self.hot = 2*np.ones(vec_length)   
         self.cold = 1*np.ones(vec_length)
         self.gain = np.ones(vec_length)
