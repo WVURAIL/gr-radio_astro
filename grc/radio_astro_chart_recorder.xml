@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<block>
+  <name>chart_recorder</name>
+  <key>radio_astro_chart_recorder</key>
+  <category>[radio_astro]</category>
+  <import>import radio_astro</import>
+  <make>radio_astro.chart_recorder($scan_length, $chart_run, $save_to_file, $prefix, $integration_time)</make>
+ 
+  <callback>save_file($save_to_file)</callback>
+  <callback>start_run($chart_run)</callback>
+
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+ 
+  <param>
+    <name>scan_length</name>
+    <key>scan_length</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>chart_run</name>
+    <key>chart_run</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>save_to_file</name>
+    <key>save_to_file</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>prefix</name>
+    <key>prefix</key>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>integration_time</name>
+    <key>integration_time</key>
+    <type>float</type>
+  </param>
+
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>in</name>
+    <type>float</type>
+  </sink>
+
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <source>
+    <name>out</name>
+    <type>float</type>
+    <vlen>$scan_length</vlen>
+  </source>
+</block>

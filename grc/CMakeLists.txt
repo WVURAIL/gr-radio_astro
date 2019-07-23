@@ -30,5 +30,6 @@ install(FILES
     radio_astro_systemp_calibration.xml
     radio_astro_detect.xml
     radio_astro_ra_event_log.xml
-    radio_astro_ra_event_sink.xml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_ra_event_sink.xml
+    radio_astro_chart_recorder.xml DESTINATION share/gnuradio/grc/blocks
 )

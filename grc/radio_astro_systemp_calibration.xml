@@ -6,8 +6,9 @@
   <import>import radio_astro</import>
   <make>radio_astro.systemp_calibration($vec_length, $collect, $samp_rate, $freq, $prefix, $spectrumcapture_toggle)</make>
 
-  <callback>set_parameters($collect, $spectrumcapture_toggle)</callback>
-
+  <callback>set_collect($collect)</callback>
+  <callback>set_spectrumcapture_toggle($spectrumcapture_toggle)</callback>
+  
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
