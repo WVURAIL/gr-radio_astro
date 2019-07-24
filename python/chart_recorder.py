@@ -23,7 +23,19 @@ import numpy as np
 from gnuradio import gr
 from datetime import datetime
 import time
-import h5py
+try:
+    import h5py
+except:
+    print "Python package:"
+    print "   h5py"
+    print "Not found.  If needed, at the command line type:"
+    print "sudo apt install h5py"
+    print "or"
+    print "pip install h5py"
+    print "However we dom't recommend installing python packages using pip"
+    print "Use your OS local package manager used to install 'gnuradio' to"
+    print "maintain consistent python environments"
+    print ""
 
 class chart_recorder(gr.sync_block):
     
