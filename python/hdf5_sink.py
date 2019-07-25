@@ -28,7 +28,7 @@ except:
     print "Python package:"
     print "   h5py"
     print "Not found.  If needed, at the command line type:"
-    print "sudo apt install h5py"
+    print "sudo apt install python-h5py"
     print "or"
     print "pip install h5py"
     print "However we dom't recommend installing python packages using pip"
