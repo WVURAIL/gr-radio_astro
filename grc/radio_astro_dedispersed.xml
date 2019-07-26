@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<block>
+  <name>dedispersed</name>
+  <key>radio_astro_dedispersed</key>
+  <category>[radio_astro]</category>
+  <import>import radio_astro</import>
+  <make>radio_astro.dedispersed($vec_length, $dms, $f_obs, $bw, $t_int, $nt, $s_bw, $e_bw, $dm_step)</make>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+  <param>
+    <name>vec_length</name>
+    <key>vec_length</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>dms</name>
+    <key>dms</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>f_obs</name>
+    <key>f_obs</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>bw</name>
+    <key>bw</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>t_int</name>
+    <key>t_int</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>nt</name>
+    <key>nt</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>start_dm</name>
+    <key>s_bw</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>end_dm</name>
+    <key>e_bw</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>dm_step</name>
+    <key>dm_step</key>
+    <type>int</type>
+  </param>
+
+
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>in</name>
+    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+  </sink>
+
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <source>
+    <name>out</name>
+    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+  </source>
+</block>

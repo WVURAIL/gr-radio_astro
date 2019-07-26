@@ -20,7 +20,7 @@ install(FILES
     radio_astro_powerSpectrum.xml
     radio_astro_hdf5_sink.xml
     radio_astro_dedisperse.xml
-    radio_astro_dedispersion.xml
+    radio_astro_dedispersion_old.xml
     radio_astro_correlate.xml
     radio_astro_ra_integrate.xml
     radio_astro_ra_vave.xml
@@ -30,5 +30,8 @@ install(FILES
     radio_astro_systemp_calibration.xml
     radio_astro_detect.xml
     radio_astro_ra_event_log.xml
-    radio_astro_ra_event_sink.xml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_ra_event_sink.xml
+    radio_astro_dedispersed.xml
+    radio_astro_Kelvin_to_Janskey.xml
+    radio_astro_Pulse_detection.xml DESTINATION share/gnuradio/grc/blocks
 )
