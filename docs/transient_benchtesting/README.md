@@ -65,8 +65,7 @@ This section will be explaining how the completed flowgraph of the detection wor
 * The signal after being throttled is turned back into a vector with a length of the number of frequency channels. The vector stream is then run through another stream to vector block to turn it into a matrix.
  * The new length of the matrix is the number of time samples by frequency channels that we want. The number of time channels is found two ways. 
   * If running from a file, then the number of channels is ![\frac{number\_of\_data\_points\_in\_the\_file}{vector\_length* decimation\_in\_integrate block}](https://latex.codecogs.com/gif.latex?%5Cfrac%7Bnumber%5C_of%5C_data%5C_points%5C_in%5C_the%5C_file%7D%7Bvector%5C_length*%20decimation%5C_in%5C_integrate%20block%7D)
-  * If running live data, then there is no *size* of a file. Instead, find a number that is significantly larger than the display integration variable (usually an order of magnitude greater). From this approximation of the period, multiply the value by the number of periods desired in one `"file". This is then the number of samples of your "file".
-  
+  * If running live data, then there is no *size* of a file. Instead, take the sample rate and multiply it by the size of what you want a "file" to be. This gives the number of data points.
 * The signal is then intriduced to the dedispersed block, which has multiple parameters ![](dedisperse_block.png)
  * `stat_dm` is the starting dm that will be observed at.
  * `end_dm`  is the last DMs that will be observed at.
@@ -75,7 +74,7 @@ This section will be explaining how the completed flowgraph of the detection wor
  * `bw` is the observing bandwidth of the telescope in MHz. This is generally decided by the sampling rate the data was taken at.
  * `nt` is the number of time samples, the same as in the previous stream to vector block.
  * `t_int` is the time length of each timestep.
-  * For a file source, this is found by taking the number of time channels and dividing the duration of the observation in milliseconds by it.
+  * For a file source, this is found by dividing the duration of the observation in milliseconds by the number of time channels.
   * For a live source, this is found by taking the number of time channels and dividing by the number that is significantly greater than the pulse width and again multiplying by the number of periods desired in the "file".
  * The block takes an input of size equal to nt*vec_length
 

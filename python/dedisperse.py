@@ -83,8 +83,27 @@ class dedisperse(gr.sync_block):
 
     #@jit
     def dedisperse(self, img):
-        '''Takes in 2d freq vs time and de-disperses it for all the dm in dms
-        f_low is the lower frequency.  bw is the total passed bandwidth in mhz. t_bin is the size of a time bin in milliseconds'''
+        ''' bw is the total passed bandwidth in mhz. t_bin is the size of a time bin in milliseconds
+         Dedisperses data that has been given to it
+
+
+    NOTES: Must add a .0 after the float values otherwise the block will not work
+
+
+    INPUT
+
+    vec_length : (int) This is the number of frequencies that the incoming data has. In GNU radio, this is the vector size that is produced by an FFT sink
+    dms        : (float vector) The range of dispersion measures that will be tested to see which is the correct one
+    f_obs      : (float) The central frequency in MHz at which the bandwidth is centred about
+    bw         : (float) The total observing bandwidth in MHz that is being observed
+    nt         : (int) The number of time samples that are in the data set after integration. This is found by the integer ratio of the length of the data set, and freqnecy channels and integration size
+    t_int      : (float) The bin size in milliseconds
+
+    
+    OUTPUT
+
+    de_dis_ar: (float vector) The dedispersed pulse 
+    '''
         de_dis_ar = _dedisperse( img, self.vec_length, self.nt, self.ndm, self.t_int, self.dms, self.bw, self.f_obs)
         return de_dis_ar
 

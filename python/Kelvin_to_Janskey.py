@@ -24,7 +24,7 @@ from gnuradio import gr
 
 class Kelvin_to_Janskey(gr.sync_block):
     """
-    docstring for block Kelvin_to_Janskey
+    Converts temperature of a source into Janskeys
     """
     def __init__(self,e_area):
         gr.sync_block.__init__(self,

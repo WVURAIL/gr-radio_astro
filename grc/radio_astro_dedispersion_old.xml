@@ -66,4 +66,56 @@
     <type>float</type>
     <vlen>$nt*$dms</vlen>
   </source>
+
+<doc>
+
+This is an older version of the dedisperse block.
+
+Was replaced in July 2019 with the next version of the block
+-------------------------------------------------------------------------------------------------------------------
+VEC_LENGTH
+
+The number of frequency channels given by the FFT.
+-------------------------------------------------------------------------------------------------------------------
+DMS
+
+The largest DM tested. The smallest is 0
+
+Note: This must be greater than 0
+-------------------------------------------------------------------------------------------------------------------
+F_OBS
+
+The centre frequency that the telescope is observing at. 
+
+Note: expected to be given in units of MHz.
+-------------------------------------------------------------------------------------------------------------------
+BW
+
+The observing bandwidth given by the sample rate inside of the Osmocom block, LimeSuite Source, etc.
+
+If not observing in real time, this is the observing bandwidth the the telescope observed at, NOT the throttle rate of your flowgraph.
+
+Note: expected to be given in units of MHz.
+-------------------------------------------------------------------------------------------------------------------
+T_INT
+
+The time per interval in the data. Ie the timestep for every data point given. 
+
+For a file source, the value is given by the total viewing time in milliseconds divided bythe total number time channels (see NT variable below).
+
+For a live source, this value is given by the total viewing time in milliseconds divided by the desired frame.
+This frame is up to an individuals discretion, but generally it is better to calculate it as the period (for a pulsar) times the number of periods desired in a frame
+-------------------------------------------------------------------------------------------------------------------
+NT
+
+The number of time channels the data is being separated into by integration.
+
+This is given by the total number of data points divided by the number of integrations and vector length.
+
+For a live source, the number of data points is given by the sample rate times the time length that you want a "file" to be.
+
+Note: LimeSDR-Mini and LimeSDR-Micro supports only the same sample rate for TX and RX.
+
+-------------------------------------------------------------------------------------------------------------------
+</doc>
 </block>

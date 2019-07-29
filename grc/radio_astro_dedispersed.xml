@@ -11,7 +11,7 @@
        * key (makes the value accessible as $keyname, e.g. in the make node)
        * type -->
   <param>
-    <name>vec_length</name>
+    <name>vector length</name>
     <key>vec_length</key>
     <type>int</type>
   </param>
@@ -20,16 +20,17 @@
     <name>dms</name>
     <key>dms</key>
     <type>int</type>
+    <hide>part</hide>
   </param>
 
   <param>
-    <name>f_obs</name>
+    <name>observing frequency</name>
     <key>f_obs</key>
     <type>float</type>
   </param>
 
   <param>
-    <name>bw</name>
+    <name>bandwidth</name>
     <key>bw</key>
     <type>float</type>
   </param>
@@ -84,4 +85,63 @@
     <name>out</name>
     <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
   </source>
+
+<doc>
+-------------------------------------------------------------------------------------------------------------------
+VECTOR LENGTH
+
+The number of frequency channels given by the FFT.
+-------------------------------------------------------------------------------------------------------------------
+OBSERVING FREQUENCY
+
+The centre frequency that the telescope is observing at. 
+
+Note: expected to be given in units of MHz.
+-------------------------------------------------------------------------------------------------------------------
+BANDWIDTH
+
+The observing bandwidth given by the sample rate inside of the Osmocom block, LimeSuite Source, etc.
+
+If not observing in real time, this is the observing bandwidth the the telescope observed at, NOT the throttle rate of your flowgraph.
+
+Note: expected to be given in units of MHz.
+-------------------------------------------------------------------------------------------------------------------
+T_INT
+
+The time per interval in the data. Ie the timestep for every data point given. 
+
+For a file source, the value is given by the total viewing time in milliseconds divided bythe total number time channels (see NT variable below).
+
+For a live source, this value is given by the total viewing time in milliseconds divided by the desired frame.
+This frame is up to an individuals discretion, but generally it is better to calculate it as the period (for a pulsar) times the number of periods desired in a frame
+-------------------------------------------------------------------------------------------------------------------
+NT
+
+The number of time channels the data is being separated into by integration.
+
+This is given by the total number of data points divided by the number of integrations and vector length.
+
+For a live source, the number of data points is given by the sample rate times the time length that you want a "file" to be.
+
+Note: LimeSDR-Mini and LimeSDR-Micro supports only the same sample rate for TX and RX.
+-------------------------------------------------------------------------------------------------------------------
+START_DM
+
+Here the first DM that will be tested is specified
+
+Note: This value must be less than the end_dm, and must be positive
+-------------------------------------------------------------------------------------------------------------------
+END_DM
+
+The final DM that will be tested
+
+Note: This value must be greater than the start_dm, and must be positive
+-------------------------------------------------------------------------------------------------------------------
+DM_STEP
+
+This specifies the number of steps for each dm, starting with the start_dm and ending with the end_dm.
+
+This works similar to numpy.linspace, where the fisrt and last dms are included in the number of steps
+-------------------------------------------------------------------------------------------------------------------
+</doc>
 </block>

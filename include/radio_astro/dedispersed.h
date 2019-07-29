@@ -20,16 +20,19 @@
 
 
 #ifndef INCLUDED_RADIO_ASTRO_DEDISPERSED_H
-#define INCLUDED_RADIO_ASTRO_DEDISPERSED_H
+  #define INCLUDED_RADIO_ASTRO_DEDISPERSED_H
 
 #include <radio_astro/api.h>
 #include <gnuradio/block.h>
+
 
 namespace gr {
   namespace radio_astro {
 
     /*!
-     * \brief <+description of block+>
+     * \brief Dedisperses incoming signals along a range of specified DMs. 
+     * 
+     * This is the number of frequency channels that the signal is contained
      * \ingroup radio_astro
      *
      */
@@ -38,14 +41,7 @@ namespace gr {
      public:
       typedef boost::shared_ptr<dedispersed> sptr;
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of radio_astro::dedispersed.
-       *
-       * To avoid accidental use of raw pointers, radio_astro::dedispersed's
-       * constructor is in a private implementation
-       * class. radio_astro::dedispersed::make is the public interface for
-       * creating new instances.
-       */
+      
       static sptr make(int vec_length, int dms, float f_obs, float bw, float t_int, int nt, int s_bw, int e_bw, int dm_step);
     };
 
