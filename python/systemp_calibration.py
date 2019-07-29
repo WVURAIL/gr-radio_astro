@@ -38,9 +38,15 @@ class systemp_calibration(gr.sync_block):
     systemp_calibration - takes input from a spectrometer.
         In:  Data stream of spectra
         Several vectors are output:
-        out0: Latest Spectrum - either raw or with calibration, depending on user's choice.
+        out0: Latest Spectrum - either raw or denoised, with or without calibration, depending on user's choice.
         out1: Gain - updated whenever "hot" or "cold" calibrations are done.
         out2: System Temperature - updated whenever "hot" or "cold" calibrations are done.
+
+    The input signal is denoised using 2 methods:
+       1. Noise spikes are removed using a moving median method;
+       2. The spectrum is smoothed using a moving average weighted with a Gaussian function about each point.
+    
+    Once the system temperature is determined as a function of frequency, its final value is taken as the average of the system temperature over the spectrum.
     
     Parameters:
     (1) vec_length - vector length in channels
@@ -78,12 +84,6 @@ class systemp_calibration(gr.sync_block):
         self.data_array = np.zeros((vec_length,2))
         self.a = np.zeros(self.vec_length)
         self.x = np.zeros(vec_length)
-        
-        #self.freq_fit_range = np.zeros(1600)
-        #self.signal_fit_range = np.zeros(1600)
-        #self.signal_fit = np.ones(self.vec_length)
-        
-        #self.signal_fit_range = self.signal_fit_range.reshape(1,1600)
 
         # To do a gaussian smoothing to the data, assign values to the gaussian kernal.
         # Note: The parameter k defines the size of the window used in smoothing; "fwhm" defines the width of the gaussian fit.
@@ -141,6 +141,8 @@ class systemp_calibration(gr.sync_block):
             out0[:] = self.filtered_out0/(self.gain) - self.tsys
             self.spectrum[:] = self.filtered_out0/(self.gain) - self.tsys
 
+            # The self.spectrum array is what gets output to the .csv file when the Capture Latest Spectrum button is pressed.
+
             
         elif self.collect == "hot":
                         
@@ -161,6 +163,9 @@ class systemp_calibration(gr.sync_block):
             self.tsys = (self.thot - self.y*self.tcold)/(self.y-1)
             self.gain = self.cold/(self.tcold + self.tsys)
             self.gain[self.gain <= 0] = 1
+            tm = np.median(self.tsys)
+            for i in range(self.vec_length):
+                self.tsys[i] = tm
             
         elif self.collect == "cold":
 
@@ -182,6 +187,9 @@ class systemp_calibration(gr.sync_block):
             self.tsys = (self.thot - self.y*self.tcold)/(self.y-1)
             self.gain = self.cold/(self.tcold + self.tsys)
             self.gain[self.gain <= 0] = 1
+            tm = np.median(self.tsys)
+            for i in range(self.vec_length):
+                self.tsys[i] = tm
 
         elif self.collect == "nocal":
             
@@ -211,8 +219,6 @@ class systemp_calibration(gr.sync_block):
             np.savetxt(self.textfilename, self.data_array, delimiter=',')
             self.spectrumcapture_toggle = False
         
-        #self.spectrum[:] = out0[:]        # This array is written to the data_array[:,1] when output to file.
-
         return len(output_items[0])
     
 
@@ -252,7 +258,7 @@ class systemp_calibration(gr.sync_block):
             # lowerbound = max of either 1 or the signal index, whichever is greater,
             # in case the spike is near the beginning of the array and the value 
             # abovethresh-k_spike < 0.
-            # Similarly, upperbound defines the maximum index above which there is no data.
+            # Similarly, upperbound defines the maximum index above which theself.tsys = np.mean(self.tsys[self.k_cal:-self.k_cal])re is no data.
 
             self.lowerbound = max(1, self.abovethresh_index[i] - self.k_spike)
             self.upperbound = min(self.abovethresh_index[i] + self.k_spike, self.vec_length)

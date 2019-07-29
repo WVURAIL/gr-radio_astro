@@ -44,5 +44,6 @@ from systemp_calibration import systemp_calibration
 from ra_event_log import ra_event_log
 from ra_event_sink import ra_event_sink
 from chart_recorder import chart_recorder
+from csv_filesink import csv_filesink
 
 #

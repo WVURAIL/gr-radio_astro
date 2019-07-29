@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<block>
+  <name>csv_filesink</name>
+  <key>radio_astro_csv_filesink</key>
+  <category>[radio_astro]</category>
+  <import>import radio_astro</import>
+  <make>radio_astro.csv_filesink($vec_length, $samp_rate, $freq, $prefix, $save_toggle)</make>
+
+  <callback>set_save_toggle($save_toggle)</callback>
+
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+  <param>
+    <name>vec_length</name>
+    <key>vec_length</key>
+    <type>int</type>
+  </param>
+
+  <param>
+    <name>samp_rate</name>
+    <key>samp_rate</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>freq</name>
+    <key>freq</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>prefix</name>
+    <key>prefix</key>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>save_toggle</name>
+    <key>save_toggle</key>
+    <type>string</type>
+  </param>
+
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>in</name>
+    <type>float</type>
+    <vlen>$vec_length</vlen>
+  </sink>
+
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  
+</block>

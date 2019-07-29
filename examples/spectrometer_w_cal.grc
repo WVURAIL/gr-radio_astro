@@ -97,7 +97,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(432, 764)</value>
+      <value>(32, 580)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -192,7 +192,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 604)</value>
+      <value>(1344, 1140)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -219,34 +219,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(408, 4)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>display_integration</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(120, 96)</value>
+      <value>(312, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -273,7 +246,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(56, 668)</value>
+      <value>(424, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -300,7 +273,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 740)</value>
+      <value>(528, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -319,7 +292,7 @@
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Integration time in secs</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -327,7 +300,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(288, 4)</value>
+      <value>(976, 92)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -339,14 +312,14 @@
     </param>
     <param>
       <key>value</key>
-      <value>40</value>
+      <value>1</value>
     </param>
   </block>
   <block>
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>File path length for captured spectra</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -354,7 +327,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(664, 4)</value>
+      <value>(1144, 92)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -373,7 +346,7 @@
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Filename for hdf5 sink block</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -381,7 +354,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(992, 4)</value>
+      <value>(1384, 92)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -393,7 +366,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>prefix + timenow + "_ymethod_cal.h5"</value>
+      <value>prefix + timenow + "_GBO_Drift_A0E75.5.h5"</value>
     </param>
   </block>
   <block>
@@ -408,7 +381,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 96)</value>
+      <value>(192, 84)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -439,11 +412,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(264, 580)</value>
+      <value>(24, 852)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,4,1,1</value>
+      <value>1,4,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -475,7 +448,7 @@
     </param>
     <param>
       <key>label</key>
-      <value>Save File</value>
+      <value>Write to File</value>
     </param>
     <param>
       <key>labels</key>
@@ -534,7 +507,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 540)</value>
+      <value>(960, 1132)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -561,7 +534,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 468)</value>
+      <value>(1152, 1140)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -592,7 +565,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(248, 980)</value>
+      <value>(24, 1060)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -635,7 +608,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(832, 4)</value>
+      <value>(592, 1124)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -662,7 +635,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(184, 4)</value>
+      <value>(192, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -685,7 +658,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>20000</value>
+      <value>200000</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -693,7 +666,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 940)</value>
+      <value>(320, 1060)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -725,11 +698,11 @@
     </param>
     <param>
       <key>step</key>
-      <value>50</value>
+      <value>1000</value>
     </param>
     <param>
       <key>stop</key>
-      <value>300000</value>
+      <value>1000000000000</value>
     </param>
     <param>
       <key>rangeType</key>
@@ -737,7 +710,7 @@
     </param>
     <param>
       <key>widget</key>
-      <value>counter</value>
+      <value>counter_slider</value>
     </param>
   </block>
   <block>
@@ -756,7 +729,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 804)</value>
+      <value>(336, 924)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -784,7 +757,7 @@
     </param>
     <param>
       <key>start</key>
-      <value>-100</value>
+      <value>-1000</value>
     </param>
     <param>
       <key>step</key>
@@ -800,7 +773,7 @@
     </param>
     <param>
       <key>widget</key>
-      <value>counter</value>
+      <value>counter_slider</value>
     </param>
   </block>
   <block>
@@ -823,7 +796,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(904, 176)</value>
+      <value>(1000, 272)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -874,7 +847,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(304, 448)</value>
+      <value>(368, 568)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -917,11 +890,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1112, 364)</value>
+      <value>(1500, 552)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>180</value>
+      <value>270</value>
     </param>
     <param>
       <key>id</key>
@@ -964,7 +937,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(304, 180)</value>
+      <value>(368, 300)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1019,7 +992,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(312, 260)</value>
+      <value>(376, 380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1074,7 +1047,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(304, 332)</value>
+      <value>(368, 452)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1121,7 +1094,7 @@
     </param>
     <param>
       <key>decim</key>
-      <value>int(display_integration*samp_rate/vec_length)</value>
+      <value>int(integration_time*samp_rate/vec_length)</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1129,11 +1102,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(932, 424)</value>
+      <value>(1272, 460)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>270</value>
+      <value>180</value>
     </param>
     <param>
       <key>id</key>
@@ -1176,7 +1149,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1280, 192)</value>
+      <value>(1488, 368)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1223,7 +1196,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 324)</value>
+      <value>(696, 444)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1274,7 +1247,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 252)</value>
+      <value>(696, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1325,7 +1298,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 172)</value>
+      <value>(696, 292)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1376,7 +1349,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 100)</value>
+      <value>(696, 220)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1423,7 +1396,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(304, 108)</value>
+      <value>(368, 228)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1474,7 +1447,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(456, 180)</value>
+      <value>(520, 300)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1525,7 +1498,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(464, 332)</value>
+      <value>(528, 452)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1576,7 +1549,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(464, 260)</value>
+      <value>(528, 380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1635,7 +1608,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1088, 76)</value>
+      <value>(1192, 284)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1686,7 +1659,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(544, 12)</value>
+      <value>(24, 132)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1717,7 +1690,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(24, 404)</value>
+      <value>(64, 76)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1740,7 +1713,7 @@
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Controls for scaling the graph</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1748,7 +1721,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 1092)</value>
+      <value>(328, 836)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1760,7 +1733,69 @@
     </param>
     <param>
       <key>note</key>
-      <value>Graph Options</value>
+      <value>GRAPH OPTIONS</value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>Check/change these variables before each run.</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1128, 4)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>note_0_0</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>USER DEFINED VARIABLES:</value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>Polyphase filter bank functions</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1136, 1052)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>note_0_0_0</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>CUSTOM FUNCTIONS</value>
     </param>
   </block>
   <block>
@@ -1807,7 +1842,7 @@
     </param>
     <param>
       <key>gain0</key>
-      <value>14</value>
+      <value>17</value>
     </param>
     <param>
       <key>ant10</key>
@@ -3067,7 +3102,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 188)</value>
+      <value>(16, 252)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3087,7 +3122,7 @@
     </param>
     <param>
       <key>time_source0</key>
-      <value></value>
+      <value>gpsdo</value>
     </param>
     <param>
       <key>clock_source1</key>
@@ -3202,7 +3237,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(456, 404)</value>
+      <value>(560, 524)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3525,7 +3560,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(716, 992)</value>
+      <value>(700, 840)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3796,7 +3831,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(884, 992)</value>
+      <value>(876, 840)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -4067,7 +4102,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1060, 992)</value>
+      <value>(1036, 840)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -4311,6 +4346,58 @@
     </param>
   </block>
   <block>
+    <key>radio_astro_csv_filesink</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>Choose "Write to File" to write data to a .csv file
+at the path specified in Prefix.</value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1240, 716)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_csv_filesink_0</value>
+    </param>
+    <param>
+      <key>freq</key>
+      <value>freq</value>
+    </param>
+    <param>
+      <key>prefix</key>
+      <value>prefix</value>
+    </param>
+    <param>
+      <key>samp_rate</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
+      <key>save_toggle</key>
+      <value>save_toggle</value>
+    </param>
+    <param>
+      <key>vec_length</key>
+      <value>vec_length</value>
+    </param>
+  </block>
+  <block>
     <key>radio_astro_hdf5_sink</key>
     <param>
       <key>alias</key>
@@ -4326,11 +4413,11 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1256, 788)</value>
+      <value>(1424, 940)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4346,7 +4433,7 @@
     </param>
     <param>
       <key>fname</key>
-      <value>recfile+"_3LNA17"</value>
+      <value>recfile</value>
     </param>
     <param>
       <key>freq_start</key>
@@ -4362,11 +4449,11 @@
     </param>
     <param>
       <key>notes</key>
-      <value></value>
+      <value>Green Bank; integration = 1 s</value>
     </param>
     <param>
       <key>pointing</key>
-      <value>A180E55</value>
+      <value>A0E75.5</value>
     </param>
     <param>
       <key>save_toggle</key>
@@ -4397,7 +4484,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(900, 624)</value>
+      <value>(892, 544)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4587,6 +4674,12 @@
   <connection>
     <source_block_id>radio_astro_systemp_calibration_0</source_block_id>
     <sink_block_id>qtgui_vector_sink_f_0_0_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_systemp_calibration_0</source_block_id>
+    <sink_block_id>radio_astro_csv_filesink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
