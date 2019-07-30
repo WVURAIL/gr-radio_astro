@@ -339,7 +339,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/john/DSPIRA_2019/Horn_Spectra_2019/"</value>
+      <value>"/home/dspradio/grc-data"</value>
     </param>
   </block>
   <block>
@@ -366,7 +366,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>prefix + timenow + "_GBO_Drift_A0E75.5.h5"</value>
+      <value>prefix + timenow + ".csv"</value>
     </param>
   </block>
   <block>
@@ -416,7 +416,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,4,1,2</value>
+      <value>1,2,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -569,7 +569,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,2,1,1</value>
+      <value>1,1,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
