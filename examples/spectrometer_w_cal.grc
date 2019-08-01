@@ -339,7 +339,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/dspradio/grc-data"</value>
+      <value>"/home/dspradio/grc-data/"</value>
     </param>
   </block>
   <block>
@@ -366,7 +366,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>prefix + timenow + ".csv"</value>
+      <value>prefix + timenow + ".h5"</value>
     </param>
   </block>
   <block>
@@ -408,15 +408,15 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(24, 852)</value>
+      <value>(179, 851)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,2,1,1</value>
+      <value>1,3,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -424,7 +424,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>save_toggle</value>
+      <value>save_toggle_csv</value>
     </param>
     <param>
       <key>label0</key>
@@ -448,7 +448,7 @@
     </param>
     <param>
       <key>label</key>
-      <value>Write to File</value>
+      <value>Write to CSV files</value>
     </param>
     <param>
       <key>labels</key>
@@ -492,7 +492,106 @@
     </param>
     <param>
       <key>widget</key>
-      <value>combo_box</value>
+      <value>radio_buttons</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_chooser</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>"False"</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(24, 852)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>1,2,1,1</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>save_toggle_hdf5</value>
+    </param>
+    <param>
+      <key>label0</key>
+      <value>Write to File</value>
+    </param>
+    <param>
+      <key>label1</key>
+      <value>Not writing to file</value>
+    </param>
+    <param>
+      <key>label2</key>
+      <value></value>
+    </param>
+    <param>
+      <key>label3</key>
+      <value></value>
+    </param>
+    <param>
+      <key>label4</key>
+      <value></value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Write HDF5</value>
+    </param>
+    <param>
+      <key>labels</key>
+      <value>[]</value>
+    </param>
+    <param>
+      <key>num_opts</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>option0</key>
+      <value>"True"</value>
+    </param>
+    <param>
+      <key>option1</key>
+      <value>"False"</value>
+    </param>
+    <param>
+      <key>option2</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>option3</key>
+      <value>3</value>
+    </param>
+    <param>
+      <key>option4</key>
+      <value>4</value>
+    </param>
+    <param>
+      <key>options</key>
+      <value>[0, 1, 2]</value>
+    </param>
+    <param>
+      <key>orient</key>
+      <value>Qt.QVBoxLayout</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>string</value>
+    </param>
+    <param>
+      <key>widget</key>
+      <value>radio_buttons</value>
     </param>
   </block>
   <block>
@@ -569,7 +668,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,1,1,1</value>
+      <value>0,3,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3241,7 +3340,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>9,3,1,2</value>
+      <value>9,3,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4106,7 +4205,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>4,0,5,5</value>
+      <value>4,0,5,6</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4390,7 +4489,7 @@ at the path specified in Prefix.</value>
     </param>
     <param>
       <key>save_toggle</key>
-      <value>save_toggle</value>
+      <value>save_toggle_csv</value>
     </param>
     <param>
       <key>vec_length</key>
@@ -4413,7 +4512,7 @@ at the path specified in Prefix.</value>
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -4457,7 +4556,7 @@ at the path specified in Prefix.</value>
     </param>
     <param>
       <key>save_toggle</key>
-      <value>save_toggle</value>
+      <value>save_toggle_hdf5</value>
     </param>
     <param>
       <key>vec_length</key>
