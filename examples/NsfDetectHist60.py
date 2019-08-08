@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: Nsf Airspy Event Detect: 6 MHz
+# Title: Nsf RTLSDR Event Detect: 3MHz
 # Author: Glen Langston
-# Description: Event Detection using Airspy
-# Generated: Wed Aug  7 20:58:14 2019
+# Description: Event Detection using RTLSDR
+# Generated: Wed Aug  7 20:54:17 2019
 ##################################################
 
 from distutils.version import StrictVersion
@@ -40,12 +40,12 @@ import time
 from gnuradio import qtgui
 
 
-class NsfDetect60(gr.top_block, Qt.QWidget):
+class NsfDetectHist60(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Nsf Airspy Event Detect: 6 MHz")
+        gr.top_block.__init__(self, "Nsf RTLSDR Event Detect: 3MHz")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("Nsf Airspy Event Detect: 6 MHz")
+        self.setWindowTitle("Nsf RTLSDR Event Detect: 3MHz")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -63,7 +63,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NsfDetect60")
+        self.settings = Qt.QSettings("GNU Radio", "NsfDetectHist60")
         self.restoreGeometry(self.settings.value("geometry", type=QtCore.QByteArray))
 
 
@@ -85,7 +85,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(ConfigFile)
         try: fftsize_save = self._fftsize_save_config.getint('main', 'samplesize')
-        except: fftsize_save = 1024
+        except: fftsize_save = 2048
         self.fftsize_save = fftsize_save
         self._device_save_config = ConfigParser.ConfigParser()
         self._device_save_config.read(ConfigFile)
@@ -122,7 +122,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.Telescope = Telescope = telescope_save
         self.Observer = Observer = observer_save
         self.Mode = Mode = 2
-        self.Gain2 = Gain2 = 12.
         self.Gain1 = Gain1 = Gain1s
         self.Frequency = Frequency = Frequencys
         self.EventMode = EventMode = 0
@@ -280,69 +279,14 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_iq_balance_mode(0, 0)
         self.rtlsdr_source_0.set_gain_mode(False, 0)
         self.rtlsdr_source_0.set_gain(float(Gain1), 0)
-        self.rtlsdr_source_0.set_if_gain(float(Gain2), 0)
-        self.rtlsdr_source_0.set_bb_gain(float(Gain2), 0)
+        self.rtlsdr_source_0.set_if_gain(12, 0)
+        self.rtlsdr_source_0.set_bb_gain(12, 0)
         self.rtlsdr_source_0.set_antenna('', 0)
         self.rtlsdr_source_0.set_bandwidth(Bandwidth, 0)
 
         (self.rtlsdr_source_0).set_processor_affinity([3])
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
-        self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
-        	fftsize, #size
-        	Bandwidth, #samp_rate
-        	"", #name
-        	1 #number of inputs
-        )
-        self.qtgui_time_sink_x_0_0.set_update_time(1)
-        self.qtgui_time_sink_x_0_0.set_y_axis(-.3, .3)
-
-        self.qtgui_time_sink_x_0_0.set_y_label('Event', "")
-
-        self.qtgui_time_sink_x_0_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
-        self.qtgui_time_sink_x_0_0.enable_autoscale(True)
-        self.qtgui_time_sink_x_0_0.enable_grid(False)
-        self.qtgui_time_sink_x_0_0.enable_axis_labels(True)
-        self.qtgui_time_sink_x_0_0.enable_control_panel(False)
-        self.qtgui_time_sink_x_0_0.enable_stem_plot(False)
-
-        if not True:
-          self.qtgui_time_sink_x_0_0.disable_legend()
-
-        labels = ['I', 'Q', '', '', '',
-                  '', '', '', '', '']
-        widths = [1, 1, 1, 1, 1,
-                  1, 1, 1, 1, 1]
-        colors = ["blue", "red", "green", "black", "cyan",
-                  "magenta", "yellow", "dark red", "dark green", "blue"]
-        styles = [1, 1, 1, 1, 1,
-                  1, 1, 1, 1, 1]
-        markers = [-1, -1, -1, -1, -1,
-                   -1, -1, -1, -1, -1]
-        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
-                  1.0, 1.0, 1.0, 1.0, 1.0]
-
-        for i in xrange(2):
-            if len(labels[i]) == 0:
-                if(i % 2 == 0):
-                    self.qtgui_time_sink_x_0_0.set_line_label(i, "Re{{Data {0}}}".format(i/2))
-                else:
-                    self.qtgui_time_sink_x_0_0.set_line_label(i, "Im{{Data {0}}}".format(i/2))
-            else:
-                self.qtgui_time_sink_x_0_0.set_line_label(i, labels[i])
-            self.qtgui_time_sink_x_0_0.set_line_width(i, widths[i])
-            self.qtgui_time_sink_x_0_0.set_line_color(i, colors[i])
-            self.qtgui_time_sink_x_0_0.set_line_style(i, styles[i])
-            self.qtgui_time_sink_x_0_0.set_line_marker(i, markers[i])
-            self.qtgui_time_sink_x_0_0.set_line_alpha(i, alphas[i])
-
-        self._qtgui_time_sink_x_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_0_win, 3, 2, 5, 7)
-        for r in range(3, 8):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 9):
-            self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
         	fftsize,
         	100,
@@ -390,7 +334,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.blocks_vector_to_stream_0 = blocks.vector_to_stream(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
 
@@ -402,14 +345,12 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_stream_to_vector_0, 0), (self.radio_astro_detect_0, 0))
-        self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
-        self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NsfDetect60")
+        self.settings = Qt.QSettings("GNU Radio", "NsfDetectHist60")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -602,14 +543,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self._Mode_callback(self.Mode)
         self.radio_astro_detect_0.set_mode( self.Mode)
 
-    def get_Gain2(self):
-        return self.Gain2
-
-    def set_Gain2(self, Gain2):
-        self.Gain2 = Gain2
-        self.rtlsdr_source_0.set_if_gain(float(self.Gain2), 0)
-        self.rtlsdr_source_0.set_bb_gain(float(self.Gain2), 0)
-
     def get_Gain1(self):
         return self.Gain1
 
@@ -686,7 +619,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
-        self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(self.ConfigFile)
         if not self._Bandwidths_config.has_section('main'):
@@ -709,7 +641,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self._Azimuth_save_config.write(open(self.ConfigFile, 'w'))
 
 
-def main(top_block_cls=NsfDetect60, options=None):
+def main(top_block_cls=NsfDetectHist60, options=None):
 
     qapp = Qt.QApplication(sys.argv)
 
