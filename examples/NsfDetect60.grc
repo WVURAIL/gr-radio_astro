@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.7.12'?>
+<?grc format='1' created='3.7.13'?>
 <flow_graph>
   <timestamp>Sun Mar 11 16:57:49 2018</timestamp>
   <block>
@@ -22,7 +22,7 @@
     </param>
     <param>
       <key>description</key>
-      <value>Event Detection using RTLSDR</value>
+      <value>Event Detection using Airspy</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>Nsf RTLSDR Event Detect: 3MHz</value>
+      <value>Nsf Airspy Event Detect: 6 MHz</value>
     </param>
     <param>
       <key>placement</key>
@@ -685,6 +685,33 @@
     </param>
   </block>
   <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(696, 737)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain2</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>12.</value>
+    </param>
+  </block>
+  <block>
     <key>variable_qtgui_chooser</key>
     <param>
       <key>comment</key>
@@ -986,7 +1013,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>2048</value>
+      <value>1024</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1198,7 +1225,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 272)</value>
+      <value>(296, 239)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1355,7 +1382,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(488, 252)</value>
+      <value>(488, 225)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1387,7 +1414,7 @@
     </param>
     <param>
       <key>label1</key>
-      <value></value>
+      <value>I</value>
     </param>
     <param>
       <key>marker1</key>
@@ -1435,7 +1462,7 @@
     </param>
     <param>
       <key>label2</key>
-      <value></value>
+      <value>Q</value>
     </param>
     <param>
       <key>marker2</key>
@@ -2171,7 +2198,7 @@
     </param>
     <param>
       <key>bb_gain0</key>
-      <value>12</value>
+      <value>float(Gain2)</value>
     </param>
     <param>
       <key>bw0</key>
@@ -2195,7 +2222,7 @@
     </param>
     <param>
       <key>if_gain0</key>
-      <value>12</value>
+      <value>float(Gain2)</value>
     </param>
     <param>
       <key>iq_balance_mode0</key>
@@ -3463,7 +3490,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 116)</value>
+      <value>(10, 117)</value>
     </param>
     <param>
       <key>_rotation</key>

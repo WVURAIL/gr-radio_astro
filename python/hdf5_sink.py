@@ -21,9 +21,21 @@
 
 import numpy as np
 from gnuradio import gr
-import h5py
 import time
-
+try:
+    import h5py
+except:
+    print "Python package:"
+    print "   h5py"
+    print "Not found.  If needed, at the command line type:"
+    print "sudo apt install python-h5py"
+    print "or"
+    print "pip install h5py"
+    print "However we dom't recommend installing python packages using pip"
+    print "Use your OS local package manager used to install gnuradio to"
+    print "maintain consistent python environments"
+    print ""
+    
 class hdf5_sink(gr.sync_block):
     """
     docstring for block hdf5_sink

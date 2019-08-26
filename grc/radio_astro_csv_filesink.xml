@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <block>
-  <name>systemp_calibration</name>
-  <key>radio_astro_systemp_calibration</key>
+  <name>csv_filesink</name>
+  <key>radio_astro_csv_filesink</key>
   <category>[radio_astro]</category>
   <import>import radio_astro</import>
-  <make>radio_astro.systemp_calibration($vec_length, $collect, $samp_rate, $freq, $prefix, $spectrumcapture_toggle)</make>
+  <make>radio_astro.csv_filesink($vec_length, $samp_rate, $freq, $prefix, $save_toggle)</make>
 
-  <callback>set_collect($collect)</callback>
-  <callback>set_spectrumcapture_toggle($spectrumcapture_toggle)</callback>
-  
+  <callback>set_save_toggle($save_toggle)</callback>
+
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
        Sub-nodes:
        * name
@@ -18,12 +17,6 @@
     <name>vec_length</name>
     <key>vec_length</key>
     <type>int</type>
-  </param>
-
-  <param>
-    <name>collect</name>
-    <key>collect</key>
-    <type>string</type>
   </param>
 
   <param>
@@ -45,9 +38,9 @@
   </param>
 
   <param>
-    <name>spectrumcapture_toggle</name>
-    <key>spectrumcapture_toggle</key>
-    <type>bool</type>
+    <name>save_toggle</name>
+    <key>save_toggle</key>
+    <type>string</type>
   </param>
 
   <!-- Make one 'sink' node per input. Sub-nodes:
@@ -66,21 +59,5 @@
        * type
        * vlen
        * optional (set to 1 for optional inputs) -->
-  <source>
-    <name>spectrum</name>
-    <type>float</type>
-    <vlen>$vec_length</vlen>
-  </source>
-
-  <source>
-    <name>gain</name>
-    <type>float</type>
-    <vlen>$vec_length</vlen>
-  </source>
-
-  <source>
-    <name>tsys</name>
-    <type>float</type>
-    <vlen>$vec_length</vlen>
-  </source>
+  
 </block>

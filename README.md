@@ -1,13 +1,19 @@
 # gr-radio_astro
 
-##
+##  
 
-See additional documentation here:
-https://github.com/WVURAIL/gr-radio_astro/docs
+Modules and blocks include here create a Gnuradio-Companion flowchart for use in radio astronomy.  
 
-##
+This graph allows astronomical observations with home built radio telescopes.  
+With this software, and your radio telescope, you can find Spiral Arms of our Milky Way
+galaxy from your own back yard.
 
-Modules and blocks here to help create a grc flowchart for use in radio astronomy.  
+<a href="https://github.com/WVURAIL/gr-radio_astro/tree/master/docs"> <img src="https://raw.githubusercontent.com/WVURAIL/gr-radio_astro/master/docs/NooElecHotColdLoadTest105K.png" alt="Observer Interface" align="right" width=200></a>
+Find additional documentation on the observer interface here:
+                                                                        
+https://github.com/WVURAIL/gr-radio_astro/tree/master/docs
+
+  
 
 ## Installation
 
@@ -48,3 +54,8 @@ Blocks should now be available in gnuradio-companion.
  Generic linux can try:
  
  ``sudo pip install h5py``
+
+<a href="http://www.gb.nrao.edu/~glangsto/LightWorkMemo014r9.pdf"> <img src="https://raw.githubusercontent.com/glangsto/analyze/master/images/NathanielReginaHornObs.png" width=200 
+alt="Horn, Nathaniel and Regina" align="right"></a>
+For documentation on understanding the data you've takena and making a map of th e
+Milky Way see: https://github.com/glangsto/analyze

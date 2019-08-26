@@ -71,6 +71,7 @@ class ra_ascii_sink(gr.sync_block):
         self.obs.read_spec_ast(self.noteName)    # read the parameters 
         self.obs.observer = observers
         self.obs.nChan = vlen
+        self.obs.refChan = self.obs.nChan/2.
         self.obs.nSpec = 1
         self.obs.ydataA = np.zeros(vlen)
         self.obs.ydataB = np.zeros(vlen)
