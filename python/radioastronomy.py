@@ -2,7 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
-19SEP14 GIL only use gains[] array for SDR gains
+19SEP14 GIL only use gains[] to store SDR gains
 19SEP11 GIL restore write_ascii_ave()
 19JUN29 GIL diagnose errors in vel2chan
 19JUN26 GIL fix error for smaller spectra introduced when adding events
@@ -806,13 +806,15 @@ class Spectrum(object):
                     self.erms = float(parts[3])
                 if parts[1] == 'EMJD':
                     self.emjd = float(parts[3])
+                # parse  GAIN1 = 10. etc; but ignore GAINS = line
                 apart = parts[1]
                 ifind = apart.find("GAIN")
                 if ifind >= 0:
                     if verbose:
                         print parts
-                    i = int(apart[ifind+4])
-                    if i > 0 and i <= 4:
+                    gainnumber = str(apart[ifind+4])
+                    if gainnumber.isdigit():
+                        i = int(gainnumber)
                         n = len(parts)
                         self.gains[i-1] = float(parts[n-1])
                         if verbose:
