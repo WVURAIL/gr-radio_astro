@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.7.11'?>
+<?grc format='1' created='3.7.13'?>
 <flow_graph>
   <timestamp>Sun Mar 11 16:57:49 2018</timestamp>
   <block>
@@ -73,12 +73,20 @@
       <value>True</value>
     </param>
     <param>
+      <key>sizing_mode</key>
+      <value>fixed</value>
+    </param>
+    <param>
       <key>thread_safe_setters</key>
       <value></value>
     </param>
     <param>
       <key>title</key>
       <value>NsfIntegrate: Average+Record Astronomical Obs.</value>
+    </param>
+    <param>
+      <key>placement</key>
+      <value>(0,0)</value>
     </param>
   </block>
   <block>
@@ -499,7 +507,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>Gain1s</value>
+      <value>Gain1_save</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -507,7 +515,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(496, 584)</value>
+      <value>(696, 676)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -542,7 +550,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>49.</value>
+      <value>14.</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -550,7 +558,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(960, 476)</value>
+      <value>(696, 778)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -558,7 +566,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>Gain1s</value>
+      <value>Gain1_save</value>
     </param>
     <param>
       <key>option</key>
@@ -1346,7 +1354,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1192, 508)</value>
+      <value>(1188, 460)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1492,7 +1500,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1168, 476)</value>
+      <value>(839, 778)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1638,7 +1646,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(984, 684)</value>
+      <value>(1024, 655)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1685,7 +1693,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(984, 500)</value>
+      <value>(1014, 491)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2915,7 +2923,7 @@
     </param>
     <param>
       <key>bandwidth</key>
-      <value>Bandwidths</value>
+      <value>Bandwidth</value>
     </param>
     <param>
       <key>alias</key>
@@ -2931,7 +2939,7 @@
     </param>
     <param>
       <key>device</key>
-      <value>device_save</value>
+      <value>Device</value>
     </param>
     <param>
       <key>elevation</key>
@@ -2943,7 +2951,7 @@
     </param>
     <param>
       <key>frequency</key>
-      <value>Frequencys</value>
+      <value>Frequency</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -2955,7 +2963,7 @@
     </param>
     <param>
       <key>gain1</key>
-      <value>Gain1</value>
+      <value>float(Gain1)</value>
     </param>
     <param>
       <key>gain2</key>
@@ -2995,7 +3003,7 @@
     </param>
     <param>
       <key>site</key>
-      <value>telescope_save</value>
+      <value>Telescope</value>
     </param>
     <param>
       <key>vlen</key>
@@ -3018,7 +3026,7 @@
     </param>
     <param>
       <key>bandwidth</key>
-      <value>Bandwidths</value>
+      <value>Bandwidth</value>
     </param>
     <param>
       <key>alias</key>
@@ -3046,7 +3054,7 @@
     </param>
     <param>
       <key>frequency</key>
-      <value>Frequencys</value>
+      <value>Frequency</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -3074,7 +3082,7 @@
     </param>
     <param>
       <key>observers</key>
-      <value>observers_save</value>
+      <value>observer</value>
     </param>
     <param>
       <key>obstype</key>

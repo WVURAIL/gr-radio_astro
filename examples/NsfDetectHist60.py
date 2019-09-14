@@ -5,10 +5,8 @@
 # Title: Nsf RTLSDR Event Detect: 3MHz
 # Author: Glen Langston
 # Description: Event Detection using RTLSDR
-# Generated: Wed Aug  7 20:54:17 2019
+# Generated: Sat Sep 14 10:31:25 2019
 ##################################################
-
-from distutils.version import StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -20,9 +18,8 @@ if __name__ == '__main__':
         except:
             print "Warning: failed to XInitThreads()"
 
-from PyQt5 import Qt
-from PyQt5 import Qt, QtCore
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt4 import Qt
+from PyQt4.QtCore import QObject, pyqtSlot
 from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import gr
@@ -64,7 +61,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self.top_layout.addLayout(self.top_grid_layout)
 
         self.settings = Qt.QSettings("GNU Radio", "NsfDetectHist60")
-        self.restoreGeometry(self.settings.value("geometry", type=QtCore.QByteArray))
+        self.restoreGeometry(self.settings.value("geometry").toByteArray())
 
 
         ##################################################
@@ -122,6 +119,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self.Telescope = Telescope = telescope_save
         self.Observer = Observer = observer_save
         self.Mode = Mode = 2
+        self.Gain2 = Gain2 = 12.
         self.Gain1 = Gain1 = Gain1s
         self.Frequency = Frequency = Frequencys
         self.EventMode = EventMode = 0
@@ -145,7 +143,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._fftsize_line_edit = Qt.QLineEdit(str(self.fftsize))
         self._fftsize_tool_bar.addWidget(self._fftsize_line_edit)
         self._fftsize_line_edit.returnPressed.connect(
-        	lambda: self.set_fftsize(int(str(self._fftsize_line_edit.text()))))
+        	lambda: self.set_fftsize(int(str(self._fftsize_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._fftsize_tool_bar, 1, 2, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -156,7 +154,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Telescope_line_edit = Qt.QLineEdit(str(self.Telescope))
         self._Telescope_tool_bar.addWidget(self._Telescope_line_edit)
         self._Telescope_line_edit.returnPressed.connect(
-        	lambda: self.set_Telescope(str(str(self._Telescope_line_edit.text()))))
+        	lambda: self.set_Telescope(str(str(self._Telescope_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Telescope_tool_bar, 1, 0, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -167,7 +165,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Observer_line_edit = Qt.QLineEdit(str(self.Observer))
         self._Observer_tool_bar.addWidget(self._Observer_line_edit)
         self._Observer_line_edit.returnPressed.connect(
-        	lambda: self.set_Observer(str(str(self._Observer_line_edit.text()))))
+        	lambda: self.set_Observer(str(str(self._Observer_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Observer_tool_bar, 0, 0, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -194,7 +192,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
         self._Gain1_tool_bar.addWidget(self._Gain1_line_edit)
         self._Gain1_line_edit.returnPressed.connect(
-        	lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text()))))
+        	lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Gain1_tool_bar, 0, 2, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -205,7 +203,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Frequency_line_edit = Qt.QLineEdit(str(self.Frequency))
         self._Frequency_tool_bar.addWidget(self._Frequency_line_edit)
         self._Frequency_line_edit.returnPressed.connect(
-        	lambda: self.set_Frequency(eng_notation.str_to_num(str(self._Frequency_line_edit.text()))))
+        	lambda: self.set_Frequency(eng_notation.str_to_num(str(self._Frequency_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Frequency_tool_bar, 0, 5, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -232,7 +230,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Elevation_line_edit = Qt.QLineEdit(str(self.Elevation))
         self._Elevation_tool_bar.addWidget(self._Elevation_line_edit)
         self._Elevation_line_edit.returnPressed.connect(
-        	lambda: self.set_Elevation(eng_notation.str_to_num(str(self._Elevation_line_edit.text()))))
+        	lambda: self.set_Elevation(eng_notation.str_to_num(str(self._Elevation_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Elevation_tool_bar, 1, 7, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -243,7 +241,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Device_line_edit = Qt.QLineEdit(str(self.Device))
         self._Device_tool_bar.addWidget(self._Device_line_edit)
         self._Device_line_edit.returnPressed.connect(
-        	lambda: self.set_Device(str(str(self._Device_line_edit.text()))))
+        	lambda: self.set_Device(str(str(self._Device_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Device_tool_bar, 2, 0, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -254,7 +252,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Bandwidth_line_edit = Qt.QLineEdit(str(self.Bandwidth))
         self._Bandwidth_tool_bar.addWidget(self._Bandwidth_line_edit)
         self._Bandwidth_line_edit.returnPressed.connect(
-        	lambda: self.set_Bandwidth(eng_notation.str_to_num(str(self._Bandwidth_line_edit.text()))))
+        	lambda: self.set_Bandwidth(eng_notation.str_to_num(str(self._Bandwidth_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Bandwidth_tool_bar, 1, 5, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -265,7 +263,7 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Azimuth_line_edit = Qt.QLineEdit(str(self.Azimuth))
         self._Azimuth_tool_bar.addWidget(self._Azimuth_line_edit)
         self._Azimuth_line_edit.returnPressed.connect(
-        	lambda: self.set_Azimuth(eng_notation.str_to_num(str(self._Azimuth_line_edit.text()))))
+        	lambda: self.set_Azimuth(eng_notation.str_to_num(str(self._Azimuth_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Azimuth_tool_bar, 0, 7, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -275,17 +273,17 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_sample_rate(Bandwidth)
         self.rtlsdr_source_0.set_center_freq(Frequency, 0)
         self.rtlsdr_source_0.set_freq_corr(0, 0)
-        self.rtlsdr_source_0.set_dc_offset_mode(0, 0)
+        self.rtlsdr_source_0.set_dc_offset_mode(2, 0)
         self.rtlsdr_source_0.set_iq_balance_mode(0, 0)
         self.rtlsdr_source_0.set_gain_mode(False, 0)
-        self.rtlsdr_source_0.set_gain(float(Gain1), 0)
-        self.rtlsdr_source_0.set_if_gain(12, 0)
-        self.rtlsdr_source_0.set_bb_gain(12, 0)
+        self.rtlsdr_source_0.set_gain(Gain1, 0)
+        self.rtlsdr_source_0.set_if_gain(float(Gain2), 0)
+        self.rtlsdr_source_0.set_bb_gain(float(Gain2), 0)
         self.rtlsdr_source_0.set_antenna('', 0)
         self.rtlsdr_source_0.set_bandwidth(Bandwidth, 0)
 
         (self.rtlsdr_source_0).set_processor_affinity([3])
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', Observer, Telescope, Device, Gain1, Azimuth, Elevation)
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
         	fftsize,
@@ -543,13 +541,22 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
         self._Mode_callback(self.Mode)
         self.radio_astro_detect_0.set_mode( self.Mode)
 
+    def get_Gain2(self):
+        return self.Gain2
+
+    def set_Gain2(self, Gain2):
+        self.Gain2 = Gain2
+        self.rtlsdr_source_0.set_if_gain(float(self.Gain2), 0)
+        self.rtlsdr_source_0.set_bb_gain(float(self.Gain2), 0)
+
     def get_Gain1(self):
         return self.Gain1
 
     def set_Gain1(self, Gain1):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
-        self.rtlsdr_source_0.set_gain(float(self.Gain1), 0)
+        self.rtlsdr_source_0.set_gain(self.Gain1, 0)
+        self.radio_astro_ra_event_sink_0.set_gain1( self.Gain1)
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):
@@ -643,6 +650,10 @@ class NsfDetectHist60(gr.top_block, Qt.QWidget):
 
 def main(top_block_cls=NsfDetectHist60, options=None):
 
+    from distutils.version import StrictVersion
+    if StrictVersion(Qt.qVersion()) >= StrictVersion("4.5.0"):
+        style = gr.prefs().get_string('qtgui', 'style', 'raster')
+        Qt.QApplication.setGraphicsSystem(style)
     qapp = Qt.QApplication(sys.argv)
 
     tb = top_block_cls()
@@ -652,7 +663,7 @@ def main(top_block_cls=NsfDetectHist60, options=None):
     def quitting():
         tb.stop()
         tb.wait()
-    qapp.aboutToQuit.connect(quitting)
+    qapp.connect(qapp, Qt.SIGNAL("aboutToQuit()"), quitting)
     qapp.exec_()
 
 

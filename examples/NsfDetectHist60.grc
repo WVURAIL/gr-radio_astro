@@ -685,6 +685,33 @@
     </param>
   </block>
   <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(768, 768)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain2</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>12.</value>
+    </param>
+  </block>
+  <block>
     <key>variable_qtgui_chooser</key>
     <param>
       <key>comment</key>
@@ -1710,7 +1737,7 @@
     </param>
     <param>
       <key>gain1</key>
-      <value>float(Gain1)</value>
+      <value>Gain1</value>
     </param>
     <param>
       <key>id</key>
@@ -1753,7 +1780,7 @@
     </param>
     <param>
       <key>bb_gain0</key>
-      <value>12</value>
+      <value>float(Gain2)</value>
     </param>
     <param>
       <key>bw0</key>
@@ -1761,7 +1788,7 @@
     </param>
     <param>
       <key>dc_offset_mode0</key>
-      <value>0</value>
+      <value>2</value>
     </param>
     <param>
       <key>corr0</key>
@@ -1777,7 +1804,7 @@
     </param>
     <param>
       <key>if_gain0</key>
-      <value>12</value>
+      <value>float(Gain2)</value>
     </param>
     <param>
       <key>iq_balance_mode0</key>
@@ -1785,7 +1812,7 @@
     </param>
     <param>
       <key>gain0</key>
-      <value>float(Gain1)</value>
+      <value>Gain1</value>
     </param>
     <param>
       <key>ant10</key>

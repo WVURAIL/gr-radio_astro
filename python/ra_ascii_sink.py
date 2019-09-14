@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 19SEP14 GIL fix gain and telescope location
 # 18AUG18 GIL return time until average is complete
 # 18AUG17 GIL allow note file to have any extension on input
 # 18MAY20 GIL code cleanup
@@ -190,8 +191,8 @@ class ra_ascii_sink(gr.sync_block):
         """
         Record the SDR gain settings 
         """
-        self.obs.gain1 = float(gain1)
-        print 'Gain 1           : %7.2f' % (self.obs.gain1)
+        self.obs.gains[0] = float(gain1)
+        print 'Gain 1           : %7.2f' % (self.obs.gains[0])
         if dosave:
             self.save_setup()
 
@@ -199,8 +200,8 @@ class ra_ascii_sink(gr.sync_block):
         """
         Record the SDR gain settings 
         """
-        self.obs.gain2 = float(gain2)
-        print 'Gain 2           : %7.2f' % (self.obs.gain2)
+        self.obs.gains[1] = float(gain2)
+        print 'Gain 2           : %7.2f' % (self.obs.gains[1])
         if dosave:
             self.save_setup()
 
@@ -208,8 +209,8 @@ class ra_ascii_sink(gr.sync_block):
         """
         Record the SDR gain settings 
         """
-        self.obs.gain3 = float(gain3)
-        print 'Gain 3           : %7.2f' % (self.obs.gain3)
+        self.obs.gains[2] = float(gain3)
+        print 'Gain 3           : %7.2f' % (self.obs.gains[2])
         if dosave:
             self.save_setup()
 
@@ -241,6 +242,7 @@ class ra_ascii_sink(gr.sync_block):
         The setup files is a full spectrum
         """
         self.obs.write_ascii_file(self.setupdir, self.noteName)
+        print 'Updated: %s' % (self.noteName)
         
     def set_obstype(self, obstype):
         """
@@ -268,6 +270,7 @@ class ra_ascii_sink(gr.sync_block):
         Set the telescope name for this site
         """
         self.obs.site = str(site)
+        self.obs.noteA = str(site)
         print "Telescope : ", self.obs.site
         if dosave:
             self.save_setup()
