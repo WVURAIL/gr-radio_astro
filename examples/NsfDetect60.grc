@@ -2155,7 +2155,7 @@
     </param>
     <param>
       <key>gain1</key>
-      <value>float(Gain1)</value>
+      <value>Gain1</value>
     </param>
     <param>
       <key>id</key>
@@ -2206,7 +2206,7 @@
     </param>
     <param>
       <key>dc_offset_mode0</key>
-      <value>0</value>
+      <value>2</value>
     </param>
     <param>
       <key>corr0</key>
@@ -2230,7 +2230,7 @@
     </param>
     <param>
       <key>gain0</key>
-      <value>float(Gain1)</value>
+      <value>Gain1</value>
     </param>
     <param>
       <key>ant10</key>

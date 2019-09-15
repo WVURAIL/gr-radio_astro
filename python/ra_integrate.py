@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 19SEP14 GIL hanning smooth reference in case of subtracting fit
 # 19JUN21 GIL more code cleanup
 # 19JUN20 GIL subtract baseline from ref.   Integrate ref for 5 seconds
 # 19JUN19 GIL subtract baseline from ref.   Integrate ref for 30 seconds
@@ -121,7 +122,7 @@ class ra_integrate(gr.sync_block):
         self.shortave = np.zeros(self.vlen)
         self.shortlast = np.zeros(self.vlen)
         self.nshort=0
-        self.maxshort=30                         # count before restart sum
+        self.maxshort=20                         # count before restart sum
         self.oneovermax = float(1./self.maxshort)# normalization factor
         self.obs.nchan = self.vlen
         self.obs.refchan = self.vlen/2.
@@ -634,7 +635,11 @@ class ra_integrate(gr.sync_block):
                         self.shortlast = TSYS * self.shortlast * oneoverhot
                         self.yfit = self.shortlast[self.xfit]
                         thefit = np.polyfit( self.xfit, self.yfit, 1)
-                        refs = self.shortlast - ((self.xindex*thefit[0]) + thefit[1])
+                        temps = self.shortlast - ((self.xindex*thefit[0]) + thefit[1])
+                        # hanning smooth
+                        refs = 2.*temps
+                        refs[1:self.vlen-1] += (temps[0:self.vlen-2] + temps[2:self.vlen])
+                        refs = 0.25*refs
                         # will keep showing last short reference until next is ready
                         self.shortlast = refs
                         self.nshort = 0   # restart sum on next cycle

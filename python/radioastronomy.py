@@ -2,6 +2,8 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+19SEP14 GIL only use gains[] to store SDR gains
+19SEP11 GIL restore write_ascii_ave()
 19JUN29 GIL diagnose errors in vel2chan
 19JUN26 GIL fix error for smaller spectra introduced when adding events
 19MAY10 GIL slight code cleanup
@@ -310,7 +312,7 @@ class Spectrum(object):
         self.city = str("Green Bank") # observing city
         self.region = str("West Virginia") # observing region
         self.country = str("US")     # observing country
-        self.gains = gains           # one or more gain parameters
+        self.gains = copy.deepcopy(gains)    # one or more gain parameters
         self.telaz = 0.              # telescope azimuth (degrees)
         self.telel = 0.    # telescope elevation (degrees)
         self.tellon = 0.   # geographic longitude negative = West (degrees)
@@ -444,11 +446,6 @@ class Spectrum(object):
         fullname = dirname + outname
         outfile = open(fullname, 'w')
         outfile.write('# File: ' + outname + '\n')
-        gainstr = ''
-        ngains = len(self.gains)
-        for iii in range(ngains-1):
-            gainstr = gainstr + str(self.gains[iii]) + '; '
-        gainstr = gainstr + str(self.gains[ngains-1])
         self.noteA = self.noteA.replace('\n', '')
         self.noteA = self.noteA.strip()
         outline = '# NOTEA     = ' + self.noteA + '\n'
@@ -492,8 +489,6 @@ class Spectrum(object):
         self.frame = self.frame.replace('\n', '')
         self.frame = self.frame.strip()
         outline = '# FRAME     = ' + self.frame + '\n'
-        outfile.write(outline)
-        outline = '# GAINS     = ' + gainstr + '\n'
         outfile.write(outline)
         ngains = len(self.gains)
         if ngains > 0:
@@ -671,6 +666,29 @@ class Spectrum(object):
         outname = outname.replace(":", "")
         self.write_ascii_file(dirname, outname)
 
+    def write_ascii_ave(self, dirname):
+        """
+        Write ascii average file containing astronomy data
+        File name is based on time of observation
+        """
+        now = self.utc
+        strnow = now.isoformat()
+        datestr = strnow.split('.')
+        daypart = datestr[0]
+        yymmdd = daypart[2:19]    # actually date and time parts
+        yymmdd = yymmdd + "-ave"  # distiguish averages from observations
+        # distinguish hot load and regular observations
+        extension = '.ast'
+        if self.bunit == 'Kelvins':
+            extension = '.kel'
+        elif self.telel < 0:
+            extension = '.hot'
+        else:
+            extension = '.ast'
+        outname = yymmdd + extension
+        outname = outname.replace(":", "")
+        self.write_ascii_file(dirname, outname)
+
     def read_spec_ast(self, fullname):
         """
         Read an ascii radio Spectrum file or an event in radio samples and
@@ -788,38 +806,19 @@ class Spectrum(object):
                     self.erms = float(parts[3])
                 if parts[1] == 'EMJD':
                     self.emjd = float(parts[3])
-                # get one or more gains separated by ';'
-                if parts[1] == 'LNA' or parts[1] == 'GAINS':
-                    gains = []
-                    for jjj in range(3, len(parts)):
-                        gainstr = parts[jjj].replace(';', ' ')
-                        gainstr = gainstr.replace(',', ' ')
-                        moreparts = gainstr.split()
-                        for kkk in moreparts:
-                            gains.append(float(kkk))
-                    if verbose:
-                        print 'read: parts: ', parts
-                        print 'read: gains: ', gains
-                    self.gains = np.array(gains)
-                    # get one or more gains separated by ';'
-                if parts[1] == 'LNA=' or parts[1] == 'GAINS=':
-                    gains = []
-                    for jjj in range(2, len(parts)):
-                        gainstr = parts[jjj].replace(';', ' ')
-                        gainstr = gainstr.replace(',', ' ')
-                        moreparts = gainstr.split()
-                        for kkk in moreparts:
-                            gains.append(float(kkk))
-                    self.gains = np.array(gains)
+                # parse  GAIN1 = 10. etc; but ignore GAINS = line
                 apart = parts[1]
-                if apart[0:3] == 'GAIN':
-                    i = int(apart[4])
-                    if i > 0 and i < 6:
+                ifind = apart.find("GAIN")
+                if ifind >= 0:
+                    if verbose:
+                        print parts
+                    gainnumber = str(apart[ifind+4])
+                    if gainnumber.isdigit():
+                        i = int(gainnumber)
                         n = len(parts)
                         self.gains[i-1] = float(parts[n-1])
-                    else:
-                        if apart[4] != 'S':
-                            print "Error parsing GAINn: ", line
+                        if verbose:
+                            print 'Gain %d: %f' % (i, self.gains[i-1])
                 if parts[1] == 'OBSERVER':
                     otherparts = line.split('=')
                     self.observer = str(otherparts[1]).strip()

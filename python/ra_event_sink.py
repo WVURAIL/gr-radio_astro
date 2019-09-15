@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+"""
+Event writing function compatible with spectrum writing functions
+Glen Langston - 2019 September 14
+"""
 # -*- coding: utf-8 -*-
 #
 # Copyright 2018 Glen Langston, Quiet Skies <+YOU OR YOUR COMPANY+>.
@@ -14,6 +18,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 19SEP14 GIL make gain processing compatible with ra_ascii_sink.py
 # 19APR02 GIL cleanup typos
 # 19MAR26 GIL take observers, telescope, gain1, azimuth, elevation as inputs
 # 19MAR26 GIL record event peak and rms
@@ -21,12 +26,11 @@
 # 19JAN15 GIL initial version based on ra_ascii_sink
 
 import os
-import sys
 import datetime
 import numpy as np
 from gnuradio import gr
-import radioastronomy
 import pmt
+import radioastronomy
 
 try:
     import jdutil
@@ -54,8 +58,11 @@ class ra_event_sink(gr.sync_block):
     """
     def __init__(self, noteName, vlen, frequency, bandwidth, record, note, observer, telescope, device,
                  gain1, azimuth, elevation):
+        """
+        Initialize the event writing setup, recording the observing parameters
+        """
         gr.sync_block.__init__(self,
-                               name="ra_event_sink",              
+                               name="ra_event_sink",
                                # inputs: time sequence of I,Q values,
                                # peak, rms, Event MJD
                                in_sig=[(np.complex64, int(vlen))],
@@ -66,20 +73,20 @@ class ra_event_sink(gr.sync_block):
         self.record = int(record)
         noteName = str(noteName)
         # first keep setup info in class header
-        self.observer = str( observer)
-        self.site = str( telescope)
-        self.noteA = str( note)
-        self.device = str( device)
-        self.gains = np.zeros(3)
-        self.gains[0] = float(gain1)
+        self.observer = str(observer)
+        self.site = str(telescope)
+        self.noteA = str(note)
+        self.device = str(device)
         self.telaz = float(azimuth)
         self.telel = float(elevation)
         self.bandwidthMHz = float(bandwidth)
         self.frequencyMHz = float(frequency)
-        self.obs = radioastronomy.Spectrum( nChan=0, nSamples=vlen)
+        self.gain1 = float(gain1)
+        self.obs = radioastronomy.Spectrum(nChan=0, nSamples=vlen)
+        # now transfer parameters to the observations file
         self.setupdir = "./"
         # read all generic setup info in the note file
-        self.set_setup( noteName, doSave = True)
+        self.set_setup(noteName, doSave=True)
         # report newly discovered tags once
         self.lasttag = ""
 
@@ -91,6 +98,10 @@ class ra_event_sink(gr.sync_block):
         return ninput_items
 
     def set_sample_rate(self, bandwidthMHz, doSave=True):
+        """
+        Set the sample rate for these event detections.
+        The sample rate determines the time resolution
+        """
         self.bandwidthMHz = np.float(bandwidthMHz)
         if self.bandwidthMHz <= 0.0001:
             print "Invalid Bandwidth: ", self.bandwidthMHz
@@ -98,25 +109,25 @@ class ra_event_sink(gr.sync_block):
         if self.bandwidthMHz >= 1000.:
             print "Invalid Bandwidth: ", self.bandwidthMHz
             self.bandwidthMHz = 1.
-        self.obs.bandwidthHz = self.bandwidthMHz*1.E6  # observation units Hz
+        self.obs.bandwidthHz = self.bandwidthMHz*1.E6  # observation units Hzo
         print "Setting Bandwidth: %10.6f MHz" % (1.E-6*self.obs.bandwidthHz)
         self.obs.dt = 1./np.fabs(self.obs.bandwidthHz)
         t = -self.obs.dt * self.obs.refSample
-        print "NChan = %5d; NSamples = %5d" % (self.obs.nChan,self.obs.nSamples)
+        print "NChan = %5d; NSamples = %5d" % (self.obs.nChan, self.obs.nSamples)
         print "N x   = %5d; N y      = %5d" % (len(self.obs.xdata), len(self.obs.ydataA))
         for iii in range(self.vlen):
             self.obs.xdata[iii] = t
             t = t + self.obs.dt
         if doSave:
-            self.obs.write_ascii_file( self.setupdir, self.noteName);
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
     def set_frequency(self, frequencyMHz, doSave=True):
         self.frequencyMHz = np.float(frequencyMHz)
         self.obs.centerFreqHz = self.frequencyMHz*1.E6  # observation units Hz
         if doSave:
-            self.obs.write_ascii_file( self.setupdir, self.noteName);
+            self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_device(self, device, doSave = True):
+    def set_device(self, device, doSave=True):
         """
         Record the software defined radio device type and setup
         """
@@ -124,7 +135,7 @@ class ra_event_sink(gr.sync_block):
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)    # read the parameters 
 
-    def set_observer(self, observer, doSave = True):
+    def set_observer(self, observer, doSave=True):
         """
         Save Observer Names
         """
@@ -133,7 +144,7 @@ class ra_event_sink(gr.sync_block):
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_telescope(self, telescope, doSave = True):
+    def set_telescope(self, telescope, doSave=True):
         """
         Save Telescope Names
         """
@@ -142,25 +153,32 @@ class ra_event_sink(gr.sync_block):
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_note(self, noteA, doSave = True):
+    def set_note(self, noteA, doSave=True):
         """
         Save Note decribing the observations
         """
-        self.noteA = str( noteA)
+        self.noteA = str(noteA)
         self.obs.noteA = self.noteA
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_gain1(self, gain1, doSave = True):
+    def set_gain1(self, gain1, doSave=True):
         """
         Save SDR Gain parameter (dB)
         """
-        self.gains[0] = float(gain1)
-        self.obs.gains[0] = self.gains[0]
+        self.gain1 = float(gain1)
+        self.obs.gains[0] = float(gain1)
+        print "Gain 1: %7.2f" % (self.gain1)
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_telaz(self, telaz, doSave = True):
+    def set_gain(self, gain1, doSave=True):
+        """
+        Save SDR Gain parameter (dB) alias
+        """
+        self.set_gain1( self, gain1, doSave)
+
+    def set_telaz(self, telaz, doSave=True):
         """
         Save Telescope Azimuth
         """
@@ -169,24 +187,24 @@ class ra_event_sink(gr.sync_block):
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_vlen(self, vlen, doSave = True):
+    def set_vlen(self, vlen, doSave=True):
         """
-        Save Telescope Elevation
+        Save vector length
         """
         self.vlen = int(vlen)
         if self.vlen < 16:
             self.vlen = 16
-            print "Vector Length too small: %3d, using %3d" % (int(vlen),self.vlen)
+            print "Vector too short: %3d, using %3d" % (int(vlen), self.vlen)
         self.obs.nSamples = self.vlen
-        self.obs.xdata = np.zeros( self.vlen)
-        self.obs.ydataA = np.zeros( self.vlen)
-        self.obs.ydataB = np.zeros( self.vlen)
+        self.obs.xdata = np.zeros(self.vlen)
+        self.obs.ydataA = np.zeros(self.vlen)
+        self.obs.ydataB = np.zeros(self.vlen)
         self.obs.refsample = self.vlen/2.
         self.obs.count = 1
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_telel(self, telel, doSave = True):
+    def set_telel(self, telel, doSave=True):
         """
         Save Telescope Elevation
         """
@@ -206,13 +224,13 @@ class ra_event_sink(gr.sync_block):
             print '!!! Warning, unexpected Notes File name! '
             print '!!! Using file: ', self.noteName
         else:
-            if os.path.isfile( self.noteName):
+            if os.path.isfile(self.noteName):
                 print 'Setup File       : ', self.noteName
             else:
-                if os.path.isfile( "Watch.not"):
+                if os.path.isfile("Watch.not"):
                     try:
                         import shutil
-                        shutil.copyfile( "Watch.not", self.noteName)
+                        shutil.copyfile("Watch.not", self.noteName)
                         print "Created %s from file: Watch.not" % (self.noteName)
                     except:
                         pformat = "! Create the Note file %s, and try again !" 
@@ -229,19 +247,20 @@ class ra_event_sink(gr.sync_block):
         self.obs.xdata = np.zeros(self.vlen)
         now = datetime.datetime.utcnow()
         self.eventutc = now
+        # set default events values
         self.emjd = 0.
+        self.epeak = 0.
+        self.erms = 1.
         self.lastmjd = 0.
         self.obs.utc = now
         self.obs.site = self.site
         self.obs.noteA = self.noteA
         self.obs.device = self.device
-        self.obs.gains[0] = self.gains[0]
         self.obs.telaz = self.telaz
         self.obs.telel = self.telel
         self.obs.centerFreqHz = self.frequencyMHz*1.E6
-        self.xdata = np.zeros(self.vlen)
-        self.ydataA = np.zeros(self.vlen)
-        self.ydataB = np.zeros(self.vlen)
+        self.obs.bandwidthHz = self.bandwidthMHz*1.E6
+        self.obs.gains[0] = self.gain1
 
         self.obs.datadir = "../events/"          # writing events not spectra
         self.obs.noteB = "Event Detection"
@@ -251,10 +270,10 @@ class ra_event_sink(gr.sync_block):
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
             print 'DataDir          : ', self.obs.datadir
-        self.set_sample_rate( self.bandwidthMHz, doSave=doSave)
-    
+        self.set_sample_rate(self.bandwidthMHz, doSave=doSave)
+
     def set_record(self, record):
-        """ 
+        """
         When changing record status, need to update counters
         """
         if record == radioastronomy.INTWAIT: 
@@ -312,7 +331,7 @@ class ra_event_sink(gr.sync_block):
                 self.lastmjd = self.emjd
                 self.obs.ydataA = samples.real
                 self.obs.ydataB = samples.imag
-                utc = jdutil.mjd_to_datetime( self.emjd)
+                utc = jdutil.mjd_to_datetime(self.emjd)
                 self.obs.utc = utc
                 self.obs.emjd = self.emjd
                 self.obs.epeak = self.epeak
@@ -321,17 +340,12 @@ class ra_event_sink(gr.sync_block):
                 strnow = utc.isoformat()
                 datestr = strnow.split('.')
                 daypart = datestr[0]
-                if len( datestr) > 1:
+                if len(datestr) > 1:
                     milliseconds = datestr[1]            # need to add milliseconds to file name
                 else:
                     milliseconds = "000"                 # rare case of no milliseconds
                 milliseconds = milliseconds[0:3]
                 yymmdd = daypart[2:19]
-#                print 'Sink Event: ', self.ecount
-#                print 'Sink Utc : ', self.obs.utc
-#                print 'Sink MJD : %15.9f' % (self.emjd)
-#                print 'Sink days: %12.6f + %12.6f ' % (fdays, hours)
-#                print 'Sink Magnitude: ', peaks, ' +/- ', rmss
                 if self.record == radioastronomy.INTRECORD:
                     #remove : from time
                     yymmdd = yymmdd.replace(":", "")
@@ -339,8 +353,7 @@ class ra_event_sink(gr.sync_block):
                     outname = yymmdd + '.eve'   # tag as an event
                     self.obs.writecount = self.obs.writecount + 1
                     # need to keep track of total number of spectra averaged
-                    tempcount = self.obs.count
-                    self.obs.write_ascii_file( self.obs.datadir, outname)
+                    self.obs.write_ascii_file(self.obs.datadir, outname)
                     print('\a')  # ring the terminal bell
                 self.ecount = self.ecount + 1
             nout = nout+1

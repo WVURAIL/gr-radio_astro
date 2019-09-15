@@ -14,7 +14,7 @@
   <callback>set_telescope( $telescope)</callback>
   <callback>set_device( $device)</callback>
   <callback>set_frequency( $frequency)</callback>
-  <callback>set_gain( $gain)</callback>
+  <callback>set_gain1( $gain1)</callback>
   <callback>set_telaz( $azimuth)</callback>
   <callback>set_telel( $elevation)</callback>
   <!-- Make one 'param' node for every Parameter you want settable from the GUI.
