@@ -33,5 +33,6 @@ install(FILES
     radio_astro_ra_event_sink.xml
     radio_astro_dedispersed.xml
     radio_astro_Kelvin_to_Janskey.xml
-    radio_astro_Pulse_detection.xml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_Pulse_detection.xml
+    radio_astro_Period_Pulse_detection.xml DESTINATION share/gnuradio/grc/blocks
 )
