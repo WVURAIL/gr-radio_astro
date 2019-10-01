@@ -23,6 +23,7 @@ import numpy as np
 from gnuradio import gr
 from scipy import signal
 
+
 def peakfinder_pulsar_DM(x, threshold):
     '''
     Finds the peaks in a dedispersed pulsar that has been run through a matched filter with a Gaussian.
@@ -74,6 +75,8 @@ def _detection(img1, img2, pac_size, pw, nt, ndm):
     img2    : (float array) The noise that is assumed to be the background noise for the pulsar.
     pac_size: (int) The number of samples wide the pulse will be
     pw      : (float) The variance of the pulse
+    nt      : (int) Number of timesteps for the data
+    ndm     : (int) Number of DMs looked at
 
 
     OUTPUT
@@ -87,14 +90,23 @@ def _detection(img1, img2, pac_size, pw, nt, ndm):
 
     img1 = img1.reshape((ndm, nt))
     img2 = img2.reshape((ndm,nt))
+
+    ffty = np.fft.fft(img1, axis=1)
+    ffty_noise = np.fft.fft(img2, axis=1)
+    
+    window=(signal.tukey(ffty.shape[1], .006))  # The alpha parameter was found based on trial and error.
+    B=abs(window*ffty[:])                     
+    window_noise = (signal.tukey(ffty_noise.shape[1], .006))
+    B_noise = abs(window_noise*ffty_noise[:]) 
+
     gau = np.exp(.5*-( np.arange(-int(pac_size/2),int(pac_size/2)) /pw)**2)
     correlates = []
     corr_bb = []
     #print(gau)
     
     for i in range(len(img1)):
-        correlates.append(signal.convolve(img1[i], gau, mode='same'))
-        corr_bb.append(signal.convolve(img2[i],gau,mode='valid'))
+        correlates.append(signal.convolve(B[i], gau, mode='same'))
+        corr_bb.append(signal.convolve(B_noise[i],gau,mode='valid'))
     correlates = np.asarray(correlates)
     corr_bb = np.asarray(corr_bb)
     #print(correlates.shape)
@@ -103,8 +115,18 @@ def _detection(img1, img2, pac_size, pw, nt, ndm):
     mean_heights = np.zeros(len(correlates))
     for i in range(len(correlates)):
         mean_heights[i] = np.mean(correlates[i])
-    peak_heights = peakfinder_pulsar_DM(correlates, mean_heights)
+    peak_heights = peakfinder_pulsar_DM(correlates, mean_heights*10)
+    print(len(peak_heights[0]))
+    for i in range(len(correlates)):
+        count=2
+        print(i)
+        while len(peak_heights[i])< len(peak_heights[0]):
+            peak_heights[i:] = (peakfinder_pulsar_DM(correlates[:], mean_heights[:]*20/count))[i:]
+            count += 1
+            if count==10:
+                peak_heights[i:] = 0
     #print(peak_heights)
+
     maximums = np.zeros(len(peak_heights))
     for i in range(len(peak_heights)):
         maximums[i] = np.mean(peak_heights[i])
@@ -122,8 +144,7 @@ def _detection(img1, img2, pac_size, pw, nt, ndm):
 class Pulse_detection(gr.sync_block):
     """
 
-    Determines if a pulsar has been detected. If so, the data is let through and the dedispersed pulsar is given as an output array. If not, then nothing is given
-    and the statement that a pulsar has not been detected is printed.
+    Determines if a pulsar has been detected. If so, the data is let through and the dedispersed pulsar is given as an output array. If not, then nothing is given and the statement that a pulsar has not been detected is printed.
 
 
     INPUT
@@ -132,6 +153,8 @@ class Pulse_detection(gr.sync_block):
     img2    : (float vector) The noise that is assumed to be the background noise for the pulsar.
     pac_size: (int) The number of samples wide the pulse will be
     pw      : (float) The variance of the pulse
+    nt      : (int) Number of timesteps for the data
+    dms     : (int) Number of DMs looked at   
 
 
     OUTPUT
