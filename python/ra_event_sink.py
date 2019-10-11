@@ -18,6 +18,7 @@ Glen Langston - 2019 September 14
 # GNU General Public License for more details.
 #
 # HISTORY
+# 19OCT11 GIL add test for duplicate events, sensed by same RMS as last event
 # 19SEP14 GIL make gain processing compatible with ra_ascii_sink.py
 # 19APR02 GIL cleanup typos
 # 19MAR26 GIL take observers, telescope, gain1, azimuth, elevation as inputs
@@ -251,6 +252,7 @@ class ra_event_sink(gr.sync_block):
         self.emjd = 0.
         self.epeak = 0.
         self.erms = 1.
+        self.lastRms = 1.
         self.lastmjd = 0.
         self.obs.utc = now
         self.obs.site = self.site
@@ -336,6 +338,13 @@ class ra_event_sink(gr.sync_block):
                 self.obs.emjd = self.emjd
                 self.obs.epeak = self.epeak
                 self.obs.erms = self.erms
+                if self.erms == self.lastRms:
+                    print "Duplicate Event, not writing!"
+                    print "RMS == last RMS: %7.3f" % (self.erms)
+                    nout = nout+1
+                    continue
+                else:
+                    self.lastRms = self.erms
                 # create file name from event time
                 strnow = utc.isoformat()
                 datestr = strnow.split('.')
