@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: PlutoSDR Dongle
-# Generated: Thu Jul 25 15:13:19 2019
+# Generated: Fri Oct 11 12:00:28 2019
 ##################################################
 
 from distutils.version import StrictVersion
@@ -110,11 +110,6 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
         try: nAves = self._nAves_config.getint('main', 'nave')
         except: nAves = 20
         self.nAves = nAves
-        self._frame_save_config = ConfigParser.ConfigParser()
-        self._frame_save_config.read(ConfigFile)
-        try: frame_save = self._frame_save_config.getint('main', 'Frame')
-        except: frame_save = 0
-        self.frame_save = frame_save
         self.fftsize = fftsize = fftsize_save
         self._device_save_config = ConfigParser.ConfigParser()
         self._device_save_config.read(ConfigFile)
@@ -152,7 +147,6 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
         self.observer = observer = observers_save
         self.nAve = nAve = nAves
         self.Xaxis = Xaxis = xaxis_save
-        self.VelFrame = VelFrame = frame_save
         self.Telescope = Telescope = telescope_save
         self.Record = Record = 0
         self.Gain2 = Gain2 = 12.
@@ -345,7 +339,7 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["black", "dark green", "red", "blue", "cyan",
+        colors = ["gold", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
@@ -451,22 +445,6 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
-        self._VelFrame_options = (0, 1, 2, )
-        self._VelFrame_labels = ('Topocentric', 'LSRK', 'Barycentric', )
-        self._VelFrame_tool_bar = Qt.QToolBar(self)
-        self._VelFrame_tool_bar.addWidget(Qt.QLabel('Frame'+": "))
-        self._VelFrame_combo_box = Qt.QComboBox()
-        self._VelFrame_tool_bar.addWidget(self._VelFrame_combo_box)
-        for label in self._VelFrame_labels: self._VelFrame_combo_box.addItem(label)
-        self._VelFrame_callback = lambda i: Qt.QMetaObject.invokeMethod(self._VelFrame_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._VelFrame_options.index(i)))
-        self._VelFrame_callback(self.VelFrame)
-        self._VelFrame_combo_box.currentIndexChanged.connect(
-        	lambda i: self.set_VelFrame(self._VelFrame_options[i]))
-        self.top_grid_layout.addWidget(self._VelFrame_tool_bar, 7, 2, 1, 1)
-        for r in range(7, 8):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 3):
-            self.top_grid_layout.setColumnStretch(c, 1)
         self._Telescope_tool_bar = Qt.QToolBar(self)
         self._Telescope_tool_bar.addWidget(Qt.QLabel('Tel'+": "))
         self._Telescope_line_edit = Qt.QLineEdit(str(self.Telescope))
@@ -582,12 +560,6 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
         	self._nAves_config.add_section('main')
         self._nAves_config.set('main', 'nave', str(self.nAve))
         self._nAves_config.write(open(self.ConfigFile, 'w'))
-        self._frame_save_config = ConfigParser.ConfigParser()
-        self._frame_save_config.read(self.ConfigFile)
-        if not self._frame_save_config.has_section('main'):
-        	self._frame_save_config.add_section('main')
-        self._frame_save_config.set('main', 'Frame', str(self.VelFrame))
-        self._frame_save_config.write(open(self.ConfigFile, 'w'))
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)
         if not self._fftsize_save_config.has_section('main'):
@@ -705,13 +677,6 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
     def set_nAves(self, nAves):
         self.nAves = nAves
         self.set_nAve(self.nAves)
-
-    def get_frame_save(self):
-        return self.frame_save
-
-    def set_frame_save(self, frame_save):
-        self.frame_save = frame_save
-        self.set_VelFrame(self.frame_save)
 
     def get_fftsize(self):
         return self.fftsize
@@ -872,19 +837,6 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
         self._xaxis_save_config.set('main', 'Xaxis', str(self.Xaxis))
         self._xaxis_save_config.write(open(self.ConfigFile, 'w'))
         self.qtgui_vector_sink_f_0_0.set_x_axis(self.xmins[self.Xaxis], self.xsteps[self.Xaxis])
-
-    def get_VelFrame(self):
-        return self.VelFrame
-
-    def set_VelFrame(self, VelFrame):
-        self.VelFrame = VelFrame
-        self._frame_save_config = ConfigParser.ConfigParser()
-        self._frame_save_config.read(self.ConfigFile)
-        if not self._frame_save_config.has_section('main'):
-        	self._frame_save_config.add_section('main')
-        self._frame_save_config.set('main', 'Frame', str(self.VelFrame))
-        self._frame_save_config.write(open(self.ConfigFile, 'w'))
-        self._VelFrame_callback(self.VelFrame)
 
     def get_Telescope(self):
         return self.Telescope
