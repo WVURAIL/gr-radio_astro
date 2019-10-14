@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>NsfIntegrate: Average+Record Astronomical Obs.</value>
+      <value>NSF Watch for Events whille recording spectra</value>
     </param>
     <param>
       <key>placement</key>
