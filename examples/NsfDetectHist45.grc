@@ -433,7 +433,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>5,0, 1, 2</value>
+      <value>2 ,2, 1, 2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -704,7 +704,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>6,0,1,2</value>
+      <value>2,5,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1041,7 +1041,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>7,0,1,2</value>
+      <value>2,7,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1395,7 +1395,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>3,0,2,6</value>
+      <value>3,0,2,5</value>
     </param>
     <param>
       <key>_rotation</key>
