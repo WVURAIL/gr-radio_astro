@@ -2292,7 +2292,7 @@
     </param>
     <param>
       <key>bandwidth</key>
-      <value>Bandwidths</value>
+      <value>Bandwidth</value>
     </param>
     <param>
       <key>alias</key>
@@ -2320,7 +2320,7 @@
     </param>
     <param>
       <key>frequency</key>
-      <value>Frequencys</value>
+      <value>Frequency</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -2455,7 +2455,7 @@
     </param>
     <param>
       <key>setup</key>
-      <value>ObsName+".not"</value>
+      <value>ObsName+"Event.not"</value>
     </param>
     <param>
       <key>telescope</key>
