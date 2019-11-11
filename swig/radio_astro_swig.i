@@ -10,6 +10,7 @@
 %{
 #include "radio_astro/dedispersion.h"
 #include "radio_astro/detect.h"
+#include "radio_astro/vmedian.h"
 %}
 
 
@@ -17,3 +18,5 @@
 GR_SWIG_BLOCK_MAGIC2(radio_astro, dedispersion);
 %include "radio_astro/detect.h"
 GR_SWIG_BLOCK_MAGIC2(radio_astro, detect);
+%include "radio_astro/vmedian.h"
+GR_SWIG_BLOCK_MAGIC2(radio_astro, vmedian);

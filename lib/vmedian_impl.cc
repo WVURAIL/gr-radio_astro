@@ -33,7 +33,7 @@ namespace gr {
   namespace radio_astro {
 
     vmedian::sptr
-    vmedian::make(int vec_length, int nt)
+    vmedian::make(int vec_length, int n)
     {
       return gnuradio::get_initial_sptr
         (new vmedian_impl(vec_length, n));
@@ -99,13 +99,19 @@ namespace gr {
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)
     {
-      const float *in = (const float *) input_items[0];
-      float *out = (float *) output_items[0];
+      const float *in = (const float *) input_items[0], * onein;
+      float *out = (float *) output_items[0], * oneout;
       unsigned ninputs = ninput_items.size();
       int success, nout = 0;
 
+      // for all input vectors
       for (unsigned j = 0; j < ninputs; j++) 
-	{ success = vmedian(in, out);
+	{ // process one vector at a time
+	  onein = &in[j];
+	  // write 0 or 1 output vectors
+	  oneout = &out[nout];
+	  success = vmedian( onein, oneout);
+	  // every n vectors, one more output is written 
 	  nout += success;
 	}
       // Tell runtime system how many input items we consumed on
@@ -141,16 +147,17 @@ namespace gr {
       else {  /* if here, count is full, time to complete the median */
 	  for(unsigned int j=0; j < vlen; j++)
 	    { if (input[j] > vmax[j])
-		out[j] = vsum[j] - vmin[j];
+		output[j] = vsum[j] - vmin[j];
 	      else if (input[j] < vmin[j])
-		out[j] = vsum[j] - vmax[j];
+		output[j] = vsum[j] - vmax[j];
 	      else { /* else neither min nor max, must add to sum */
 		vsum[j] += input[j];
-		out[j] = vsum[j] - (vmax[j] + vmin[j]);
+		output[j] = vsum[j] - (vmax[j] + vmin[j]);
 	      } /* end else neither min nor max */
 	    } /* end for all channels */
+	  // finally scale by number of vectors averaged
 	  for(unsigned int j=0; j < vlen; j++)
-	     out[j] *= oneovern2;
+	     output[j] *= oneovern2;
 	  nout = 1;
 	  count = 0;
       } /* end else final count */

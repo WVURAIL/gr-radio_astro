@@ -38,9 +38,9 @@ namespace gr {
       int d_n2 = d_n-2;
       int count = 0;          // count of vectors so far processed
       int vlen = d_vec_length;
-      float vsum[MAX_BUFF];   // vector sum of samples in channel
-      float vmin[MAX_BUFF];   // vector of minimum values in channel
-      float vmax[MAX_BUFF];   // vector of maximum values in channel
+      float vsum[MAX_VLEN];   // vector sum of samples in channel
+      float vmin[MAX_VLEN];   // vector of minimum values in channel
+      float vmax[MAX_VLEN];   // vector of maximum values in channel
       float oneovern2 = 1./float(d_n2);  // Normally median 4 values, so exclude min,max (2)
       
      public:
@@ -54,7 +54,7 @@ namespace gr {
 
       void set_vlen( int vec_length);
       
-      int vmedian(const gr_complex *input, gr_complex *output);
+      int vmedian(const float *input, float *output);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,

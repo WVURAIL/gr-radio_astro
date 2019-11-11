@@ -26,7 +26,7 @@ install(FILES
     radio_astro_ra_vave.xml
     radio_astro_ra_ascii_sink.xml
     radio_astro_ra_vmedian.xml
-    radio_astro_ra_vmedian.xml
+    radio_astro_vmedian.xml
     radio_astro_systemp_calibration.xml
     radio_astro_detect.xml
     radio_astro_ra_event_log.xml
