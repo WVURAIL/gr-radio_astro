@@ -22,7 +22,7 @@
     </param>
     <param>
       <key>description</key>
-      <value>PlutoSDR Dongle</value>
+      <value>PlutoSDR Dongle at Max rate for all samples</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>NsfIntegrate45</value>
+      <value>NsfIntegrate32</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -663,7 +663,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"Integrate45"</value>
+      <value>"Integrate32"</value>
     </param>
   </block>
   <block>
@@ -1729,7 +1729,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(491, 133)</value>
+      <value>(488, 128)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1772,7 +1772,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(704, 248)</value>
+      <value>(720, 244)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1815,7 +1815,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(491, 25)</value>
+      <value>(488, 28)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1874,7 +1874,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(688, 0)</value>
+      <value>(672, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2059,7 +2059,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(696, 107)</value>
+      <value>(656, 108)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2613,7 +2613,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1167, 245)</value>
+      <value>(1112, 248)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2999,7 +2999,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(932, 225)</value>
+      <value>(912, 232)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3051,7 +3051,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vmedian</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -3070,7 +3070,101 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(504, 240)</value>
+      <value>(728, 304)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_vmedian_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>vdecimate</key>
+      <value>4</value>
+    </param>
+  </block>
+  <block>
+    <key>radio_astro_vmedian</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(576, 304)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_vmedian_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>vdecimate</key>
+      <value>4</value>
+    </param>
+  </block>
+  <block>
+    <key>radio_astro_vmedian</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(568, 240)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3078,7 +3172,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vmedian_0</value>
+      <value>radio_astro_vmedian_0_0_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -3098,7 +3192,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vmedian</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -3117,7 +3211,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(320, 240)</value>
+      <value>(424, 240)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3125,7 +3219,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vmedian_0_0</value>
+      <value>radio_astro_vmedian_0_0_0_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -3145,7 +3239,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vmedian</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -3164,7 +3258,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(504, 312)</value>
+      <value>(424, 304)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3172,101 +3266,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vmedian_0_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-  </block>
-  <block>
-    <key>radio_astro_ra_vmedian</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(320, 312)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vmedian_0_1</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-  </block>
-  <block>
-    <key>radio_astro_ra_vmedian</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(688, 312)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vmedian_0_1_0</value>
+      <value>radio_astro_vmedian_0_0_1</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -3299,7 +3299,7 @@
   </connection>
   <connection>
     <source_block_id>blocks_complex_to_mag_squared_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0</sink_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -3364,38 +3364,38 @@
     <sink_key>4</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_0_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_1_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_1</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_1_0</source_block_id>
+    <source_block_id>radio_astro_vmedian_0</source_block_id>
     <sink_block_id>radio_astro_ra_ascii_sink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_1_0</source_block_id>
+    <source_block_id>radio_astro_vmedian_0</source_block_id>
     <sink_block_id>radio_astro_ra_integrate_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0_0_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0_0_0_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0_0_1</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

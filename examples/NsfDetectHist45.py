@@ -5,7 +5,7 @@
 # Title: Nsf PlutoSdr Event Detect: 4.5MHz
 # Author: Glen Langston
 # Description: Event Detection using PlutoSdr
-# Generated: Fri Aug  2 22:30:15 2019
+# Generated: Fri Oct 11 12:09:16 2019
 ##################################################
 
 from distutils.version import StrictVersion
@@ -134,10 +134,10 @@ class NsfDetectHist45(gr.top_block, Qt.QWidget):
         ##################################################
         self._nsigma_range = Range(0., 10., .1, 5.0, 100)
         self._nsigma_win = RangeWidget(self._nsigma_range, self.set_nsigma, 'N Sigma', "counter", float)
-        self.top_grid_layout.addWidget(self._nsigma_win, 7, 0, 1, 2)
-        for r in range(7, 8):
+        self.top_grid_layout.addWidget(self._nsigma_win, 2, 7, 1, 2)
+        for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
+        for c in range(7, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._fftsize_tool_bar = Qt.QToolBar(self)
         self._fftsize_tool_bar.addWidget(Qt.QLabel('Sample_Size'+": "))
@@ -183,10 +183,10 @@ class NsfDetectHist45(gr.top_block, Qt.QWidget):
         self._Mode_callback(self.Mode)
         self._Mode_combo_box.currentIndexChanged.connect(
         	lambda i: self.set_Mode(self._Mode_options[i]))
-        self.top_grid_layout.addWidget(self._Mode_tool_bar, 6, 0, 1, 2)
-        for r in range(6, 7):
+        self.top_grid_layout.addWidget(self._Mode_tool_bar, 2, 5, 1, 2)
+        for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
+        for c in range(5, 7):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Gain1_tool_bar = Qt.QToolBar(self)
         self._Gain1_tool_bar.addWidget(Qt.QLabel('Gain1'+": "))
@@ -221,10 +221,10 @@ class NsfDetectHist45(gr.top_block, Qt.QWidget):
         self._EventMode_callback(self.EventMode)
         self._EventMode_combo_box.currentIndexChanged.connect(
         	lambda i: self.set_EventMode(self._EventMode_options[i]))
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 5, 0, 1, 2)
-        for r in range(5, 6):
+        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 2, 2, 1, 2)
+        for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
+        for c in range(2, 4):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Elevation_tool_bar = Qt.QToolBar(self)
         self._Elevation_tool_bar.addWidget(Qt.QLabel('Elevation'+": "))
@@ -314,10 +314,10 @@ class NsfDetectHist45(gr.top_block, Qt.QWidget):
             self.qtgui_histogram_sink_x_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_histogram_sink_x_0_win = sip.wrapinstance(self.qtgui_histogram_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_histogram_sink_x_0_win, 3, 0, 2, 6)
+        self.top_grid_layout.addWidget(self._qtgui_histogram_sink_x_0_win, 3, 0, 2, 5)
         for r in range(3, 5):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 6):
+        for c in range(0, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.pluto_source_0 = iio.pluto_source('192.168.2.1', int(int(Frequency)), int(int(Bandwidth)), int(20000000), 0x8000, False, False, True, "manual", float(Gain1), '', True)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
@@ -535,6 +535,7 @@ class NsfDetectHist45(gr.top_block, Qt.QWidget):
     def set_Gain1(self, Gain1):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
+        self.radio_astro_ra_event_sink_0.set_gain1( float(self.Gain1))
         self.pluto_source_0.set_params(int(int(self.Frequency)), int(int(self.Bandwidth)), int(20000000), False, False, True, "manual", float(self.Gain1), '', True)
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)

@@ -1,4 +1,4 @@
-# File: Integrate45.not
+# File: Integrate32.not
 # NOTEA     = Pi#2 RectangularHorn PlutoSdr
 # NOTEB     = Event Detection
 # OBSERVER  = Science Aficionado
@@ -32,7 +32,7 @@
 # NAVE      = 250
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2019-10-14 23:40:01.941099
+# UTC       = 2019-11-12 14:16:29.831779
 # LST       = 13:39:01.190
 # AZ        = 180.0
 # EL        = -40.0

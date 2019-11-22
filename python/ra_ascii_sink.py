@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 19OCT14 GIL track down time estimate issues
 # 19SEP14 GIL fix gain and telescope location
 # 18AUG18 GIL return time until average is complete
 # 18AUG17 GIL allow note file to have any extension on input
@@ -150,11 +151,15 @@ class ra_ascii_sink(gr.sync_block):
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
         print "Setting Bandwidth: %10.0f Hz" % (self.obs.bandwidthHz)
-        self.dt = self.obs.nmedian * self.vlen / self.obs.bandwidthHz
+        self.dt = self.obs.nmedian * self.obs.nChan / self.obs.bandwidthHz
         self.average_sec = self.dt * self.nave
         for iii in range(self.vlen):
             self.obs.xdata[iii] = nu
             nu = nu + deltaNu
+        self.average_sec = self.dt * self.nave
+        print "Integration Time: %8.2f" % (self.average_sec)
+        print "N media, N ave: %d, %d" % (self.obs.nmedian, self.nave)
+        print "N chan,       : %d" % (self.obs.nChan)
         if dosave:
             self.save_setup()
 
@@ -244,6 +249,16 @@ class ra_ascii_sink(gr.sync_block):
         self.obs.write_ascii_file(self.setupdir, self.noteName)
         print 'Updated: %s' % (self.noteName)
         
+    def update_len(self, spectrum):
+        """
+        Update the length of the output vectors
+        """
+        self.obs.ydataA = np.zeros(self.vlen)
+        self.obs.ydataB = np.zeros(self.vlen)
+        self.obs.xdata = np.zeros(self.vlen)
+        self.obs.nchan = self.vlen
+        self.obs.refchan = self.vlen/2.
+
     def set_obstype(self, obstype):
         """
         The observing type is an integer with enumerated values
@@ -383,7 +398,6 @@ class ra_ascii_sink(gr.sync_block):
             middle, duration = radioastronomy.aveutcs(self.startutc, self.stoputc)
             self.obs.utc = middle
             self.obs.durationSec = duration
-            tsamples = self.obs.nmedian * self.nave * float(self.obs.nChan) / self.obs.bandwidthHz
             # this removes component due non-gain part of spectrum
             self.obs.ydataA[0:ncp] = self.sum[0:ncp]
             self.obs.azel2radec()
@@ -392,8 +406,8 @@ class ra_ascii_sink(gr.sync_block):
             daypart = datestr[0]
             yymmdd = daypart[2:19]
             if self.record != radioastronomy.INTWAIT: 
-                print 'Record Duration  : %7.2fs (Expected %7.2fs)' % (duration, tsamples)
-                if duration < .8 * tsamples:
+                print 'Record Duration  : %7.2fs (Expected %7.2fs)' % (duration, self.average_sec)
+                if duration < .8 * self.average_sec:
                     print 'Duration too short, not saving'
                     self.startutc = now
                     self.avecount = 0
