@@ -148,7 +148,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 952)</value>
+      <value>(952, 952)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -226,7 +226,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>7.e6</value>
+      <value>10.e6</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -840,7 +840,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(688, 680)</value>
+      <value>(376, 664)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1557,7 +1557,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(776, 824)</value>
+      <value>(1064, 824)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3668,7 +3668,7 @@
     </param>
     <param>
       <key>bw</key>
-      <value>6000</value>
+      <value>8000</value>
     </param>
     <param>
       <key>biasT</key>
@@ -3752,11 +3752,11 @@
     </param>
     <param>
       <key>rf_freq</key>
-      <value>Frequency</value>
+      <value>int(Frequency)</value>
     </param>
     <param>
       <key>sample_rate</key>
-      <value>Bandwidth</value>
+      <value>int(Bandwidth)</value>
     </param>
   </block>
   <connection>

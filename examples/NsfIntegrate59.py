@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: SDRPlay 5.9MHz Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with 5.9 MHz SDRPlay RSP 1A
-# Generated: Sat Jan 11 18:31:09 2020
+# Generated: Mon Jan 13 11:42:49 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -80,7 +80,7 @@ class NsfIntegrate59(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'bandwidth')
-        except: Bandwidths = 7.e6
+        except: Bandwidths = 10.e6
         self.Bandwidths = Bandwidths
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(ConfigFile)
@@ -391,8 +391,8 @@ class NsfIntegrate59(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(7, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.sdrplay_rsp1a_source_0 = sdrplay.rsp1a_source(Frequency, 6000, False, int(IF_attn), DcOffsetMode, IQMode,
-                False, 0, 1, Bandwidth, BroadcastNotch, False, int(Gain1), BiasOn,
+        self.sdrplay_rsp1a_source_0 = sdrplay.rsp1a_source(int(Frequency), 8000, False, int(IF_attn), DcOffsetMode, IQMode,
+                False, 0, 1, int(Bandwidth), BroadcastNotch, False, int(Gain1), BiasOn,
                 '0')
 
         self.radio_astro_vmedian_0_2_0 = radio_astro.vmedian(fftsize, 4)
@@ -424,7 +424,7 @@ class NsfIntegrate59(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["gold", "dark green", "red", "blue", "cyan",
+        colors = ["black", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
@@ -736,7 +736,7 @@ class NsfIntegrate59(gr.top_block, Qt.QWidget):
         self._Frequencys_config.set('main', 'Frequency', str(self.Frequency))
         self._Frequencys_config.write(open(self.ConfigFile, 'w'))
         Qt.QMetaObject.invokeMethod(self._Frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Frequency)))
-        self.sdrplay_rsp1a_source_0.set_rf_freq(self.Frequency)
+        self.sdrplay_rsp1a_source_0.set_rf_freq(int(self.Frequency))
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
 
     def get_Bandwidth(self):
