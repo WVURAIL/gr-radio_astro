@@ -5,7 +5,7 @@
 # Title: Test Signal.  Adds a tone in 4.5 MHz band
 # Author: Glen Langston
 # Description: Diagnostic test design
-# Generated: Fri Jan 31 13:39:48 2020
+# Generated: Fri Jan 31 17:49:07 2020
 ##################################################
 
 if __name__ == '__main__':
@@ -23,6 +23,7 @@ from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import fft
+from gnuradio import filter
 from gnuradio import gr
 from gnuradio import iio
 from gnuradio import qtgui
@@ -30,6 +31,7 @@ from gnuradio.eng_option import eng_option
 from gnuradio.fft import window
 from gnuradio.filter import firdes
 from optparse import OptionParser
+import radio_astro
 import sip
 import sys
 from gnuradio import qtgui
@@ -65,15 +67,15 @@ class NsfTest(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.OffsetMHz = OffsetMHz = 0.666
+        self.OffsetMHz = OffsetMHz = 0.111
         self.FreqMHz = FreqMHz = 1420.
-        self.samp_rate = samp_rate = 32000
+        self.Bandwidth = Bandwidth = 1.e6
+        self.samp_rate = samp_rate = int(Bandwidth)
         self.fftsize = fftsize = 1024
         self.Offset = Offset = OffsetMHz*1.E6
         self.H1 = H1 = 1420.406E6
-        self.Gain1 = Gain1 = 65
+        self.Gain1 = Gain1 = 70
         self.Frequency = Frequency = FreqMHz*1.E6
-        self.Bandwidth = Bandwidth = 4.5e6
         self.Attn1 = Attn1 = 65
 
         ##################################################
@@ -101,6 +103,10 @@ class NsfTest(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self.radio_astro_vmedian_0_2_0 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_vmedian_0_2 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             float(Frequency-(Bandwidth/2.))*1.e-6,
@@ -112,7 +118,7 @@ class NsfTest(gr.top_block, Qt.QWidget):
         )
         self.qtgui_vector_sink_f_0_0.set_update_time(.5)
         self.qtgui_vector_sink_f_0_0.set_y_axis(0, 10)
-        self.qtgui_vector_sink_f_0_0.enable_autoscale(True)
+        self.qtgui_vector_sink_f_0_0.enable_autoscale(False)
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
         self.qtgui_vector_sink_f_0_0.set_x_axis_units("")
         self.qtgui_vector_sink_f_0_0.set_y_axis_units("")
@@ -189,13 +195,15 @@ class NsfTest(gr.top_block, Qt.QWidget):
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.pluto_source_0 = iio.pluto_source('192.168.2.1', int(int(Frequency)), int(int(Bandwidth)), int(20000000), 0x8000, False, False, True, "manual", float(Gain1), '', True)
-        self.pluto_sink_0 = iio.pluto_sink('', int(float(Frequency+Offset)), int(float(Bandwidth)), int(20000000), 0x8000, True, float(Attn1), '', True)
+        self.pluto_sink_0 = iio.pluto_sink('', int(float(Frequency+Offset)), int(float(Bandwidth)), int(20000000), 0x8000, False, float(Attn1), '', True)
+        self.low_pass_filter_0 = filter.fir_filter_ccf(1, firdes.low_pass(
+        	1, Bandwidth, .1E6, .025E6, firdes.WIN_HAMMING, 6.76))
         self.fft_vxx_0 = fft.fft_vcc(fftsize, True, (window.hamming(fftsize)), True, 1)
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
         self.blocks_add_const_vxx_0 = blocks.add_const_vcc((1, ))
-        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, .02, 0)
+        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 30, 0)
         self._OffsetMHz_tool_bar = Qt.QToolBar(self)
         self._OffsetMHz_tool_bar.addWidget(Qt.QLabel('OffsetMHz)'+": "))
         self._OffsetMHz_line_edit = Qt.QLineEdit(str(self.OffsetMHz))
@@ -224,15 +232,20 @@ class NsfTest(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_const_vxx_0, 0))
+        self.connect((self.analog_noise_source_x_0, 0), (self.low_pass_filter_0, 0))
         self.connect((self.blocks_add_const_vxx_0, 0), (self.pluto_sink_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
-        self.connect((self.blocks_complex_to_mag_0, 0), (self.qtgui_vector_sink_f_0_0, 0))
+        self.connect((self.blocks_complex_to_mag_0, 0), (self.radio_astro_vmedian_0_2, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_0, 0))
+        self.connect((self.low_pass_filter_0, 0), (self.blocks_add_const_vxx_0, 0))
         self.connect((self.pluto_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.pluto_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
+        self.connect((self.radio_astro_vmedian_0, 0), (self.qtgui_vector_sink_f_0_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
+        self.connect((self.radio_astro_vmedian_0_2, 0), (self.radio_astro_vmedian_0_2_0, 0))
+        self.connect((self.radio_astro_vmedian_0_2_0, 0), (self.radio_astro_vmedian_0_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "NsfTest")
@@ -255,6 +268,17 @@ class NsfTest(gr.top_block, Qt.QWidget):
         self.set_Frequency(self.FreqMHz*1.E6)
         Qt.QMetaObject.invokeMethod(self._FreqMHz_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.FreqMHz)))
 
+    def get_Bandwidth(self):
+        return self.Bandwidth
+
+    def set_Bandwidth(self, Bandwidth):
+        self.Bandwidth = Bandwidth
+        self.set_samp_rate(int(self.Bandwidth))
+        self.qtgui_vector_sink_f_0_0.set_x_axis(float(self.Frequency-(self.Bandwidth/2.))*1.e-6, float(self.Bandwidth*1.e-6/self.fftsize))
+        self.pluto_source_0.set_params(int(int(self.Frequency)), int(int(self.Bandwidth)), int(20000000), False, False, True, "manual", float(self.Gain1), '', True)
+        self.pluto_sink_0.set_params(int(float(self.Frequency+self.Offset)), int(float(self.Bandwidth)), int(20000000), float(self.Attn1), '', True)
+        self.low_pass_filter_0.set_taps(firdes.low_pass(1, self.Bandwidth, .1E6, .025E6, firdes.WIN_HAMMING, 6.76))
+
     def get_samp_rate(self):
         return self.samp_rate
 
@@ -266,6 +290,10 @@ class NsfTest(gr.top_block, Qt.QWidget):
 
     def set_fftsize(self, fftsize):
         self.fftsize = fftsize
+        self.radio_astro_vmedian_0_2_0.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0_2.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0_0.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0.set_vlen( self.fftsize)
         self.qtgui_vector_sink_f_0_0.set_x_axis(float(self.Frequency-(self.Bandwidth/2.))*1.e-6, float(self.Bandwidth*1.e-6/self.fftsize))
 
     def get_Offset(self):
@@ -294,15 +322,6 @@ class NsfTest(gr.top_block, Qt.QWidget):
 
     def set_Frequency(self, Frequency):
         self.Frequency = Frequency
-        self.qtgui_vector_sink_f_0_0.set_x_axis(float(self.Frequency-(self.Bandwidth/2.))*1.e-6, float(self.Bandwidth*1.e-6/self.fftsize))
-        self.pluto_source_0.set_params(int(int(self.Frequency)), int(int(self.Bandwidth)), int(20000000), False, False, True, "manual", float(self.Gain1), '', True)
-        self.pluto_sink_0.set_params(int(float(self.Frequency+self.Offset)), int(float(self.Bandwidth)), int(20000000), float(self.Attn1), '', True)
-
-    def get_Bandwidth(self):
-        return self.Bandwidth
-
-    def set_Bandwidth(self, Bandwidth):
-        self.Bandwidth = Bandwidth
         self.qtgui_vector_sink_f_0_0.set_x_axis(float(self.Frequency-(self.Bandwidth/2.))*1.e-6, float(self.Bandwidth*1.e-6/self.fftsize))
         self.pluto_source_0.set_params(int(int(self.Frequency)), int(int(self.Bandwidth)), int(20000000), False, False, True, "manual", float(self.Gain1), '', True)
         self.pluto_sink_0.set_params(int(float(self.Frequency+self.Offset)), int(float(self.Bandwidth)), int(20000000), float(self.Attn1), '', True)
