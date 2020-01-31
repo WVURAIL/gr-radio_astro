@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: NSF Watch for Events whille recording spectra
+# Title: NSF Watch 7MHz SDRPlay
 # Author: Glen Langston
-# Description: PlutoSDR Dongle at full speed 3.2 MHz samples
-# Generated: Tue Nov 12 12:19:44 2019
+# Description: SDRPlay RS1A, 7 MHz samples
+# Generated: Thu Nov 14 16:37:51 2019
 ##################################################
 
 from distutils.version import StrictVersion
@@ -27,7 +27,6 @@ from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import fft
 from gnuradio import gr
-from gnuradio import iio
 from gnuradio import qtgui
 from gnuradio.eng_option import eng_option
 from gnuradio.fft import window
@@ -36,17 +35,18 @@ from gnuradio.qtgui import Range, RangeWidget
 from optparse import OptionParser
 import ConfigParser
 import radio_astro
+import sdrplay
 import sip
 import sys
 from gnuradio import qtgui
 
 
-class NsfWatch32(gr.top_block, Qt.QWidget):
+class NsfWatch70(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "NSF Watch for Events whille recording spectra")
+        gr.top_block.__init__(self, "NSF Watch 7MHz SDRPlay")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("NSF Watch for Events whille recording spectra")
+        self.setWindowTitle("NSF Watch 7MHz SDRPlay")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -64,14 +64,14 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NsfWatch32")
+        self.settings = Qt.QSettings("GNU Radio", "NsfWatch70")
         self.restoreGeometry(self.settings.value("geometry", type=QtCore.QByteArray))
 
 
         ##################################################
         # Variables
         ##################################################
-        self.ObsName = ObsName = "Integrate32"
+        self.ObsName = ObsName = "Integrate70"
         self.ConfigFile = ConfigFile = ObsName+".conf"
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(ConfigFile)
@@ -81,7 +81,7 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'Bandwidth')
-        except: Bandwidths = 6.e6
+        except: Bandwidths = 5.e6
         self.Bandwidths = Bandwidths
         self._telescope_save_config = ConfigParser.ConfigParser()
         self._telescope_save_config.read(ConfigFile)
@@ -131,13 +131,16 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
-        self.Record = Record = 0
+        self.Record = Record = 1
+        self.IQMode = IQMode = True
         self.H1 = H1 = 1420.406E6
         self.Gain2 = Gain2 = 12.
         self.Gain1 = Gain1 = Gain1s
-        self.EventMode = EventMode = 0
+        self.EventMode = EventMode = 1
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
+        self.DcOffsetMode = DcOffsetMode = True
+        self.BroadcastNotch = BroadcastNotch = True
         self.Azimuth = Azimuth = Azimuth_save
 
         ##################################################
@@ -210,6 +213,17 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
+        _IQMode_check_box = Qt.QCheckBox('IQMode')
+        self._IQMode_choices = {True: True, False: False}
+        self._IQMode_choices_inv = dict((v,k) for k,v in self._IQMode_choices.iteritems())
+        self._IQMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_IQMode_check_box, "setChecked", Qt.Q_ARG("bool", self._IQMode_choices_inv[i]))
+        self._IQMode_callback(self.IQMode)
+        _IQMode_check_box.stateChanged.connect(lambda i: self.set_IQMode(self._IQMode_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_IQMode_check_box, 9, 4, 1, 2)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(4, 6):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._Gain1_tool_bar = Qt.QToolBar(self)
         self._Gain1_tool_bar.addWidget(Qt.QLabel('Gain1'+": "))
         self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
@@ -270,6 +284,28 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        _DcOffsetMode_check_box = Qt.QCheckBox('DcOffsetMode')
+        self._DcOffsetMode_choices = {True: True, False: False}
+        self._DcOffsetMode_choices_inv = dict((v,k) for k,v in self._DcOffsetMode_choices.iteritems())
+        self._DcOffsetMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_DcOffsetMode_check_box, "setChecked", Qt.Q_ARG("bool", self._DcOffsetMode_choices_inv[i]))
+        self._DcOffsetMode_callback(self.DcOffsetMode)
+        _DcOffsetMode_check_box.stateChanged.connect(lambda i: self.set_DcOffsetMode(self._DcOffsetMode_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_DcOffsetMode_check_box, 9, 0, 1, 2)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 2):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        _BroadcastNotch_check_box = Qt.QCheckBox('BroadcastNotch')
+        self._BroadcastNotch_choices = {True: True, False: False}
+        self._BroadcastNotch_choices_inv = dict((v,k) for k,v in self._BroadcastNotch_choices.iteritems())
+        self._BroadcastNotch_callback = lambda i: Qt.QMetaObject.invokeMethod(_BroadcastNotch_check_box, "setChecked", Qt.Q_ARG("bool", self._BroadcastNotch_choices_inv[i]))
+        self._BroadcastNotch_callback(self.BroadcastNotch)
+        _BroadcastNotch_check_box.stateChanged.connect(lambda i: self.set_BroadcastNotch(self._BroadcastNotch_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_BroadcastNotch_check_box, 9, 2, 1, 2)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(2, 4):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._Bandwidth_tool_bar = Qt.QToolBar(self)
         self._Bandwidth_tool_bar.addWidget(Qt.QLabel('Bandwidth'+": "))
         self._Bandwidth_line_edit = Qt.QLineEdit(str(self.Bandwidth))
@@ -292,6 +328,10 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(7, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self.sdrplay_rsp1a_source_0 = sdrplay.rsp1a_source(Frequency, 7000, False, 20, DcOffsetMode, IQMode,
+                False, 0, 1, Bandwidth, BroadcastNotch, False, int(Gain1), False,
+                '0')
+
         self.radio_astro_vmedian_0_0_1_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
@@ -383,7 +423,6 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.pluto_source_0 = iio.pluto_source('192.168.2.1', int(int(Frequency)), int(int(Bandwidth)), int(20000000), 0x8000, False, False, True, "manual", float(Gain1), '', True)
         self.fft_vxx_0 = fft.fft_vcc(fftsize, True, (window.hamming(fftsize)), True, 1)
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
@@ -400,8 +439,6 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
-        self.connect((self.pluto_source_0, 0), (self.blocks_complex_to_float_0, 0))
-        self.connect((self.pluto_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_ra_ascii_sink_0, 0))
@@ -409,9 +446,11 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_1, 0), (self.radio_astro_vmedian_0_0_1_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_1_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
+        self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_complex_to_float_0, 0))
+        self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NsfWatch32")
+        self.settings = Qt.QSettings("GNU Radio", "NsfWatch70")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -554,10 +593,10 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
     def set_Frequency(self, Frequency):
         self.Frequency = Frequency
         Qt.QMetaObject.invokeMethod(self._Frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Frequency)))
+        self.sdrplay_rsp1a_source_0.set_rf_freq(self.Frequency)
         self.radio_astro_ra_event_sink_0.set_frequency( self.Frequency*1.E-6)
         self.radio_astro_ra_ascii_sink_0.set_frequency( self.Frequency)
         self.radio_astro_detect_0.set_freq( self.Frequency)
-        self.pluto_source_0.set_params(int(int(self.Frequency)), int(int(self.Bandwidth)), int(20000000), False, False, True, "manual", float(self.Gain1), '', True)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(self.ConfigFile)
@@ -582,7 +621,6 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth( self.Bandwidth)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
-        self.pluto_source_0.set_params(int(int(self.Frequency)), int(int(self.Bandwidth)), int(20000000), False, False, True, "manual", float(self.Gain1), '', True)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(self.ConfigFile)
@@ -681,6 +719,13 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self._Record_callback(self.Record)
         self.radio_astro_ra_ascii_sink_0.set_record( self.Record)
 
+    def get_IQMode(self):
+        return self.IQMode
+
+    def set_IQMode(self, IQMode):
+        self.IQMode = IQMode
+        self._IQMode_callback(self.IQMode)
+
     def get_H1(self):
         return self.H1
 
@@ -701,9 +746,9 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
     def set_Gain1(self, Gain1):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
+        self.sdrplay_rsp1a_source_0.set_lna_atten_step(int(self.Gain1))
         self.radio_astro_ra_event_sink_0.set_gain1( float(self.Gain1))
         self.radio_astro_ra_ascii_sink_0.set_gain1( float(self.Gain1))
-        self.pluto_source_0.set_params(int(int(self.Frequency)), int(int(self.Bandwidth)), int(20000000), False, False, True, "manual", float(self.Gain1), '', True)
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):
@@ -748,6 +793,20 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         Qt.QMetaObject.invokeMethod(self._Device_line_edit, "setText", Qt.Q_ARG("QString", str(self.Device)))
         self.radio_astro_ra_event_sink_0.set_device( self.Device)
 
+    def get_DcOffsetMode(self):
+        return self.DcOffsetMode
+
+    def set_DcOffsetMode(self, DcOffsetMode):
+        self.DcOffsetMode = DcOffsetMode
+        self._DcOffsetMode_callback(self.DcOffsetMode)
+
+    def get_BroadcastNotch(self):
+        return self.BroadcastNotch
+
+    def set_BroadcastNotch(self, BroadcastNotch):
+        self.BroadcastNotch = BroadcastNotch
+        self._BroadcastNotch_callback(self.BroadcastNotch)
+
     def get_Azimuth(self):
         return self.Azimuth
 
@@ -764,7 +823,7 @@ class NsfWatch32(gr.top_block, Qt.QWidget):
         self._Azimuth_save_config.write(open(self.ConfigFile, 'w'))
 
 
-def main(top_block_cls=NsfWatch32, options=None):
+def main(top_block_cls=NsfWatch70, options=None):
 
     qapp = Qt.QApplication(sys.argv)
 
