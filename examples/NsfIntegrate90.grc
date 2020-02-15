@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>NsfIntegrate: SDRPlay 5.9MHz Astronomical Obs.</value>
+      <value>NsfIntegrate: SDRPlay 9MHz Astronomical Obs.</value>
     </param>
     <param>
       <key>placement</key>
@@ -3176,7 +3176,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1192, 224)</value>
+      <value>(1168, 232)</value>
     </param>
     <param>
       <key>gui_hint</key>

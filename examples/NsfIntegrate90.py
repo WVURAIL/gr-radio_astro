@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: NsfIntegrate: SDRPlay 5.9MHz Astronomical Obs.
+# Title: NsfIntegrate: SDRPlay 9MHz Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with 9.0 MHz SDRPlay RSP 1A
-# Generated: Mon Jan 13 13:04:26 2020
+# Generated: Sat Feb 15 16:20:37 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -43,9 +43,9 @@ from gnuradio import qtgui
 class NsfIntegrate90(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "NsfIntegrate: SDRPlay 5.9MHz Astronomical Obs.")
+        gr.top_block.__init__(self, "NsfIntegrate: SDRPlay 9MHz Astronomical Obs.")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("NsfIntegrate: SDRPlay 5.9MHz Astronomical Obs.")
+        self.setWindowTitle("NsfIntegrate: SDRPlay 9MHz Astronomical Obs.")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))

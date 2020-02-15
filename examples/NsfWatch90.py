@@ -5,7 +5,7 @@
 # Title: NSF Watch 9MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 9 MHz samples
-# Generated: Mon Jan 13 13:23:02 2020
+# Generated: Sat Feb 15 16:27:38 2020
 ##################################################
 
 from distutils.version import StrictVersion
