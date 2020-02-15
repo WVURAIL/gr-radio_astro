@@ -30,17 +30,17 @@ HISTORY
 import datetime
 import copy
 import numpy as np
-import angles
+from . import angles
 
 try:
     import ephem
 except ImportError:
-    print 'Ephemerous Python Code needed!'
-    print 'In Linux type:'
-    print '       sudo apt-get install python-dev'
-    print '       sudo apt-get install python-pip'
-    print '       sudo pip install pyephem'
-    print ''
+    print('Ephemerous Python Code needed!')
+    print('In Linux type:')
+    print('       sudo apt-get install python-dev')
+    print('       sudo apt-get install python-pip')
+    print('       sudo pip install pyephem')
+    print('')
     exit()
 
 MAXCHAN = 4096
@@ -84,7 +84,7 @@ def degree2float(instring, hint):
         anangle = angles.DeltaAngle(instring)
         outfloat = anangle.d
     else:
-        print "%s format error: %s, zero returned " % (hint, instring)
+        print("%s format error: %s, zero returned " % (hint, instring))
     return outfloat
 
 def hour2float(instring, hint):
@@ -100,7 +100,7 @@ def hour2float(instring, hint):
         anangle = angles.AlphaAngle(instring)
         outfloat = anangle.d
     else:
-        print "%s format error: %s, zero returned " % (hint, instring)
+        print("%s format error: %s, zero returned " % (hint, instring))
     return outfloat
 
 def time2float(instring, hint):
@@ -116,7 +116,7 @@ def time2float(instring, hint):
         atime = angles.AlphaAngle(instring)
         outfloat = atime.h*3600.
     else:
-        print "%s format error: %s, zero returned " % (hint, instring)
+        print("%s format error: %s, zero returned " % (hint, instring))
     return outfloat
 
 
@@ -161,33 +161,33 @@ def iplatlon():
     try:
         import re
         import json
-        from urllib2 import urlopen
+        from urllib.request import urlopen
     except:
-        print 'Can not find Python code for:'
-        print 'import re'
-        print 'import json'
-        print 'from urllib2 import urlopen'
+        print('Can not find Python code for:')
+        print('import re')
+        print('import json')
+        print('from urllib2 import urlopen')
         # returning Green bank
         return City, Region, Country, lat, lon
 
     try:
         data = str(urlopen('http://checkip.dyndns.com/').read())
     except:
-        print 'Can not open internet access to get Location'
+        print('Can not open internet access to get Location')
         # returning Green bank
         return City, Region, Country, lat, lon
 
     try:
         IP = re.compile(r'(\d+.\d+.\d+.\d+)').search(data).group(1)
     except:
-        print 'Can not parse ip string'
+        print('Can not parse ip string')
         return City, Region, Country, lat, lon
     try:
         url = 'http://ipinfo.io/' + IP + '/json'
         response = urlopen(url)
         data = json.load(response)
     except:
-        print 'Can not get ip location from internet'
+        print('Can not get ip location from internet')
         return City, Region, Country, lat, lon
 
     org=data['org']
@@ -200,12 +200,12 @@ def iplatlon():
     lat = float( locs[0])
     lon = float( locs[1])
 
-    print '\nYour IP details: '
-    print 'IP       : {0} '.format(IP)
-    print 'Region   : {0}; Country : {1}'.format(Region, Country)
-    print 'City     : {0}'.format(City)
-    print 'Org      : {0}'.format(org)
-    print 'Latitude : ',lat,';  Longitude: ',lon
+    print('\nYour IP details: ')
+    print('IP       : {0} '.format(IP))
+    print('Region   : {0}; Country : {1}'.format(Region, Country))
+    print('City     : {0}'.format(City))
+    print('Org      : {0}'.format(org))
+    print('Latitude : ',lat,';  Longitude: ',lon)
     return City, Region, Country, lat, lon
 
 def degree2float(instring, hint):
@@ -221,7 +221,7 @@ def degree2float(instring, hint):
         anangle = angles.DeltaAngle(instring)
         outfloat = anangle.d
     else:
-        print "%s format error: %s, zero returned " % (hint, instring)
+        print("%s format error: %s, zero returned " % (hint, instring))
     return outfloat
 
 def hour2float(instring, hint):
@@ -237,7 +237,7 @@ def hour2float(instring, hint):
         anangle = angles.AlphaAngle(instring)
         outfloat = anangle.d
     else:
-        print "%s format error: %s, zero returned " % (hint, instring)
+        print("%s format error: %s, zero returned " % (hint, instring))
     return outfloat
 
 def time2float(instring, hint):
@@ -253,7 +253,7 @@ def time2float(instring, hint):
         atime = angles.AlphaAngle(instring)
         outfloat = atime.h*3600.
     else:
-        print "%s format error: %s, zero returned " % (hint, instring)
+        print("%s format error: %s, zero returned " % (hint, instring))
     return outfloat
 
 class Spectrum(object):
@@ -445,7 +445,7 @@ class Spectrum(object):
         """
     # need the current time to update coordiantes
         now = self.utc
-        print "File %4d: %s (%d)" % (self.writecount, outname, self.count)
+        print("File %4d: %s (%d)" % (self.writecount, outname, self.count))
         fullname = dirname + outname
         outfile = open(fullname, 'w')
         outfile.write('# File: ' + outname + '\n')
@@ -606,14 +606,14 @@ class Spectrum(object):
             if self.nSpec > 1:
                 pformat = "%04d %s %.4f %.4f\n"
                 for i in range(min(self.nChan, leny)):
-                    outline = pformat % (i, str(long(x)), self.ydataA[i], self.ydataB[i])
+                    outline = pformat % (i, str(int(x)), self.ydataA[i], self.ydataB[i])
                     outfile.write(outline)
                     x = x + dx
             else:
                 pformat = "%04d %s %.4f\n"
                 for i in range(min(self.nChan, leny)):
 #                    outline = str(i).zfill(4) + ' ' + str(long(x)) + ' ' + str(self.ydataA[i]) + '\n'
-                    outline = pformat % (i, str(long(x)), self.ydataA[i])
+                    outline = pformat % (i, str(int(x)), self.ydataA[i])
                     outline = outline.replace('  ', ' ')
                     outfile.write(outline)
                     x = x + dx
@@ -625,15 +625,15 @@ class Spectrum(object):
             self.nChan = 0                 # cannot be both samples and spectra
             if leny > self.nSamples:
                 self.nSamples = leny
-                print "Y array length and N Sample miss match:", leny, self.nSamples
+                print("Y array length and N Sample miss match:", leny, self.nSamples)
             if TIMEPARTS == 2:             # if not writing time
                 outline = "#   I       Q\n"
                 outfile.write(outline)
                 pformat = "%.5f %.5f\n"
                 if self.nSamples < 2:
-                    print "Very small number of samples: ",self.nSamples
-                    print "N Chan: %5d; N  x: %5d " % (self.nChan, len(self.xdata))
-                    print "N y1  : %5d; N y2: %5d " % (len(self.ydataA), len(self.ydataB))
+                    print("Very small number of samples: ",self.nSamples)
+                    print("N Chan: %5d; N  x: %5d " % (self.nChan, len(self.xdata)))
+                    print("N y1  : %5d; N y2: %5d " % (len(self.ydataA), len(self.ydataB)))
                 for i in range(self.nSamples):
                     outline = pformat % (self.ydataA[i], self.ydataB[i])
                     outline = outline.replace(' 0.', ' .')
@@ -725,10 +725,10 @@ class Spectrum(object):
             if linecount == 0:
                 parts[1] = parts[1].upper()
                 if parts[1] != 'FILE:':
-                    print ""
-                    print "read_spec_ascii input error!"
-                    print ""
-                    print "Input not an NSF Spectrum file:", fullname
+                    print("")
+                    print("read_spec_ascii input error!")
+                    print("")
+                    print("Input not an NSF Spectrum file:", fullname)
                     exit()
             linecount = linecount + 1
 # if a very short or blank line
@@ -761,7 +761,7 @@ class Spectrum(object):
                     x = angles.sexa2deci(lstparts['sign'], *lstparts['vals'])
                     self.lst = x*15. # convert back to degrees
                     if verbose:
-                        print parts[3], x
+                        print(parts[3], x)
                 if parts[1] == 'AZ':
                     self.telaz = degree2float(parts[3], parts[1])
                 if parts[1] == 'EL':
@@ -786,7 +786,7 @@ class Spectrum(object):
                     otherparts = line.split('=')
                     self.bunit = str(otherparts[1]).strip()
                     if verbose:
-                        print 'Bunit    ', self.bunit
+                        print('Bunit    ', self.bunit)
                 if parts[1] == 'NSPEC':
                     self.nSpec = int(parts[3])
                 if parts[1] == 'NTIME':
@@ -822,66 +822,66 @@ class Spectrum(object):
                 ifind = apart.find("GAIN")
                 if ifind >= 0:
                     if verbose:
-                        print parts
+                        print(parts)
                     gainnumber = str(apart[ifind+4])
                     if gainnumber.isdigit():
                         i = int(gainnumber)
                         n = len(parts)
                         self.gains[i-1] = float(parts[n-1])
                         if verbose:
-                            print 'Gain %d: %f' % (i, self.gains[i-1])
+                            print('Gain %d: %f' % (i, self.gains[i-1]))
                 if parts[1] == 'OBSERVER':
                     otherparts = line.split('=')
                     self.observer = str(otherparts[1]).strip()
                     if verbose:
-                        print 'Observer: ', self.observer
+                        print('Observer: ', self.observer)
                 if parts[1] == 'DEVICE':
                     otherparts = line.split('=', 1)
                     if len(otherparts) > 1:
                         self.device = str(otherparts[1]).strip()
                     else:
-                        print 'Error parsing device : ', line
+                        print('Error parsing device : ', line)
                     if verbose:
-                        print 'Device  : ', self.device
+                        print('Device  : ', self.device)
                 if parts[1] == 'DATADIR':
                     otherparts = line.split('=', 1)
                     if len(otherparts) > 1:
                         self.datadir = str(otherparts[1]).strip()
                     else:
-                        print 'Error parsing datadir : ', line
+                        print('Error parsing datadir : ', line)
                     if verbose:
-                        print 'DataDir : ', self.datadir
+                        print('DataDir : ', self.datadir)
                 if parts[1] == 'SITE':
                     otherparts = line.split('=')
                     self.site = str(otherparts[1]).strip()
                     self.noteA = self.site # site is new note in interface
                     if verbose:
-                        print 'Site    : ', self.site
+                        print('Site    : ', self.site)
                 if parts[1] == 'CITY':
                     otherparts = line.split('=')
                     self.city = str(otherparts[1]).strip()
                     if verbose:
-                        print 'City    : ', self.city
+                        print('City    : ', self.city)
                 if parts[1] == 'REGION':
                     otherparts = line.split('=')
                     self.region = str(otherparts[1]).strip()
                     if verbose:
-                        print 'Region  : ', self.region
+                        print('Region  : ', self.region)
                 if parts[1] == 'COUNTRY':
                     otherparts = line.split('=')
                     self.country = str(otherparts[1]).strip()
                     if verbose:
-                        print 'Country : ', self.country
+                        print('Country : ', self.country)
                 if parts[1] == 'NOTEA':
                     otherparts = line.split('=')
                     self.noteA = str(otherparts[1]).strip()
                     if verbose:
-                        print 'Note A  : ', self.noteA
+                        print('Note A  : ', self.noteA)
                 if parts[1] == 'NOTEB':
                     otherparts = line.split('=')
                     self.noteB = str(otherparts[1]).strip()
                     if verbose:
-                        print 'Note B  : ', self.noteB
+                        print('Note B  : ', self.noteB)
                 if parts[1] == 'AST_VERS':
                     otherparts = line.split('=')
                     if verbose:
@@ -890,12 +890,12 @@ class Spectrum(object):
                     otherparts = line.split('=')
                     self.frame = str(otherparts[1]).strip()
                     if verbose:
-                        print 'FRAME  : ', self.frame
+                        print('FRAME  : ', self.frame)
                 if parts[1] == 'TELTYPE':
                     otherparts = line.split('=')
                     self.telType = str(otherparts[1]).strip()
                     if verbose:
-                        print 'Tel Type: ', self.telType
+                        print('Tel Type: ', self.telType)
                 if parts[1] == 'LON' or parts[1] == 'GALLON':
                     aparts = angles.phmsdms(parts[3])
                     x = angles.sexa2deci(aparts['sign'], *aparts['vals'])
@@ -915,7 +915,7 @@ class Spectrum(object):
                     x = angles.sexa2deci(aparts['sign'], *aparts['vals'])
                     self.ra = x * 15. # convert back to degrees
                     if verbose:
-                        print 'RA', parts[3], aparts, x
+                        print('RA', parts[3], aparts, x)
                 if parts[1] == 'DEC':
                     aparts = angles.phmsdms(parts[3])
                     x = angles.sexa2deci(aparts['sign'], *aparts['vals'])
@@ -1000,7 +1000,7 @@ class Spectrum(object):
             dt = 1./(self.bandwidthHz)     # compute time per sample
             t = -dt * self.refSample     # time tag relative to reference sample
             if verbose:
-                print "Time Offset of First Sample (%d): %15.9f (s)" % ( self.refSample, t)
+                print("Time Offset of First Sample (%d): %15.9f (s)" % ( self.refSample, t))
             self.xdata = np.zeros(self.nSamples)
             for iii in range( self.nSamples):
                 self.xdata[iii] = t
@@ -1141,7 +1141,7 @@ def lines(linelist, lineWidth, x, y):
     nx2 = int(nx/2)
     ny = len(y)
     if nx != ny:
-        print "x and y data do not match", nx, ny
+        print("x and y data do not match", nx, ny)
         return y
 
     yout = copy.deepcopy(y) # init the output

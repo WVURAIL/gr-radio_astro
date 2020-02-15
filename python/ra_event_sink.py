@@ -31,16 +31,16 @@ import datetime
 import numpy as np
 from gnuradio import gr
 import pmt
-import radioastronomy
+from . import radioastronomy
 
 try:
-    import jdutil
+    from . import jdutil
 except:
-    print "jdutil is needed to compute Modified Julian Days"
-    print "try:"
-    print "git clone https://github.com/jiffyclub/jdutil.py"
-    print ""
-    print "Good Luck! -- Glen"
+    print("jdutil is needed to compute Modified Julian Days")
+    print("try:")
+    print("git clone https://github.com/jiffyclub/jdutil.py")
+    print("")
+    print("Good Luck! -- Glen")
 
 class ra_event_sink(gr.sync_block):
     """
@@ -105,17 +105,17 @@ class ra_event_sink(gr.sync_block):
         """
         self.bandwidthMHz = np.float(bandwidthMHz)
         if self.bandwidthMHz <= 0.0001:
-            print "Invalid Bandwidth: ", self.bandwidthMHz
+            print("Invalid Bandwidth: ", self.bandwidthMHz)
             self.bandwidthMHz = 1.
         if self.bandwidthMHz >= 1000.:
-            print "Invalid Bandwidth: ", self.bandwidthMHz
+            print("Invalid Bandwidth: ", self.bandwidthMHz)
             self.bandwidthMHz = 1.
         self.obs.bandwidthHz = self.bandwidthMHz*1.E6  # observation units Hzo
-        print "Setting Bandwidth: %10.6f MHz" % (1.E-6*self.obs.bandwidthHz)
+        print("Setting Bandwidth: %10.6f MHz" % (1.E-6*self.obs.bandwidthHz))
         self.obs.dt = 1./np.fabs(self.obs.bandwidthHz)
         t = -self.obs.dt * self.obs.refSample
-        print "NChan = %5d; NSamples = %5d" % (self.obs.nChan, self.obs.nSamples)
-        print "N x   = %5d; N y      = %5d" % (len(self.obs.xdata), len(self.obs.ydataA))
+        print("NChan = %5d; NSamples = %5d" % (self.obs.nChan, self.obs.nSamples))
+        print("N x   = %5d; N y      = %5d" % (len(self.obs.xdata), len(self.obs.ydataA)))
         for iii in range(self.vlen):
             self.obs.xdata[iii] = t
             t = t + self.obs.dt
@@ -169,7 +169,7 @@ class ra_event_sink(gr.sync_block):
         """
         self.gain1 = float(gain1)
         self.obs.gains[0] = float(gain1)
-        print "Gain 1: %7.2f" % (self.gain1)
+        print("Gain 1: %7.2f" % (self.gain1))
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
@@ -195,7 +195,7 @@ class ra_event_sink(gr.sync_block):
         self.vlen = int(vlen)
         if self.vlen < 16:
             self.vlen = 16
-            print "Vector too short: %3d, using %3d" % (int(vlen), self.vlen)
+            print("Vector too short: %3d, using %3d" % (int(vlen), self.vlen))
         self.obs.nSamples = self.vlen
         self.obs.xdata = np.zeros(self.vlen)
         self.obs.ydataA = np.zeros(self.vlen)
@@ -222,20 +222,20 @@ class ra_event_sink(gr.sync_block):
         noteParts = noteName.split('.')
         self.noteName = noteParts[0]+'.not'
         if len(noteParts) > 2:
-            print '!!! Warning, unexpected Notes File name! '
-            print '!!! Using file: ', self.noteName
+            print('!!! Warning, unexpected Notes File name! ')
+            print('!!! Using file: ', self.noteName)
         else:
             if os.path.isfile(self.noteName):
-                print 'Setup File       : ', self.noteName
+                print('Setup File       : ', self.noteName)
             else:
                 if os.path.isfile("Watch.not"):
                     try:
                         import shutil
                         shutil.copyfile("Watch.not", self.noteName)
-                        print "Created %s from file: Watch.not" % (self.noteName)
+                        print("Created %s from file: Watch.not" % (self.noteName))
                     except:
                         pformat = "! Create the Note file %s, and try again !" 
-                        print pformat % (self.noteName)
+                        print(pformat % (self.noteName))
         self.obs.read_spec_ast(self.setupdir + self.noteName)    # read the parameters 
         self.obs.datadir = "../events/"          # writing events not spectra
         self.obs.nSpec = 0             # not working with spectra
@@ -271,7 +271,7 @@ class ra_event_sink(gr.sync_block):
         nd = len(self.obs.datadir)
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
-            print 'DataDir          : ', self.obs.datadir
+            print('DataDir          : ', self.obs.datadir)
         self.set_sample_rate(self.bandwidthMHz, doSave=doSave)
 
     def set_record(self, record):
@@ -279,12 +279,12 @@ class ra_event_sink(gr.sync_block):
         When changing record status, need to update counters
         """
         if record == radioastronomy.INTWAIT: 
-            print "Stop  Recording  : "
+            print("Stop  Recording  : ")
             self.obs.writecount = 0
             self.ecount = 1
         # if changing state from recording to not recording
         elif self.record == radioastronomy.INTWAIT and record != radioastronomy.INTWAIT:
-            print "Start Recording  : "
+            print("Start Recording  : ")
         self.record = int(record)
 
     def get_record(self):
@@ -322,7 +322,7 @@ class ra_event_sink(gr.sync_block):
                     self.erms = value
 #                    print 'Tag RMs : %7.4f' % (self.erms)
                 elif key != self.lasttag:
-                    print 'Unknown Tag: ', key, value
+                    print('Unknown Tag: ', key, value)
                     self.lasttag = key
         nout = 0
         for i in range(nv):
@@ -339,8 +339,8 @@ class ra_event_sink(gr.sync_block):
                 self.obs.epeak = self.epeak
                 self.obs.erms = self.erms
                 if self.erms == self.lastRms:
-                    print "Duplicate Event, not writing!"
-                    print "RMS == last RMS: %7.3f" % (self.erms)
+                    print("Duplicate Event, not writing!")
+                    print("RMS == last RMS: %7.3f" % (self.erms))
                     nout = nout+1
                     continue
                 else:
