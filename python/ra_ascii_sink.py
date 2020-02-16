@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20Feb16 GIL remove normalization.  Do that in post processing
 # 20Feb15 GIL fix normalization for different averaging times
 # 19OCT14 GIL track down time estimate issues
 # 19SEP14 GIL fix gain and telescope location
@@ -401,7 +402,8 @@ class ra_ascii_sink(gr.sync_block):
             self.obs.durationSec = duration
             # this removes component due non-gain part of spectrum
             # avecount normaizes the counts of observations
-            self.obs.ydataA[0:ncp] = self.sum[0:ncp]/float(self.avecount)
+#            self.obs.ydataA[0:ncp] = self.sum[0:ncp]/float(self.avecount)
+            self.obs.ydataA[0:ncp] = self.sum[0:ncp]
             self.obs.azel2radec()
             strnow = middle.isoformat()
             datestr = strnow.split('.')
