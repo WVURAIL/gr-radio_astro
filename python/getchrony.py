@@ -33,9 +33,9 @@ def getchrony():
     date = parts[0]
     time = parts[1]
     ip = parts[2]
-    offsetrms = float(parts[6])
     #print("Offset: %s" % (parts[9]))
-    offset = float(parts[9])
+    offset = float(parts[6])
+    offsetrms = float(parts[9])
     datestr = "%sT%s" % (date, time)
     return( datestr, offset, offsetrms)
 
@@ -61,7 +61,9 @@ if __name__=='__main__':
         print("Usage: python getchrony.py [-H] [3]")
         print("Where -H  Optionally print help info")
         print("Where 3   Return parsed log value in 3 parts:")
-        print("   1) Utc date string, 2) float offset and 3) standard deviation")
+        print("")
+        print("   The Offset (seconds) should be added to System time to get the UTC time of events")
+        print("")
         with open(filename) as f:
             first_line = f.readline()
             second_line = f.readline()
@@ -75,6 +77,10 @@ if __name__=='__main__':
     
     line = subprocess.check_output(['tail', '-1', filename])
 
+    if doHelp:
+        sys.stdout.write("%s" % (line))
+        sys.stdout.flush()
+        
     datestr, offset, offsetrms = getchrony()
     print( "%s %9.6f %8.6f" % (datestr, offset, offsetrms))
     exit()
