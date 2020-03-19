@@ -5,10 +5,8 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: PlutoSDR Dongle at Max rate for all samples
-# Generated: Tue Nov 26 18:52:21 2019
+# Generated: Mon Mar 16 13:38:04 2020
 ##################################################
-
-from distutils.version import StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -20,9 +18,8 @@ if __name__ == '__main__':
         except:
             print "Warning: failed to XInitThreads()"
 
-from PyQt5 import Qt
-from PyQt5 import Qt, QtCore
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt4 import Qt
+from PyQt4.QtCore import QObject, pyqtSlot
 from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import fft
@@ -64,7 +61,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self.top_layout.addLayout(self.top_grid_layout)
 
         self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate64")
-        self.restoreGeometry(self.settings.value("geometry", type=QtCore.QByteArray))
+        self.restoreGeometry(self.settings.value("geometry").toByteArray())
 
 
         ##################################################
@@ -134,7 +131,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self.Azimuth_save = Azimuth_save
         self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)", "Intensity(K)"]
         self.ymins = ymins = [ 0.01,  -20,  90.,-.5]
-        self.ymaxs = ymaxs = [1., 10., 180., 80.]
+        self.ymaxs = ymaxs = [5., 10., 180., 80.]
         self.xsteps = xsteps = [Bandwidth*1.E-6/fftsize, -Bandwidth*3.E5/(H1*fftsize), 1]
         self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]
         self._xaxis_save_0_config = ConfigParser.ConfigParser()
@@ -195,7 +192,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._observer_line_edit = Qt.QLineEdit(str(self.observer))
         self._observer_tool_bar.addWidget(self._observer_line_edit)
         self._observer_line_edit.returnPressed.connect(
-        	lambda: self.set_observer(str(str(self._observer_line_edit.text()))))
+        	lambda: self.set_observer(str(str(self._observer_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._observer_tool_bar, 0, 0, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -206,7 +203,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._nAve_line_edit = Qt.QLineEdit(str(self.nAve))
         self._nAve_tool_bar.addWidget(self._nAve_line_edit)
         self._nAve_line_edit.returnPressed.connect(
-        	lambda: self.set_nAve(int(str(self._nAve_line_edit.text()))))
+        	lambda: self.set_nAve(int(str(self._nAve_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._nAve_tool_bar, 0, 2, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -217,7 +214,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._fftsize_line_edit = Qt.QLineEdit(str(self.fftsize))
         self._fftsize_tool_bar.addWidget(self._fftsize_line_edit)
         self._fftsize_line_edit.returnPressed.connect(
-        	lambda: self.set_fftsize(int(str(self._fftsize_line_edit.text()))))
+        	lambda: self.set_fftsize(int(str(self._fftsize_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._fftsize_tool_bar, 1, 2, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -260,7 +257,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
         self._Gain1_tool_bar.addWidget(self._Gain1_line_edit)
         self._Gain1_line_edit.returnPressed.connect(
-        	lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text()))))
+        	lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Gain1_tool_bar, 3, 0, 1, 1)
         for r in range(3, 4):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -271,7 +268,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._Frequency_line_edit = Qt.QLineEdit(str(self.Frequency))
         self._Frequency_tool_bar.addWidget(self._Frequency_line_edit)
         self._Frequency_line_edit.returnPressed.connect(
-        	lambda: self.set_Frequency(eng_notation.str_to_num(str(self._Frequency_line_edit.text()))))
+        	lambda: self.set_Frequency(eng_notation.str_to_num(str(self._Frequency_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Frequency_tool_bar, 0, 5, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -282,7 +279,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._Elevation_line_edit = Qt.QLineEdit(str(self.Elevation))
         self._Elevation_tool_bar.addWidget(self._Elevation_line_edit)
         self._Elevation_line_edit.returnPressed.connect(
-        	lambda: self.set_Elevation(eng_notation.str_to_num(str(self._Elevation_line_edit.text()))))
+        	lambda: self.set_Elevation(eng_notation.str_to_num(str(self._Elevation_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Elevation_tool_bar, 1, 7, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -293,7 +290,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._Bandwidth_line_edit = Qt.QLineEdit(str(self.Bandwidth))
         self._Bandwidth_tool_bar.addWidget(self._Bandwidth_line_edit)
         self._Bandwidth_line_edit.returnPressed.connect(
-        	lambda: self.set_Bandwidth(eng_notation.str_to_num(str(self._Bandwidth_line_edit.text()))))
+        	lambda: self.set_Bandwidth(eng_notation.str_to_num(str(self._Bandwidth_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Bandwidth_tool_bar, 1, 5, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -304,7 +301,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._Azimuth_line_edit = Qt.QLineEdit(str(self.Azimuth))
         self._Azimuth_tool_bar.addWidget(self._Azimuth_line_edit)
         self._Azimuth_line_edit.returnPressed.connect(
-        	lambda: self.set_Azimuth(eng_notation.str_to_num(str(self._Azimuth_line_edit.text()))))
+        	lambda: self.set_Azimuth(eng_notation.str_to_num(str(self._Azimuth_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Azimuth_tool_bar, 0, 7, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -339,7 +336,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["black", "dark green", "red", "blue", "cyan",
+        colors = ["gold", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
@@ -450,7 +447,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._Telescope_line_edit = Qt.QLineEdit(str(self.Telescope))
         self._Telescope_tool_bar.addWidget(self._Telescope_line_edit)
         self._Telescope_line_edit.returnPressed.connect(
-        	lambda: self.set_Telescope(str(str(self._Telescope_line_edit.text()))))
+        	lambda: self.set_Telescope(str(str(self._Telescope_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Telescope_tool_bar, 1, 0, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -461,7 +458,7 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
         self._Device_line_edit = Qt.QLineEdit(str(self.Device))
         self._Device_tool_bar.addWidget(self._Device_line_edit)
         self._Device_line_edit.returnPressed.connect(
-        	lambda: self.set_Device(str(str(self._Device_line_edit.text()))))
+        	lambda: self.set_Device(str(str(self._Device_line_edit.text().toAscii()))))
         self.top_grid_layout.addWidget(self._Device_tool_bar, 2, 0, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -934,6 +931,10 @@ class NsfIntegrate64(gr.top_block, Qt.QWidget):
 
 def main(top_block_cls=NsfIntegrate64, options=None):
 
+    from distutils.version import StrictVersion
+    if StrictVersion(Qt.qVersion()) >= StrictVersion("4.5.0"):
+        style = gr.prefs().get_string('qtgui', 'style', 'raster')
+        Qt.QApplication.setGraphicsSystem(style)
     qapp = Qt.QApplication(sys.argv)
 
     tb = top_block_cls()
@@ -943,7 +944,7 @@ def main(top_block_cls=NsfIntegrate64, options=None):
     def quitting():
         tb.stop()
         tb.wait()
-    qapp.aboutToQuit.connect(quitting)
+    qapp.connect(qapp, Qt.SIGNAL("aboutToQuit()"), quitting)
     qapp.exec_()
 
 

@@ -1652,7 +1652,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[1., 10., 180., 80.]</value>
+      <value>[5., 10., 180., 80.]</value>
     </param>
   </block>
   <block>
