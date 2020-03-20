@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>Test Signal.  Adds a tone in 4.5 MHz band</value>
+      <value>Test Signal.  Adds a tone in 1 MHz band</value>
     </param>
     <param>
       <key>placement</key>
@@ -97,7 +97,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>65</value>
+      <value>80</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -163,7 +163,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>1420.</value>
+      <value>1437</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -229,7 +229,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>70</value>
+      <value>75</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1525,7 +1525,7 @@
     </param>
     <param>
       <key>ymax</key>
-      <value>10</value>
+      <value>1.</value>
     </param>
     <param>
       <key>ymin</key>

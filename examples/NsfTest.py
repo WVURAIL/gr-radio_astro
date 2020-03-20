@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: Test Signal.  Adds a tone in 4.5 MHz band
+# Title: Test Signal.  Adds a tone in 1 MHz band
 # Author: Glen Langston
 # Description: Diagnostic test design
-# Generated: Fri Jan 31 17:49:07 2020
+# Generated: Thu Mar 19 21:26:41 2020
 ##################################################
 
 if __name__ == '__main__':
@@ -40,9 +40,9 @@ from gnuradio import qtgui
 class NsfTest(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Test Signal.  Adds a tone in 4.5 MHz band")
+        gr.top_block.__init__(self, "Test Signal.  Adds a tone in 1 MHz band")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("Test Signal.  Adds a tone in 4.5 MHz band")
+        self.setWindowTitle("Test Signal.  Adds a tone in 1 MHz band")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -68,15 +68,15 @@ class NsfTest(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.OffsetMHz = OffsetMHz = 0.111
-        self.FreqMHz = FreqMHz = 1420.
+        self.FreqMHz = FreqMHz = 1437
         self.Bandwidth = Bandwidth = 1.e6
         self.samp_rate = samp_rate = int(Bandwidth)
         self.fftsize = fftsize = 1024
         self.Offset = Offset = OffsetMHz*1.E6
         self.H1 = H1 = 1420.406E6
-        self.Gain1 = Gain1 = 70
+        self.Gain1 = Gain1 = 75
         self.Frequency = Frequency = FreqMHz*1.E6
-        self.Attn1 = Attn1 = 65
+        self.Attn1 = Attn1 = 80
 
         ##################################################
         # Blocks
@@ -117,7 +117,7 @@ class NsfTest(gr.top_block, Qt.QWidget):
             1 # Number of inputs
         )
         self.qtgui_vector_sink_f_0_0.set_update_time(.5)
-        self.qtgui_vector_sink_f_0_0.set_y_axis(0, 10)
+        self.qtgui_vector_sink_f_0_0.set_y_axis(0, 1.)
         self.qtgui_vector_sink_f_0_0.enable_autoscale(False)
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
         self.qtgui_vector_sink_f_0_0.set_x_axis_units("")
