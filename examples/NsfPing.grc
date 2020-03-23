@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>NsfTest</value>
+      <value>NsfPing</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -590,7 +590,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(717, 20)</value>
+      <value>(747, 10)</value>
     </param>
     <param>
       <key>_rotation</key>
