@@ -30,7 +30,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(832, 20)</value>
+      <value>(472, 8)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>vectordemo</value>
+      <value>vectordemo_c</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>Vector averaging and median comparison</value>
+      <value>Vector median comparison</value>
     </param>
     <param>
       <key>placement</key>
@@ -101,7 +101,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(368, 16)</value>
+      <value>(704, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -128,7 +128,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(240, 16)</value>
+      <value>(192, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -140,7 +140,61 @@
     </param>
     <param>
       <key>value</key>
-      <value>1e6</value>
+      <value>2e6</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(832, 4)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>variable_0</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(312, 56)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>variable_1</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0</value>
     </param>
   </block>
   <block>
@@ -167,7 +221,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 272)</value>
+      <value>(16, 212)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -289,7 +343,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(24, 140)</value>
+      <value>(24, 112)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -336,57 +390,6 @@
     </param>
     <param>
       <key>const</key>
-      <value>[50.]*fftsize</value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(648, 512)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_add_const_vxx_0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_add_const_vxx</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>const</key>
       <value>[0.]*fftsize</value>
     </param>
     <param>
@@ -399,7 +402,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(648, 592)</value>
+      <value>(604, 450)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -450,7 +453,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(648, 432)</value>
+      <value>(594, 358)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -497,7 +500,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(264, 128)</value>
+      <value>(266, 122)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -548,7 +551,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(864, 176)</value>
+      <value>(819, 158)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -591,7 +594,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 432)</value>
+      <value>(256, 358)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -642,7 +645,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 432)</value>
+      <value>(430, 358)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -693,7 +696,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(360, 176)</value>
+      <value>(368, 158)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -744,7 +747,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(72, 512)</value>
+      <value>(51, 399)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -807,7 +810,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(568, 140)</value>
+      <value>(563, 128)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -870,7 +873,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 460)</value>
+      <value>(860, 327)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -930,7 +933,7 @@
     </param>
     <param>
       <key>label2</key>
-      <value>Average</value>
+      <value>Median</value>
     </param>
     <param>
       <key>width2</key>
@@ -1062,7 +1065,7 @@
     </param>
     <param>
       <key>nconnections</key>
-      <value>3</value>
+      <value>2</value>
     </param>
     <param>
       <key>ref_level</key>
@@ -1114,100 +1117,6 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vave</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(296, 512)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vave_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>radio_astro_ra_vave</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(472, 512)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vave_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
     <key>radio_astro_ra_vmedian</key>
     <param>
       <key>alias</key>
@@ -1227,7 +1136,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 592)</value>
+      <value>(256, 450)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1274,7 +1183,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 592)</value>
+      <value>(430, 450)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1320,16 +1229,10 @@
     <sink_key>1</sink_key>
   </connection>
   <connection>
-    <source_block_id>blocks_add_const_vxx_0</source_block_id>
-    <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
-  </connection>
-  <connection>
     <source_block_id>blocks_add_const_vxx_0_0</source_block_id>
     <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
     <source_key>0</source_key>
-    <sink_key>2</sink_key>
+    <sink_key>1</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_add_const_vxx_0_1</source_block_id>
@@ -1375,12 +1278,6 @@
   </connection>
   <connection>
     <source_block_id>blocks_throttle_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vave_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_throttle_0</source_block_id>
     <sink_block_id>radio_astro_ra_vmedian_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
@@ -1388,18 +1285,6 @@
   <connection>
     <source_block_id>fft_vxx_0</source_block_id>
     <sink_block_id>blocks_complex_to_mag_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>radio_astro_ra_vave_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vave_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>radio_astro_ra_vave_0_0</source_block_id>
-    <sink_block_id>blocks_add_const_vxx_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

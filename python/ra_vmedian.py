@@ -46,7 +46,7 @@ class ra_vmedian(gr.decim_block):
         self.vmax = numpy.zeros(self.vlen)
         self.count = 0
         if self.vdecimate < 3:
-            print 'Vector Median, not enough inputs: ', self.vdecimate, ' Using 3'
+            print('Vector Median, not enough inputs: ', self.vdecimate, ' Using 3')
             self.vdecimate = 3
         self.set_decimate(self.vdecimate)
 
@@ -116,4 +116,4 @@ class ra_vmedian(gr.decim_block):
         """
         self.vdecimate = max(3, int(decimate))
         self.oneovern = 1./(float(self.vdecimate)-2.)
-        print "V_median decimate: %d" % (self.vdecimate)
+        print("V_median decimate: %d" % (self.vdecimate))

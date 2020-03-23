@@ -143,6 +143,7 @@ namespace gr {
 	      else if (input[j] < vmin[j])
 		vmin[j] = input[j];
 	    }
+	  count += 1;
 	}
       else {  /* if here, count is full, time to complete the median */
 	  for(unsigned int j=0; j < vlen; j++)

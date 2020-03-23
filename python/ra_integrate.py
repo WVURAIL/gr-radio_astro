@@ -38,7 +38,7 @@ import datetime
 import numpy as np
 from gnuradio import gr
 import copy
-import radioastronomy
+from . import radioastronomy
 
 # this block has 5 output spectra:
 # 1st is just the input spectrum
@@ -92,24 +92,24 @@ class ra_integrate(gr.sync_block):
                                         (np.float32, int(vlen)), (np.float32, int(vlen))])
         vlen = int(vlen)
         self.vlen = vlen
-        self.nintegrate = 1L
+        self.nintegrate = 1
         self.noteName = str(noteName)
         noteParts = self.noteName.split('.')
         #always use .not extension for notes files
         self.noteName = noteParts[0]+'.not'
         if len(noteParts) > 2:
-            print '!!! Warning, unexpected Notes File name! '
-            print '!!! Using file: ',self.noteName
+            print('!!! Warning, unexpected Notes File name! ')
+            print('!!! Using file: ',self.noteName)
         if os.path.isfile( self.noteName):
-            print 'Setup File       : ', self.noteName
+            print('Setup File       : ', self.noteName)
         else:
             if os.path.isfile( "Watch.not"):
                 try:
                     import shutil
                     shutil.copyfile( "Watch.not", self.noteName)
-                    print "Created %s from file: Watch.not" % (self.noteName)
+                    print("Created %s from file: Watch.not" % (self.noteName))
                 except:
-                    print "! Create the Note file %s, and try again !" % (self.noteName)
+                    print("! Create the Note file %s, and try again !" % (self.noteName))
         self.obstype = obstype
         self.inttype = inttype
         self.obs = radioastronomy.Spectrum()
@@ -169,8 +169,8 @@ class ra_integrate(gr.sync_block):
         self.xfit = np.concatenate((xa,xb))      # indicies for fit 
         self.xindex = np.arange(self.vlen)       # array of integers
         self.yfit = self.obs.ydataA[self.xfit]   # sub-array of fittable data
-        self.allchan  = np.array(range(self.vlen))
-        print 'Setup File       : ', self.noteName
+        self.allchan  = np.array(list(range(self.vlen)))
+        print('Setup File       : ', self.noteName)
         self.obs.read_spec_ast(self.noteName)    # read the parameters
         self.obs.observer = observers
         self.ave.read_spec_ast(self.noteName)    # read the parameters
@@ -180,10 +180,10 @@ class ra_integrate(gr.sync_block):
         nd = len(self.obs.datadir)
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
-            print 'DataDir          : ', self.obs.datadir
-        print 'Observer Names   : ', self.obs.observer
-        self.obstypes = range(radioastronomy.NOBSTYPES)
-        self.intstatus = range(radioastronomy.NINTTYPES)
+            print('DataDir          : ', self.obs.datadir)
+        print('Observer Names   : ', self.obs.observer)
+        self.obstypes = list(range(radioastronomy.NOBSTYPES))
+        self.intstatus = list(range(radioastronomy.NINTTYPES))
         self.set_frequency(frequency)
         self.set_bandwidth(bandwidth)
         self.set_azimuth(azimuth)
@@ -210,7 +210,7 @@ class ra_integrate(gr.sync_block):
         self.xfit = np.concatenate((xa,xb))      # indicies for fit 
         self.xindex = np.arange(self.vlen)       # array of integers
         self.yfit = self.obs.ydataA[self.xfit]   # sub-array of fittable data
-        self.allchan  = np.array(range(self.vlen))
+        self.allchan  = np.array(list(range(self.vlen)))
         self.shortave = np.zeros(self.vlen)
         self.shortlast = np.zeros(self.vlen)
         self.nshort=0
@@ -236,7 +236,7 @@ class ra_integrate(gr.sync_block):
         deltaNu = self.obs.bandwidthHz/np.float(self.vlen)
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
-        print "Setting Frequency: %10.0f Hz" % (self.obs.centerFreqHz)
+        print("Setting Frequency: %10.0f Hz" % (self.obs.centerFreqHz))
         nx = len( self.obs.xdata)
         if nx != self.vlen:
             self.update_len(self.obs)
@@ -264,7 +264,7 @@ class ra_integrate(gr.sync_block):
             self.update_len(self.cold)
         if len(self.ref.xdata) != self.vlen:
             self.update_len(self.ref)
-        print "Setting Bandwidth: %10.0f Hz" % (self.obs.bandwidthHz)
+        print("Setting Bandwidth: %10.0f Hz" % (self.obs.bandwidthHz))
         for iii in range(self.vlen):
             self.obs.xdata[iii] = nu
             self.ave.xdata[iii] = nu
@@ -282,7 +282,7 @@ class ra_integrate(gr.sync_block):
         self.hot.telaz = self.obs.telaz
         self.cold.telaz = self.obs.telaz
         self.ref.telaz = self.obs.telaz
-        print "Setting Azimuth  : %6.1f d" % self.obs.telaz
+        print("Setting Azimuth  : %6.1f d" % self.obs.telaz)
 
     def set_elevation(self, elevation):
         """
@@ -293,7 +293,7 @@ class ra_integrate(gr.sync_block):
         self.hot.telaz = self.obs.telel
         self.cold.telaz = self.obs.telel
         self.ref.telaz = self.obs.telel
-        print "Setting Elevation: %6.1f d" % self.obs.telel
+        print("Setting Elevation: %6.1f d" % self.obs.telel)
 
     def set_nmedian(self, nmedian):
         """
@@ -306,9 +306,9 @@ class ra_integrate(gr.sync_block):
         self.hot.nmedian = nmedian
         self.cold.nmedian = nmedian
         self.ref.nmedian = nmedian
-        print 'Median Count     : %d' % (self.obs.nmedian)
+        print('Median Count     : %d' % (self.obs.nmedian))
         t = self.obs.nmedian * self.vlen / self.obs.bandwidthHz
-        print 'Average time     : %8.3f s' % (t)
+        print('Average time     : %8.3f s' % (t))
 
     def get_setup(self):
         """
@@ -333,14 +333,14 @@ class ra_integrate(gr.sync_block):
                 self.obstype = radioastronomy.OBSCOLD
             else:
                 self.obstype = radioastronomy.OBSHOT
-        print "Observation Type : ", radioastronomy.obslabels[self.obstype]
+        print("Observation Type : ", radioastronomy.obslabels[self.obstype])
 
     def set_inttype(self, inttype):
         """
         Update the recording integration type, one of WAIT, RECORD or Save
         """
         self.inttype = int(inttype)
-        print "Integration Type : ", radioastronomy.intlabels[self.inttype]
+        print("Integration Type : ", radioastronomy.intlabels[self.inttype])
         
     def set_observers(self, observers):
         """
@@ -352,7 +352,7 @@ class ra_integrate(gr.sync_block):
         self.ref.observer = observers
         self.cold.observers = observers
         self.hot.observers = observers
-        print "Observers : ", self.obs.observer
+        print("Observers : ", self.obs.observer)
 
     def set_units(self, units):
         """
@@ -362,7 +362,7 @@ class ra_integrate(gr.sync_block):
             self.units = int(units)
         else:
             self.units = 0
-        print "Units     : ", radioastronomy.unitlabels[self.units]
+        print("Units     : ", radioastronomy.unitlabels[self.units])
 
     def set_tcold(self, tcold):
         """
@@ -372,7 +372,7 @@ class ra_integrate(gr.sync_block):
         if tcold < 3.:
             tcold = 3.
         self.tcold = tcold
-        print "T_cold    : ", self.tcold
+        print("T_cold    : ", self.tcold)
 
     def set_thot(self, thot):
         """
@@ -382,7 +382,7 @@ class ra_integrate(gr.sync_block):
         if thot < 50.:
             thot = 295.
         self.thot = thot
-        print "T_hot     : ", self.thot
+        print("T_hot     : ", self.thot)
 
     def set_record(self, record):
         """
@@ -395,11 +395,11 @@ class ra_integrate(gr.sync_block):
         parts = strnow.split('.')
         strnow = parts[0]
         if record == radioastronomy.INTWAIT:
-            print "Stop  Averaging  : ", strnow
+            print("Stop  Averaging  : ", strnow)
             self.stoputc = now
         # only restart averaging if not in averaging state
         elif self.record == radioastronomy.INTWAIT:
-            print "Start Averaging  : ", strnow
+            print("Start Averaging  : ", strnow)
             self.startutc = now
         self.record = int(record)
 
@@ -491,7 +491,7 @@ class ra_integrate(gr.sync_block):
         n56 = 5*n6
 
         if li != self.vlen:
-            print 'spectrum length changed! %d => %d' % (self.vlen, li)
+            print('spectrum length changed! %d => %d' % (self.vlen, li))
             self.vlen = li
             self.obs.xdata = np.zeros(li)
             self.obs.ydataA = np.zeros(li)
@@ -643,9 +643,9 @@ class ra_integrate(gr.sync_block):
                         # will keep showing last short reference until next is ready
                         self.shortlast = refs
                         self.nshort = 0   # restart sum on next cycle
-                        print ""
-                        print "New Ref"
-                        print ""
+                        print("")
+                        print("New Ref")
+                        print("")
                     else:
                         refs = self.shortlast
                     # end if subtracting baseline
@@ -673,11 +673,11 @@ class ra_integrate(gr.sync_block):
 
                 label = radioastronomy.unitlabels[self.units]
                 if self.units == 0:
-                    print "%s Max %9.3f Min: %9.3f Median: %9.3f %s " % (yymmdd, vmax, vmin, vmed, label)
+                    print("%s Max %9.3f Min: %9.3f Median: %9.3f %s " % (yymmdd, vmax, vmin, vmed, label))
                 elif self.units == 1:
-                    print "%s Max %9.3f Min: %9.3f Median: %9.3f %s " % (yymmdd, vmax, vmin, vmed, label)
+                    print("%s Max %9.3f Min: %9.3f Median: %9.3f %s " % (yymmdd, vmax, vmin, vmed, label))
                 else: 
-                    print "%s Max %9.1f Min: %9.1f Median: %9.1f %s " % (yymmdd, vmax, vmin, vmed, label)
+                    print("%s Max %9.1f Min: %9.1f Median: %9.1f %s " % (yymmdd, vmax, vmin, vmed, label))
                 sys.stdout.write("\033[F")
                 self.printutc = now
         # end for all input vectors

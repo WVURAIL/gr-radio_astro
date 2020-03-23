@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <?grc format='1' created='3.7.13'?>
 <flow_graph>
-  <timestamp>Fri Apr 13 11:15:22 2018</timestamp>
+  <timestamp>Fri Jan 31 12:08:46 2020</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -22,7 +22,7 @@
     </param>
     <param>
       <key>description</key>
-      <value>This GRC demo compares the outputs of average and median with straght vector plotting</value>
+      <value>Diagnostic test design</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -30,7 +30,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(832, 20)</value>
+      <value>(8, 8)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>vectordemo</value>
+      <value>NsfTest</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -82,11 +82,50 @@
     </param>
     <param>
       <key>title</key>
-      <value>Vector averaging and median comparison</value>
+      <value>Test Signal.  Adds a tone in 1 MHz band</value>
     </param>
     <param>
       <key>placement</key>
       <value>(0,0)</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>80</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(327, 92)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>1,0,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Attn1</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Attn1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
     </param>
   </block>
   <block>
@@ -101,7 +140,232 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(368, 16)</value>
+      <value>(430, 20)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Bandwidth</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1.e6</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1437</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(460, 92)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>0,2,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>FreqMHz</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Freq (MHz)</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(532, 20)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Frequency</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>FreqMHz*1.E6</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>75</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(204, 92)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>0,0,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain1</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Gain1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(215, 20)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>H1</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1420.406E6</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(635, 20)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Offset</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>OffsetMHz*1.E6</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0.111</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(583, 92)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>1,2,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>OffsetMHz</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>OffsetMHz)</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(327, 20)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -128,7 +392,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(240, 16)</value>
+      <value>(717, 20)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -140,14 +404,14 @@
     </param>
     <param>
       <key>value</key>
-      <value>1e6</value>
+      <value>int(Bandwidth)</value>
     </param>
   </block>
   <block>
     <key>analog_noise_source_x</key>
     <param>
       <key>amp</key>
-      <value>1</value>
+      <value>30</value>
     </param>
     <param>
       <key>alias</key>
@@ -167,7 +431,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 272)</value>
+      <value>(40, 737)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -199,132 +463,6 @@
     </param>
   </block>
   <block>
-    <key>analog_sig_source_x</key>
-    <param>
-      <key>amp</key>
-      <value>.1</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>freq</key>
-      <value>3e5</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(16, 8)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>analog_sig_source_x_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>offset</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>samp_rate</key>
-      <value>samp_rate</value>
-    </param>
-    <param>
-      <key>waveform</key>
-      <value>analog.GR_COS_WAVE</value>
-    </param>
-  </block>
-  <block>
-    <key>analog_sig_source_x</key>
-    <param>
-      <key>amp</key>
-      <value>.05</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>freq</key>
-      <value>2e5</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(24, 140)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>analog_sig_source_x_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>offset</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>complex</value>
-    </param>
-    <param>
-      <key>samp_rate</key>
-      <value>samp_rate</value>
-    </param>
-    <param>
-      <key>waveform</key>
-      <value>analog.GR_COS_WAVE</value>
-    </param>
-  </block>
-  <block>
     <key>blocks_add_const_vxx</key>
     <param>
       <key>alias</key>
@@ -336,7 +474,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>[50.]*fftsize</value>
+      <value>1</value>
     </param>
     <param>
       <key>affinity</key>
@@ -348,7 +486,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(648, 512)</value>
+      <value>(522, 752)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -360,155 +498,6 @@
     </param>
     <param>
       <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_add_const_vxx</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>const</key>
-      <value>[0.]*fftsize</value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(648, 592)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_add_const_vxx_0_0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_add_const_vxx</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>const</key>
-      <value>[100.]*fftsize</value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(648, 432)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_add_const_vxx_0_1</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_add_xx</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(264, 128)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_add_xx_0</value>
-    </param>
-    <param>
-      <key>type</key>
       <value>complex</value>
     </param>
     <param>
@@ -520,8 +509,47 @@
       <value>0</value>
     </param>
     <param>
-      <key>num_inputs</key>
-      <value>3</value>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_complex_to_float</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(307, 460)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_complex_to_float_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
     </param>
     <param>
       <key>vlen</key>
@@ -548,7 +576,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(864, 176)</value>
+      <value>(839, 240)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -565,108 +593,6 @@
     <param>
       <key>minoutbuf</key>
       <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_keep_one_in_n</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(296, 432)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_keep_one_in_n_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>n</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_keep_one_in_n</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(472, 432)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_keep_one_in_n_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>n</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
     </param>
     <param>
       <key>vlen</key>
@@ -693,7 +619,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(360, 176)</value>
+      <value>(317, 189)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -701,7 +627,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>blocks_stream_to_vector_0</value>
+      <value>blocks_stream_to_vector_0_0</value>
     </param>
     <param>
       <key>type</key>
@@ -722,61 +648,6 @@
     <param>
       <key>vlen</key>
       <value>1</value>
-    </param>
-  </block>
-  <block>
-    <key>blocks_throttle</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(72, 512)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_throttle_0</value>
-    </param>
-    <param>
-      <key>ignoretag</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>samples_per_second</key>
-      <value>samp_rate</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -807,7 +678,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(568, 140)</value>
+      <value>(553, 179)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -835,22 +706,255 @@
     </param>
     <param>
       <key>shift</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>window</key>
-      <value>window.blackmanharris(1024)</value>
+      <value>window.hamming(fftsize)</value>
     </param>
   </block>
   <block>
-    <key>qtgui_vector_sink_f</key>
+    <key>low_pass_filter</key>
     <param>
-      <key>autoscale</key>
+      <key>beta</key>
+      <value>6.76</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>cutoff_freq</key>
+      <value>.1E6</value>
+    </param>
+    <param>
+      <key>decim</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>fir_filter_ccf</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(297, 706)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>gain</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>low_pass_filter_0</value>
+    </param>
+    <param>
+      <key>interp</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>samp_rate</key>
+      <value>Bandwidth</value>
+    </param>
+    <param>
+      <key>width</key>
+      <value>.025E6</value>
+    </param>
+    <param>
+      <key>win</key>
+      <value>firdes.WIN_HAMMING</value>
+    </param>
+  </block>
+  <block>
+    <key>pluto_sink</key>
+    <param>
+      <key>attenuation</key>
+      <value>float(Attn1)</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>buffer_size</key>
+      <value>0x8000</value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>cyclic</key>
       <value>False</value>
     </param>
     <param>
-      <key>average</key>
-      <value>1.0</value>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>auto_filter</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>filter</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(819, 686)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>pluto_sink_0</value>
+    </param>
+    <param>
+      <key>uri</key>
+      <value></value>
+    </param>
+    <param>
+      <key>frequency</key>
+      <value>float(Frequency+Offset)</value>
+    </param>
+    <param>
+      <key>bandwidth</key>
+      <value>20000000</value>
+    </param>
+    <param>
+      <key>samplerate</key>
+      <value>float(Bandwidth)</value>
+    </param>
+  </block>
+  <block>
+    <key>pluto_source</key>
+    <param>
+      <key>bbdc</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>buffer_size</key>
+      <value>0x8000</value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>uri</key>
+      <value>192.168.2.1</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>auto_filter</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>filter</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(30, 179)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>gain</key>
+      <value>"manual"</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>pluto_source_0</value>
+    </param>
+    <param>
+      <key>frequency</key>
+      <value>int(Frequency)</value>
+    </param>
+    <param>
+      <key>manual_gain</key>
+      <value>float(Gain1)</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>quadrature</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>rfdc</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>bandwidth</key>
+      <value>20000000</value>
+    </param>
+    <param>
+      <key>samplerate</key>
+      <value>int(Bandwidth)</value>
+    </param>
+  </block>
+  <block>
+    <key>qtgui_histogram_sink_x</key>
+    <param>
+      <key>accum</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>autoscale</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>axislabels</key>
+      <value>True</value>
     </param>
     <param>
       <key>alias</key>
@@ -870,11 +974,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 460)</value>
+      <value>(737, 435)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value></value>
+      <value>2,0,3,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -882,15 +986,338 @@
     </param>
     <param>
       <key>grid</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>id</key>
-      <value>qtgui_vector_sink_f_0</value>
+      <value>qtgui_histogram_sink_x_0</value>
+    </param>
+    <param>
+      <key>legend</key>
+      <value>True</value>
     </param>
     <param>
       <key>alpha1</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color1</key>
+      <value>"blue"</value>
+    </param>
+    <param>
+      <key>label1</key>
+      <value>I</value>
+    </param>
+    <param>
+      <key>marker1</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style1</key>
       <value>1</value>
+    </param>
+    <param>
+      <key>width1</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha10</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color10</key>
+      <value>"dark blue"</value>
+    </param>
+    <param>
+      <key>label10</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker10</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style10</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width10</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha2</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color2</key>
+      <value>"red"</value>
+    </param>
+    <param>
+      <key>label2</key>
+      <value>Q</value>
+    </param>
+    <param>
+      <key>marker2</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style2</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width2</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha3</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color3</key>
+      <value>"green"</value>
+    </param>
+    <param>
+      <key>label3</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker3</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style3</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width3</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha4</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color4</key>
+      <value>"black"</value>
+    </param>
+    <param>
+      <key>label4</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker4</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style4</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width4</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha5</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color5</key>
+      <value>"cyan"</value>
+    </param>
+    <param>
+      <key>label5</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker5</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style5</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width5</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha6</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color6</key>
+      <value>"magenta"</value>
+    </param>
+    <param>
+      <key>label6</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker6</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style6</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width6</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha7</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color7</key>
+      <value>"yellow"</value>
+    </param>
+    <param>
+      <key>label7</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker7</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style7</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width7</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha8</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color8</key>
+      <value>"dark red"</value>
+    </param>
+    <param>
+      <key>label8</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker8</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style8</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width8</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>alpha9</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>color9</key>
+      <value>"dark green"</value>
+    </param>
+    <param>
+      <key>label9</key>
+      <value></value>
+    </param>
+    <param>
+      <key>marker9</key>
+      <value>-1</value>
+    </param>
+    <param>
+      <key>style9</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>width9</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>xmax</key>
+      <value>.4</value>
+    </param>
+    <param>
+      <key>xmin</key>
+      <value>-.4</value>
+    </param>
+    <param>
+      <key>name</key>
+      <value>""</value>
+    </param>
+    <param>
+      <key>bins</key>
+      <value>100</value>
+    </param>
+    <param>
+      <key>nconnections</key>
+      <value>2</value>
+    </param>
+    <param>
+      <key>size</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>update_time</key>
+      <value>1.</value>
+    </param>
+  </block>
+  <block>
+    <key>qtgui_vector_sink_f</key>
+    <param>
+      <key>autoscale</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>average</key>
+      <value>0.05</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1014, 317)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>2,2,4,3</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>grid</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>qtgui_vector_sink_f_0_0</value>
+    </param>
+    <param>
+      <key>alpha1</key>
+      <value>2.</value>
     </param>
     <param>
       <key>color1</key>
@@ -898,7 +1325,7 @@
     </param>
     <param>
       <key>label1</key>
-      <value>One in 4</value>
+      <value>Latest</value>
     </param>
     <param>
       <key>width1</key>
@@ -926,15 +1353,15 @@
     </param>
     <param>
       <key>color2</key>
-      <value>"blue"</value>
+      <value>"dark green"</value>
     </param>
     <param>
       <key>label2</key>
-      <value>Average</value>
+      <value>Median</value>
     </param>
     <param>
       <key>width2</key>
-      <value>2</value>
+      <value>3</value>
     </param>
     <param>
       <key>alpha3</key>
@@ -942,11 +1369,11 @@
     </param>
     <param>
       <key>color3</key>
-      <value>"green"</value>
+      <value>"red"</value>
     </param>
     <param>
       <key>label3</key>
-      <value>Median</value>
+      <value>Hot</value>
     </param>
     <param>
       <key>width3</key>
@@ -958,15 +1385,15 @@
     </param>
     <param>
       <key>color4</key>
-      <value>"black"</value>
+      <value>"blue"</value>
     </param>
     <param>
       <key>label4</key>
-      <value></value>
+      <value>Cold</value>
     </param>
     <param>
       <key>width4</key>
-      <value>1</value>
+      <value>2</value>
     </param>
     <param>
       <key>alpha5</key>
@@ -978,11 +1405,11 @@
     </param>
     <param>
       <key>label5</key>
-      <value></value>
+      <value>Ref</value>
     </param>
     <param>
       <key>width5</key>
-      <value>1</value>
+      <value>3</value>
     </param>
     <param>
       <key>alpha6</key>
@@ -1062,7 +1489,7 @@
     </param>
     <param>
       <key>nconnections</key>
-      <value>3</value>
+      <value>1</value>
     </param>
     <param>
       <key>ref_level</key>
@@ -1074,7 +1501,7 @@
     </param>
     <param>
       <key>update_time</key>
-      <value>0.10</value>
+      <value>.5</value>
     </param>
     <param>
       <key>vlen</key>
@@ -1082,15 +1509,15 @@
     </param>
     <param>
       <key>x_axis_label</key>
-      <value>"x-Axis"</value>
+      <value>"Frequency (MHz)"</value>
     </param>
     <param>
       <key>x_start</key>
-      <value>0</value>
+      <value>float(Frequency-(Bandwidth/2.))*1.e-6</value>
     </param>
     <param>
       <key>x_step</key>
-      <value>1.0</value>
+      <value>float(Bandwidth*1.e-6/fftsize)</value>
     </param>
     <param>
       <key>x_units</key>
@@ -1098,7 +1525,7 @@
     </param>
     <param>
       <key>ymax</key>
-      <value>150</value>
+      <value>1.</value>
     </param>
     <param>
       <key>ymin</key>
@@ -1106,7 +1533,7 @@
     </param>
     <param>
       <key>y_axis_label</key>
-      <value>"y-Axis"</value>
+      <value>Intensity</value>
     </param>
     <param>
       <key>y_units</key>
@@ -1114,7 +1541,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vave</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -1133,7 +1560,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 512)</value>
+      <value>(594, 379)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1141,101 +1568,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vave_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>radio_astro_ra_vave</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(472, 512)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vave_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>radio_astro_ra_vmedian</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(296, 592)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vmedian_0</value>
+      <value>radio_astro_vmedian_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -1255,7 +1588,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vmedian</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -1274,7 +1607,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 592)</value>
+      <value>(368, 379)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1282,7 +1615,101 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vmedian_0_0</value>
+      <value>radio_astro_vmedian_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>vdecimate</key>
+      <value>4</value>
+    </param>
+  </block>
+  <block>
+    <key>radio_astro_vmedian</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(583, 307)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_vmedian_0_2</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>vdecimate</key>
+      <value>4</value>
+    </param>
+  </block>
+  <block>
+    <key>radio_astro_vmedian</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(368, 307)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_vmedian_0_2_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -1303,85 +1730,37 @@
   </block>
   <connection>
     <source_block_id>analog_noise_source_x_0</source_block_id>
-    <sink_block_id>blocks_add_xx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>2</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>analog_sig_source_x_0</source_block_id>
-    <sink_block_id>blocks_add_xx_0</sink_block_id>
+    <sink_block_id>low_pass_filter_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>analog_sig_source_x_0_0</source_block_id>
-    <sink_block_id>blocks_add_xx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_add_const_vxx_0</source_block_id>
-    <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_add_const_vxx_0_0</source_block_id>
-    <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>2</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_add_const_vxx_0_1</source_block_id>
-    <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
+    <sink_block_id>pluto_sink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>blocks_add_xx_0</source_block_id>
-    <sink_block_id>blocks_stream_to_vector_0</sink_block_id>
+    <source_block_id>blocks_complex_to_float_0</source_block_id>
+    <sink_block_id>qtgui_histogram_sink_x_0</sink_block_id>
+    <source_key>1</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_complex_to_float_0</source_block_id>
+    <sink_block_id>qtgui_histogram_sink_x_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_complex_to_mag_0</source_block_id>
-    <sink_block_id>blocks_throttle_0</sink_block_id>
+    <sink_block_id>radio_astro_vmedian_0_2</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>blocks_keep_one_in_n_0</source_block_id>
-    <sink_block_id>blocks_keep_one_in_n_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_keep_one_in_n_0_0</source_block_id>
-    <sink_block_id>blocks_add_const_vxx_0_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_stream_to_vector_0</source_block_id>
+    <source_block_id>blocks_stream_to_vector_0_0</source_block_id>
     <sink_block_id>fft_vxx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_throttle_0</source_block_id>
-    <sink_block_id>blocks_keep_one_in_n_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_throttle_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vave_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_throttle_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -1392,26 +1771,44 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vave_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vave_0_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>radio_astro_ra_vave_0_0</source_block_id>
+    <source_block_id>low_pass_filter_0</source_block_id>
     <sink_block_id>blocks_add_const_vxx_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_0</sink_block_id>
+    <source_block_id>pluto_source_0</source_block_id>
+    <sink_block_id>blocks_complex_to_float_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_0</source_block_id>
-    <sink_block_id>blocks_add_const_vxx_0_0</sink_block_id>
+    <source_block_id>pluto_source_0</source_block_id>
+    <sink_block_id>blocks_stream_to_vector_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0</source_block_id>
+    <sink_block_id>qtgui_vector_sink_f_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0_2</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_2_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_vmedian_0_2_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

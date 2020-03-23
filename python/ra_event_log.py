@@ -76,10 +76,10 @@ class ra_event_log(gr.sync_block):
         """
         bandwidth = np.float(bandwidth)
         if bandwidth == 0:
-            print "Invalid Bandwidth: ", bandwidth
+            print("Invalid Bandwidth: ", bandwidth)
             return
         self.bandwidth = bandwidth
-        print "Setting Bandwidth: %10.6f MHz" % (self.bandwidth)
+        print("Setting Bandwidth: %10.6f MHz" % (self.bandwidth))
 
     def get_sample_rate(self):
         """
@@ -158,7 +158,7 @@ class ra_event_log(gr.sync_block):
                     self.erms = value
 #                    print 'Tag RMs : %7.4f' % (self.erms)
                 else:
-                    print 'Unknown Tag: ', value
+                    print('Unknown Tag: ', value)
 
         # for all input vectors
         for i in range(nv):
@@ -166,7 +166,7 @@ class ra_event_log(gr.sync_block):
             if self.eventmjd > self.lastmjd:
                 # log the event
                 self.ecount = self.ecount + 1
-                print "\nEvent   Logged: %15.9f (MJD) %9.4f %8.4f" % (self.eventmjd, self.emagnitude, self.erms)
+                print("\nEvent   Logged: %15.9f (MJD) %9.4f %8.4f" % (self.eventmjd, self.emagnitude, self.erms))
                 imjd = np.int(self.eventmjd)
                 seconds = (self.eventmjd - imjd)*86400.
                 isecond = np.int(seconds)

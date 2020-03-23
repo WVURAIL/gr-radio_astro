@@ -66,7 +66,7 @@ class ra_vave(gr.decim_block):
 
         noutports = len(output_items)
         if noutports != 1:
-            print '!!!!!!! Unexpected number of output ports: ', noutports
+            print('!!!!!!! Unexpected number of output ports: ', noutports)
         out = output_items[0]  # all vectors in PORT 0
 
         iout = 0 # count the number of output vectors
@@ -106,4 +106,4 @@ class ra_vave(gr.decim_block):
         """
         self.vdecimate = max(1, int(decimate))
         self.oneovern = 1./float(self.vdecimate)
-        print "V_ave decimate   : %d" % (self.vdecimate)
+        print("V_ave decimate   : %d" % (self.vdecimate))

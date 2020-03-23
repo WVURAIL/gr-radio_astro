@@ -14,6 +14,8 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20Feb16 GIL remove normalization.  Do that in post processing
+# 20Feb15 GIL fix normalization for different averaging times
 # 19OCT14 GIL track down time estimate issues
 # 19SEP14 GIL fix gain and telescope location
 # 18AUG18 GIL return time until average is complete
@@ -30,7 +32,7 @@ import sys
 import datetime
 import numpy as np
 from gnuradio import gr
-import radioastronomy
+from . import radioastronomy
 
 class ra_ascii_sink(gr.sync_block):
     """
@@ -67,8 +69,8 @@ class ra_ascii_sink(gr.sync_block):
         #always use .not extension for notes files
         self.noteName = noteParts[0]+'.not'
         if len(noteParts) > 2:
-            print '!!! Warning, unexpected Notes File name! '
-            print '!!! Using file: ',self.noteName
+            print('!!! Warning, unexpected Notes File name! ')
+            print('!!! Using file: ',self.noteName)
         self.obs = radioastronomy.Spectrum()
         self.obs.read_spec_ast(self.noteName)    # read the parameters 
         self.obs.observer = observers
@@ -90,26 +92,26 @@ class ra_ascii_sink(gr.sync_block):
         #always use .not extension for notes files
         self.noteName = noteParts[0]+'.not'
         if len(noteParts) > 2:
-            print '!!! Warning, unexpected Notes File name! '
-            print '!!! Using file: ', self.noteName
+            print('!!! Warning, unexpected Notes File name! ')
+            print('!!! Using file: ', self.noteName)
         else:
             if os.path.isfile( self.noteName):
-                print 'Setup File       : ', self.noteName
+                print('Setup File       : ', self.noteName)
             else:
                 if os.path.isfile( "Watch.not"):
                     try:
                         import shutil
                         shutil.copyfile( "Watch.not", self.noteName)
-                        print "Created %s from file: Watch.not" % (self.noteName)
+                        print("Created %s from file: Watch.not" % (self.noteName))
                     except:
-                        print "! Create the Note file %s, and try again !" % (self.noteName)
+                        print("! Create the Note file %s, and try again !" % (self.noteName))
         if not os.path.exists(self.obs.datadir):
             os.makedirs(self.obs.datadir)
         nd = len(self.obs.datadir)
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
-            print 'DataDir          : ', self.obs.datadir
-        print 'Observer Names   : ', self.obs.observer
+            print('DataDir          : ', self.obs.datadir)
+        print('Observer Names   : ', self.obs.observer)
         # skip writing notes until the end of init
         dosave = False
         self.set_obstype(obstype)
@@ -138,7 +140,7 @@ class ra_ascii_sink(gr.sync_block):
         deltaNu = self.obs.bandwidthHz/np.float(self.vlen)
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
-        print "Setting Frequency: %10.0f Hz" % (self.obs.centerFreqHz)
+        print("Setting Frequency: %10.0f Hz" % (self.obs.centerFreqHz))
         for iii in range(self.vlen):
             self.obs.xdata[iii] = nu
             nu = nu + deltaNu
@@ -150,16 +152,16 @@ class ra_ascii_sink(gr.sync_block):
         deltaNu = self.obs.bandwidthHz/np.float(self.vlen)
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
-        print "Setting Bandwidth: %10.0f Hz" % (self.obs.bandwidthHz)
+        print("Setting Bandwidth: %10.0f Hz" % (self.obs.bandwidthHz))
         self.dt = self.obs.nmedian * self.obs.nChan / self.obs.bandwidthHz
         self.average_sec = self.dt * self.nave
         for iii in range(self.vlen):
             self.obs.xdata[iii] = nu
             nu = nu + deltaNu
         self.average_sec = self.dt * self.nave
-        print "Integration Time: %8.2f" % (self.average_sec)
-        print "N media, N ave: %d, %d" % (self.obs.nmedian, self.nave)
-        print "N chan,       : %d" % (self.obs.nChan)
+        print("Integration Time: %8.2f" % (self.average_sec))
+        print("N media, N ave: %d, %d" % (self.obs.nmedian, self.nave))
+        print("N chan,       : %d" % (self.obs.nChan))
         if dosave:
             self.save_setup()
 
@@ -168,7 +170,7 @@ class ra_ascii_sink(gr.sync_block):
         Record telescope azimuth for astronomical calculations
         """
         self.obs.telaz = np.float(azimuth)
-        print "Setting Azimuth  : %6.1f d" % self.obs.telaz
+        print("Setting Azimuth  : %6.1f d" % self.obs.telaz)
         if dosave:
             self.save_setup()
                               
@@ -177,7 +179,7 @@ class ra_ascii_sink(gr.sync_block):
         Record telescope elevation for astronmical calculations
         """
         self.obs.telel = np.float(elevation)
-        print "Setting Elevation: %6.1f d" % self.obs.telel
+        print("Setting Elevation: %6.1f d" % self.obs.telel)
         if dosave:
             self.save_setup()
 
@@ -188,7 +190,7 @@ class ra_ascii_sink(gr.sync_block):
         self.obs.nmedian = int(nmedian)
         self.dt = self.obs.nmedian * self.vlen / self.obs.bandwidthHz
         self.average_sec = self.dt * self.nave
-        print 'Median N Spectra : %d  (Integration time: %8.3f)' % (self.obs.nmedian, self.average_sec)
+        print('Median N Spectra : %d  (Integration time: %8.3f)' % (self.obs.nmedian, self.average_sec))
         if dosave:
             self.save_setup()
 
@@ -197,7 +199,7 @@ class ra_ascii_sink(gr.sync_block):
         Record the SDR gain settings 
         """
         self.obs.gains[0] = float(gain1)
-        print 'Gain 1           : %7.2f' % (self.obs.gains[0])
+        print('Gain 1           : %7.2f' % (self.obs.gains[0]))
         if dosave:
             self.save_setup()
 
@@ -206,7 +208,7 @@ class ra_ascii_sink(gr.sync_block):
         Record the SDR gain settings 
         """
         self.obs.gains[1] = float(gain2)
-        print 'Gain 2           : %7.2f' % (self.obs.gains[1])
+        print('Gain 2           : %7.2f' % (self.obs.gains[1]))
         if dosave:
             self.save_setup()
 
@@ -215,17 +217,17 @@ class ra_ascii_sink(gr.sync_block):
         Record the SDR gain settings 
         """
         self.obs.gains[2] = float(gain3)
-        print 'Gain 3           : %7.2f' % (self.obs.gains[2])
+        print('Gain 3           : %7.2f' % (self.obs.gains[2]))
         if dosave:
             self.save_setup()
 
     def set_nave(self, nave, dosave=True):
         self.nave = int(nave)
         self.obs.nave = self.nave
-        print 'Average N Spectra: %d' % (self.nave)
+        print('Average N Spectra: %d' % (self.nave))
         self.dt = self.obs.nmedian * self.vlen / self.obs.bandwidthHz
         self.average_sec = self.dt * self.nave
-        print 'Average time     : %8.3f s' % (self.average_sec)
+        print('Average time     : %8.3f s' % (self.average_sec))
         if dosave:
             self.save_setup()
 
@@ -247,7 +249,7 @@ class ra_ascii_sink(gr.sync_block):
         The setup files is a full spectrum
         """
         self.obs.write_ascii_file(self.setupdir, self.noteName)
-        print 'Updated: %s' % (self.noteName)
+        print('Updated: %s' % (self.noteName))
         
     def update_len(self, spectrum):
         """
@@ -269,14 +271,14 @@ class ra_ascii_sink(gr.sync_block):
                 self.obstype = radioastronomy.OBSCOLD
             else:
                 self.obstype = radioastronomy.OBSHOT
-        print "Observation Type : ", radioastronomy.obslabels[self.obstype]
+        print("Observation Type : ", radioastronomy.obslabels[self.obstype])
 
     def set_observers(self, observers, dosave=True):
         """
         Set the observer names to give credit for discoveries
         """
         self.obs.observer = str(observers)
-        print "Observers : ", self.obs.observer
+        print("Observers : ", self.obs.observer)
         if dosave:
             self.save_setup()
 
@@ -286,7 +288,7 @@ class ra_ascii_sink(gr.sync_block):
         """
         self.obs.site = str(site)
         self.obs.noteA = str(site)
-        print "Telescope : ", self.obs.site
+        print("Telescope : ", self.obs.site)
         if dosave:
             self.save_setup()
 
@@ -295,7 +297,7 @@ class ra_ascii_sink(gr.sync_block):
         The device string sets up the SDR for the observations
         """
         self.obs.device = str(device)
-        print "Device    : ", self.obs.device
+        print("Device    : ", self.obs.device)
         if dosave:
             self.save_setup()
 
@@ -312,12 +314,12 @@ class ra_ascii_sink(gr.sync_block):
         parts = strnow.split('.')
         strnow = parts[0]
         if record == radioastronomy.INTWAIT: 
-            print "Stop  Recording  : ", strnow
+            print("Stop  Recording  : ", strnow)
             self.startutc = now
             self.obs.writecount = 0
         # if changing state from recording to not recording
         elif self.record == radioastronomy.INTWAIT and record != radioastronomy.INTWAIT:
-            print "Start Recording  : ", strnow
+            print("Start Recording  : ", strnow)
             self.startutc = now
             # reset the inner averaging loop to restart
             self.avecount = 0
@@ -361,7 +363,7 @@ class ra_ascii_sink(gr.sync_block):
         t = 0
 
         if li != self.vlen:
-            print 'spectrum length changed! %d => %d' % (self.vlen, li)
+            print('spectrum length changed! %d => %d' % (self.vlen, li))
             self.vlen = li
             self.obs.xdata = np.zeros(li)
             self.obs.ydataA = np.zeros(li)
@@ -372,7 +374,7 @@ class ra_ascii_sink(gr.sync_block):
 
         noutports = len(output_items)
         if noutports != 1:
-            print '!!!!!!! Unexpected number of output ports: ', noutports
+            print('!!!!!!! Unexpected number of output ports: ', noutports)
         out = output_items[0]  # all vectors in PORT 0
 
         iout = 0 # count the number of output vectors
@@ -399,6 +401,8 @@ class ra_ascii_sink(gr.sync_block):
             self.obs.utc = middle
             self.obs.durationSec = duration
             # this removes component due non-gain part of spectrum
+            # avecount normaizes the counts of observations
+#            self.obs.ydataA[0:ncp] = self.sum[0:ncp]/float(self.avecount)
             self.obs.ydataA[0:ncp] = self.sum[0:ncp]
             self.obs.azel2radec()
             strnow = middle.isoformat()
@@ -406,9 +410,9 @@ class ra_ascii_sink(gr.sync_block):
             daypart = datestr[0]
             yymmdd = daypart[2:19]
             if self.record != radioastronomy.INTWAIT: 
-                print 'Record Duration  : %7.2fs (Expected %7.2fs)' % (duration, self.average_sec)
+                print('Record Duration  : %7.2fs (Expected %7.2fs)' % (duration, self.average_sec))
                 if duration < .8 * self.average_sec:
-                    print 'Duration too short, not saving'
+                    print('Duration too short, not saving')
                     self.startutc = now
                     self.avecount = 0
                     continue
@@ -426,7 +430,7 @@ class ra_ascii_sink(gr.sync_block):
                 self.obs.writecount = self.obs.writecount + 1
                 # need to keep track of total number of spectra averaged
                 tempcount = self.obs.count
-                self.obs.count = self.obs.count * self.nave
+                self.obs.count = self.avecount * self.nave
                 self.obs.write_ascii_file( self.obs.datadir, outname)
                 print('\a')  # ring the terminal bell
                 # must restore the count for possible changes in nave
@@ -438,7 +442,7 @@ class ra_ascii_sink(gr.sync_block):
                 vmin = min ( spec[n6:n56])
                 vmax = max ( spec[n6:n56])
                 vmed = np.median( spec[n6:n56])
-                print "%s:  Max %9.3f Min: %9.3f Median: %9.3f      " % (yymmdd, vmax, vmin, vmed)
+                print("%s:  Max %9.3f Min: %9.3f Median: %9.3f      " % (yymmdd, vmax, vmin, vmed))
                 # move backwards to replace previous message
                 sys.stdout.write("\033[F")
                 self.obs.writecount = 0 
@@ -451,7 +455,7 @@ class ra_ascii_sink(gr.sync_block):
         
         # end for all input vectors
         if (nv != iout):
-            print 'Accumulation error:  ', nv, iout
+            print('Accumulation error:  ', nv, iout)
         return iout
     # end ascii_sink()
 
