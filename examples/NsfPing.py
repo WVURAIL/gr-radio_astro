@@ -5,7 +5,7 @@
 # Title: Test Signal.  Adds a Short pulse in a narrow Band
 # Author: Glen Langston
 # Description: Diagnostic test design
-# Generated: Sun Mar 22 20:58:29 2020
+# Generated: Mon Mar 23 10:44:39 2020
 ##################################################
 
 if __name__ == '__main__':
@@ -75,7 +75,7 @@ class NsfPing(gr.top_block, Qt.QWidget):
         self.Gain1 = Gain1 = 40
         self.Frequency = Frequency = FreqMHz*1.E6
         self.EventMode = EventMode = 0
-        self.Bandwidth = Bandwidth = 2e6
+        self.Bandwidth = Bandwidth = 4e6
         self.Attn1 = Attn1 = 80
 
         ##################################################
