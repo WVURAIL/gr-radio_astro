@@ -5,7 +5,7 @@
 # Title: Test Signal.  Adds a Short pulse in a narrow Band
 # Author: Glen Langston
 # Description: Diagnostic test design
-# Generated: Sun Mar 22 20:49:10 2020
+# Generated: Sun Mar 22 20:58:29 2020
 ##################################################
 
 if __name__ == '__main__':
@@ -164,41 +164,6 @@ class NsfPing(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.qtgui_number_sink_0 = qtgui.number_sink(
-            gr.sizeof_float,
-            0,
-            qtgui.NUM_GRAPH_HORIZ,
-            1
-        )
-        self.qtgui_number_sink_0.set_update_time(0.10)
-        self.qtgui_number_sink_0.set_title("Ramp")
-
-        labels = ['', '', '', '', '',
-                  '', '', '', '', '']
-        units = ['', '', '', '', '',
-                 '', '', '', '', '']
-        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
-                  ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
-        factor = [1, 1, 1, 1, 1,
-                  1, 1, 1, 1, 1]
-        for i in xrange(1):
-            self.qtgui_number_sink_0.set_min(i, 0.)
-            self.qtgui_number_sink_0.set_max(i, 1)
-            self.qtgui_number_sink_0.set_color(i, colors[i][0], colors[i][1])
-            if len(labels[i]) == 0:
-                self.qtgui_number_sink_0.set_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_number_sink_0.set_label(i, labels[i])
-            self.qtgui_number_sink_0.set_unit(i, units[i])
-            self.qtgui_number_sink_0.set_factor(i, factor[i])
-
-        self.qtgui_number_sink_0.enable_autoscale(False)
-        self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 0, 4, 2, 5)
-        for r in range(0, 2):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(4, 9):
-            self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
         	fftsize,
         	100,
@@ -259,6 +224,41 @@ class NsfPing(gr.top_block, Qt.QWidget):
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_SAW_WAVE, .02, 1.00001, 0)
         self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, .15, 0)
+        self.Ping = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_HORIZ,
+            1
+        )
+        self.Ping.set_update_time(0.10)
+        self.Ping.set_title("Ramp")
+
+        labels = ['Ping', '', '', '', '',
+                  '', '', '', '', '']
+        units = ['', '', '', '', '',
+                 '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+                  ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        for i in xrange(1):
+            self.Ping.set_min(i, 0.)
+            self.Ping.set_max(i, 1)
+            self.Ping.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.Ping.set_label(i, "Data {0}".format(i))
+            else:
+                self.Ping.set_label(i, labels[i])
+            self.Ping.set_unit(i, units[i])
+            self.Ping.set_factor(i, factor[i])
+
+        self.Ping.enable_autoscale(False)
+        self._Ping_win = sip.wrapinstance(self.Ping.pyqwidget(), Qt.QWidget)
+        self.top_grid_layout.addWidget(self._Ping_win, 0, 4, 2, 5)
+        for r in range(0, 2):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(4, 9):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._OffsetMHz_tool_bar = Qt.QToolBar(self)
         self._OffsetMHz_tool_bar.addWidget(Qt.QLabel('OffsetMHz)'+": "))
         self._OffsetMHz_line_edit = Qt.QLineEdit(str(self.OffsetMHz))
@@ -316,8 +316,8 @@ class NsfPing(gr.top_block, Qt.QWidget):
         ##################################################
         self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 1))
         self.connect((self.analog_noise_source_x_0, 0), (self.blocks_multiply_xx_0, 1))
+        self.connect((self.analog_sig_source_x_0, 0), (self.Ping, 0))
         self.connect((self.analog_sig_source_x_0, 0), (self.blocks_threshold_ff_0, 0))
-        self.connect((self.analog_sig_source_x_0, 0), (self.qtgui_number_sink_0, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.blocks_multiply_const_vxx_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
