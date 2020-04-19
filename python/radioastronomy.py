@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+20APR16 GIL add recording of tSys, tRx, tRms
 19NOV22 GIL reduce digits of spectral intensity
 19NOV08 GIL add 3 more digits to Event MJD 
 19SEP14 GIL only use gains[] to store SDR gains
@@ -30,7 +31,10 @@ HISTORY
 import datetime
 import copy
 import numpy as np
-from . import angles
+import angles
+
+# assume ephem can not be loaded, then try
+ephemOK = True
 
 try:
     import ephem
@@ -41,7 +45,8 @@ except ImportError:
     print('       sudo apt-get install python-pip')
     print('       sudo pip install pyephem')
     print('')
-    exit()
+    ephemOK = False
+#    exit()
 
 MAXCHAN = 4096
 OBSSURVEY = 0
@@ -70,6 +75,22 @@ clight = 299792458. # speed of light in m/sec
 #
 TIMEPARTS = 2   # define time axis of an event; only I and Q 
 #TIMEPARTS = 4  # defien time axis of an event; N Time I and Q
+
+def utcToName( utc):
+    """ 
+    utcToName: returns the 'standard' ascii name of a file for utc date and time
+    input:  utc - datetime value
+    output: ascii string
+    """
+    strnow = utc.isoformat()
+    # separate seconds from fraction of a second
+    datestr = strnow.split('.')
+    daypart = datestr[0]
+    # remove 20 from 2019 dates
+    yymmdd = daypart[2:19]
+    yymmdd = yymmdd.replace(":", "")
+    return yymmdd
+        
 
 def degree2float(instring, hint):
     """
@@ -334,7 +355,13 @@ class Spectrum(object):
         self.etaA = .8 # antenna efficiency (range 0 to 1)
         self.etaB = .99 # efficiency main beam (range 0 to 1)
         self.bunit = 'Counts'       # brightness units
-        self.version = str("2.0.1")
+        self.tSys = 200.            # System Temperature (Kelvins)
+        self.tRx = 100.             # Receiver Temperature (Kelvins)
+        self.tRms = 2.              # Uncertainty in Sys measurement
+        self.tint = 1.              # Average time for tRms+tSys measurement
+        self.KperC = 100.           # Kelvins per Count
+        self.gainFactor = 1.        # Gain Factor to normalize relative to other horns
+        self.version = str("3.0.1")
         self.polA = str("X")        # polariation of A ydata: X, Y, R, L,
         self.polB = str("Y")        # polariation of B ydata: X, Y, R, L,
         self.polAngle = float(0.0)  # orientation of polariation of A
@@ -371,14 +398,15 @@ class Spectrum(object):
         Compute the ra,dec (J2000) from Az,El location and time
         """
         rads = np.pi / 180.
-        radec2000 = ephem.Equatorial( rads*self.ra, rads*self.dec, epoch=ephem.J2000)
-        # to convert to dec degrees need to replace on : with d
         self.epoch = "2000"
-        gal = ephem.Galactic(radec2000)
-        aparts = angles.phmsdms(str(gal.lon))
-        self.gallon = angles.sexa2deci(aparts['sign'], *aparts['vals'])
-        aparts = angles.phmsdms(str(gal.lat))
-        self.gallat = angles.sexa2deci(aparts['sign'], *aparts['vals'])
+        if ephemOK:
+            radec2000 = ephem.Equatorial( rads*self.ra, rads*self.dec, epoch=ephem.J2000)
+        # to convert to dec degrees need to replace on : with d
+            gal = ephem.Galactic(radec2000)
+            aparts = angles.phmsdms(str(gal.lon))
+            self.gallon = angles.sexa2deci(aparts['sign'], *aparts['vals'])
+            aparts = angles.phmsdms(str(gal.lat))
+            self.gallat = angles.sexa2deci(aparts['sign'], *aparts['vals'])
 
     def datetime(self):
         """
@@ -399,43 +427,41 @@ class Spectrum(object):
         """
         Compute the ra,dec (J2000) from Az,El location and time
         """
-        location = ephem.Observer()
-        location.lon = str(self.tellon)
-        location.lat = str(self.tellat)
-        location.elevation = self.telelev
+        if ephemOK:
+            location = ephem.Observer()
+            location.lon = str(self.tellon)
+            location.lat = str(self.tellat)
+            location.elevation = self.telelev
         strnow = self.utc.isoformat()
         # convert Time string format into value for Observer
         dates = strnow.split('T')
         datestr = dates[0] + ' ' + dates[1]
-        location.date = datestr
+        if ephemOK:
+            location.date = datestr
         # compute Local Sidereal Time
-        lst = location.sidereal_time()
-        aparts = angles.phmsdms(str(lst))
-        self.lst = angles.sexa2deci(aparts['sign'], *aparts['vals'], todeg=True)
+            lst = location.sidereal_time()
+            aparts = angles.phmsdms(str(lst))
+            self.lst = angles.sexa2deci(aparts['sign'], *aparts['vals'], todeg=True)
         ## Must set the date before calculating ra, dec!!!
         # compute apparent RA,DEC for date of observations
-        ra_a, dec_a = location.radec_of(str(self.telaz), str(self.telel))
-#        fmt = 'Date   = %s,  LST = %s, %f (%f, %f)'
-#        print fmt % (datestr, lst, self.lst, self.telaz, self.telel)
-        radec = ephem.Equatorial(ra_a, dec_a, epoch=datestr)
-#        print 'Ra,Dec %s,%s for %s' % (radec.ra, radec.dec, radec.epoch)
-        radec2000 = ephem.Equatorial(radec, epoch=ephem.J2000)
-#        print 'Ra,Dec %s,%s for %s' % (radec2000.ra, radec2000.dec, radec2000.epoch)
+            ra_a, dec_a = location.radec_of(str(self.telaz), str(self.telel))
+            radec = ephem.Equatorial(ra_a, dec_a, epoch=datestr)
+            radec2000 = ephem.Equatorial(radec, epoch=ephem.J2000)
         # Hours
-        aparts = angles.phmsdms(str(radec2000.ra))
-        self.ra = angles.sexa2deci(aparts['sign'], *aparts['vals'], todeg=True)
+            aparts = angles.phmsdms(str(radec2000.ra))
+            self.ra = angles.sexa2deci(aparts['sign'], *aparts['vals'], todeg=True)
         # to convert to dec degrees need to replace on : with d
-        aparts = angles.phmsdms(str(radec2000.dec))
-        self.dec = angles.sexa2deci(aparts['sign'], *aparts['vals'])
+            aparts = angles.phmsdms(str(radec2000.dec))
+            self.dec = angles.sexa2deci(aparts['sign'], *aparts['vals'])
         self.epoch = "2000"
         # now update galactic coordinates
-        self.radec2gal()
-        sun = ephem.Sun(location)
-        aparts = angles.phmsdms(str(sun.az))
-        self.az_sun = angles.sexa2deci(aparts['sign'], *aparts['vals'])
-        aparts = angles.phmsdms(str(sun.alt))
-        self.altsun = angles.sexa2deci(aparts['sign'], *aparts['vals'])
-#        print 'sun az,el: %s,%s -> %f,%f' % (sun.az, sun.alt, self.az_sun, self.altsun)
+        if ephemOK:
+            self.radec2gal()
+            sun = ephem.Sun(location)
+            aparts = angles.phmsdms(str(sun.az))
+            self.az_sun = angles.sexa2deci(aparts['sign'], *aparts['vals'])
+            aparts = angles.phmsdms(str(sun.alt))
+            self.altsun = angles.sexa2deci(aparts['sign'], *aparts['vals'])
 
 ##################################################
 #
@@ -445,7 +471,8 @@ class Spectrum(object):
         """
     # need the current time to update coordiantes
         now = self.utc
-        print("File %4d: %s (%d)" % (self.writecount, outname, self.count))
+        if self.writecount > 0:
+            print("File %4d: %s (%d)" % (self.writecount, outname, self.count))
         fullname = dirname + outname
         outfile = open(fullname, 'w')
         outfile.write('# File: ' + outname + '\n')
@@ -515,6 +542,18 @@ class Spectrum(object):
         outline = '# Duration  = '  + str(self.durationSec) + '\n'
         outfile.write(outline)
         outline = '# DeltaX    = '  + str(self.deltaFreq) + '\n'
+        outfile.write(outline)
+        outline = '# TSYS      = '  + str(self.tSys) + '\n'
+        outfile.write(outline)
+        outline = '# TRX       = '  + str(self.tRx) + '\n'
+        outfile.write(outline)
+        outline = '# TRMS      = '  + str(self.tRms) + '\n'
+        outfile.write(outline)
+        outline = '# TINT      = '  + str(self.tint) + '\n'
+        outfile.write(outline)
+        outline = '# KPERC     = '  + str(self.KperC) + '\n'
+        outfile.write(outline)
+        outline = '# GAINFACT  = '  + str(self.gainFactor) + '\n'
         outfile.write(outline)
         outline = '# BUNIT     = '  + str(self.bunit).strip() + '\n'
         outfile.write(outline)
@@ -658,21 +697,16 @@ class Spectrum(object):
         Write ascii file containing astronomy data
         File name is based on time of observation
         """
-        now = self.utc
-        strnow = now.isoformat()
-        datestr = strnow.split('.')
-        daypart = datestr[0]
-        yymmdd = daypart[2:19]
-        # distinguish hot load and regular observations
+        outname = utcToName(self.utc)
+        # distinguish events and hot load obs from regular observations
         if self.nSpec <= 0:               # if not a spectrum
-            outname = yymmdd + '.eve'     # must be an event
+            outname = outname + '.eve'    # must be an event
             self.nTime = 1
         else:                             # else a spectrum
             if self.telel > 0:
-                outname = yymmdd + '.ast'
+                outname = outname + '.ast'
             else:
-                outname = yymmdd + '.hot'
-        outname = outname.replace(":", "")
+                outname = outname + '.hot'
         self.write_ascii_file(dirname, outname)
 
     def write_ascii_ave(self, dirname):
@@ -681,10 +715,7 @@ class Spectrum(object):
         File name is based on time of observation
         """
         now = self.utc
-        strnow = now.isoformat()
-        datestr = strnow.split('.')
-        daypart = datestr[0]
-        yymmdd = daypart[2:19]    # actually date and time parts
+        yymmdd = utcToName( now)
         yymmdd = yymmdd + "-ave"  # distiguish averages from observations
         # distinguish hot load and regular observations
         extension = '.ast'
@@ -695,7 +726,6 @@ class Spectrum(object):
         else:
             extension = '.ast'
         outname = yymmdd + extension
-        outname = outname.replace(":", "")
         self.write_ascii_file(dirname, outname)
 
     def read_spec_ast(self, fullname):
