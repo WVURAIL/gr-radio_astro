@@ -56,26 +56,26 @@ GR_LIBRARY_FOO(gnuradio-radio_astro RUNTIME_COMPONENT "radio_astro_runtime" DEVE
 ########################################################################
 # Build and register unit test
 ########################################################################
-include(GrTest)
+#include(GrTest)
 
-include_directories(${CPPUNIT_INCLUDE_DIRS})
+#include_directories(${CPPUNIT_INCLUDE_DIRS})
 
-list(APPEND test_radio_astro_sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/test_radio_astro.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/qa_radio_astro.cc
-)
+#list(APPEND test_radio_astro_sources
+	#${CMAKE_CURRENT_SOURCE_DIR}/test_radio_astro.cc
+    #${CMAKE_CURRENT_SOURCE_DIR}/qa_radio_astro.cc
+    #)
 
-add_executable(test-radio_astro ${test_radio_astro_sources})
+#add_executable(test-radio_astro ${test_radio_astro_sources})
 
-target_link_libraries(
-  test-radio_astro
-  ${GNURADIO_RUNTIME_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${CPPUNIT_LIBRARIES}
-  gnuradio-radio_astro
-)
+#target_link_libraries(
+	#test-radio_astro
+  #${GNURADIO_RUNTIME_LIBRARIES}
+  #${Boost_LIBRARIES}
+  #${CPPUNIT_LIBRARIES}
+  #gnuradio-radio_astro
+  #)
 
-GR_ADD_TEST(test_radio_astro test-radio_astro)
+#GR_ADD_TEST(test_radio_astro test-radio_astro)
 
 ########################################################################
 # Print summary

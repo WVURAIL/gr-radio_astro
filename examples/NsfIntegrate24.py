@@ -18,7 +18,7 @@ if __name__ == '__main__':
             x11 = ctypes.cdll.LoadLibrary('libX11.so')
             x11.XInitThreads()
         except:
-            print "Warning: failed to XInitThreads()"
+            print ("Warning: failed to XInitThreads()")
 
 from PyQt5 import Qt
 from PyQt5 import Qt, QtCore
@@ -959,7 +959,7 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
 
 def main(top_block_cls=NsfIntegrate24, options=None):
     if gr.enable_realtime_scheduling() != gr.RT_OK:
-        print "Error: failed to enable real-time scheduling."
+        print ("Error: failed to enable real-time scheduling.")
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')

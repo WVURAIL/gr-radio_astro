@@ -44,8 +44,8 @@ foreach(incdir ${GNURADIO_RUNTIME_INCLUDE_DIRS})
 endforeach(incdir)
 
 set(GR_SWIG_LIBRARIES gnuradio-radio_astro)
-set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/radio_astro_swig_doc.i)
-set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+#set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/radio_astro_swig_doc.i)
+#set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 GR_SWIG_MAKE(radio_astro_swig radio_astro_swig.i)
 
@@ -60,6 +60,6 @@ GR_SWIG_INSTALL(TARGETS radio_astro_swig DESTINATION ${GR_PYTHON_DIR}/radio_astr
 install(
     FILES
     radio_astro_swig.i
-    ${CMAKE_CURRENT_BINARY_DIR}/radio_astro_swig_doc.i
+    #${CMAKE_CURRENT_BINARY_DIR}/radio_astro_swig_doc.i
     DESTINATION ${GR_INCLUDE_DIR}/radio_astro/swig
 )
