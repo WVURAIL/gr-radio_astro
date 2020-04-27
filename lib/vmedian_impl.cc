@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
- * Copyright 2019 - Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com
- * 
- * This is free software;  you can redistribute it and/or modify
+/*
+ * Copyright 2020 Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com.
+ *
+ * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -39,16 +39,18 @@ namespace gr {
         (new vmedian_impl(vec_length, n));
     }
 
+
     /*
      * The private constructor
      */
     vmedian_impl::vmedian_impl(int vec_length, int n)
       : gr::block("vmedian",
-		  gr::io_signature::make(1, 1, sizeof(float)*vec_length),
-		  gr::io_signature::make(1, 1, sizeof(float)*vec_length)),
-        d_vec_length(vec_length),
-        d_n(n)
-    { set_vlen( vec_length);  /* initialize all imput values */
+		          gr::io_signature::make(1, 1, sizeof(float)*vec_length),
+		          gr::io_signature::make(1, 1, sizeof(float)*vec_length)),
+              d_vec_length(vec_length),
+              d_n(n)
+    
+    {set_vlen( vec_length);  /* initialize all imput values */
       set_mode( n);
     }
 
@@ -92,7 +94,7 @@ namespace gr {
 	}
       d_vec_length = vlen;
     } // end of set_vlen()
-      
+
     int
     vmedian_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
@@ -121,7 +123,8 @@ namespace gr {
       // Tell runtime system how many output items we produced.
       return nout;
     } // end of vmedian_impl:: general_work
-    
+
+
 
     int
     vmedian_impl::vmedian(const float *input, float *output)

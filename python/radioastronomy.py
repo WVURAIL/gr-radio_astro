@@ -31,7 +31,7 @@ HISTORY
 import datetime
 import copy
 import numpy as np
-import angles
+from . import angles
 
 # assume ephem can not be loaded, then try
 ephemOK = True

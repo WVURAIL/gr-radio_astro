@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
-# Copyright 2019 <+YOU OR YOUR COMPANY+>.
-# 
+#
+# Copyright 2020 DSPIRA.
+#
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this software; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
+
 
 import numpy as np
 from gnuradio import gr
@@ -38,7 +39,6 @@ except:
     print ("")
 
 class chart_recorder(gr.sync_block):
-    
     """
     input is integrated data to be added to the output chart recorder array:
         out = array[0,0,0, 0, ... 0, -3 = non-zero value, -2 = non-zero value, -1 = new value input]
@@ -63,6 +63,7 @@ class chart_recorder(gr.sync_block):
         self.output_array = np.zeros(self.scan_length)
         self.time_values = np.arange(0, int(self.scan_length*self.integration_time), self.integration_time)
         self.data_array = np.zeros((int(self.scan_length),2))
+
 
     def work(self, input_items, output_items):
         in0 = input_items[0]
@@ -101,6 +102,7 @@ class chart_recorder(gr.sync_block):
 
         return len(output_items[0])
 
+
     #Check if chart_run or save_to_file are changed:
 
     def start_run(self, chart_run):
@@ -111,4 +113,4 @@ class chart_recorder(gr.sync_block):
         if self.save_to_file == 0:          # The value of save_to_file is not used. This parameter is used simply to call this routine to set
             self.save_to_file = 1           # the save_to_file value to 1 so that the data is written to file in the If statement.
                                             # The Push Button sets the save_to_file value to 1 when pressed, then 0 when released.
-                        
+                            

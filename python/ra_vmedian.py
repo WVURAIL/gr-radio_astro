@@ -1,10 +1,7 @@
-"""
-Radio Astronomy Vector Median
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018 Quiet Skies LLC
+# Copyright 2020 Quiet Skies LLC.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

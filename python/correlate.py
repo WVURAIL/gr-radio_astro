@@ -1,35 +1,35 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
-# Copyright 2018 Kevin Bandura.
-# 
+#
+# Copyright 2020 DSPIRA.
+#
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this software; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
+
 
 import numpy as np
 from gnuradio import gr
-#from numba import jit
-#import time
 
-#@jit
+
 def _corr(in_dat, out_size, vec_length, in1_indices, in2_indices ):
     out_arr = np.zeros((out_size, vec_length), dtype=np.complex64)
     for i in range(in1_indices.size):
         out_arr[i] = in_dat[in1_indices[i]][0]*in_dat[in2_indices[i]][0].conjugate()
     return out_arr
+
 
 class correlate(gr.sync_block):
     """
@@ -46,7 +46,6 @@ class correlate(gr.sync_block):
         self.vec_length = vec_length
         self.in1_indices, self.in2_indices =  np.triu_indices(n_inputs)
         self.out_size = self.in1_indices.size
-
 
 
     def work(self, input_items, output_items):

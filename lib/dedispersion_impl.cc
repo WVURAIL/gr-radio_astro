@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
- * Copyright 2018 <+YOU OR YOUR COMPANY+>.
- * 
+/*
+ * Copyright 2020 DSPIRA.
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -24,7 +24,6 @@
 
 #include <gnuradio/io_signature.h>
 #include "dedispersion_impl.h"
-#include <iostream>
 
 namespace gr {
   namespace radio_astro {
@@ -36,6 +35,7 @@ namespace gr {
         (new dedispersion_impl(vec_length, dms, f_obs, bw, t_int, nt));
     }
 
+
     /*
      * The private constructor
      */
@@ -43,12 +43,12 @@ namespace gr {
       : gr::block("dedispersion",
               gr::io_signature::make(1, 1, sizeof(float)*vec_length*nt),
               gr::io_signature::make(1, 1, sizeof(float)*nt)),
-        d_vec_length(vec_length),
-        d_dms(dms),
-        d_f_obs(f_obs),
-        d_bw(bw),
-        d_t_int(t_int),
-        d_nt(nt)
+              d_vec_length(vec_length),
+              d_dms(dms),
+              d_f_obs(f_obs),
+              d_bw(bw),
+              d_t_int(t_int),
+              d_nt(nt)
     {}
 
     /*
@@ -88,7 +88,7 @@ namespace gr {
       // Tell runtime system how many output items we produced.
       return noutput_items;
     }
-    
+
     int
     dedispersion_impl::dedisperse(const float *input, float *output)
     {

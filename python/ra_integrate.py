@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018 Glen Langston, Quiet Skies
+# Copyright 2020 Glen Langston, Quiet Skies.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -683,5 +683,3 @@ class ra_integrate(gr.sync_block):
         # end for all input vectors
         return nout
     # end ra_integrate()
-
-

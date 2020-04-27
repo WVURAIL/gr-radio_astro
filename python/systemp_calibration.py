@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
-# Copyright 2018 <+YOU OR YOUR COMPANY+>.
-# 
+#
+# Copyright 2020 DSPIRA.
+#
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this software; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
+
 
 import numpy as np
 from datetime import datetime
@@ -32,6 +33,7 @@ except:
     print ("")
     
 from gnuradio import gr
+
 
 class systemp_calibration(gr.sync_block):
     """
@@ -114,7 +116,7 @@ class systemp_calibration(gr.sync_block):
         self.gauss_window_spec = self.normal_factor_spec*np.exp(-(self.gx_spec**2)/(2*self.fwhm_spec**2))
         self.gauss_window_spec = self.gauss_window_spec/self.gauss_window_spec.sum()
 
-    
+
     def work(self, input_items, output_items):
         in0 = input_items[0]
         # Copy the input data into a simpler array:
@@ -285,7 +287,6 @@ class systemp_calibration(gr.sync_block):
             self.filtered_out0[i] = 0
             for j in range(i-self.k_cal, i+self.k_cal+1):
                 self.filtered_out0[i] = self.filtered_out0[i] + self.filtered_spike[j]*self.gauss_window_cal[j-i+self.k_cal]
-
 
 
 

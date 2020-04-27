@@ -1,11 +1,7 @@
 #!/usr/bin/env python
-"""
-Event writing function compatible with spectrum writing functions
-Glen Langston - 2019 September 14
-"""
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018 Glen Langston, Quiet Skies <+YOU OR YOUR COMPANY+>.
+# Copyright 2020 Glen Langston, Quiet Skies.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +12,11 @@ Glen Langston - 2019 September 14
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this software; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street,
+# Boston, MA 02110-1301, USA.
 #
 # HISTORY
 # 19OCT11 GIL add test for duplicate events, sensed by same RMS as last event
@@ -369,5 +370,3 @@ class ra_event_sink(gr.sync_block):
             # output latest event count
         return nout
     # end event_sink()
-
-

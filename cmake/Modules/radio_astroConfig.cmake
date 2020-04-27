@@ -22,9 +22,10 @@ FIND_LIBRARY(
           /usr/local/lib64
           /usr/lib
           /usr/lib64
-)
+          )
+
+include("${CMAKE_CURRENT_LIST_DIR}/radio_astroTarget.cmake")
 
 INCLUDE(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(RADIO_ASTRO DEFAULT_MSG RADIO_ASTRO_LIBRARIES RADIO_ASTRO_INCLUDE_DIRS)
 MARK_AS_ADVANCED(RADIO_ASTRO_LIBRARIES RADIO_ASTRO_INCLUDE_DIRS)
-

@@ -1,0 +1,68 @@
+id: radio_astro_hdf5_sink
+label: hdf5_sink
+category: '[radio_astro]'
+
+templates:
+  imports: import radio_astro
+  make: radio_astro.hdf5_sink(${intype}, ${n_inputs}, ${vec_length}, ${save_toggle}, ${fname}, ${pointing}, ${freq_start}, ${freq_step}, ${notes})
+  callbacks:
+    - set_save_toggle(${save_toggle})
+#  Make one 'parameters' list entry for every parameter you want settable from the GUI.
+#     Keys include:
+#     * id (makes the value accessible as \$keyname, e.g. in the make entry)
+#     * label (label shown in the GUI)
+#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+parameters:
+- id: intype
+  label: IO Type
+  dtype: enum
+  default: 'Complex'
+  options: ['complex', 'float', 'int']
+  option_labels: ['Complex', 'Float', 'Int']
+  option_attributes:
+    type: [complex, float, int]
+- id: n_inputs
+  label: n_inputs
+  dtype: int
+  default: '1'
+- id: vec_length
+  label: vec_length
+  dtype: int
+- id: save_toggle
+  label: save_toggle
+  dtype: string
+- id: fname
+  label: filename
+  dtype: string
+- id: pointing
+  label: pointing
+  dtype: string
+- id: freq_start
+  label: freq_start
+  dtype: float
+- id: freq_step
+  label: freq_step
+  dtype: float
+- id: notes
+  label: notes
+  dtype: string
+
+#  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
+#  Keys include:
+#      * label (an identifier for the GUI)
+#      * domain (optional - stream or message. Default is stream)
+#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+#      * vlen (optional - data stream vector length. Default is 1)
+#      * optional (optional - set to 1 for optional inputs. Default is 0)
+inputs:
+- label: in
+  domain: stream
+  dtype: ${intype}
+  multiplicity: ${n_inputs}
+  vlen: ${vec_length}
+  optional: ...
+
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

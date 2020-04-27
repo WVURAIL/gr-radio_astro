@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
-# Copyright 2019 <+YOU OR YOUR COMPANY+>.
-# 
+#
+# Copyright 2020 DSPIRA.
+#
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this software; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
+
 
 import numpy as np
 from gnuradio import gr
@@ -43,6 +44,7 @@ class csv_filesink(gr.sync_block):
         self.frequencies = np.arange(freq - samp_rate/2, freq + samp_rate/2, samp_rate/vec_length)[:vec_length]
         self.data_array = np.zeros((vec_length,2))
 
+
     def work(self, input_items, output_items):
         in0 = input_items[0]
         
@@ -61,5 +63,5 @@ class csv_filesink(gr.sync_block):
         return len(input_items[0])
 
     def set_save_toggle(self, save_toggle):
-        self.save_toggle = save_toggle
+        self.save_toggle = save_toggle    
 

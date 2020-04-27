@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
- * Copyright 2019 Quiet Skies LLC -- Glen Langston, Proprietor.
- * 
+/*
+ * Copyright 2020 Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com.
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -63,7 +63,7 @@ namespace gr {
        * creating new instances.
        */
       static sptr make(int vec_length, float dms, float f_obs, float bw, float t_int, int nt);
-
+   
       virtual void set_dms(float dms) = 0;  // This is the nsigma parameter
 
       virtual void set_vlen(int vec_length) = 0;  // This is the nsigma parameter
@@ -73,9 +73,11 @@ namespace gr {
 
       virtual void set_freq(float f_obs) = 0;
       
+   
     };
 
   } // namespace radio_astro
 } // namespace gr
 
 #endif /* INCLUDED_RADIO_ASTRO_DETECT_H */
+
