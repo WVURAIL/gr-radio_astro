@@ -63,5 +63,5 @@ If you happen to get an error along the line of "no module found xxx" then make 
 
 where `path/to/gr-XXX/python/` should be changed to the appropriate path on your PC
 
-Glen Langston,  August 26, 2019
+Glen Langston --- National Science Foundation, May 20, 2020
 
