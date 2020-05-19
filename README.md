@@ -1,7 +1,9 @@
 # gr-radio_astro
 
-##  This repository contains Radio Astronomy designs for observations of 
-Neutral Hydrogen.   The different design names indicate the bandwidths of the observations and
+##  This repository contains Radio Astronomy designs for observations of Neutral Hydrogen.   
+
+These designs, in the examples directory, build on Gnuradio capabilities.  
+The different design names indicate the bandwidths of the observations and
 provide a hint as to the type of Software Defined Radio (SDR) used.
 
 There are two major groups of designs, one for integration observations of spectra (NsfIntegrate??) and
@@ -13,12 +15,15 @@ A summary of different Designs and devices is listed below:
 1. NsfIntegrate30 - RTL-SDR compatible devices operating with 3.0 MHz bandwidth
 2. NsfIntegrate45 - PlutoSdr devices operating at 4.5 MHz and not dropping any samples
 3. NsfIntegrate60 - AIRSPY Mini devices at 6.0 MHz
+5. NsfIntegrate70 - PlutoSdr devices operating at 7.0 MHz but dropping samples (as high as 12 MHz works, but more samples are dropped).
 4. NsfIntegrate90 - SDRPlay RSP 1A at 9.0 MHz
 5. NsfIntegrate100 - AIRSPY at 10.0 MHz.
 
 The data analysis tools for gr-radio_astro usually run on different computers than the data acqusition.   The analysis software and documentation have moved tto the repository:
 
 http://github.com/glangsto/analyze
+
+These designs use custom python and C++ code.  These programs must be built in the usual manner.
 
 --- 
 
