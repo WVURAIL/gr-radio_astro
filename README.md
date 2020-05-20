@@ -29,7 +29,7 @@ These designs use custom python and C++ code.  These programs must be built in t
 
 A build and trouble shooting guide was kindly provided by Dr. Joshua Smith and Zerina Kapetanovic of Univesity of Washington.
 
-#Install Guide
+# Install Guide
 
 1. Clone the repository and within the gr-XXX folder create a build folder
 
