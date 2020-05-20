@@ -1,11 +1,26 @@
-This is the radio_astro-write-a-block package meant as a guide to building
-out-of-tree packages. To use the radio_astro blocks, the Python namespaces
-is in 'radio_astro', which is imported as:
+# FOR Ubuntu 20.04 (on a Fresh install of OS)
 
-    import radio_astro
 
-See the Doxygen documentation for details about the blocks available
-in this package. A quick listing of the details can be found in Python
-after importing by using:
+1. Install GNURadio
 
-    help(radio_astro)
+# Install Guide
+
+1. Clone the repository and within the gr-XXX folder create a build folder
+
+`mkdir build`
+
+2. Change directory into the build folder
+
+`cd build`
+
+
+3. run the following commands
+
+```
+cmake ..
+sudo make
+sudo make install
+sudo ldconfig
+```
+
+4. Run GNU Radio Companion to check if the modules were installed. 
