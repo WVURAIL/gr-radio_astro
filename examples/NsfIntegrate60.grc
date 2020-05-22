@@ -6,7 +6,7 @@
     <key>options</key>
     <param>
       <key>author</key>
-      <value>Glen Langston</value>
+      <value>Glen Langston -- NSF 20 May 22</value>
     </param>
     <param>
       <key>window_size</key>
@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>NsfIntegrate: Average+Record Astronomical Obs.</value>
+      <value>NsfIntegrate: Average Astronomical Obs.</value>
     </param>
     <param>
       <key>placement</key>
@@ -109,7 +109,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>0,7,1,2</value>
+      <value>0,6,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -195,7 +195,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,5,1,2</value>
+      <value>1,4,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -347,7 +347,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,7,1,2</value>
+      <value>1,6,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -433,7 +433,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>0,5,1,2</value>
+      <value>0,4,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -597,7 +597,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(819, 594)</value>
+      <value>(856, 592)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -609,7 +609,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>12.</value>
+      <value>13</value>
     </param>
   </block>
   <block>
@@ -686,7 +686,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>6,0,1,1</value>
+      <value>6,0,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -812,105 +812,6 @@
     </param>
     <param>
       <key>value</key>
-      <value>frame_save</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(368, 681)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value>8,2,1,2</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>VelFrame</value>
-    </param>
-    <param>
-      <key>label0</key>
-      <value>Topocentric</value>
-    </param>
-    <param>
-      <key>label1</key>
-      <value>LSRK</value>
-    </param>
-    <param>
-      <key>label2</key>
-      <value>Barycentric</value>
-    </param>
-    <param>
-      <key>label3</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label4</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Frame</value>
-    </param>
-    <param>
-      <key>labels</key>
-      <value>[]</value>
-    </param>
-    <param>
-      <key>num_opts</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option0</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>option1</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>option2</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>option3</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option4</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>options</key>
-      <value>[0, 1, 2]</value>
-    </param>
-    <param>
-      <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>widget</key>
-      <value>combo_box</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_chooser</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
       <value>xaxis_save</value>
     </param>
     <param>
@@ -923,7 +824,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>8,5,1,3</value>
+      <value>8,3,1,3</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1133,53 +1034,6 @@
     <param>
       <key>writeback</key>
       <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_config</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>config_file</key>
-      <value>ConfigFile</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(392, 948)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>frame_save</value>
-    </param>
-    <param>
-      <key>option</key>
-      <value>Frame</value>
-    </param>
-    <param>
-      <key>section</key>
-      <value>main</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>writeback</key>
-      <value>VelFrame</value>
     </param>
   </block>
   <block>
@@ -1401,7 +1255,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>7,0,1,1</value>
+      <value>7,0,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1547,7 +1401,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>8,0,1,1</value>
+      <value>8,0,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2445,7 +2299,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>8,8,1,2</value>
+      <value>8,6,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2676,7 +2530,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>2,2,6,8</value>
+      <value>2,2,5,6</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3110,101 +2964,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vmedian</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(504, 240)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vmedian_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-  </block>
-  <block>
-    <key>radio_astro_ra_vmedian</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(320, 240)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>180</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>radio_astro_ra_vmedian_0_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-    <param>
-      <key>vdecimate</key>
-      <value>4</value>
-    </param>
-  </block>
-  <block>
-    <key>radio_astro_ra_vmedian</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -3231,7 +2991,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vmedian_0_0_0</value>
+      <value>radio_astro_vmedian_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -3251,7 +3011,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vmedian</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -3270,7 +3030,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(320, 312)</value>
+      <value>(336, 312)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3278,7 +3038,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vmedian_0_1</value>
+      <value>radio_astro_vmedian_0_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -3298,7 +3058,7 @@
     </param>
   </block>
   <block>
-    <key>radio_astro_ra_vmedian</key>
+    <key>radio_astro_vmedian</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -3317,7 +3077,101 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(688, 312)</value>
+      <value>(520, 240)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_vmedian_0_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>vdecimate</key>
+      <value>4</value>
+    </param>
+  </block>
+  <block>
+    <key>radio_astro_vmedian</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(328, 240)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>180</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_vmedian_0_0_0_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>vdecimate</key>
+      <value>4</value>
+    </param>
+  </block>
+  <block>
+    <key>radio_astro_vmedian</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(720, 312)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3325,7 +3179,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>radio_astro_ra_vmedian_0_1_0</value>
+      <value>radio_astro_vmedian_0_1</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -4765,7 +4619,7 @@
   </connection>
   <connection>
     <source_block_id>blocks_complex_to_mag_squared_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0</sink_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -4818,37 +4672,37 @@
     <sink_key>4</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_0</sink_block_id>
+    <source_block_id>radio_astro_vmedian_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_1</sink_block_id>
+    <source_block_id>radio_astro_vmedian_0_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_0_0</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_1_0</sink_block_id>
+    <source_block_id>radio_astro_vmedian_0_0_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_1</source_block_id>
-    <sink_block_id>radio_astro_ra_vmedian_0_0_0</sink_block_id>
+    <source_block_id>radio_astro_vmedian_0_0_0_0</source_block_id>
+    <sink_block_id>radio_astro_vmedian_0_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_1_0</source_block_id>
+    <source_block_id>radio_astro_vmedian_0_1</source_block_id>
     <sink_block_id>radio_astro_ra_ascii_sink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>radio_astro_ra_vmedian_0_1_0</source_block_id>
+    <source_block_id>radio_astro_vmedian_0_1</source_block_id>
     <sink_block_id>radio_astro_ra_integrate_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
