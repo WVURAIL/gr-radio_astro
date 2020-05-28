@@ -609,7 +609,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>13</value>
+      <value>15</value>
     </param>
   </block>
   <block>
@@ -3206,7 +3206,7 @@
     </param>
     <param>
       <key>ant0</key>
-      <value></value>
+      <value>1</value>
     </param>
     <param>
       <key>bb_gain0</key>
