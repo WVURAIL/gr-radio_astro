@@ -5,7 +5,7 @@
 # Title: Nsf PlutoSdr Event Detect: 4.5MHz
 # Author: Glen Langston
 # Description: Event Detection using PlutoSdr
-# Generated: Fri Oct 11 12:04:48 2019
+# Generated: Fri May 29 14:43:36 2020
 ##################################################
 
 from distutils.version import StrictVersion
