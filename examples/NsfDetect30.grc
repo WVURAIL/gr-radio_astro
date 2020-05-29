@@ -105,11 +105,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(952, 520)</value>
+      <value>(936, 376)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>0,7,1,2</value>
+      <value>0,6,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -191,11 +191,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(824, 608)</value>
+      <value>(776, 464)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,5,1,2</value>
+      <value>1,4,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -343,11 +343,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(960, 608)</value>
+      <value>(936, 464)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>1,7,1,2</value>
+      <value>1,6,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -528,11 +528,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(776, 520)</value>
+      <value>(776, 376)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>0,5,1,2</value>
+      <value>0,4,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -614,11 +614,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(640, 520)</value>
+      <value>(632, 584)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>0,2,1,2</value>
+      <value>2,2,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -657,7 +657,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(40, 876)</value>
+      <value>(1024, 584)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -682,6 +682,178 @@
     <param>
       <key>writeback</key>
       <value>Gain1</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>Gain2s</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(752, 584)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>2,4,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain2</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Gain2</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_config</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>config_file</key>
+      <value>ConfigFile</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>14.</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1048, 600)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain2s</value>
+    </param>
+    <param>
+      <key>option</key>
+      <value>gain2</value>
+    </param>
+    <param>
+      <key>section</key>
+      <value>main</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+    <param>
+      <key>writeback</key>
+      <value>Gain2</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>Gain3s</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(872, 584)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>2,6,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain3</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Gain3</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_config</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>config_file</key>
+      <value>ConfigFile</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>14.</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1072, 624)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain3s</value>
+    </param>
+    <param>
+      <key>option</key>
+      <value>gain3</value>
+    </param>
+    <param>
+      <key>section</key>
+      <value>main</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+    <param>
+      <key>writeback</key>
+      <value>Gain3</value>
     </param>
   </block>
   <block>
@@ -951,7 +1123,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(664, 608)</value>
+      <value>(640, 464)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1104,7 +1276,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(200, 444)</value>
+      <value>(624, 720)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1198,7 +1370,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 239)</value>
+      <value>(296, 256)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1292,7 +1464,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(776, 24)</value>
+      <value>(728, 24)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1686,11 +1858,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1000, 8)</value>
+      <value>(904, 8)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>3,2,5,7</value>
+      <value>3,2,5,6</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2171,7 +2343,7 @@
     </param>
     <param>
       <key>bb_gain0</key>
-      <value>12</value>
+      <value>float(Gain3)</value>
     </param>
     <param>
       <key>bw0</key>
@@ -2195,7 +2367,7 @@
     </param>
     <param>
       <key>if_gain0</key>
-      <value>12</value>
+      <value>float(Gain2)</value>
     </param>
     <param>
       <key>iq_balance_mode0</key>
