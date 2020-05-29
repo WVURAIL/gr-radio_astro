@@ -4,8 +4,8 @@
 # GNU Radio Python Flow Graph
 # Title: NSF Watch for Events whille recording spectra
 # Author: Glen Langston
-# Description: AIRSPY Dongle at full speed 10 MHz samples
-# Generated: Fri May 29 15:12:20 2020
+# Description: AIRSPY Mini at full speed 6 MHz samples
+# Generated: Fri May 29 15:14:23 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -42,7 +42,7 @@ import time
 from gnuradio import qtgui
 
 
-class NsfWatch100(gr.top_block, Qt.QWidget):
+class NsfWatch60(gr.top_block, Qt.QWidget):
 
     def __init__(self):
         gr.top_block.__init__(self, "NSF Watch for Events whille recording spectra")
@@ -65,14 +65,14 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NsfWatch100")
+        self.settings = Qt.QSettings("GNU Radio", "NsfWatch60")
         self.restoreGeometry(self.settings.value("geometry", type=QtCore.QByteArray))
 
 
         ##################################################
         # Variables
         ##################################################
-        self.ObsName = ObsName = "Integrate100"
+        self.ObsName = ObsName = "Integrate60"
         self.ConfigFile = ConfigFile = ObsName+".conf"
         self._telescope_save_config = ConfigParser.ConfigParser()
         self._telescope_save_config.read(ConfigFile)
@@ -456,7 +456,7 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NsfWatch100")
+        self.settings = Qt.QSettings("GNU Radio", "NsfWatch60")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -844,7 +844,7 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
         self._Azimuth_save_config.write(open(self.ConfigFile, 'w'))
 
 
-def main(top_block_cls=NsfWatch100, options=None):
+def main(top_block_cls=NsfWatch60, options=None):
 
     qapp = Qt.QApplication(sys.argv)
 

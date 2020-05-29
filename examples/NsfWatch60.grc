@@ -22,7 +22,7 @@
     </param>
     <param>
       <key>description</key>
-      <value>AIRSPY Dongle at full speed 10 MHz samples</value>
+      <value>AIRSPY Mini at full speed 6 MHz samples</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>NsfWatch100</value>
+      <value>NsfWatch60</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -880,7 +880,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"Integrate100"</value>
+      <value>"Integrate60"</value>
     </param>
   </block>
   <block>
