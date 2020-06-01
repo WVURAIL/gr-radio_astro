@@ -66,14 +66,16 @@ where `path/to/gr-XXX/python/` should be changed to the appropriate path on your
 # Example Interface - Tests with NeSDR, NooElec HI amplifier and Small metal Horn.
 
 This example shows successful observations of the Milky Way with a minimum cost system.   The system includes
-the NsfIntegrate30.grc (and NsfIntegrate30.py) display.
+the NsfIntegrate30.grc (and NsfIntegrate30.py) observer interface in this repository.
 
 During the observations, the interface can show spectra in raw counts or calibrated in Kelvins.
 
-<a href="docs/Pi10SmallMetalHorn-HotCOld.png"> <img src="docs/Pi10SmallMetalHorn-HotCOld.png" width=45%> 
-alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="left"></a>
-<a href="docs/Pi10SmallMetalHorn-Kelvins.png"> <img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=45%> 
-alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="right"></a>
+<a href="docs/Pi10SmallMetalHorn-HotCold.png">
+<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=45% alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="left" width=45%> 
+</a>
+<a href="docs/Pi10SmallMetalHorn-Kelvins.png"> 
+<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=45% alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="right">
+</a>
 
 # Example Data
 
