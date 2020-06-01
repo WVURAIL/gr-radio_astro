@@ -68,13 +68,14 @@ where `path/to/gr-XXX/python/` should be changed to the appropriate path on your
 This example shows successful observations of the Milky Way with a minimum cost system.   The system includes
 the NsfIntegrate30.grc (and NsfIntegrate30.py) observer interface in this repository.
 
-During the observations, the interface can show spectra in raw counts or calibrated in Kelvins.
+During the observations, the interface can show spectra in raw counts or calibrated in Kelvins, as is shown by the screen
+captures of the interface during observations.
 
 <a href="docs/Pi10SmallMetalHorn-HotCold.png">
-<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=50% alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="left" width=45%> 
+<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=50% alt="GnuRadio Observer Interfaces showing Raw Spectra in counts."> 
 </a>
 <a href="docs/Pi10SmallMetalHorn-Kelvins.png"> 
-<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=50% alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="right">
+<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=50% alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins.">
 </a>
 
 # Example Data
