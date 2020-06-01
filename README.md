@@ -63,8 +63,22 @@ If you happen to get an error along the line of "no module found xxx" then make 
 
 where `path/to/gr-XXX/python/` should be changed to the appropriate path on your PC
 
+# Example Interface - Tests with NeSDR, NooElec HI amplifier and Small metal Horn.
+
+This example shows successful observations of the Milky Way with a minimum cost system.   The system includes
+the NsfIntegrate30.grc (and NsfIntegrate30.py) display.
+
+During the observations, the interface can show spectra in raw counts or calibrated in Kelvins.
+
+<a href="docs/Pi10SmallMetalHorn-HotCOld.png"> <img src="docs/Pi10SmallMetalHorn-HotCOld.png" width=45%> 
+alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="left"></a>
+<a href="docs/Pi10SmallMetalHorn-Kelvins.png"> <img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=45%> 
+alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="right"></a>
+
 # Example Data
 
+After the observations, all spectra are recorded in the data directory, containing a series of ascii files,
+taged with the observation time.
 The data sub-directory contains a few minutes of observations with different SDR types.
 Data from 2020-May-29 were made with a minimum sized horn and NeSDR device operating
 at 3 MHz bandwidth.   Log include Hot load (the ground) and Cold Sky observations.
