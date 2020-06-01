@@ -4,7 +4,7 @@
 # OBSERVER  = Science Aficionado
 # DEVICE    = rtl=0,bias=1
 # DATADIR   = ../data/
-# SITE      = None Attached.  RTLSDR Dongle Test
+# SITE      = Small Metal Horn - NeSDR Test
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
