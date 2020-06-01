@@ -65,29 +65,37 @@ where `path/to/gr-XXX/python/` should be changed to the appropriate path on your
 
 # Example Data
 
-The data subdirectory contains a few minutes of observations with different SDR types.
+The data sub-directory contains a few minutes of observations with different SDR types.
 Data from 2020-May-29 were made with a minimum sized horn and NeSDR device operating
-at 3 MHz bandwidth.   Log include Hot load (the ground) and Cold Sky.
+at 3 MHz bandwidth.   Log include Hot load (the ground) and Cold Sky observations.
 
 The log is summarized with the "analyze S command"
 
-`S 20-05-29T170*`
+```
+S 20-05-29T170*
 
 and yields
 
-`Count  Time    Az    El   G-Lon G-Lat  Frequency  BW   Gain    Filename`
-`   1 17:03:20 180.0,-90.0 340.6,  9.5:  1420.00, 3.00  40.0 - 20-05-29T170320.hot`
-`   3 17:04:04 180.0,-90.0 340.7,  9.4:  1420.00, 3.00  40.0 - 20-05-29T170404.hot`
-`   1 17:05:06 180.0, 90.0 160.8, -9.2:  1420.00, 3.00  40.0 - 20-05-29T170506.ast`
-`  14 17:09:50 180.0, 90.0 161.5, -8.6:  1420.00, 3.00  40.0 - 20-05-29T170950.ast`
+Count  Time    Az    El   G-Lon G-Lat  Frequency  BW   Gain    Filename
+   1 17:03:20 180.0,-90.0 340.6,  9.5:  1420.00, 3.00  40.0 - 20-05-29T170320.hot
+   3 17:04:04 180.0,-90.0 340.7,  9.4:  1420.00, 3.00  40.0 - 20-05-29T170404.hot
+   1 17:05:06 180.0, 90.0 160.8, -9.2:  1420.00, 3.00  40.0 - 20-05-29T170506.ast
+  14 17:09:50 180.0, 90.0 161.5, -8.6:  1420.00, 3.00  40.0 - 20-05-29T170950.ast
+```
 
 The hot and cold load observations are shown with the Raw plot command,"R"
 
 `R 20-05-29T170*`
 
+<a href="docs/SmallHornHotCold.png"> <img src="docs/SmallHornHotCold.png" width=600 
+alt="Raw spectra, with intensity in Counts versus Frequency on the x axis." align="center"></a>
+
 The calibrated in Temperatre, Kelvins, spectra are shown with the "T" command.
 
 `T 120. 20-05-29T170*`
+
+<a href="docs/SmallHornTcal.png"> <img src="docs/SmallHornTcal.png" width=600 
+alt="Calibrated spectra, showing the intensity in Kelvins versus velocity on the x axis." align="center"></a>
 
 Glen Langston --- National Science Foundation, May 29, 2020
 
