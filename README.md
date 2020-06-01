@@ -72,10 +72,10 @@ During the observations, the interface can show spectra in raw counts or calibra
 captures of the interface during observations.
 
 <a href="docs/Pi10SmallMetalHorn-HotCold.png">
-<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=50% alt="GnuRadio Observer Interfaces showing Raw Spectra in counts."> 
+<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=600 alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="center"> 
 </a>
 <a href="docs/Pi10SmallMetalHorn-Kelvins.png"> 
-<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=50% alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins.">
+<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=600 alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="Center">
 </a>
 
 # Example Data
