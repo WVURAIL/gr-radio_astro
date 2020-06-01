@@ -71,10 +71,10 @@ the NsfIntegrate30.grc (and NsfIntegrate30.py) observer interface in this reposi
 During the observations, the interface can show spectra in raw counts or calibrated in Kelvins.
 
 <a href="docs/Pi10SmallMetalHorn-HotCold.png">
-<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=45% alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="left" width=45%> 
+<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=50% alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="left" width=45%> 
 </a>
 <a href="docs/Pi10SmallMetalHorn-Kelvins.png"> 
-<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=45% alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="right">
+<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=50% alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="right">
 </a>
 
 # Example Data
