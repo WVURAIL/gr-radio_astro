@@ -19,7 +19,7 @@ A summary of different Designs and devices is listed below:
 4. NsfIntegrate90 - SDRPlay RSP 1A at 9.0 MHz
 5. NsfIntegrate100 - AIRSPY at 10.0 MHz.
 
-The data analysis tools for gr-radio_astro usually run on different computers than the data acqusition.   The analysis software and documentation have moved tto the repository:
+The data analysis tools for gr-radio_astro usually run on different computers than the data acqusition.   The analysis software and documentation have moved to the repository:
 
 http://github.com/glangsto/analyze
 
@@ -63,5 +63,31 @@ If you happen to get an error along the line of "no module found xxx" then make 
 
 where `path/to/gr-XXX/python/` should be changed to the appropriate path on your PC
 
-Glen Langston --- National Science Foundation, May 20, 2020
+# Example Data
+
+The data subdirectory contains a few minutes of observations with different SDR types.
+Data from 2020-May-29 were made with a minimum sized horn and NeSDR device operating
+at 3 MHz bandwidth.   Log include Hot load (the ground) and Cold Sky.
+
+The log is summarized with the "analyze S command"
+
+`S 20-05-29T170*`
+
+and yields
+
+Count  Time    Az    El   G-Lon G-Lat  Frequency  BW   Gain    Filename
+   1 17:03:20 180.0,-90.0 340.6,  9.5:  1420.00, 3.00  40.0 - 20-05-29T170320.hot 
+   3 17:04:04 180.0,-90.0 340.7,  9.4:  1420.00, 3.00  40.0 - 20-05-29T170404.hot 
+   1 17:05:06 180.0, 90.0 160.8, -9.2:  1420.00, 3.00  40.0 - 20-05-29T170506.ast 
+  14 17:09:50 180.0, 90.0 161.5, -8.6:  1420.00, 3.00  40.0 - 20-05-29T170950.ast 
+
+The hot and cold load observations are shown with the Raw plot command,"R"
+
+`R 20-05-29T170*`
+
+The calibrated in Temperatre, Kelvins, spectra are shown with the "T" command.
+
+`T 120. 20-05-29T170*`
+
+Glen Langston --- National Science Foundation, May 29, 2020
 
