@@ -1,0 +1,10 @@
+# This file is solely used for NTP authentication with symmetric keys
+# as defined by RFC 1305 and RFC 5905.
+#
+# It can contain ID/key pairs which can be generated using the “keygen” option
+# from “chronyc”; for example:
+# chronyc keygen 1 SHA256 256 >> /etc/chrony/chrony.keys
+# would generate a 256-bit SHA-256 key using ID 1.
+#
+# A list of supported hash functions and output encoding can be found in
+# the "keyfile" section from the "/usr/share/doc/chrony/chrony.txt.gz" file.
