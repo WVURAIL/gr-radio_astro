@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: NSF Watch 9MHz SDRPlay
+# Title: NSF Detect 9MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 9 MHz samples
-# Generated: Mon Jun 22 14:09:40 2020
+# Generated: Mon Jun 22 14:13:11 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -39,12 +39,12 @@ import sys
 from gnuradio import qtgui
 
 
-class NsfWatch90(gr.top_block, Qt.QWidget):
+class NsfDetect90(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "NSF Watch 9MHz SDRPlay")
+        gr.top_block.__init__(self, "NSF Detect 9MHz SDRPlay")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("NSF Watch 9MHz SDRPlay")
+        self.setWindowTitle("NSF Detect 9MHz SDRPlay")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -62,7 +62,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NsfWatch90")
+        self.settings = Qt.QSettings("GNU Radio", "NsfDetect90")
         self.restoreGeometry(self.settings.value("geometry", type=QtCore.QByteArray))
 
 
@@ -507,7 +507,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_stream_to_vector_0_0_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NsfWatch90")
+        self.settings = Qt.QSettings("GNU Radio", "NsfDetect90")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -1019,7 +1019,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self._Azimuth_save_config.write(open(self.ConfigFile, 'w'))
 
 
-def main(top_block_cls=NsfWatch90, options=None):
+def main(top_block_cls=NsfDetect90, options=None):
 
     qapp = Qt.QApplication(sys.argv)
 

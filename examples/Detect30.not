@@ -10,7 +10,7 @@
 # COUNTRY   = US
 # TELTYPE   = Pyramid Horn
 # FRAME     = TOPO
-# GAIN1     = 45.0
+# GAIN1     = 49.0
 # GAIN2     = 11.0
 # GAIN3     = 11.0
 # GAIN4     = 0.0
@@ -38,7 +38,7 @@
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2020-05-29 13:03:26.429817
+# UTC       = 2020-06-22 18:35:42.593541
 # SECONDS   =       0.0000000000 
 # LST       = 01:01:10.490
 # AZ        = 180.0
