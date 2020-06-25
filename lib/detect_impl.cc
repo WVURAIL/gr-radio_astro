@@ -18,6 +18,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
+/* HISTORY 
+ * 20Jun25 GIL process all provided vectors
+ * 20Jun23 GIL try to find reason some events are missed
+ */
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -210,6 +215,7 @@ namespace gr {
       inext = 0;
       bufferfull = false;
       inext2 = (MAX_BUFF/2) + 1;
+      printf("Buffer is not full: %5d\n", inext2);
     } // end of set_vlen()
       
     int
@@ -223,7 +229,10 @@ namespace gr {
       unsigned ninputs = ninput_items.size();
       int success;
 
-      success = event(in, out);
+      // since this is a 1 to 1 process, the numbrer of inputs is
+      // the same as the number of output items
+      success = event(noutput_items, in, out);
+      
       // Tell runtime system how many input items we consumed on
       // each input stream.
       consume_each (noutput_items);
@@ -238,7 +247,9 @@ namespace gr {
     { long i = inext2 - vlen2, length = vlen,
 	jstart = 0;
 
-      // now must reset the buffer to wait for the next event
+      // the event is centered on sample inext2. Must copy vlen2 before
+      // and after the event.   Deal with circular buffer
+      // Now must reset the buffer to wait for the next event
       bufferfull = false;
 
       // if event is within the circular buffer 
@@ -248,10 +259,10 @@ namespace gr {
 	      i++;
 	    }
 	}
-      else if (i < 0)
+      else if (i < 0)   // if before beging of buffer, on other end
 	{ i += MAX_BUFF;
 	  length = MAX_BUFF - i;
-       	  // printf("Two part - shift; Move 1: i=%ld, length=%ld\n", i, length);
+       	  // printf("Two part-shift; Move 1: i=%ld, length=%ld\n", i, length);
 	  for (long j = 0; j < length; j++)
 	    { samples[j] = circular[i];
 	      i++;
@@ -259,7 +270,7 @@ namespace gr {
 	  i = 0; 
 	  jstart = length;
 	  length = vlen - length;
-       	  // printf("Two part - shift; Move 2: i=%ld, length=%ld\n", i, length);
+       	  // printf("Two part-shift; Move 2: i=%ld, length=%ld\n", i, length);
 	  for (long j = jstart; j < vlen; j++)
 	    { samples[j] = circular[i];
 	      i++;
@@ -270,7 +281,7 @@ namespace gr {
 	  length = MAX_BUFF - i;
 	  if (length > vlen)
 	    length = vlen;
-	  // printf("Two part + shift; Move 1: i=%ld, length=%ld\n", i, length);  
+	  // printf("End Two part+shift; Move 1: i=%ld, length=%ld\n", i, length);  
 	  for (long j = 0; j < length; j++) 
 	    {
 	      samples[j] = circular[i];
@@ -279,7 +290,7 @@ namespace gr {
 	  i = 0;
 	  jstart = length;
 	  length = vlen - length;
-	  // printf("Two part + shift; Move 2: i=%ld, shift=%ld\n", i, length);
+	  // printf("End Two part+shift; Move 2: i=%ld, shift=%ld\n", i, length);
 	  for (long j = jstart; j < vlen; j++)
 	    {
 	      samples[j] = circular[i];
@@ -290,16 +301,19 @@ namespace gr {
   } // end of update_buffer()
     
     int
-    detect_impl::event(const gr_complex *input, gr_complex *output)
+    detect_impl::event(const unsigned ninputs, const gr_complex *input, gr_complex *output)
     {
       //outbuf = (float *) //create fresh one if necessary
       float n_sigma = d_dms; // translate variables 
-      int vlen = d_vec_length;
+      //      int vlen = d_vec_length;
+      int datalen = d_vec_length * ninputs, nout = 0, jjj = 0;
       gr_complex rp = 0;
       double mag2 = 0, dmjd = 0;
-      
+
+      // get time all samples arrive for any events found
+      dmjd = get_mjd();
       // fill the circular buffer
-      for(unsigned int j=0; j < vlen; j++)
+      for(unsigned int j=0; j < datalen; j++)
 	{ rp = input[j];
 	  mag2 = (rp.real()*rp.real()) + (rp.imag()*rp.imag());
 	  circular[inext] = rp;
@@ -311,6 +325,7 @@ namespace gr {
 	      rms = sqrt(rms2);
 	      inext = 0;
 	      bufferfull = true; // flag buffer is now full
+		  
 	      nsigma_rms = nsigma*nsigma*rms2;
 	      sum2 = 0;          // restart rms sum
 	    }
@@ -335,7 +350,11 @@ namespace gr {
 			       pmt::mp("RMS"), // Key
 			       pmt::from_double(rms) // Value
 			       );
-		  dmjd = get_mjd();
+		  // dmjd = get_mjd();
+		  // time now is after all samples have arrived.
+		  // the event was found at sample j + vlen2
+		  bufferdelay = float((datalen-j)+vlen2)*1.E-6/d_bw;
+		  dmjd -= bufferdelay;
 		  printf("Event MJD: %15.6f; Peak=%8.4f+/-%6.4f\n", dmjd, peak, rms);
 
 		  add_item_tag(0, // Port number
@@ -345,12 +364,13 @@ namespace gr {
 			       );
 
 		  update_buffer();
+		  break;
 		} // end if an event found
-	    } // end ifb uffere full
+	    } // end if buffer full
 	} // end for all samples
 	      
       if (! initialized) {
-	for (int iii = 0; iii < vlen; iii++)
+	for (int iii = 0; iii <  d_vec_length; iii++)
 	  { samples[iii] = input[iii];
 	  }
 	initialized = 1;     // no need to re-initialize the event
@@ -359,15 +379,19 @@ namespace gr {
       if (d_nt == 0) // if monitoring input, just output input 
 	{
 	  // always output the last event
-	  for (int iii = 0; iii < vlen; iii++)
+	  for (int iii = 0; iii <  datalen; iii++)
 	    { output[iii] = input[iii];
 	    }
 	}
       else {
-	// output the last event
-	for (int iii = 0; iii < vlen; iii++)
-	  { output[iii] = samples[iii];
-	  }
+	// repeated output the last event
+	for (nout = 0; nout < ninputs; nout++)
+	  { // fill all output vectors with last event
+	    for (int iii = 0; iii < d_vec_length; iii++)
+	      { output[jjj] = samples[iii];
+		jjj++;
+	      }
+	  } // end for all input vectors
       } // end else output event
 
       return 0;

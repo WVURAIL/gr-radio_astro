@@ -27,7 +27,8 @@
 #define TIME_UTC    1
 #endif
 
-#define MAX_VLEN 16384
+// #define MAX_VLEN 16384
+#define MAX_VLEN 1024
 #define MAX_BUFF (2L*MAX_VLEN)
 
 // constants for calculating Modified Julian Date
@@ -111,7 +112,7 @@ namespace gr {
       
       int update_buffer();
 
-      int event(const gr_complex *input, gr_complex *output);
+      int event(const unsigned ninputs, const gr_complex *input, gr_complex *output);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,
