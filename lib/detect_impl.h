@@ -28,7 +28,8 @@
 #endif
 
 // #define MAX_VLEN 16384
-#define MAX_VLEN 1024
+// #define MAX_VLEN 4096
+#define MAX_VLEN 8192
 #define MAX_BUFF (2L*MAX_VLEN)
 
 // constants for calculating Modified Julian Date
@@ -120,10 +121,10 @@ namespace gr {
            gr_vector_void_star &output_items);
 
       /* function for Modified Julian Date (MJD) */
-      int ymd_to_mjd(int year, int month, int day);      
+      long ymd_to_mjd(int year, int month, int day);      
 
       /* more accurate function for Modified Julian Date (MJD) */
-      int ymd_to_mjd_x(int year, int month, int day);      
+      long ymd_to_mjd_x(int year, int month, int day);      
 
       double get_mjd();
     }; 

@@ -72,9 +72,9 @@ namespace gr {
     {
     }
 
-    int
+    long
     detect_impl::ymd_to_mjd(int year, int month, int day) 
-    { double MJD = 0;
+    { long double MJD = 0;
       long I = year, J = month, K = day, JD = 0;
 
       // Julian date, JD, is calculated only with integer math for 1800 to 2099
@@ -86,7 +86,7 @@ namespace gr {
       return( int(MJD));
     } //end of ymd_to_mjd()
 
-    int
+    long
     detect_impl::ymd_to_mjd_x(int year, int month, int day) 
     {
       year += month / MonthsPerYear;
@@ -96,12 +96,12 @@ namespace gr {
 	month += MonthsPerYear; // Months per year
 	year--;
       }
-      int d = (year / 400) * DaysPer400Years;
-      int y400 = (int) (year % 400);
+      long d = (year / 400) * DaysPer400Years;
+      long y400 = (int) (year % 400);
       d += (y400 / 100) * DaysPer100Years;
       int y100 = y400 % 100;
       d += (y100 / 4) * DaysPer4Years;
-      int y4 = y100 % 4;
+      long y4 = y100 % 4;
       d += y4 * DaysPer1Year;
       d += DaysMarch1ToBeginingOfMonth[month - MonthMarch];
       d += day;
@@ -114,16 +114,16 @@ namespace gr {
     double 
     detect_impl::get_mjd()
     {
-      double mjd = 0, seconds = 0;
+      long double mjd = 0, seconds = 0;
       struct timespec ts;
-      int r = clock_gettime(CLOCK_REALTIME, &ts);
+      long r = clock_gettime(CLOCK_REALTIME, &ts);
       char buff[100];
       time_t now = time(NULL);
       struct tm *ptm = gmtime(&now);
 
-      int year = ptm->tm_year + 1900;
-      int month = ptm->tm_mon + 1;
-      int day = ptm->tm_mday;
+      long year = ptm->tm_year + 1900;
+      long month = ptm->tm_mon + 1;
+      long day = ptm->tm_mday;
       // printf("Current date: %5d %3d %3d\n", year, month, day);
       mjd = ymd_to_mjd_x( year, month, day);
 
@@ -306,14 +306,14 @@ namespace gr {
       //outbuf = (float *) //create fresh one if necessary
       float n_sigma = d_dms; // translate variables 
       //      int vlen = d_vec_length;
-      int datalen = d_vec_length * ninputs, nout = 0, jjj = 0;
+      long datalen = d_vec_length * ninputs, nout = 0, jjj = 0;
       gr_complex rp = 0;
       double mag2 = 0, dmjd = 0;
 
       // get time all samples arrive for any events found
       dmjd = get_mjd();
       // fill the circular buffer
-      for(unsigned int j=0; j < datalen; j++)
+      for(unsigned long j=0; j < datalen; j++)
 	{ rp = input[j];
 	  mag2 = (rp.real()*rp.real()) + (rp.imag()*rp.imag());
 	  circular[inext] = rp;
@@ -355,8 +355,7 @@ namespace gr {
 		  // the event was found at sample j + vlen2
 		  bufferdelay = float((datalen-j)+vlen2)*1.E-6/d_bw;
 		  dmjd -= bufferdelay;
-		  printf("Event MJD: %15.6f; Peak=%8.4f+/-%6.4f\n", dmjd, peak, rms);
-
+		  // printf("Event MJD: %15.6f; Peak=%8.4f+/-%6.4f\n", dmjd, peak, rms);
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
 			       pmt::mp("MJD"), // Key
