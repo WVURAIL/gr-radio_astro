@@ -28,8 +28,8 @@
 #endif
 
 // #define MAX_VLEN 16384
-// #define MAX_VLEN 4096
-#define MAX_VLEN 8192
+//#define MAX_VLEN 8192
+#define MAX_VLEN 4096
 #define MAX_BUFF (2L*MAX_VLEN)
 
 // constants for calculating Modified Julian Date

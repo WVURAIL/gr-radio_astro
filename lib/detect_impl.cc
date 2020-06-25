@@ -214,7 +214,7 @@ namespace gr {
       // now must initialize indicies
       inext = 0;
       bufferfull = false;
-      inext2 = (MAX_BUFF/2) + 1;
+      inext2 = vlen2 + 1;
       printf("Buffer is not full: %5d\n", inext2);
     } // end of set_vlen()
       
@@ -238,7 +238,7 @@ namespace gr {
       consume_each (noutput_items);
 
       // Tell runtime system how many output items we produced.
-      return noutput_items;
+      return 1;
     } // end of detect_impl:: general_work
     
 
@@ -297,6 +297,8 @@ namespace gr {
 	      i++;
 	    }
 	} // else near end of circular buffer
+    for (long j = 0; j < MAX_BUFF; j++)
+      circular[j] = 0.;
     return 0;
   } // end of update_buffer()
     
@@ -335,7 +337,9 @@ namespace gr {
 	  if (bufferfull)         // when buffer is full, find peaks
 	    {
 	      if (circular2[inext2] > nsigma_rms)
-		{
+		{ // truncate RMS for RMS matching 
+		  rms = int( rms * 100000.); 
+		  rms = rms / 100000.;   
 		  imax2 = inext2;
 		  peak = sqrt(circular2[inext2]);
 		  // printf( "N-sigma Peak found: %7.1f\n", peak/rms);
@@ -363,6 +367,9 @@ namespace gr {
 			       );
 
 		  update_buffer();
+		  inext = 0;           // go back to beginning
+		  inext2 = vlen2 + 1;  // search at start
+		  sum2 = 0.;           // restart RMS sum
 		  break;
 		} // end if an event found
 	    } // end if buffer full
@@ -384,6 +391,7 @@ namespace gr {
 	}
       else {
 	// repeated output the last event
+	jjj = 0;
 	for (nout = 0; nout < ninputs; nout++)
 	  { // fill all output vectors with last event
 	    for (int iii = 0; iii < d_vec_length; iii++)
