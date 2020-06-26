@@ -3782,7 +3782,7 @@
     </param>
     <param>
       <key>sync</key>
-      <value>pc_clock</value>
+      <value></value>
     </param>
   </block>
   <connection>

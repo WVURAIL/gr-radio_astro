@@ -5,7 +5,7 @@
 # Title: Nsf Airspy Mini Event Detect: 6 MHz
 # Author: Glen Langston
 # Description: Event Detection using Airspy
-# Generated: Thu Jun  4 16:21:28 2020
+# Generated: Thu Jun 25 14:05:06 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -311,7 +311,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.rtlsdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + Device )
-        self.rtlsdr_source_0.set_time_now(osmosdr.time_spec_t(time.time()), osmosdr.ALL_MBOARDS)
         self.rtlsdr_source_0.set_sample_rate(Bandwidth)
         self.rtlsdr_source_0.set_center_freq(Frequency, 0)
         self.rtlsdr_source_0.set_freq_corr(0, 0)
