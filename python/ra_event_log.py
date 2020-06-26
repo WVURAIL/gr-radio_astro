@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# This python program logs detected events, within the Gnuradio Companion environment
+# This python program logs detected events, within the
+# Gnuradio Companion environment
 # -*- coding: utf-8 -*-
 #
 # Copyright 2018 Glen Langston, Quiet Skies <+YOU OR YOUR COMPANY+>.
@@ -51,6 +52,7 @@ class ra_event_log(gr.sync_block):
         self.ecount = 0
         self.lastmjd = 0.
         self.lastvmjd = 0.
+        self.printmjd = 0.
         self.bandwidth = bandwidth
         now = datetime.datetime.utcnow()
         self.startutc = now
@@ -62,13 +64,14 @@ class ra_event_log(gr.sync_block):
         self.evector = 0L
         self.env = 0L
         self.eoffset = 0
+        self.voffset = 0
         self.vmjd = 0.
         self.vcount = 0L
         self.nv = 0L
         self.lasttag = ""
         self.note = str(note)
-        self.pformat = "%18.12f %15d %05d %10.3f %10.6f %10.6f %5d %3d %6d\n" 
-        self.vformat = "%18.12f %15d %05d %10.3f %3d\n" 
+        self.pformat = "%18.12f %15d %05d %10.3f %3d %5d %10.6f %10.6f %5d %5d\n" 
+        self.vformat = "%18.12f %15d %05d %10.3f %3d %5d \n" 
         self.set_note( note)          # should set all values before opening log file
         self.set_sample_rate( bandwidth)
         self.set_logname(logname)
@@ -127,9 +130,9 @@ class ra_event_log(gr.sync_block):
             f.write(outline)
             outline = "# vlen      = %6d\n" % (self.vlen)
             f.write(outline)
-            outline = "#E       MJD           vector #   second  micro.sec    Peak       RMS    Event#  NV Offset\n"
+            outline = "#E       MJD           vector #   second  micro.sec  NV  Zero#   Peak       RMS    Event# Offset\n"
             f.write(outline)
-            outline = "#V       MJD           vector #   second  micro.sec  NV\n"
+            outline = "#V       MJD           vector #   second  micro.sec  NV  Zero#\n"
             f.write(outline)
             f.close()
 
@@ -182,6 +185,8 @@ class ra_event_log(gr.sync_block):
                     self.env = value
                 elif key == 'EOFFSET':
                     self.eoffset = value
+                elif key == 'VOFFSET':
+                    self.voffset = value
                 elif key == 'NV':
                     self.nv = value
                     # print 'Tag NV  : %15d' % (self.nv)
@@ -202,7 +207,7 @@ class ra_event_log(gr.sync_block):
                 isecond = np.int(seconds)
                 microseconds = (seconds - isecond) * 1.e6
                 self.lastmjd = self.emjd
-                outline = self.pformat % (self.emjd, self.evector, isecond, microseconds, self.epeak, self.erms, self.ecount, self.env, self.eoffset)
+                outline = self.pformat % (self.emjd, self.evector, isecond, microseconds, self.env, self.voffset, self.epeak, self.erms, self.ecount, self.eoffset)
                 try:
                     with open( self.logname, "a+") as f:
                         f.write(outline)
@@ -213,13 +218,16 @@ class ra_event_log(gr.sync_block):
             # also log vector time tags to interpolate accurate time
             if self.vmjd > self.lastvmjd:
                 # log the time of this vector
-                print("Vector: %15.9f %16d %4d" % (self.vmjd, self.vcount, self.nv))
+                if self.vmjd > self.printmjd:
+                    print("Vector: %15.9f %16d %4d %5d" % (self.vmjd, self.vcount, self.nv, self.voffset))
+                    # print every minute (24*60 = 1440 minutes in a day)
+                    self.printmjd = self.vmjd + (1./1440.)   
                 imjd = np.int(self.vmjd)
                 seconds = (self.vmjd - imjd)*86400.
                 isecond = np.int(seconds)
                 microseconds = (seconds - isecond) * 1.e6
                 self.lastvmjd = self.vmjd
-                outline = self.vformat % (self.vmjd, self.vcount, isecond, microseconds, self.nv)
+                outline = self.vformat % (self.vmjd, self.vcount, isecond, microseconds, self.nv, self.voffset)
                 try:
                     with open( self.logname, "a+") as f:
                         f.write(outline)

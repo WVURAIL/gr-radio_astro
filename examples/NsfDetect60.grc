@@ -273,7 +273,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(376, 16)</value>
+      <value>(304, 16)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -614,7 +614,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(656, 400)</value>
+      <value>(656, 544)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -657,11 +657,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(840, 160)</value>
+      <value>(912, 208)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>0</value>
+      <value>180</value>
     </param>
     <param>
       <key>id</key>
@@ -700,7 +700,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(776, 400)</value>
+      <value>(776, 544)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -743,11 +743,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(856, 208)</value>
+      <value>(896, 160)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>0</value>
+      <value>180</value>
     </param>
     <param>
       <key>id</key>
@@ -786,7 +786,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 400)</value>
+      <value>(896, 544)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -829,11 +829,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(880, 240)</value>
+      <value>(872, 128)</value>
     </param>
     <param>
       <key>_rotation</key>
-      <value>0</value>
+      <value>180</value>
     </param>
     <param>
       <key>id</key>
@@ -1014,7 +1014,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(240, 16)</value>
+      <value>(200, 16)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1417,7 +1417,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(256, 256)</value>
+      <value>(256, 304)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1460,7 +1460,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(256, 132)</value>
+      <value>(248, 136)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1511,7 +1511,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(656, 36)</value>
+      <value>(648, 8)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1574,7 +1574,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(416, 236)</value>
+      <value>(464, 464)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1905,7 +1905,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(824, 24)</value>
+      <value>(832, 0)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2256,7 +2256,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(480, 92)</value>
+      <value>(432, 96)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2300,6 +2300,53 @@
     </param>
   </block>
   <block>
+    <key>radio_astro_ra_event_log</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(648, 344)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_ra_event_log_0</value>
+    </param>
+    <param>
+      <key>logname</key>
+      <value></value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>Event Detection</value>
+    </param>
+    <param>
+      <key>sample_rate</key>
+      <value>Bandwidth*1.e-6</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+  </block>
+  <block>
     <key>radio_astro_ra_event_sink</key>
     <param>
       <key>azimuth</key>
@@ -2339,7 +2386,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(656, 140)</value>
+      <value>(648, 96)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3682,7 +3729,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(32, 124)</value>
+      <value>(0, 128)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3812,6 +3859,12 @@
   <connection>
     <source_block_id>radio_astro_detect_0</source_block_id>
     <sink_block_id>blocks_vector_to_stream_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_detect_0</source_block_id>
+    <sink_block_id>radio_astro_ra_event_log_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

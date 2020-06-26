@@ -5,7 +5,7 @@
 # Title: NSF Watch for Events whille recording spectra
 # Author: Glen Langston
 # Description: AIRSPY Mini at full speed 6 MHz samples
-# Generated: Fri May 29 15:14:23 2020
+# Generated: Fri Jun 26 13:22:59 2020
 ##################################################
 
 from distutils.version import StrictVersion

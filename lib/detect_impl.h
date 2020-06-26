@@ -83,7 +83,9 @@ namespace gr {
       double max2 = 0;        // max value squared so far
       double sum2 = 0;        // sum of values squared
       double rms2 = 0;        // rms squared of values in circular buffer
-      double oneovern = 1./double(MAX_BUFF);
+      long nsum = 0;          // count of samples in current sum
+      long nmaxcount = vlen*8;// count of samples until detection restarts
+      double oneovern = 1./double(nmaxcount);
       bool bufferfull = false;// assume buffer is not full 
       double nsigma_rms = 0;  // comparision value for event detection
       gr_complex samples[MAX_VLEN];  // output event buffer 

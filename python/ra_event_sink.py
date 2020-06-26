@@ -263,6 +263,7 @@ class ra_event_sink(gr.sync_block):
         # set of vector timing values
         self.vmjd = 0.
         self.vcount = 0L
+        self.voffset = 0
         self.nv = 0L
         self.obs.utc = now
         self.obs.site = self.site
@@ -339,6 +340,8 @@ class ra_event_sink(gr.sync_block):
                     self.env = value
                 elif key == 'EOFFSET':
                     self.eoffset = value
+                elif key == 'VOFFSET':
+                    self.voffset = value
                 elif key == 'PEAK':
                     self.epeak = value
                     # print 'Tag PEAK: %7.4f' % (self.epeak)

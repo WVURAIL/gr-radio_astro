@@ -5,7 +5,7 @@
 # Title: Nsf Airspy Mini Event Detect: 6 MHz
 # Author: Glen Langston
 # Description: Event Detection using Airspy
-# Generated: Thu Jun 25 14:05:06 2020
+# Generated: Fri Jun 26 13:26:45 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -325,6 +325,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
 
         (self.rtlsdr_source_0).set_processor_affinity([3])
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.e-6)
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
         	fftsize, #size
@@ -442,6 +443,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_to_vector_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0, 0))
@@ -641,6 +643,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.fftsize = fftsize
         Qt.QMetaObject.invokeMethod(self._fftsize_line_edit, "setText", Qt.Q_ARG("QString", str(self.fftsize)))
         self.radio_astro_ra_event_sink_0.set_vlen( self.fftsize)
+        self.radio_astro_ra_event_log_0.set_vlen( self.fftsize)
         self.radio_astro_detect_0.set_vlen( self.fftsize)
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)
@@ -789,6 +792,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_sample_rate(self.Bandwidth)
         self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth*1.e-6)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self._Bandwidths_config = ConfigParser.ConfigParser()

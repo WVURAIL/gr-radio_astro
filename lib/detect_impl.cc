@@ -245,17 +245,14 @@ namespace gr {
 
     int
     detect_impl::update_buffer()
-    { long i = inext2 - vlen2, length = vlen,
-	jstart = 0;
+    { long i = inext2 - vlen2, length = vlen, jstart = 0;
 
       // the event is centered on sample inext2. Must copy vlen2 before
       // and after the event.   Deal with circular buffer
-      // Now must reset the buffer to wait for the next event
-      bufferfull = false;
 
       // if event is within the circular buffer 
       if ((i >= 0) && ((i + length) < MAX_BUFF))
-	{ for (long j = 0; j < length; j++)
+	{ for (long j = jstart; j < length; j++)
 	    { samples[j] = circular[i];
 	      i++;
 	    }
@@ -298,8 +295,6 @@ namespace gr {
 	      i++;
 	    }
 	} // else near end of circular buffer
-      // for (long j = 0; j < MAX_BUFF; j++)
-      // circular[j] = 0.;
     return 0;
   } // end of update_buffer()
     
@@ -308,8 +303,7 @@ namespace gr {
     {
       //outbuf = (float *) //create fresh one if necessary
       float n_sigma = d_dms; // translate variables 
-      //      int vlen = d_vec_length;
-      long datalen = d_vec_length * ninputs, nout = 0, jjj = 0;
+      long datalen = d_vec_length * ninputs, nout = 0, jjj = 0, inext0 = inext;
       gr_complex rp = 0;
       double mag2 = 0, dmjd = 0;
 
@@ -335,6 +329,11 @@ namespace gr {
 		       pmt::mp("NV"), // Key
 		       pmt::from_uint64(ninputs) // Value
 		       );
+	  add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("VOFFSET"), // Key
+		       pmt::from_long(inext0) // Value
+		       );
 	  // add a vector count log entry every second or so
 	  logvcount = vcount + 10000;
 	} // end if time to log MJD vs vector count
@@ -346,16 +345,20 @@ namespace gr {
 	  circular[inext] = rp;
 	  circular2[inext] = mag2;
 	  sum2 += mag2;
-	  inext++;
-	  if (inext >= MAX_BUFF) // if buffer is full
-	    { rms2 = sum2*oneovern;
+	  nsum ++;               // count samples in RMS calc
+	  if (nsum >= nmaxcount) // if RMS sum is complete
+	    {rms2 = sum2*oneovern;
 	      rms = sqrt(rms2);
-	      inext = 0;
-	      bufferfull = true; // flag buffer is now full
 		  
 	      nsigma_rms = nsigma*nsigma*rms2;
 	      sum2 = 0;          // restart rms sum
-	    }
+	      nsum = 0;
+	      bufferfull = true; // flag buffer is now full enough
+	    } // end if RMS sum complete
+	      
+	  inext++;               // update index to next sample to save
+	  if (inext >= MAX_BUFF) // if at end of buffer, loop
+	     inext = 0;
 	  inext2++;              // update position for search 
 	  if (inext2 >= MAX_BUFF) // if at end of circular buffer
 	    inext2 = 0;           // go back to beginning
@@ -379,11 +382,13 @@ namespace gr {
 			       pmt::mp("RMS"), // Key
 			       pmt::from_double(rms) // Value
 			       );
-		  // dmjd = get_mjd();
 		  // time now is after all samples have arrived.
-		  // the event was found at sample j + vlen2
-		  bufferdelay = float((datalen-j)+vlen2)*1.E-6/d_bw;
-		  dmjd -= bufferdelay;
+		  // the event was found at sample inext2
+		  // first count samples since started loop
+		  bufferdelay = inext0 - inext2;
+		  if (bufferdelay < 0)
+		    bufferdelay += MAX_BUFF;
+		  dmjd -= (float(bufferdelay)*1.e-6/d_bw);
 		  // printf("Event MJD: %15.6f; Peak=%8.4f+/-%6.4f\n", dmjd, peak, rms);
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
@@ -398,7 +403,12 @@ namespace gr {
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
 			       pmt::mp("EOFFSET"), // Key
-			       pmt::from_long(j) // Value
+			       pmt::from_long(inext2) // Value
+			       );
+		  add_item_tag(0, // Port number
+			       nitems_written(0) + 1, // Offset
+			       pmt::mp("VOFFSET"), // Key
+			       pmt::from_long(inext0) // Value
 			       );
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
@@ -407,10 +417,9 @@ namespace gr {
 			       );
 
 		  update_buffer();
-		  inext = 0;           // go back to beginning
-		  inext2 = vlen2 + 1;  // search at start
-		  sum2 = 0.;           // restart RMS sum
-		  break;
+		  nsum = 0;            // restart Sum count
+		  sum2 = 0.;           // restart RMS Sum
+		  bufferfull = false;
 		} // end if an event found
 	    } // end if buffer full
 	} // end for all samples
