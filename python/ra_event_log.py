@@ -15,6 +15,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20JUN26 GIL log vector tags to deterine accurate time
 # 19FEB14 GIL make tag labels compatible with C++ tags
 # 19JAN19 GIL initial version based on ra_event_sink
 
@@ -49,20 +50,29 @@ class ra_event_log(gr.sync_block):
         self.vlen = vlen
         self.ecount = 0
         self.lastmjd = 0.
+        self.lastvmjd = 0.
         self.bandwidth = bandwidth
         now = datetime.datetime.utcnow()
         self.startutc = now
         self.setupdir = "./"
         self.logname = str(logname)
-        self.eventmjd = 0.
-        self.emagnitude = 0.
+        self.emjd = 0.
+        self.epeak = 0.
         self.erms = 0.
+        self.evector = 0L
+        self.env = 0L
+        self.eoffset = 0
+        self.vmjd = 0.
+        self.vcount = 0L
+        self.nv = 0L
+        self.lasttag = ""
         self.note = str(note)
-        self.pformat = "%04d %18.12f %05d %10.3f %10.6f %10.6f\n" 
+        self.pformat = "%18.12f %15d %05d %10.3f %10.6f %10.6f %5d %3d %6d\n" 
+        self.vformat = "%18.12f %15d %05d %10.3f %3d\n" 
         self.set_note( note)          # should set all values before opening log file
         self.set_sample_rate( bandwidth)
         self.set_logname(logname)
-
+        
     def forecast(self, noutput_items, ninput_items): #forcast is a no op
         """
         The work block always processes all inputs
@@ -117,7 +127,9 @@ class ra_event_log(gr.sync_block):
             f.write(outline)
             outline = "# vlen      = %6d\n" % (self.vlen)
             f.write(outline)
-            outline = "#  N      MJD          second  micro.sec    Peak       RMS\n"
+            outline = "#E       MJD           vector #   second  micro.sec    Peak       RMS    Event#  NV Offset\n"
+            f.write(outline)
+            outline = "#V       MJD           vector #   second  micro.sec  NV\n"
             f.write(outline)
             f.close()
 
@@ -141,7 +153,7 @@ class ra_event_log(gr.sync_block):
         
         # get any tags of a new detected event
 #        tags = self.get_tags_in_window(0, 0, +self.vlen, pmt.to_pmt('event'))
-        tags = self.get_tags_in_window(0, 0, +self.vlen)
+        tags = self.get_tags_in_window(0, 0, +nv)
         # if there are tags, then a new event was detected
         if len(tags) > 0:
             for tag in tags:
@@ -149,36 +161,72 @@ class ra_event_log(gr.sync_block):
                 key = pmt.to_python(tag.key)
                 value = pmt.to_python(tag.value)
                 if key == 'MJD':
-                    self.eventmjd = value
-#                    print 'Tag MJD : %15.9f' % (self.eventmjd)
+                    self.emjd = value
+#                    print 'Tag MJD : %15.9f' % (self.emjd)
+                elif key == 'VMJD':
+                    self.vmjd = value
+                    # print 'Tag VMJD: %15.9f' % (self.vmjd)
                 elif key == 'PEAK':
-                    self.emagnitude = value
-#                    print 'Tag PEAK: %7.4f' % (self.emagnitude)
+                    self.epeak = value
+#                    print 'Tag PEAK: %7.4f' % (self.epeak)
                 elif key == 'RMS':
                     self.erms = value
 #                    print 'Tag RMs : %7.4f' % (self.erms)
-                else:
-                    print('Unknown Tag: ', value)
+                elif key == 'VCOUNT':
+                    self.vcount = value
+                    # print 'Tag VCOUNT: %15.9f' % (self.vcount)
+                elif key == 'EVECTOR':
+                    self.evector = value
+                    # print 'Tag VMJD: %15.9f' % (self.emjd)
+                elif key == 'ENV':
+                    self.env = value
+                elif key == 'EOFFSET':
+                    self.eoffset = value
+                elif key == 'NV':
+                    self.nv = value
+                    # print 'Tag NV  : %15d' % (self.nv)
+                elif key != self.lasttag:
+                    print('Unknown Tag: ', key, value)
+                    self.lasttag = key
 
-        # for all input vectors
-        for i in range(nv):
+        i = nv - 1
+        # expect only one event in tag group
+        if i > -1:
             # if a new Modified Julian Day, then an event was detected
-            if self.eventmjd > self.lastmjd:
+            if self.emjd > self.lastmjd:
                 # log the event
                 self.ecount = self.ecount + 1
-                print("\nEvent   Logged: %15.9f (MJD) %9.4f %8.4f" % (self.eventmjd, self.emagnitude, self.erms))
-                imjd = np.int(self.eventmjd)
-                seconds = (self.eventmjd - imjd)*86400.
+                print("Event : %15.9f %16d %9.4f %8.4f %4d" % (self.emjd, self.evector, self.epeak, self.erms, self.ecount))
+                imjd = np.int(self.emjd)
+                seconds = (self.emjd - imjd)*86400.
                 isecond = np.int(seconds)
                 microseconds = (seconds - isecond) * 1.e6
-                self.lastmjd = self.eventmjd
-                outline = self.pformat % (self.ecount, self.eventmjd, isecond, microseconds, self.emagnitude, self.erms)
+                self.lastmjd = self.emjd
+                outline = self.pformat % (self.emjd, self.evector, isecond, microseconds, self.epeak, self.erms, self.ecount, self.env, self.eoffset)
                 try:
                     with open( self.logname, "a+") as f:
                         f.write(outline)
                         f.close()
                 except:
-                    continue
+                    print("Can Not Log")
+                
+            # also log vector time tags to interpolate accurate time
+            if self.vmjd > self.lastvmjd:
+                # log the time of this vector
+                print("Vector: %15.9f %16d %4d" % (self.vmjd, self.vcount, self.nv))
+                imjd = np.int(self.vmjd)
+                seconds = (self.vmjd - imjd)*86400.
+                isecond = np.int(seconds)
+                microseconds = (seconds - isecond) * 1.e6
+                self.lastvmjd = self.vmjd
+                outline = self.vformat % (self.vmjd, self.vcount, isecond, microseconds, self.nv)
+                try:
+                    with open( self.logname, "a+") as f:
+                        f.write(outline)
+                        f.close()
+                except:
+                    print("Can Not Log")
+                
             # end for all input events
         return nv
     # end event_log()

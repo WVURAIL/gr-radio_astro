@@ -19,6 +19,7 @@
  */
 
 /* HISTORY 
+ * 20Jun26 GIL add vector count and sample offset tags
  * 20Jun25 GIL process all provided vectors
  * 20Jun23 GIL try to find reason some events are missed
  */
@@ -297,8 +298,8 @@ namespace gr {
 	      i++;
 	    }
 	} // else near end of circular buffer
-    for (long j = 0; j < MAX_BUFF; j++)
-      circular[j] = 0.;
+      // for (long j = 0; j < MAX_BUFF; j++)
+      // circular[j] = 0.;
     return 0;
   } // end of update_buffer()
     
@@ -314,6 +315,30 @@ namespace gr {
 
       // get time all samples arrive for any events found
       dmjd = get_mjd();
+      vcount += ninputs;
+      // to reduce CPU usage, only log vector count MJDs every
+      // second or so.
+      if (vcount > logvcount)
+	{
+	  add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("VMJD"), // Key
+		       pmt::from_double(dmjd) // Value
+		       );
+	  add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("VCOUNT"), // Key
+		       pmt::from_uint64(vcount) // Value
+		       );
+	  add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("NV"), // Key
+		       pmt::from_uint64(ninputs) // Value
+		       );
+	  // add a vector count log entry every second or so
+	  logvcount = vcount + 10000;
+	} // end if time to log MJD vs vector count
+      
       // fill the circular buffer
       for(unsigned long j=0; j < datalen; j++)
 	{ rp = input[j];
@@ -364,6 +389,21 @@ namespace gr {
 			       nitems_written(0) + 1, // Offset
 			       pmt::mp("MJD"), // Key
 			       pmt::from_double(dmjd) // Value
+			       );
+		  add_item_tag(0, // Port number
+			       nitems_written(0) + 1, // Offset
+			       pmt::mp("EVECTOR"), // Key
+			       pmt::from_uint64(vcount) // Value
+			       );
+		  add_item_tag(0, // Port number
+			       nitems_written(0) + 1, // Offset
+			       pmt::mp("EOFFSET"), // Key
+			       pmt::from_long(j) // Value
+			       );
+		  add_item_tag(0, // Port number
+			       nitems_written(0) + 1, // Offset
+			       pmt::mp("ENV"), // Key
+			       pmt::from_long(ninputs) // Value
 			       );
 
 		  update_buffer();

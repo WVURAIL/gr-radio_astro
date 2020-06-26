@@ -89,7 +89,9 @@ namespace gr {
       gr_complex samples[MAX_VLEN];  // output event buffer 
       bool initialized = 0;   // flag initializing output
       double bufferdelay = float(MAX_VLEN/2)*1.E-6/d_bw;
-      
+      unsigned long vcount = 0; // count of vectors processed
+      unsigned long logvcount = 0; // count of last logged mjd
+      long eventoffset = 0;     // index of event in block
      public:
       detect_impl(int vec_length,float dms, float f_obs, float bw, float t_int, int nt);
       ~detect_impl();
