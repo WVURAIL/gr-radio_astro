@@ -83,6 +83,12 @@ class ra_event_log(gr.sync_block):
         ninput_items = noutput_items
         return ninput_items
 
+    def set_vlen(self, vlen):
+        """
+        Save vector length
+        """
+        self.vlen = int(vlen)
+
     def set_sample_rate(self, bandwidth):
         """
         Set the sample rate to know the time resolution

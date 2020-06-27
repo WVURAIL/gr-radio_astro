@@ -5,7 +5,7 @@
 # Title: NSF Detect 9MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 9 MHz samples
-# Generated: Mon Jun 22 14:13:11 2020
+# Generated: Sat Jun 27 11:20:54 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -22,7 +22,6 @@ if __name__ == '__main__':
 
 from PyQt5 import Qt
 from PyQt5 import Qt, QtCore
-from PyQt5.QtCore import QObject, pyqtSlot
 from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import gr
@@ -169,7 +168,7 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
         self.H1 = H1 = 1420.406E6
         self.Gain2 = Gain2 = 12.
         self.Gain1 = Gain1 = Gain1s
-        self.EventMode = EventMode = 1
+        self.EventMode = EventMode = False
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
         self.DebugOn = DebugOn = bool(DebugOn_save)
@@ -255,21 +254,16 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._EventMode_options = (0, 1, )
-        self._EventMode_labels = ('! ! Wait ! !', 'Write', )
-        self._EventMode_tool_bar = Qt.QToolBar(self)
-        self._EventMode_tool_bar.addWidget(Qt.QLabel('Event Mode'+": "))
-        self._EventMode_combo_box = Qt.QComboBox()
-        self._EventMode_tool_bar.addWidget(self._EventMode_combo_box)
-        for label in self._EventMode_labels: self._EventMode_combo_box.addItem(label)
-        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._EventMode_options.index(i)))
+        _EventMode_check_box = Qt.QCheckBox('Event Write')
+        self._EventMode_choices = {True: True, False: False}
+        self._EventMode_choices_inv = dict((v,k) for k,v in self._EventMode_choices.iteritems())
+        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_EventMode_check_box, "setChecked", Qt.Q_ARG("bool", self._EventMode_choices_inv[i]))
         self._EventMode_callback(self.EventMode)
-        self._EventMode_combo_box.currentIndexChanged.connect(
-        	lambda i: self.set_EventMode(self._EventMode_options[i]))
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 2, 4, 1, 4)
+        _EventMode_check_box.stateChanged.connect(lambda i: self.set_EventMode(self._EventMode_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_EventMode_check_box, 2, 4, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(4, 8):
+        for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Elevation_tool_bar = Qt.QToolBar(self)
         self._Elevation_tool_bar.addWidget(Qt.QLabel('Elevation'+": "))
@@ -299,7 +293,11 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
         self._DebugOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_DebugOn_check_box, "setChecked", Qt.Q_ARG("bool", self._DebugOn_choices_inv[i]))
         self._DebugOn_callback(self.DebugOn)
         _DebugOn_check_box.stateChanged.connect(lambda i: self.set_DebugOn(self._DebugOn_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_DebugOn_check_box)
+        self.top_grid_layout.addWidget(_DebugOn_check_box, 2, 6, 1, 2)
+        for r in range(2, 3):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(6, 8):
+            self.top_grid_layout.setColumnStretch(c, 1)
         _DcOffsetMode_check_box = Qt.QCheckBox('DcOffsetMode')
         self._DcOffsetMode_choices = {True: True, False: False}
         self._DcOffsetMode_choices_inv = dict((v,k) for k,v in self._DcOffsetMode_choices.iteritems())
@@ -317,7 +315,11 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
         self._DabNotch_callback = lambda i: Qt.QMetaObject.invokeMethod(_DabNotch_check_box, "setChecked", Qt.Q_ARG("bool", self._DabNotch_choices_inv[i]))
         self._DabNotch_callback(self.DabNotch)
         _DabNotch_check_box.stateChanged.connect(lambda i: self.set_DabNotch(self._DabNotch_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_DabNotch_check_box)
+        self.top_grid_layout.addWidget(_DabNotch_check_box, 9, 6, 1, 1)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(6, 7):
+            self.top_grid_layout.setColumnStretch(c, 1)
         _BroadcastNotch_check_box = Qt.QCheckBox('BroadcastNotch')
         self._BroadcastNotch_choices = {True: True, False: False}
         self._BroadcastNotch_choices_inv = dict((v,k) for k,v in self._BroadcastNotch_choices.iteritems())
@@ -335,7 +337,11 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
         self._BiasOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_BiasOn_check_box, "setChecked", Qt.Q_ARG("bool", self._BiasOn_choices_inv[i]))
         self._BiasOn_callback(self.BiasOn)
         _BiasOn_check_box.stateChanged.connect(lambda i: self.set_BiasOn(self._BiasOn_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_BiasOn_check_box)
+        self.top_grid_layout.addWidget(_BiasOn_check_box, 9, 7, 1, 1)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(7, 8):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._Bandwidth_tool_bar = Qt.QToolBar(self)
         self._Bandwidth_tool_bar.addWidget(Qt.QLabel('Bandwidth'+": "))
         self._Bandwidth_line_edit = Qt.QLineEdit(str(self.Bandwidth))
@@ -363,6 +369,7 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
                 '0')
 
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.e-6)
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
         	fftsize, #size
@@ -502,6 +509,7 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_to_vector_0_0_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_stream_to_vector_0_0_0, 0))
@@ -763,6 +771,7 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
         self.Bandwidth = Bandwidth
         Qt.QMetaObject.invokeMethod(self._Bandwidth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Bandwidth)))
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth*1.e-6)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
@@ -826,6 +835,7 @@ class NsfDetect90(gr.top_block, Qt.QWidget):
         self.fftsize = fftsize
         Qt.QMetaObject.invokeMethod(self._fftsize_line_edit, "setText", Qt.Q_ARG("QString", str(self.fftsize)))
         self.radio_astro_ra_event_sink_0.set_vlen( self.fftsize)
+        self.radio_astro_ra_event_log_0.set_vlen( self.fftsize)
         self.radio_astro_detect_0.set_vlen( self.fftsize)
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)

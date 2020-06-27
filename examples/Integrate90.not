@@ -1,10 +1,10 @@
 # File: Integrate90.not
-# NOTEA     = SDRPlay+Newer Horn Pi #2
+# NOTEA     = SDRPlay+No Horn Pi #2
 # NOTEB     = Spectral Integration AIRSPY Test
 # OBSERVER  = Science Aficionado
 # DEVICE    = SDRPlay RSP1A
 # DATADIR   = ../data/
-# SITE      = SDRPlay+Newer Horn Pi #2
+# SITE      = SDRPlay+No Horn Pi #2
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
@@ -38,11 +38,11 @@
 # NAVE      = 200
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2020-06-22 17:55:09.329615
+# UTC       = 2020-06-27 14:56:17.098053
 # SECONDS   =       0.0000000000 
 # LST       = 21:54:45.120
 # AZ        = 180.0
-# EL        = -99.0
+# EL        = -90.0
 # TELLON    = -79:50:22.920
 # TELLAT    = +38:25:59.160
 # RA        = 09:52:56.520

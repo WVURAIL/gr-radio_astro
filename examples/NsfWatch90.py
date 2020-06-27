@@ -5,7 +5,7 @@
 # Title: NSF Watch 9MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 9 MHz samples
-# Generated: Mon Jun 22 14:09:40 2020
+# Generated: Sat Jun 27 10:54:42 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -25,9 +25,11 @@ from PyQt5 import Qt, QtCore
 from PyQt5.QtCore import QObject, pyqtSlot
 from gnuradio import blocks
 from gnuradio import eng_notation
+from gnuradio import fft
 from gnuradio import gr
 from gnuradio import qtgui
 from gnuradio.eng_option import eng_option
+from gnuradio.fft import window
 from gnuradio.filter import firdes
 from gnuradio.qtgui import Range, RangeWidget
 from optparse import OptionParser
@@ -164,6 +166,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
+        self.Record = Record = 1
         self.IQMode = IQMode = IQMode_save
         self.IF_attn = IF_attn = IF_attn_save
         self.H1 = H1 = 1420.406E6
@@ -182,10 +185,32 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
+        self._observer_tool_bar = Qt.QToolBar(self)
+        self._observer_tool_bar.addWidget(Qt.QLabel('Who'+": "))
+        self._observer_line_edit = Qt.QLineEdit(str(self.observer))
+        self._observer_tool_bar.addWidget(self._observer_line_edit)
+        self._observer_line_edit.returnPressed.connect(
+        	lambda: self.set_observer(str(str(self._observer_line_edit.text()))))
+        self.top_grid_layout.addWidget(self._observer_tool_bar, 0, 0, 1, 2)
+        for r in range(0, 1):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 2):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._nsigma_range = Range(0., 10., .1, 5.0, 100)
         self._nsigma_win = RangeWidget(self._nsigma_range, self.set_nsigma, 'N Sigma', "counter", float)
-        self.top_grid_layout.addWidget(self._nsigma_win, 2, 2, 1, 2)
+        self.top_grid_layout.addWidget(self._nsigma_win, 2, 5, 1, 2)
         for r in range(2, 3):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(5, 7):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        self._nAve_tool_bar = Qt.QToolBar(self)
+        self._nAve_tool_bar.addWidget(Qt.QLabel('N_Ave.'+": "))
+        self._nAve_line_edit = Qt.QLineEdit(str(self.nAve))
+        self._nAve_tool_bar.addWidget(self._nAve_line_edit)
+        self._nAve_line_edit.returnPressed.connect(
+        	lambda: self.set_nAve(int(str(self._nAve_line_edit.text()))))
+        self.top_grid_layout.addWidget(self._nAve_tool_bar, 0, 2, 1, 2)
+        for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 4):
             self.top_grid_layout.setColumnStretch(c, 1)
@@ -211,6 +236,22 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self._Record_options = (0, 1, )
+        self._Record_labels = ('! ! Wait ! !', 'AVERAGE', )
+        self._Record_tool_bar = Qt.QToolBar(self)
+        self._Record_tool_bar.addWidget(Qt.QLabel('Spec. Mode'+": "))
+        self._Record_combo_box = Qt.QComboBox()
+        self._Record_tool_bar.addWidget(self._Record_combo_box)
+        for label in self._Record_labels: self._Record_combo_box.addItem(label)
+        self._Record_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Record_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Record_options.index(i)))
+        self._Record_callback(self.Record)
+        self._Record_combo_box.currentIndexChanged.connect(
+        	lambda i: self.set_Record(self._Record_options[i]))
+        self.top_grid_layout.addWidget(self._Record_tool_bar, 3, 2, 1, 3)
+        for r in range(3, 4):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(2, 5):
+            self.top_grid_layout.setColumnStretch(c, 1)
         _IQMode_check_box = Qt.QCheckBox('IQMode')
         self._IQMode_choices = {True: True, False: False}
         self._IQMode_choices_inv = dict((v,k) for k,v in self._IQMode_choices.iteritems())
@@ -228,10 +269,10 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self._IF_attn_tool_bar.addWidget(self._IF_attn_line_edit)
         self._IF_attn_line_edit.returnPressed.connect(
         	lambda: self.set_IF_attn(eng_notation.str_to_num(str(self._IF_attn_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._IF_attn_tool_bar, 4, 0, 1, 2)
-        for r in range(4, 5):
+        self.top_grid_layout.addWidget(self._IF_attn_tool_bar, 8, 3, 1, 2)
+        for r in range(8, 9):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
+        for c in range(3, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Gain1_tool_bar = Qt.QToolBar(self)
         self._Gain1_tool_bar.addWidget(Qt.QLabel('Gain1'+": "))
@@ -250,10 +291,10 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self._Frequency_tool_bar.addWidget(self._Frequency_line_edit)
         self._Frequency_line_edit.returnPressed.connect(
         	lambda: self.set_Frequency(eng_notation.str_to_num(str(self._Frequency_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._Frequency_tool_bar, 0, 4, 1, 2)
+        self.top_grid_layout.addWidget(self._Frequency_tool_bar, 0, 5, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(4, 6):
+        for c in range(5, 7):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._EventMode_options = (0, 1, )
         self._EventMode_labels = ('! ! Wait ! !', 'Write', )
@@ -266,10 +307,10 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self._EventMode_callback(self.EventMode)
         self._EventMode_combo_box.currentIndexChanged.connect(
         	lambda i: self.set_EventMode(self._EventMode_options[i]))
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 2, 4, 1, 4)
+        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 2, 2, 1, 3)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(4, 8):
+        for c in range(2, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Elevation_tool_bar = Qt.QToolBar(self)
         self._Elevation_tool_bar.addWidget(Qt.QLabel('Elevation'+": "))
@@ -277,10 +318,10 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self._Elevation_tool_bar.addWidget(self._Elevation_line_edit)
         self._Elevation_line_edit.returnPressed.connect(
         	lambda: self.set_Elevation(eng_notation.str_to_num(str(self._Elevation_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._Elevation_tool_bar, 1, 6, 1, 2)
+        self.top_grid_layout.addWidget(self._Elevation_tool_bar, 1, 7, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(6, 8):
+        for c in range(7, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Device_tool_bar = Qt.QToolBar(self)
         self._Device_tool_bar.addWidget(Qt.QLabel('Dev'+": "))
@@ -342,10 +383,10 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self._Bandwidth_tool_bar.addWidget(self._Bandwidth_line_edit)
         self._Bandwidth_line_edit.returnPressed.connect(
         	lambda: self.set_Bandwidth(eng_notation.str_to_num(str(self._Bandwidth_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._Bandwidth_tool_bar, 1, 4, 1, 2)
+        self.top_grid_layout.addWidget(self._Bandwidth_tool_bar, 1, 5, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(4, 6):
+        for c in range(5, 7):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Azimuth_tool_bar = Qt.QToolBar(self)
         self._Azimuth_tool_bar.addWidget(Qt.QLabel('Azimuth'+": "))
@@ -353,71 +394,59 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self._Azimuth_tool_bar.addWidget(self._Azimuth_line_edit)
         self._Azimuth_line_edit.returnPressed.connect(
         	lambda: self.set_Azimuth(eng_notation.str_to_num(str(self._Azimuth_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._Azimuth_tool_bar, 0, 6, 1, 2)
+        self.top_grid_layout.addWidget(self._Azimuth_tool_bar, 0, 7, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(6, 8):
+        for c in range(7, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.sdrplay_rsp1a_source_0 = sdrplay.rsp1a_source(int(Frequency), 8000, False, int(IF_attn), DcOffsetMode, IQMode,
                 bool(DebugOn), 0, 1, int(Bandwidth), BroadcastNotch, DabNotch, int(Gain1), bool(BiasOn),
                 '0')
 
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
-        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
-        self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
-        	fftsize, #size
-        	Bandwidth, #samp_rate
-        	"", #name
-        	1 #number of inputs
+        self.radio_astro_vmedian_0_0_1_0 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_vmedian_0_0_1 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", 2*fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', 2*fftsize, Bandwidth*1.e-6)
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record,
+            0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain2))
+        self.radio_astro_detect_0 = radio_astro.detect(2*fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, EventMode)
+        self.qtgui_number_sink_0 = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_NONE,
+            1
         )
-        self.qtgui_time_sink_x_0_0.set_update_time(1)
-        self.qtgui_time_sink_x_0_0.set_y_axis(-.3, .3)
+        self.qtgui_number_sink_0.set_update_time(1.)
+        self.qtgui_number_sink_0.set_title("")
 
-        self.qtgui_time_sink_x_0_0.set_y_label('Event', "")
-
-        self.qtgui_time_sink_x_0_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
-        self.qtgui_time_sink_x_0_0.enable_autoscale(True)
-        self.qtgui_time_sink_x_0_0.enable_grid(False)
-        self.qtgui_time_sink_x_0_0.enable_axis_labels(True)
-        self.qtgui_time_sink_x_0_0.enable_control_panel(False)
-        self.qtgui_time_sink_x_0_0.enable_stem_plot(False)
-
-        if not True:
-          self.qtgui_time_sink_x_0_0.disable_legend()
-
-        labels = ['I', 'Q', '', '', '',
+        labels = ['T Remains:', '', '', '', '',
                   '', '', '', '', '']
-        widths = [1, 1, 1, 1, 1,
+        units = ['(s)', '', '', '', '',
+                 '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+                  ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
                   1, 1, 1, 1, 1]
-        colors = ["blue", "red", "green", "black", "cyan",
-                  "magenta", "yellow", "dark red", "dark green", "blue"]
-        styles = [1, 1, 1, 1, 1,
-                  1, 1, 1, 1, 1]
-        markers = [-1, -1, -1, -1, -1,
-                   -1, -1, -1, -1, -1]
-        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
-                  1.0, 1.0, 1.0, 1.0, 1.0]
-
-        for i in xrange(2):
+        for i in xrange(1):
+            self.qtgui_number_sink_0.set_min(i, 0.)
+            self.qtgui_number_sink_0.set_max(i, nAve * fftsize * 1024. / Bandwidth)
+            self.qtgui_number_sink_0.set_color(i, colors[i][0], colors[i][1])
             if len(labels[i]) == 0:
-                if(i % 2 == 0):
-                    self.qtgui_time_sink_x_0_0.set_line_label(i, "Re{{Data {0}}}".format(i/2))
-                else:
-                    self.qtgui_time_sink_x_0_0.set_line_label(i, "Im{{Data {0}}}".format(i/2))
+                self.qtgui_number_sink_0.set_label(i, "Data {0}".format(i))
             else:
-                self.qtgui_time_sink_x_0_0.set_line_label(i, labels[i])
-            self.qtgui_time_sink_x_0_0.set_line_width(i, widths[i])
-            self.qtgui_time_sink_x_0_0.set_line_color(i, colors[i])
-            self.qtgui_time_sink_x_0_0.set_line_style(i, styles[i])
-            self.qtgui_time_sink_x_0_0.set_line_marker(i, markers[i])
-            self.qtgui_time_sink_x_0_0.set_line_alpha(i, alphas[i])
+                self.qtgui_number_sink_0.set_label(i, labels[i])
+            self.qtgui_number_sink_0.set_unit(i, units[i])
+            self.qtgui_number_sink_0.set_factor(i, factor[i])
 
-        self._qtgui_time_sink_x_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_0_win, 3, 2, 4, 6)
-        for r in range(3, 7):
+        self.qtgui_number_sink_0.enable_autoscale(False)
+        self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.pyqwidget(), Qt.QWidget)
+        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 3, 5, 1, 3)
+        for r in range(3, 4):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 8):
+        for c in range(5, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
         	fftsize,
@@ -461,35 +490,15 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
             self.qtgui_histogram_sink_x_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_histogram_sink_x_0_win = sip.wrapinstance(self.qtgui_histogram_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_histogram_sink_x_0_win, 5, 0, 1, 2)
-        for r in range(5, 6):
+        self.top_grid_layout.addWidget(self._qtgui_histogram_sink_x_0_win, 4, 0, 1, 5)
+        for r in range(4, 5):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
+        for c in range(0, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._observer_tool_bar = Qt.QToolBar(self)
-        self._observer_tool_bar.addWidget(Qt.QLabel('Who'+": "))
-        self._observer_line_edit = Qt.QLineEdit(str(self.observer))
-        self._observer_tool_bar.addWidget(self._observer_line_edit)
-        self._observer_line_edit.returnPressed.connect(
-        	lambda: self.set_observer(str(str(self._observer_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._observer_tool_bar, 0, 0, 1, 2)
-        for r in range(0, 1):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        self._nAve_tool_bar = Qt.QToolBar(self)
-        self._nAve_tool_bar.addWidget(Qt.QLabel('N_Ave.'+": "))
-        self._nAve_line_edit = Qt.QLineEdit(str(self.nAve))
-        self._nAve_tool_bar.addWidget(self._nAve_line_edit)
-        self._nAve_line_edit.returnPressed.connect(
-        	lambda: self.set_nAve(int(str(self._nAve_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._nAve_tool_bar, 0, 2, 1, 2)
-        for r in range(0, 1):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 4):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        self.blocks_vector_to_stream_0 = blocks.vector_to_stream(gr.sizeof_gr_complex*1, fftsize)
-        self.blocks_stream_to_vector_0_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
+        self.fft_vxx_0 = fft.fft_vcc(fftsize, True, (window.hamming(fftsize)), True, 1)
+        self.blocks_stream_to_vector_0_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, 2*fftsize)
+        self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
+        self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
 
 
@@ -499,11 +508,20 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         ##################################################
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_1, 0))
+        self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0_0, 0), (self.radio_astro_detect_0, 0))
-        self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
-        self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
+        self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
+        self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
+        self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_ra_ascii_sink_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0_1, 0), (self.radio_astro_vmedian_0_0_1_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0_1_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
         self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_complex_to_float_0, 0))
+        self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.sdrplay_rsp1a_source_0, 0), (self.blocks_stream_to_vector_0_0_0, 0))
 
     def closeEvent(self, event):
@@ -517,6 +535,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
     def set_ObsName(self, ObsName):
         self.ObsName = ObsName
         self.radio_astro_ra_event_sink_0.set_setup( self.ObsName+"Event.not")
+        self.radio_astro_ra_ascii_sink_0.set_setup( self.ObsName+".not")
         self.set_ConfigFile(self.ObsName+".conf")
 
     def get_ConfigFile(self):
@@ -530,6 +549,12 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         	self._telescope_save_config.add_section('main')
         self._telescope_save_config.set('main', 'telescope', str(self.Telescope))
         self._telescope_save_config.write(open(self.ConfigFile, 'w'))
+        self._device_save_config = ConfigParser.ConfigParser()
+        self._device_save_config.read(self.ConfigFile)
+        if not self._device_save_config.has_section('main'):
+        	self._device_save_config.add_section('main')
+        self._device_save_config.set('main', 'device', str(self.Device))
+        self._device_save_config.write(open(self.ConfigFile, 'w'))
         self._observers_save_config = ConfigParser.ConfigParser()
         self._observers_save_config.read(self.ConfigFile)
         if not self._observers_save_config.has_section('main'):
@@ -548,12 +573,6 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         	self._fftsize_save_config.add_section('main')
         self._fftsize_save_config.set('main', 'fftsize', str(self.fftsize))
         self._fftsize_save_config.write(open(self.ConfigFile, 'w'))
-        self._device_save_config = ConfigParser.ConfigParser()
-        self._device_save_config.read(self.ConfigFile)
-        if not self._device_save_config.has_section('main'):
-        	self._device_save_config.add_section('main')
-        self._device_save_config.set('main', 'device', str(self.Device))
-        self._device_save_config.write(open(self.ConfigFile, 'w'))
         self._IQMode_save_config = ConfigParser.ConfigParser()
         self._IQMode_save_config.read(self.ConfigFile)
         if not self._IQMode_save_config.has_section('main'):
@@ -647,6 +666,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
     def set_telescope_save(self, telescope_save):
         self.telescope_save = telescope_save
         self.set_Telescope(self.telescope_save)
+        self.radio_astro_ra_ascii_sink_0.set_site( self.telescope_save)
 
     def get_observers_save(self):
         return self.observers_save
@@ -675,6 +695,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
     def set_device_save(self, device_save):
         self.device_save = device_save
         self.set_Device(self.device_save)
+        self.radio_astro_ra_ascii_sink_0.set_device( self.device_save)
 
     def get_IQMode_save(self):
         return self.IQMode_save
@@ -705,6 +726,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         Qt.QMetaObject.invokeMethod(self._Frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Frequency)))
         self.sdrplay_rsp1a_source_0.set_rf_freq(int(self.Frequency))
         self.radio_astro_ra_event_sink_0.set_frequency( self.Frequency*1.E-6)
+        self.radio_astro_ra_ascii_sink_0.set_frequency( self.Frequency)
         self.radio_astro_detect_0.set_freq( self.Frequency)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Frequencys_config = ConfigParser.ConfigParser()
@@ -763,8 +785,9 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.Bandwidth = Bandwidth
         Qt.QMetaObject.invokeMethod(self._Bandwidth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Bandwidth)))
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth*1.e-6)
+        self.radio_astro_ra_ascii_sink_0.set_bandwidth( self.Bandwidth)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
-        self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(self.ConfigFile)
@@ -785,13 +808,14 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
 
     def set_observer(self, observer):
         self.observer = observer
+        Qt.QMetaObject.invokeMethod(self._observer_line_edit, "setText", Qt.Q_ARG("QString", str(self.observer)))
+        self.radio_astro_ra_ascii_sink_0.set_observers( self.observer)
         self._observers_save_config = ConfigParser.ConfigParser()
         self._observers_save_config.read(self.ConfigFile)
         if not self._observers_save_config.has_section('main'):
         	self._observers_save_config.add_section('main')
         self._observers_save_config.set('main', 'observers', str(self.observer))
         self._observers_save_config.write(open(self.ConfigFile, 'w'))
-        Qt.QMetaObject.invokeMethod(self._observer_line_edit, "setText", Qt.Q_ARG("QString", str(self.observer)))
 
     def get_numin(self):
         return self.numin
@@ -811,13 +835,14 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
 
     def set_nAve(self, nAve):
         self.nAve = nAve
+        Qt.QMetaObject.invokeMethod(self._nAve_line_edit, "setText", Qt.Q_ARG("QString", str(self.nAve)))
+        self.radio_astro_ra_ascii_sink_0.set_nave( self.nAve)
         self._nAves_config = ConfigParser.ConfigParser()
         self._nAves_config.read(self.ConfigFile)
         if not self._nAves_config.has_section('main'):
         	self._nAves_config.add_section('main')
         self._nAves_config.set('main', 'nave', str(self.nAve))
         self._nAves_config.write(open(self.ConfigFile, 'w'))
-        Qt.QMetaObject.invokeMethod(self._nAve_line_edit, "setText", Qt.Q_ARG("QString", str(self.nAve)))
 
     def get_fftsize(self):
         return self.fftsize
@@ -825,8 +850,14 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
     def set_fftsize(self, fftsize):
         self.fftsize = fftsize
         Qt.QMetaObject.invokeMethod(self._fftsize_line_edit, "setText", Qt.Q_ARG("QString", str(self.fftsize)))
-        self.radio_astro_ra_event_sink_0.set_vlen( self.fftsize)
-        self.radio_astro_detect_0.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0_0_1_0.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0_0_1.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0_0_0.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0_0.set_vlen( self.fftsize)
+        self.radio_astro_vmedian_0.set_vlen( self.fftsize)
+        self.radio_astro_ra_event_sink_0.set_vlen( 2*self.fftsize)
+        self.radio_astro_ra_event_log_0.set_vlen( 2*self.fftsize)
+        self.radio_astro_detect_0.set_vlen( 2*self.fftsize)
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)
         if not self._fftsize_save_config.has_section('main'):
@@ -839,14 +870,22 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
 
     def set_Telescope(self, Telescope):
         self.Telescope = Telescope
-        Qt.QMetaObject.invokeMethod(self._Telescope_line_edit, "setText", Qt.Q_ARG("QString", str(self.Telescope)))
         self._telescope_save_config = ConfigParser.ConfigParser()
         self._telescope_save_config.read(self.ConfigFile)
         if not self._telescope_save_config.has_section('main'):
         	self._telescope_save_config.add_section('main')
         self._telescope_save_config.set('main', 'telescope', str(self.Telescope))
         self._telescope_save_config.write(open(self.ConfigFile, 'w'))
+        Qt.QMetaObject.invokeMethod(self._Telescope_line_edit, "setText", Qt.Q_ARG("QString", str(self.Telescope)))
         self.radio_astro_ra_event_sink_0.set_telescope( self.Telescope)
+
+    def get_Record(self):
+        return self.Record
+
+    def set_Record(self, Record):
+        self.Record = Record
+        self._Record_callback(self.Record)
+        self.radio_astro_ra_ascii_sink_0.set_record( self.Record)
 
     def get_IQMode(self):
         return self.IQMode
@@ -886,6 +925,8 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
 
     def set_Gain2(self, Gain2):
         self.Gain2 = Gain2
+        self.radio_astro_ra_ascii_sink_0.set_gain2( float(self.Gain2))
+        self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.Gain2))
 
     def get_Gain1(self):
         return self.Gain1
@@ -895,6 +936,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
         self.sdrplay_rsp1a_source_0.set_lna_atten_step(int(self.Gain1))
         self.radio_astro_ra_event_sink_0.set_gain1( float(self.Gain1))
+        self.radio_astro_ra_ascii_sink_0.set_gain1( float(self.Gain1))
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):
@@ -909,6 +951,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.EventMode = EventMode
         self._EventMode_callback(self.EventMode)
         self.radio_astro_ra_event_sink_0.set_record( self.EventMode)
+        self.radio_astro_detect_0.set_mode( self.EventMode)
 
     def get_Elevation(self):
         return self.Elevation
@@ -917,6 +960,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.Elevation = Elevation
         Qt.QMetaObject.invokeMethod(self._Elevation_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Elevation)))
         self.radio_astro_ra_event_sink_0.set_telel( self.Elevation)
+        self.radio_astro_ra_ascii_sink_0.set_elevation( self.Elevation)
         self._Elevation_save_config = ConfigParser.ConfigParser()
         self._Elevation_save_config.read(self.ConfigFile)
         if not self._Elevation_save_config.has_section('main'):
@@ -929,14 +973,14 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
 
     def set_Device(self, Device):
         self.Device = Device
-        Qt.QMetaObject.invokeMethod(self._Device_line_edit, "setText", Qt.Q_ARG("QString", str(self.Device)))
-        self.radio_astro_ra_event_sink_0.set_device( self.Device)
         self._device_save_config = ConfigParser.ConfigParser()
         self._device_save_config.read(self.ConfigFile)
         if not self._device_save_config.has_section('main'):
         	self._device_save_config.add_section('main')
         self._device_save_config.set('main', 'device', str(self.Device))
         self._device_save_config.write(open(self.ConfigFile, 'w'))
+        Qt.QMetaObject.invokeMethod(self._Device_line_edit, "setText", Qt.Q_ARG("QString", str(self.Device)))
+        self.radio_astro_ra_event_sink_0.set_device( self.Device)
 
     def get_DebugOn(self):
         return self.DebugOn
@@ -1011,6 +1055,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.Azimuth = Azimuth
         Qt.QMetaObject.invokeMethod(self._Azimuth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Azimuth)))
         self.radio_astro_ra_event_sink_0.set_telaz( self.Azimuth)
+        self.radio_astro_ra_ascii_sink_0.set_azimuth( self.Azimuth)
         self._Azimuth_save_config = ConfigParser.ConfigParser()
         self._Azimuth_save_config.read(self.ConfigFile)
         if not self._Azimuth_save_config.has_section('main'):

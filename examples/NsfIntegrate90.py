@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: SDRPlay 9MHz Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with 9.0 MHz SDRPlay RSP 1A
-# Generated: Sat Feb 15 16:20:37 2020
+# Generated: Thu Jun 18 13:38:14 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -450,7 +450,7 @@ class NsfIntegrate90(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["gold", "dark green", "red", "blue", "cyan",
+        colors = ["black", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
