@@ -5,7 +5,7 @@
 # Title: Nsf RTLSDR Event Detect: 2.4MHz
 # Author: Glen Langston
 # Description: Event Detection using RTLSDR
-# Generated: Thu Jun 18 13:54:08 2020
+# Generated: Sun Jun 28 12:44:21 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -120,7 +120,7 @@ class NsfDetect24(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'bandwidth')
-        except: Bandwidths = 3.e6
+        except: Bandwidths = 2.4e6
         self.Bandwidths = Bandwidths
         self._Azimuth_save_config = ConfigParser.ConfigParser()
         self._Azimuth_save_config.read(ConfigFile)
@@ -136,7 +136,7 @@ class NsfDetect24(gr.top_block, Qt.QWidget):
         self.Gain2 = Gain2 = Gain2s
         self.Gain1 = Gain1 = Gain1s
         self.Frequency = Frequency = Frequencys
-        self.EventMode = EventMode = 0
+        self.EventMode = EventMode = False
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
         self.Bandwidth = Bandwidth = Bandwidths
@@ -245,18 +245,13 @@ class NsfDetect24(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._EventMode_options = (0, 1, )
-        self._EventMode_labels = ('Wait', 'Write', )
-        self._EventMode_tool_bar = Qt.QToolBar(self)
-        self._EventMode_tool_bar.addWidget(Qt.QLabel('Write Mode'+": "))
-        self._EventMode_combo_box = Qt.QComboBox()
-        self._EventMode_tool_bar.addWidget(self._EventMode_combo_box)
-        for label in self._EventMode_labels: self._EventMode_combo_box.addItem(label)
-        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._EventMode_options.index(i)))
+        _EventMode_check_box = Qt.QCheckBox('Event Write')
+        self._EventMode_choices = {True: True, False: False}
+        self._EventMode_choices_inv = dict((v,k) for k,v in self._EventMode_choices.iteritems())
+        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_EventMode_check_box, "setChecked", Qt.Q_ARG("bool", self._EventMode_choices_inv[i]))
         self._EventMode_callback(self.EventMode)
-        self._EventMode_combo_box.currentIndexChanged.connect(
-        	lambda i: self.set_EventMode(self._EventMode_options[i]))
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 5, 0, 1, 2)
+        _EventMode_check_box.stateChanged.connect(lambda i: self.set_EventMode(self._EventMode_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_EventMode_check_box, 5, 0, 1, 2)
         for r in range(5, 6):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
@@ -320,6 +315,7 @@ class NsfDetect24(gr.top_block, Qt.QWidget):
 
         (self.rtlsdr_source_0).set_processor_affinity([3])
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.e-6)
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
         	fftsize, #size
@@ -437,6 +433,7 @@ class NsfDetect24(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_to_vector_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0, 0))
@@ -617,6 +614,7 @@ class NsfDetect24(gr.top_block, Qt.QWidget):
         self.fftsize = fftsize
         Qt.QMetaObject.invokeMethod(self._fftsize_line_edit, "setText", Qt.Q_ARG("QString", str(self.fftsize)))
         self.radio_astro_ra_event_sink_0.set_vlen( self.fftsize)
+        self.radio_astro_ra_event_log_0.set_vlen( self.fftsize)
         self.radio_astro_detect_0.set_vlen( self.fftsize)
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)
@@ -765,6 +763,7 @@ class NsfDetect24(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_sample_rate(float(self.Bandwidth))
         self.rtlsdr_source_0.set_bandwidth(float(self.Bandwidth*1e6), 0)
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth*1.e-6)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self._Bandwidths_config = ConfigParser.ConfigParser()

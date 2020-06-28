@@ -1,10 +1,10 @@
-# File: Detect24.not
+# File: Integrate24Event.not
 # NOTEA     = Event Detection
 # NOTEB     = Event Detection
-# OBSERVER  = Science Aficionado
+# OBSERVER  = Radio Observer
 # DEVICE    = rtl=0,bias=1
 # DATADIR   = ../events/
-# SITE      = No Horn, just RTLSDR dongle
+# SITE      = NooElecAmp RTLSDR Dongle Test
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
@@ -14,7 +14,7 @@
 # GAIN2     = 11.0
 # GAIN3     = 11.0
 # GAIN4     = 0.0
-# Count     = 1
+# Count     = 1024
 # CenterFreq= 1420000000.0
 # Bandwidth = 2400000.0
 # Duration  = 0.689015
@@ -30,19 +30,19 @@
 # NSPEC     = 0
 # NTIME     = 1
 # NSAMPLES  = 2048
-# EPEAK     = 0.101898467551
-# ERMS      = 0.0242701510174
-# EMJD      = 58998.543356793809 
+# EPEAK     = 4.10875183718
+# ERMS      = 0.995973393526
+# EMJD      = 58568.808999981004 
 # REFCHAN   = 1024.0
 # REFSAMPL  = 1024
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2020-06-28 16:44:25.187401
+# UTC       = 2020-06-28 17:27:14.318012
 # SECONDS   =       0.0000000000 
 # LST       = 01:01:10.490
 # AZ        = 180.0
-# EL        = -90.0
+# EL        = 90.0
 # TELLON    = -79:50:22.920
 # TELLAT    = +38:25:59.160
 # RA        = 00:59:21.370
