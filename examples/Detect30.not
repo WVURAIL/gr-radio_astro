@@ -2,15 +2,15 @@
 # NOTEA     = Event Detection
 # NOTEB     = Event Detection
 # OBSERVER  = Science Aficionado
-# DEVICE    = rtl=0,bias=1
+# DEVICE    = airspy,bias=1,pack=1
 # DATADIR   = ../events/
-# SITE      = No Horn, just RTLSDR dongle
+# SITE      = 1Pps+Airspy mini + NooElec Amp Noise
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
 # TELTYPE   = Pyramid Horn
 # FRAME     = TOPO
-# GAIN1     = 49.0
+# GAIN1     = 17.0
 # GAIN2     = 11.0
 # GAIN3     = 11.0
 # GAIN4     = 0.0
@@ -30,15 +30,15 @@
 # NSPEC     = 0
 # NTIME     = 1
 # NSAMPLES  = 2048
-# EPEAK     = 0.101898467551
-# ERMS      = 0.0242701510174
-# EMJD      = 58998.543356793809 
+# EPEAK     = 0.506202846262
+# ERMS      = 0.09936
+# EMJD      = 59028.783237555748 
 # REFCHAN   = 1024.0
 # REFSAMPL  = 1024
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2020-06-22 18:35:42.593541
+# UTC       = 2020-06-28 18:49:10.324095
 # SECONDS   =       0.0000000000 
 # LST       = 01:01:10.490
 # AZ        = 180.0
