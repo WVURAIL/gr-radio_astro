@@ -414,26 +414,30 @@
     </param>
   </block>
   <block>
-    <key>variable_qtgui_chooser</key>
+    <key>variable_qtgui_check_box</key>
     <param>
       <key>comment</key>
       <value></value>
     </param>
     <param>
       <key>value</key>
-      <value>0</value>
+      <value>False</value>
     </param>
     <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
+      <key>false</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>_coordinate</key>
-      <value>(32, 672)</value>
+      <value>(24, 696)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>5,0, 1, 2</value>
+      <value>5,0,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -444,72 +448,16 @@
       <value>EventMode</value>
     </param>
     <param>
-      <key>label0</key>
-      <value>Wait</value>
-    </param>
-    <param>
-      <key>label1</key>
-      <value>Write</value>
-    </param>
-    <param>
-      <key>label2</key>
-      <value>Write</value>
-    </param>
-    <param>
-      <key>label3</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label4</key>
-      <value></value>
-    </param>
-    <param>
       <key>label</key>
-      <value>Write Mode</value>
+      <value>Write Events</value>
     </param>
     <param>
-      <key>labels</key>
-      <value>[]</value>
-    </param>
-    <param>
-      <key>num_opts</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>option0</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>option1</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>option2</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option3</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option4</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>options</key>
-      <value>[0, 1, 2]</value>
-    </param>
-    <param>
-      <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
+      <key>true</key>
+      <value>True</value>
     </param>
     <param>
       <key>type</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>widget</key>
-      <value>combo_box</value>
+      <value>bool</value>
     </param>
   </block>
   <block>
@@ -614,7 +562,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(656, 400)</value>
+      <value>(656, 448)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -747,7 +695,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(776, 400)</value>
+      <value>(776, 448)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -833,7 +781,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 400)</value>
+      <value>(896, 448)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1417,7 +1365,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(256, 256)</value>
+      <value>(264, 272)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1574,7 +1522,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(416, 236)</value>
+      <value>(440, 240)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2300,6 +2248,53 @@
     </param>
   </block>
   <block>
+    <key>radio_astro_ra_event_log</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(664, 336)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_ra_event_log_0</value>
+    </param>
+    <param>
+      <key>logname</key>
+      <value></value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>Event Detection</value>
+    </param>
+    <param>
+      <key>sample_rate</key>
+      <value>Bandwidth*1.e-6</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
+    </param>
+  </block>
+  <block>
     <key>radio_astro_ra_event_sink</key>
     <param>
       <key>azimuth</key>
@@ -2339,7 +2334,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(656, 140)</value>
+      <value>(656, 96)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3812,6 +3807,12 @@
   <connection>
     <source_block_id>radio_astro_detect_0</source_block_id>
     <sink_block_id>blocks_vector_to_stream_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_detect_0</source_block_id>
+    <sink_block_id>radio_astro_ra_event_log_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
