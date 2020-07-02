@@ -5,7 +5,7 @@
 # Title: Nsf Airspy Mini Event Detect: 6 MHz
 # Author: Glen Langston
 # Description: Event Detection using Airspy
-# Generated: Fri Jun 26 13:26:45 2020
+# Generated: Thu Jul  2 16:37:51 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -192,16 +192,25 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Mode_options = (0, 2, )
         self._Mode_labels = ('Monitor', 'Detect', )
-        self._Mode_tool_bar = Qt.QToolBar(self)
-        self._Mode_tool_bar.addWidget(Qt.QLabel('Data Mode'+": "))
-        self._Mode_combo_box = Qt.QComboBox()
-        self._Mode_tool_bar.addWidget(self._Mode_combo_box)
-        for label in self._Mode_labels: self._Mode_combo_box.addItem(label)
-        self._Mode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Mode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Mode_options.index(i)))
+        self._Mode_group_box = Qt.QGroupBox('Data Mode')
+        self._Mode_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._Mode_button_group = variable_chooser_button_group()
+        self._Mode_group_box.setLayout(self._Mode_box)
+        for i, label in enumerate(self._Mode_labels):
+        	radio_button = Qt.QRadioButton(label)
+        	self._Mode_box.addWidget(radio_button)
+        	self._Mode_button_group.addButton(radio_button, i)
+        self._Mode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Mode_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._Mode_options.index(i)))
         self._Mode_callback(self.Mode)
-        self._Mode_combo_box.currentIndexChanged.connect(
+        self._Mode_button_group.buttonClicked[int].connect(
         	lambda i: self.set_Mode(self._Mode_options[i]))
-        self.top_grid_layout.addWidget(self._Mode_tool_bar, 6, 0, 1, 2)
+        self.top_grid_layout.addWidget(self._Mode_group_box, 6, 0, 1, 2)
         for r in range(6, 7):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
@@ -252,16 +261,25 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._EventMode_options = (0, 1, )
         self._EventMode_labels = ('Wait', 'Write', )
-        self._EventMode_tool_bar = Qt.QToolBar(self)
-        self._EventMode_tool_bar.addWidget(Qt.QLabel('Write Mode'+": "))
-        self._EventMode_combo_box = Qt.QComboBox()
-        self._EventMode_tool_bar.addWidget(self._EventMode_combo_box)
-        for label in self._EventMode_labels: self._EventMode_combo_box.addItem(label)
-        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._EventMode_options.index(i)))
+        self._EventMode_group_box = Qt.QGroupBox('Write Mode')
+        self._EventMode_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._EventMode_button_group = variable_chooser_button_group()
+        self._EventMode_group_box.setLayout(self._EventMode_box)
+        for i, label in enumerate(self._EventMode_labels):
+        	radio_button = Qt.QRadioButton(label)
+        	self._EventMode_box.addWidget(radio_button)
+        	self._EventMode_button_group.addButton(radio_button, i)
+        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._EventMode_options.index(i)))
         self._EventMode_callback(self.EventMode)
-        self._EventMode_combo_box.currentIndexChanged.connect(
+        self._EventMode_button_group.buttonClicked[int].connect(
         	lambda i: self.set_EventMode(self._EventMode_options[i]))
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 5, 0, 1, 2)
+        self.top_grid_layout.addWidget(self._EventMode_group_box, 5, 0, 1, 2)
         for r in range(5, 6):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
@@ -400,7 +418,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         if not True:
           self.qtgui_histogram_sink_x_0.disable_legend()
 
-        labels = ['', '', '', '', '',
+        labels = ['I', 'Q', '', '', '',
                   '', '', '', '', '']
         widths = [1, 1, 1, 1, 1,
                   1, 1, 1, 1, 1]

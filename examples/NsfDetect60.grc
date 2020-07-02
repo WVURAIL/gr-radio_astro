@@ -501,7 +501,7 @@
     </param>
     <param>
       <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
+      <value>Qt.QHBoxLayout</value>
     </param>
     <param>
       <key>type</key>
@@ -509,7 +509,7 @@
     </param>
     <param>
       <key>widget</key>
-      <value>combo_box</value>
+      <value>radio_buttons</value>
     </param>
   </block>
   <block>
@@ -944,7 +944,7 @@
     </param>
     <param>
       <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
+      <value>Qt.QHBoxLayout</value>
     </param>
     <param>
       <key>type</key>
@@ -952,7 +952,7 @@
     </param>
     <param>
       <key>widget</key>
-      <value>combo_box</value>
+      <value>radio_buttons</value>
     </param>
   </block>
   <block>
@@ -1606,7 +1606,7 @@
     </param>
     <param>
       <key>label1</key>
-      <value></value>
+      <value>I</value>
     </param>
     <param>
       <key>marker1</key>
@@ -1654,7 +1654,7 @@
     </param>
     <param>
       <key>label2</key>
-      <value></value>
+      <value>Q</value>
     </param>
     <param>
       <key>marker2</key>
