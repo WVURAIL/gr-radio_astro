@@ -113,12 +113,24 @@ blocks:
   id: variable
   parameters:
     comment: Integration time in secs
-    value: '1'
+    value: '2'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
     coordinate: [976, 100.0]
+    rotation: 0
+    state: enabled
+- name: min_integration
+  id: variable
+  parameters:
+    comment: At least integrate 16 times, ~6milliseconds  Keep this for normailzation
+    value: '16'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [304, 76.0]
     rotation: 0
     state: enabled
 - name: prefix
@@ -289,10 +301,10 @@ blocks:
     min_len: '200'
     orient: Qt.Horizontal
     rangeType: float
-    start: '50'
+    start: '0.01'
     step: '1000'
     stop: '1000000000000'
-    value: '200000'
+    value: '500'
     widget: counter_slider
   states:
     bus_sink: false
@@ -429,13 +441,13 @@ blocks:
     coordinate: [368, 452]
     rotation: 0
     state: enabled
-- name: blocks_integrate_xx_0_0
+- name: blocks_integrate_xx_0_0_0
   id: blocks_integrate_xx
   parameters:
     affinity: ''
     alias: ''
     comment: ''
-    decim: int(integration_time*samp_rate/vec_length)
+    decim: min_integration
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -444,7 +456,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1272, 460]
+    coordinate: [1224, 484.0]
     rotation: 180
     state: enabled
 - name: blocks_multiply_conjugate_cc_0
@@ -1398,6 +1410,23 @@ blocks:
     coordinate: [1424, 940]
     rotation: 0
     state: enabled
+- name: radio_astro_integration_0
+  id: radio_astro_integration
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_integrations: int(integration_time*samp_rate/vec_length/min_integration)
+    vec_length: vec_length
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [976, 484.0]
+    rotation: 180
+    state: enabled
 - name: radio_astro_systemp_calibration_0
   id: radio_astro_systemp_calibration
   parameters:
@@ -1416,18 +1445,18 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [956.0, 432]
+    coordinate: [764.0, 608]
     rotation: 270
     state: enabled
 
 connections:
 - [blocks_add_xx_0, '0', fft_vxx_0, '0']
 - [blocks_complex_to_real_0, '0', qtgui_histogram_sink_x_0, '0']
-- [blocks_complex_to_real_0_0, '0', blocks_integrate_xx_0_0, '0']
+- [blocks_complex_to_real_0_0, '0', blocks_integrate_xx_0_0_0, '0']
 - [blocks_delay_0_0, '0', blocks_stream_to_vector_0_0, '0']
 - [blocks_delay_0_0_0, '0', blocks_stream_to_vector_0_2, '0']
 - [blocks_delay_0_0_0_0, '0', blocks_stream_to_vector_0_1, '0']
-- [blocks_integrate_xx_0_0, '0', radio_astro_systemp_calibration_0, '0']
+- [blocks_integrate_xx_0_0_0, '0', radio_astro_integration_0, '0']
 - [blocks_multiply_conjugate_cc_0, '0', blocks_complex_to_real_0_0, '0']
 - [blocks_multiply_const_vxx_0, '0', blocks_add_xx_0, '3']
 - [blocks_multiply_const_vxx_0_0, '0', blocks_add_xx_0, '2']
@@ -1444,6 +1473,7 @@ connections:
 - [osmosdr_source_0, '0', blocks_delay_0_0_0, '0']
 - [osmosdr_source_0, '0', blocks_delay_0_0_0_0, '0']
 - [osmosdr_source_0, '0', blocks_stream_to_vector_0, '0']
+- [radio_astro_integration_0, '0', radio_astro_systemp_calibration_0, '0']
 - [radio_astro_systemp_calibration_0, '0', qtgui_vector_sink_f_0_0_1, '0']
 - [radio_astro_systemp_calibration_0, '0', radio_astro_csv_filesink_0, '0']
 - [radio_astro_systemp_calibration_0, '0', radio_astro_hdf5_sink_0_0_0, '0']
