@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.17">
+  <compound refid="classgr_1_1radio__astro_1_1dedispersion" kind="class"><name>gr::radio_astro::dedispersion</name>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion_1a8645b10a0038eda7aea1d5837d1e73b8" kind="typedef"><name>sptr</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion_1a5a9f9d3dd4f9f65e937bd1529517431a" kind="function"><name>make</name></member>
+  </compound>
+  <compound refid="classgr_1_1radio__astro_1_1detect" kind="class"><name>gr::radio_astro::detect</name>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a5c293d7bdef7e2aa6efee468eb59f370" kind="typedef"><name>sptr</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a75c2c925891dee1135d27fee1bf6ec15" kind="function"><name>make</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a8c6bc2be6db5769b28cfed75de6d8503" kind="function"><name>set_dms</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1ad7d177cb7a4c2284c7898418f807d31e" kind="function"><name>set_vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a806372490426f7193aacfbb35953b7d4" kind="function"><name>set_mode</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a936748ccc3fef4d557602ef115be6523" kind="function"><name>set_bw</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1af129b37c396e46e8db031489a53387e8" kind="function"><name>set_freq</name></member>
+  </compound>
+  <compound refid="classgr_1_1radio__astro_1_1vmedian" kind="class"><name>gr::radio_astro::vmedian</name>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1af65086176d2cc1f2b184a3177a395b0a" kind="typedef"><name>sptr</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1a35d925e3acd0357e8b36d8cdb19d82a9" kind="function"><name>set_vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1ac99e770f71d575f81c7e4c8c72c0a23a" kind="function"><name>set_mode</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1a7bd704614d626fd2a023c34ca5ebf46b" kind="function"><name>make</name></member>
+  </compound>
+  <compound refid="namespacegr" kind="namespace"><name>gr</name>
+  </compound>
+  <compound refid="namespacegr_1_1radio__astro" kind="namespace"><name>gr::radio_astro</name>
+  </compound>
+  <compound refid="namespacestd" kind="namespace"><name>std</name>
+  </compound>
+  <compound refid="api_8h" kind="file"><name>api.h</name>
+    <member refid="api_8h_1a257449157cb28015fdfa7d5a3302d518" kind="define"><name>RADIO_ASTRO_API</name></member>
+  </compound>
+  <compound refid="dedispersion_8h" kind="file"><name>dedispersion.h</name>
+  </compound>
+  <compound refid="detect_8h" kind="file"><name>detect.h</name>
+  </compound>
+  <compound refid="vmedian_8h" kind="file"><name>vmedian.h</name>
+  </compound>
+  <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>include</name>
+  </compound>
+  <compound refid="dir_939a0b8f5bbaa30494bda672b0a17cdc" kind="dir"><name>radio_astro</name>
+  </compound>
+</doxygenindex>

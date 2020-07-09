@@ -58,7 +58,7 @@ class systemp_calibration(gr.sync_block):
     (5) prefix - used in the filename to describe the pathlength; set in a Variable box. 
     (6) spectrumcapture_toggle - determines whether the spectrum is captured to a file written to the pathlength described by the prefix variable, and written with the filename = prefix + timenow + "_spectrum.csv".
     """
-    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle):
+    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, spectrumclip_toggle):
         gr.sync_block.__init__(self,
             name="systemp_calibration",
             in_sig=[(np.float32, int(vec_length))],
@@ -70,6 +70,7 @@ class systemp_calibration(gr.sync_block):
         self.samp_rate = samp_rate
         self.freq = freq
         self.prefix = prefix
+        self.spectrumclip_toggle = spectrumclip_toggle
 
          # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)

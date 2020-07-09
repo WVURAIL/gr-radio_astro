@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="classgr_1_1radio__astro_1_1dedispersion" kind="class" language="C++" prot="public">
+    <compoundname>gr::radio_astro::dedispersion</compoundname>
+    <basecompoundref prot="public" virt="virtual">block</basecompoundref>
+    <includes refid="dedispersion_8h" local="no">dedispersion.h</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classgr_1_1radio__astro_1_1dedispersion_1a8645b10a0038eda7aea1d5837d1e73b8" prot="public" static="no">
+        <type>boost::shared_ptr&lt; <ref refid="classgr_1_1radio__astro_1_1dedispersion" kindref="compound">dedispersion</ref> &gt;</type>
+        <definition>typedef boost::shared_ptr&lt;dedispersion&gt; gr::radio_astro::dedispersion::sptr</definition>
+        <argsstring></argsstring>
+        <name>sptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/include/radio_astro/dedispersion.h" line="38" column="33" bodyfile="/home/john/gr_repositories/gr-radio_astro/include/radio_astro/dedispersion.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1dedispersion_1a5a9f9d3dd4f9f65e937bd1529517431a" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classgr_1_1radio__astro_1_1dedispersion_1a8645b10a0038eda7aea1d5837d1e73b8" kindref="member">sptr</ref></type>
+        <definition>static sptr gr::radio_astro::dedispersion::make</definition>
+        <argsstring>(int vec_length, float dms, float f_obs, float bw, float t_int, int nt)</argsstring>
+        <name>make</name>
+        <param>
+          <type>int</type>
+          <declname>vec_length</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>dms</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>f_obs</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>bw</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>t_int</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>nt</declname>
+        </param>
+        <briefdescription>
+<para>Return a shared_ptr to a new instance of <ref refid="classgr_1_1radio__astro_1_1dedispersion" kindref="compound">radio_astro::dedispersion</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>To avoid accidental use of raw pointers, <ref refid="classgr_1_1radio__astro_1_1dedispersion" kindref="compound">radio_astro::dedispersion</ref>&apos;s constructor is in a private implementation class. <ref refid="classgr_1_1radio__astro_1_1dedispersion_1a5a9f9d3dd4f9f65e937bd1529517431a" kindref="member">radio_astro::dedispersion::make</ref> is the public interface for creating new instances. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/include/radio_astro/dedispersion.h" line="48" column="19"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Dedisperse incoming power spectrum. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>block</label>
+      </node>
+      <node id="1">
+        <label>gr::radio_astro::dedispersion</label>
+        <link refid="classgr_1_1radio__astro_1_1dedispersion"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>block</label>
+      </node>
+      <node id="1">
+        <label>gr::radio_astro::dedispersion</label>
+        <link refid="classgr_1_1radio__astro_1_1dedispersion"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/john/gr_repositories/gr-radio_astro/include/radio_astro/dedispersion.h" line="36" column="1" bodyfile="/home/john/gr_repositories/gr-radio_astro/include/radio_astro/dedispersion.h" bodystart="35" bodyend="49"/>
+    <listofallmembers>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion_1a5a9f9d3dd4f9f65e937bd1529517431a" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion</scope><name>make</name></member>
+      <member refid="classgr_1_1radio__astro_1_1dedispersion_1a8645b10a0038eda7aea1d5837d1e73b8" prot="public" virt="non-virtual"><scope>gr::radio_astro::dedispersion</scope><name>sptr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

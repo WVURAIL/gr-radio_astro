@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="classgr_1_1radio__astro_1_1vmedian__impl" kind="class" language="C++" prot="public">
+    <compoundname>gr::radio_astro::vmedian_impl</compoundname>
+    <basecompoundref refid="classgr_1_1radio__astro_1_1vmedian" prot="public" virt="non-virtual">gr::radio_astro::vmedian</basecompoundref>
+    <includes refid="vmedian__impl_8h" local="no">vmedian_impl.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1a730ba8a093819b6a1eaed37f781c8ad2" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::d_vec_length</definition>
+        <argsstring></argsstring>
+        <name>d_vec_length</name>
+        <initializer>= 2048</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="35" column="11" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1a179959e18415e80a9996ee4f66d87184" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::d_n</definition>
+        <argsstring></argsstring>
+        <name>d_n</name>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="36" column="11" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1ac57028033b9c0214a18205512104c394" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::d_n1</definition>
+        <argsstring></argsstring>
+        <name>d_n1</name>
+        <initializer>= d_n-1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="37" column="11" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1a9c06841e37776336f3776867a1204aee" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::d_n2</definition>
+        <argsstring></argsstring>
+        <name>d_n2</name>
+        <initializer>= d_n-2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="38" column="11" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1a6cf7dc5127169ba0900f1fea20504db2" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="39" column="11" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1a6d406a128f64c1618c77d36cac69eb72" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::vlen</definition>
+        <argsstring></argsstring>
+        <name>vlen</name>
+        <initializer>= d_vec_length</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="40" column="11" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1ace1db98d31c6446957f7345199f419c5" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::vmedian_impl::vsum[MAX_VLEN]</definition>
+        <argsstring>[MAX_VLEN]</argsstring>
+        <name>vsum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="41" column="13" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1a7dd67583ae8c203d9e97b4a1a77172ec" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::vmedian_impl::vmin[MAX_VLEN]</definition>
+        <argsstring>[MAX_VLEN]</argsstring>
+        <name>vmin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="42" column="13" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1adf9e69ca0b80f8a385ce42b96a20731c" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::vmedian_impl::vmax[MAX_VLEN]</definition>
+        <argsstring>[MAX_VLEN]</argsstring>
+        <name>vmax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="43" column="13" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classgr_1_1radio__astro_1_1vmedian__impl_1a1a152d954298654686f5a714a9bef9a1" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float gr::radio_astro::vmedian_impl::oneovern2</definition>
+        <argsstring></argsstring>
+        <name>oneovern2</name>
+        <initializer>= 1./float(d_n2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="44" column="13" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1vmedian__impl_1af853da481dcb7c702d30017c6fdb2c4d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gr::radio_astro::vmedian_impl::vmedian_impl</definition>
+        <argsstring>(int vec_length, int n)</argsstring>
+        <name>vmedian_impl</name>
+        <param>
+          <type>int</type>
+          <declname>vec_length</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="47" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1vmedian__impl_1adcbfe9e5ea960ffc2a174e24e237aeaf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>gr::radio_astro::vmedian_impl::~vmedian_impl</definition>
+        <argsstring>()</argsstring>
+        <name>~vmedian_impl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="48" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1vmedian__impl_1afedb153a8c372e4c8605adc1244e53bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gr::radio_astro::vmedian_impl::forecast</definition>
+        <argsstring>(int noutput_items, gr_vector_int &amp;ninput_items_required)</argsstring>
+        <name>forecast</name>
+        <param>
+          <type>int</type>
+          <declname>noutput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_int &amp;</type>
+          <declname>ninput_items_required</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="51" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1vmedian__impl_1a7c9232f30eba20c5df1080dbbe7eb180" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void gr::radio_astro::vmedian_impl::set_mode</definition>
+        <argsstring>(int n)</argsstring>
+        <name>set_mode</name>
+        <reimplements refid="classgr_1_1radio__astro_1_1vmedian_1ac99e770f71d575f81c7e4c8c72c0a23a">set_mode</reimplements>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="53" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1vmedian__impl_1ae0beb327acbb0b37fb119030d9fd1715" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void gr::radio_astro::vmedian_impl::set_vlen</definition>
+        <argsstring>(int vec_length)</argsstring>
+        <name>set_vlen</name>
+        <reimplements refid="classgr_1_1radio__astro_1_1vmedian_1a35d925e3acd0357e8b36d8cdb19d82a9">set_vlen</reimplements>
+        <param>
+          <type>int</type>
+          <declname>vec_length</declname>
+        </param>
+        <briefdescription>
+<para>Return a shared_ptr to a new instance of <ref refid="classgr_1_1radio__astro_1_1vmedian" kindref="compound">radio_astro::vmedian</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>To avoid accidental use of raw pointers, <ref refid="classgr_1_1radio__astro_1_1vmedian" kindref="compound">radio_astro::vmedian</ref>&apos;s constructor is in a private implementation class. <ref refid="classgr_1_1radio__astro_1_1vmedian_1a7bd704614d626fd2a023c34ca5ebf46b" kindref="member">radio_astro::vmedian::make</ref> is the public interface for creating new instances. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="55" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1vmedian__impl_1a55a1baef1034740bba4ff8a5eef23cdb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::vmedian</definition>
+        <argsstring>(const float *input, float *output)</argsstring>
+        <name>vmedian</name>
+        <param>
+          <type>const float *</type>
+          <declname>input</declname>
+        </param>
+        <param>
+          <type>float *</type>
+          <declname>output</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="57" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classgr_1_1radio__astro_1_1vmedian__impl_1ad6b82b9759999b1218602d65240c6bd9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gr::radio_astro::vmedian_impl::general_work</definition>
+        <argsstring>(int noutput_items, gr_vector_int &amp;ninput_items, gr_vector_const_void_star &amp;input_items, gr_vector_void_star &amp;output_items)</argsstring>
+        <name>general_work</name>
+        <param>
+          <type>int</type>
+          <declname>noutput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_int &amp;</type>
+          <declname>ninput_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_const_void_star &amp;</type>
+          <declname>input_items</declname>
+        </param>
+        <param>
+          <type>gr_vector_void_star &amp;</type>
+          <declname>output_items</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="59" column="11"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>gr::radio_astro::vmedian</label>
+        <link refid="classgr_1_1radio__astro_1_1vmedian"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>gr::radio_astro::vmedian_impl</label>
+        <link refid="classgr_1_1radio__astro_1_1vmedian__impl"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>block</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>gr::radio_astro::vmedian</label>
+        <link refid="classgr_1_1radio__astro_1_1vmedian"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>gr::radio_astro::vmedian_impl</label>
+        <link refid="classgr_1_1radio__astro_1_1vmedian__impl"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>block</label>
+      </node>
+    </collaborationgraph>
+    <location file="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" line="32" column="1" bodyfile="/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.h" bodystart="31" bodyend="64"/>
+    <listofallmembers>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a6cf7dc5127169ba0900f1fea20504db2" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>count</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a179959e18415e80a9996ee4f66d87184" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>d_n</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ac57028033b9c0214a18205512104c394" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>d_n1</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a9c06841e37776336f3776867a1204aee" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>d_n2</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a730ba8a093819b6a1eaed37f781c8ad2" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>d_vec_length</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1afedb153a8c372e4c8605adc1244e53bb" prot="public" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>forecast</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ad6b82b9759999b1218602d65240c6bd9" prot="public" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>general_work</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian_1a7bd704614d626fd2a023c34ca5ebf46b" prot="public" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>make</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a1a152d954298654686f5a714a9bef9a1" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>oneovern2</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a7c9232f30eba20c5df1080dbbe7eb180" prot="public" virt="virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>set_mode</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ae0beb327acbb0b37fb119030d9fd1715" prot="public" virt="virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>set_vlen</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian_1af65086176d2cc1f2b184a3177a395b0a" prot="public" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>sptr</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a6d406a128f64c1618c77d36cac69eb72" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>vlen</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1adf9e69ca0b80f8a385ce42b96a20731c" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>vmax</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a55a1baef1034740bba4ff8a5eef23cdb" prot="public" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>vmedian</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1af853da481dcb7c702d30017c6fdb2c4d" prot="public" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>vmedian_impl</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a7dd67583ae8c203d9e97b4a1a77172ec" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>vmin</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ace1db98d31c6446957f7345199f419c5" prot="private" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>vsum</name></member>
+      <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1adcbfe9e5ea960ffc2a174e24e237aeaf" prot="public" virt="non-virtual"><scope>gr::radio_astro::vmedian_impl</scope><name>~vmedian_impl</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

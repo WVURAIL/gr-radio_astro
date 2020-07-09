@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.17">
+  <compound refid="classgr_1_1radio__astro_1_1dedispersion" kind="class"><name>gr::radio_astro::dedispersion</name>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion_1a8645b10a0038eda7aea1d5837d1e73b8" kind="typedef"><name>sptr</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion_1a5a9f9d3dd4f9f65e937bd1529517431a" kind="function"><name>make</name></member>
+  </compound>
+  <compound refid="classgr_1_1radio__astro_1_1dedispersion__impl" kind="class"><name>gr::radio_astro::dedispersion_impl</name>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ab9f1728660104da263847e8c5354e9e5" kind="variable"><name>d_vec_length</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ad4a28af9247eb2941ab6cd7a090e579a" kind="variable"><name>d_dms</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a52cff54f6bd8b80c2fdc7ef76266bab3" kind="variable"><name>d_f_obs</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1aa9bfaad424c13cdac7bcce821d92af6e" kind="variable"><name>d_bw</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a6879e0ec479859037937f990fc26496a" kind="variable"><name>d_t_int</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1aed44db24a34e3ef428dd2b9e1ea34110" kind="variable"><name>d_nt</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a9cc40f280ee001787608478b77422fb0" kind="function"><name>dedispersion_impl</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ada875f919bad8641bdcd4c23445e5f6b" kind="function"><name>~dedispersion_impl</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1ac6b4f9f7d429c82ac6ad70357e63ee86" kind="function"><name>forecast</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a3890361c125ffeb6a8221a4410f2e753" kind="function"><name>dedisperse</name></member>
+    <member refid="classgr_1_1radio__astro_1_1dedispersion__impl_1a499f716bf99700a5a211a997cd070b1b" kind="function"><name>general_work</name></member>
+  </compound>
+  <compound refid="classgr_1_1radio__astro_1_1detect" kind="class"><name>gr::radio_astro::detect</name>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a5c293d7bdef7e2aa6efee468eb59f370" kind="typedef"><name>sptr</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a75c2c925891dee1135d27fee1bf6ec15" kind="function"><name>make</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a8c6bc2be6db5769b28cfed75de6d8503" kind="function"><name>set_dms</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1ad7d177cb7a4c2284c7898418f807d31e" kind="function"><name>set_vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a806372490426f7193aacfbb35953b7d4" kind="function"><name>set_mode</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1a936748ccc3fef4d557602ef115be6523" kind="function"><name>set_bw</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect_1af129b37c396e46e8db031489a53387e8" kind="function"><name>set_freq</name></member>
+  </compound>
+  <compound refid="classgr_1_1radio__astro_1_1detect__impl" kind="class"><name>gr::radio_astro::detect_impl</name>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a1c31ef610235991c4206aa49b42f2c41" kind="variable"><name>d_vec_length</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a893c02f1e9f0826acaf58d30e9a15cbb" kind="variable"><name>d_dms</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1aaf11087183cfd0dcb643bc92886827be" kind="variable"><name>d_f_obs</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1aaeb76ae239b106f7dcaa5f17946ac780" kind="variable"><name>d_bw</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1abfaf471a734efdb4e5eb54841f312732" kind="variable"><name>d_t_int</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a4c367c19e96f52560cdb35aa682727b4" kind="variable"><name>d_nt</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a11bc03dbdee6dc10ac3161cd8544b2d4" kind="variable"><name>vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a53685d979339b5d582215d76287e5ee7" kind="variable"><name>vlen2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ae686b5985dda316fe2df9e8046b3cd1c" kind="variable"><name>nsigma</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a141a9062177cb1626652a3ebb173910f" kind="variable"><name>peak</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a8d0ac00e5c3fd28ba47e827e8aac70c9" kind="variable"><name>rms</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a3f1397919d1f0ce7b93a33958226a12a" kind="variable"><name>mjd</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ac97b42be5f12d82108b52b42d68b9dcb" kind="variable"><name>circular</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1abb5f83e72f31bc137078670475998172" kind="variable"><name>circular2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a4911a1a5411ff72b5552cee0d71e8252" kind="variable"><name>inext</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a3b0429076d756d2696e879dc3cb92459" kind="variable"><name>inext2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1acde34d61fef68b2b7a53c1becb3c2577" kind="variable"><name>imax2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1adee02c8c053ea7295a4ac24f6e5f42d3" kind="variable"><name>max2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a0bfbc95364bf0b0eb49c3d3c11133a68" kind="variable"><name>sum2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a9fe2bb757c4162b7d72f49ab3d46630a" kind="variable"><name>rms2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ae17fe8921f7efbe94be9602088c69961" kind="variable"><name>oneovern</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1abf3ef40e8d12f6109689a6149f539bc8" kind="variable"><name>bufferfull</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ab32479520497a1799c15f4f53416a58f" kind="variable"><name>nsigma_rms</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ac6c2bbe0a2276d6b986ee517b4dd7dc1" kind="variable"><name>samples</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a4c4b04a892520c5864a189427395627d" kind="variable"><name>initialized</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a57fd3e719ccac404b37a376d7f4140df" kind="variable"><name>bufferdelay</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a94b4af9435801b274a29432cb5c717f3" kind="function"><name>detect_impl</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ad668fd59866ba3978c4cb2498e5b5ab1" kind="function"><name>~detect_impl</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a09732fc1aa37c0a55b65de0daaea5201" kind="function"><name>forecast</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a0c6280cd3dac0763e2111d5b96b2ffaa" kind="function"><name>set_dms</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ad4c063ba9ff9314607cb769c774e6073" kind="function"><name>set_bw</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a586e7b4fba42474ad162f4fb05179e11" kind="function"><name>set_freq</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ac8871c45d6f41a1f283374295581b884" kind="function"><name>set_dt</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1afc89f388f216d446744ad709cc48719f" kind="function"><name>set_mode</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ac4631c329555b3f8900c8c4a692a52d9" kind="function"><name>set_vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a522388c7a3adfae1623e62915f8dbeb6" kind="function"><name>update_buffer</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1a66fc20bf7a19b94407b3ee5f03a8b34f" kind="function"><name>event</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1aed44b75850c893e425c4e0b678a8fa20" kind="function"><name>general_work</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ab834841945ac0ed6a1d7297aa445de24" kind="function"><name>ymd_to_mjd</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1acc1a960cd695206d38636ff5e7d6784b" kind="function"><name>ymd_to_mjd_x</name></member>
+    <member refid="classgr_1_1radio__astro_1_1detect__impl_1ada69fa5c816265bf3a0c6e77e472ec0e" kind="function"><name>get_mjd</name></member>
+  </compound>
+  <compound refid="classgr_1_1radio__astro_1_1vmedian" kind="class"><name>gr::radio_astro::vmedian</name>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1af65086176d2cc1f2b184a3177a395b0a" kind="typedef"><name>sptr</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1a35d925e3acd0357e8b36d8cdb19d82a9" kind="function"><name>set_vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1ac99e770f71d575f81c7e4c8c72c0a23a" kind="function"><name>set_mode</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian_1a7bd704614d626fd2a023c34ca5ebf46b" kind="function"><name>make</name></member>
+  </compound>
+  <compound refid="classgr_1_1radio__astro_1_1vmedian__impl" kind="class"><name>gr::radio_astro::vmedian_impl</name>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a730ba8a093819b6a1eaed37f781c8ad2" kind="variable"><name>d_vec_length</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a179959e18415e80a9996ee4f66d87184" kind="variable"><name>d_n</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ac57028033b9c0214a18205512104c394" kind="variable"><name>d_n1</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a9c06841e37776336f3776867a1204aee" kind="variable"><name>d_n2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a6cf7dc5127169ba0900f1fea20504db2" kind="variable"><name>count</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a6d406a128f64c1618c77d36cac69eb72" kind="variable"><name>vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ace1db98d31c6446957f7345199f419c5" kind="variable"><name>vsum</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a7dd67583ae8c203d9e97b4a1a77172ec" kind="variable"><name>vmin</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1adf9e69ca0b80f8a385ce42b96a20731c" kind="variable"><name>vmax</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a1a152d954298654686f5a714a9bef9a1" kind="variable"><name>oneovern2</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1af853da481dcb7c702d30017c6fdb2c4d" kind="function"><name>vmedian_impl</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1adcbfe9e5ea960ffc2a174e24e237aeaf" kind="function"><name>~vmedian_impl</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1afedb153a8c372e4c8605adc1244e53bb" kind="function"><name>forecast</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a7c9232f30eba20c5df1080dbbe7eb180" kind="function"><name>set_mode</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ae0beb327acbb0b37fb119030d9fd1715" kind="function"><name>set_vlen</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1a55a1baef1034740bba4ff8a5eef23cdb" kind="function"><name>vmedian</name></member>
+    <member refid="classgr_1_1radio__astro_1_1vmedian__impl_1ad6b82b9759999b1218602d65240c6bd9" kind="function"><name>general_work</name></member>
+  </compound>
+  <compound refid="namespacegr" kind="namespace"><name>gr</name>
+  </compound>
+  <compound refid="namespacegr_1_1radio__astro" kind="namespace"><name>gr::radio_astro</name>
+  </compound>
+  <compound refid="namespacestd" kind="namespace"><name>std</name>
+  </compound>
+  <compound refid="api_8h" kind="file"><name>api.h</name>
+    <member refid="api_8h_1a257449157cb28015fdfa7d5a3302d518" kind="define"><name>RADIO_ASTRO_API</name></member>
+  </compound>
+  <compound refid="dedispersion_8h" kind="file"><name>dedispersion.h</name>
+  </compound>
+  <compound refid="dedispersion__impl_8h" kind="file"><name>dedispersion_impl.h</name>
+  </compound>
+  <compound refid="detect_8h" kind="file"><name>detect.h</name>
+  </compound>
+  <compound refid="detect__impl_8h" kind="file"><name>detect_impl.h</name>
+    <member refid="detect__impl_8h_1aa43107f3cb85397223bf6d40be480480" kind="define"><name>TIME_UTC</name></member>
+    <member refid="detect__impl_8h_1a41c234a9b5961736ef38546445835d65" kind="define"><name>MAX_VLEN</name></member>
+    <member refid="detect__impl_8h_1a4b70916bdf28ed7afd94e4fb98230a90" kind="define"><name>MAX_BUFF</name></member>
+    <member refid="detect__impl_8h_1ab9d85bb422f784e7e4d24b90c5b48c57" kind="define"><name>DaysPer400Years</name></member>
+    <member refid="detect__impl_8h_1acea8f36a72770e873c7d6af02eefeb16" kind="define"><name>DaysPer100Years</name></member>
+    <member refid="detect__impl_8h_1aeee4360772d29c86f960ff8786f8c192" kind="define"><name>DaysPer4Years</name></member>
+    <member refid="detect__impl_8h_1a9e1d22d90ec522ab7462f9c8cff40a5d" kind="define"><name>DaysPer1Year</name></member>
+    <member refid="detect__impl_8h_1aa861dca2a3f975872be6d63fca6efb86" kind="define"><name>MonthsPerYear</name></member>
+    <member refid="detect__impl_8h_1aa449e838934e670f91520651a2466934" kind="define"><name>MonthsPer400Years</name></member>
+    <member refid="detect__impl_8h_1ab5ff1557b2743fbdf6687a646a55c54e" kind="define"><name>MonthMarch</name></member>
+    <member refid="detect__impl_8h_1ad31ab66258dd4f013eb1c1a460a11cf6" kind="define"><name>mjdOffset</name></member>
+    <member refid="detect__impl_8h_1a0ef6815a0973fe3b8f63c0d4379fe6e3" kind="variable"><name>DaysMarch1ToBeginingOfMonth</name></member>
+  </compound>
+  <compound refid="group__defs_8dox" kind="file"><name>group_defs.dox</name>
+  </compound>
+  <compound refid="main__page_8dox" kind="file"><name>main_page.dox</name>
+  </compound>
+  <compound refid="vmedian_8h" kind="file"><name>vmedian.h</name>
+  </compound>
+  <compound refid="vmedian__impl_8h" kind="file"><name>vmedian_impl.h</name>
+    <member refid="vmedian__impl_8h_1a41c234a9b5961736ef38546445835d65" kind="define"><name>MAX_VLEN</name></member>
+  </compound>
+  <compound refid="group__block" kind="group"><name>block</name>
+  </compound>
+  <compound refid="dir_49e56c817e5e54854c35e136979f97ca" kind="dir"><name>docs</name>
+  </compound>
+  <compound refid="dir_359d2bec989c9a8deeeb9aee335c1c76" kind="dir"><name>doxygen</name>
+  </compound>
+  <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>include</name>
+  </compound>
+  <compound refid="dir_97aefd0d527b934f1d99a682da8fe6a9" kind="dir"><name>lib</name>
+  </compound>
+  <compound refid="dir_f2cd86917185299abf5a1f0679072f3c" kind="dir"><name>other</name>
+  </compound>
+  <compound refid="dir_939a0b8f5bbaa30494bda672b0a17cdc" kind="dir"><name>radio_astro</name>
+  </compound>
+  <compound refid="indexpage" kind="page"><name>index</name>
+  </compound>
+</doxygenindex>

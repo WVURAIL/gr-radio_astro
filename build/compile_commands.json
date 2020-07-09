@@ -1,0 +1,27 @@
+[
+{
+  "directory": "/home/john/gr_repositories/gr-radio_astro/build/lib",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DGR_CTRLPORT -Dgnuradio_radio_astro_EXPORTS -I/home/john/gr_repositories/gr-radio_astro/lib/../include  -O3 -DNDEBUG -fPIC   -fvisibility=hidden -std=gnu++11 -o CMakeFiles/gnuradio-radio_astro.dir/dedispersion_impl.cc.o -c /home/john/gr_repositories/gr-radio_astro/lib/dedispersion_impl.cc",
+  "file": "/home/john/gr_repositories/gr-radio_astro/lib/dedispersion_impl.cc"
+},
+{
+  "directory": "/home/john/gr_repositories/gr-radio_astro/build/lib",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DGR_CTRLPORT -Dgnuradio_radio_astro_EXPORTS -I/home/john/gr_repositories/gr-radio_astro/lib/../include  -O3 -DNDEBUG -fPIC   -fvisibility=hidden -std=gnu++11 -o CMakeFiles/gnuradio-radio_astro.dir/detect_impl.cc.o -c /home/john/gr_repositories/gr-radio_astro/lib/detect_impl.cc",
+  "file": "/home/john/gr_repositories/gr-radio_astro/lib/detect_impl.cc"
+},
+{
+  "directory": "/home/john/gr_repositories/gr-radio_astro/build/lib",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DGR_CTRLPORT -Dgnuradio_radio_astro_EXPORTS -I/home/john/gr_repositories/gr-radio_astro/lib/../include  -O3 -DNDEBUG -fPIC   -fvisibility=hidden -std=gnu++11 -o CMakeFiles/gnuradio-radio_astro.dir/vmedian_impl.cc.o -c /home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.cc",
+  "file": "/home/john/gr_repositories/gr-radio_astro/lib/vmedian_impl.cc"
+},
+{
+  "directory": "/home/john/gr_repositories/gr-radio_astro/build/swig",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DGR_CTRLPORT -Dradio_astro_swig_EXPORTS -I/home/john/gr_repositories/gr-radio_astro/build/swig -I/home/john/gr_repositories/gr-radio_astro/swig -I/usr/include/gnuradio/swig -I/home/john/gr_repositories/gr-radio_astro/lib/../include -isystem /usr/include/python3.8  -O3 -DNDEBUG -fPIC   -fvisibility=hidden -std=gnu++11 -o CMakeFiles/radio_astro_swig.dir/CMakeFiles/radio_astro_swig.dir/radio_astro_swigPYTHON_wrap.cxx.o -c /home/john/gr_repositories/gr-radio_astro/build/swig/CMakeFiles/radio_astro_swig.dir/radio_astro_swigPYTHON_wrap.cxx",
+  "file": "/home/john/gr_repositories/gr-radio_astro/build/swig/CMakeFiles/radio_astro_swig.dir/radio_astro_swigPYTHON_wrap.cxx"
+},
+{
+  "directory": "/home/john/gr_repositories/gr-radio_astro/build/swig",
+  "command": "/usr/bin/c++    -O3 -DNDEBUG   -fvisibility=hidden -std=gnu++11 -o CMakeFiles/_radio_astro_swig_doc_tag.dir/_radio_astro_swig_doc_tag.cpp.o -c /home/john/gr_repositories/gr-radio_astro/build/swig/_radio_astro_swig_doc_tag.cpp",
+  "file": "/home/john/gr_repositories/gr-radio_astro/build/swig/_radio_astro_swig_doc_tag.cpp"
+}
+]

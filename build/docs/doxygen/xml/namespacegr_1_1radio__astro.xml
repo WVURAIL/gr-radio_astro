@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="namespacegr_1_1radio__astro" kind="namespace" language="C++">
+    <compoundname>gr::radio_astro</compoundname>
+    <innerclass refid="classgr_1_1radio__astro_1_1dedispersion" prot="public">gr::radio_astro::dedispersion</innerclass>
+    <innerclass refid="classgr_1_1radio__astro_1_1dedispersion__impl" prot="public">gr::radio_astro::dedispersion_impl</innerclass>
+    <innerclass refid="classgr_1_1radio__astro_1_1detect" prot="public">gr::radio_astro::detect</innerclass>
+    <innerclass refid="classgr_1_1radio__astro_1_1detect__impl" prot="public">gr::radio_astro::detect_impl</innerclass>
+    <innerclass refid="classgr_1_1radio__astro_1_1vmedian" prot="public">gr::radio_astro::vmedian</innerclass>
+    <innerclass refid="classgr_1_1radio__astro_1_1vmedian__impl" prot="public">gr::radio_astro::vmedian_impl</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/john/gr_repositories/gr-radio_astro/include/radio_astro/dedispersion.h" line="28" column="23"/>
+  </compounddef>
+</doxygen>
