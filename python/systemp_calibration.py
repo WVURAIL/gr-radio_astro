@@ -70,7 +70,7 @@ class systemp_calibration(gr.sync_block):
         self.samp_rate = samp_rate
         self.freq = freq
         self.prefix = prefix
-        self.spectrumclip_toggle = spectrumclip_toggle
+        self.spectrumclip_toggle = "True"
 
          # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)
@@ -87,6 +87,14 @@ class systemp_calibration(gr.sync_block):
         self.data_array = np.zeros((vec_length,2))
         self.a = np.zeros(self.vec_length)
         self.x = np.zeros(vec_length)
+
+        self.Nclip_lo = 410
+        self.Nclip_hi = 410
+        self.spectrum_mask_full = np.ones(vec_length)
+        self.spectrum_mask_clipped = np.ones(vec_length)
+        self.spectrum_mask_clipped[:self.Nclip_lo] = 0
+        self.spectrum_mask_clipped[vec_length - self.Nclip_hi:] = 0
+
 
         # To do a gaussian smoothing to the data, assign values to the gaussian kernal.
         # Note: The parameter k defines the size of the window used in smoothing; "fwhm" defines the width of the gaussian fit.
@@ -125,6 +133,11 @@ class systemp_calibration(gr.sync_block):
         out0 = output_items[0]
         out1 = output_items[1]
         out2 = output_items[2]
+
+        if self.spectrumclip_toggle == "True":
+            self.spectrum_mask = self.spectrum_mask_clipped
+        else:
+            self.spectrum_mask = self.spectrum_mask_full
 
          # Check if the "collect" Chooser is changed. If "hot" or "cold" are selected, the Gain and Tsys are updated.
          # The collect variable is selected in the .grc program, as follows:
@@ -233,6 +246,9 @@ class systemp_calibration(gr.sync_block):
     def set_spectrumcapture_toggle(self, spectrumcapture_toggle):
         if self.spectrumcapture_toggle == False:
             self.spectrumcapture_toggle = True
+
+    def spectrumclip_toggle(self, spectrumclip_toggle):
+        self.spectrumclip_toggle = spectrumclip_toggle
 
 
     #define SPIKE REMOVAL smoothing function

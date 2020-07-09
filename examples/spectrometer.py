@@ -203,7 +203,7 @@ class spectrometer(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 3):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.radio_astro_systemp_calibration_0 = radio_astro.systemp_calibration(vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle)
+        self.radio_astro_systemp_calibration_0 = radio_astro.systemp_calibration(vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, '')
         self.radio_astro_integration_0 = radio_astro.integration(vec_length, int(integration_time*samp_rate/vec_length/min_integration))
         self.radio_astro_hdf5_sink_0_0_0 = radio_astro.hdf5_sink(float, 1, vec_length, save_toggle_hdf5, recfile, 'A0E75.5', freq - samp_rate/2, samp_rate/vec_length, 'Green Bank; integration = 1 s')
         self.radio_astro_csv_filesink_0 = radio_astro.csv_filesink( vec_length, samp_rate, freq, prefix, save_toggle_csv)
