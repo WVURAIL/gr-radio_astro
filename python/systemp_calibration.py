@@ -154,8 +154,8 @@ class systemp_calibration(gr.sync_block):
             self.gauss_smoothing_spec()     # This routine smoothes the data using a Gaussian averaging.
 
             # The output is calibrated using the gain and Tsys:
-            out0[:] = self.filtered_out0/(self.gain) - self.tsys
-            self.spectrum[:] = self.filtered_out0/(self.gain) - self.tsys
+            out0[:] = (self.filtered_out0/(self.gain) - self.tsys)*self.spectrum_mask
+            self.spectrum[:] = (self.filtered_out0/(self.gain) - self.tsys)*self.spectrum_mask
 
             # The self.spectrum array is what gets output to the .csv file when the Capture Latest Spectrum button is pressed.
 
@@ -214,8 +214,8 @@ class systemp_calibration(gr.sync_block):
             self.gauss_smoothing_spec()     # This routine smoothes the data using a Gaussian averaging.
 
             # The output is the smoothed data, but not calibrated. self.filtered_out0 is the output array resulting from the smoothing routines.
-            out0[:] = self.filtered_out0
-            self.spectrum[:] = self.filtered_out0
+            out0[:] = self.filtered_out0*self.spectrum_mask
+            self.spectrum[:] = self.filtered_out0*self.spectrum_mask
     
         else:
             out0[:] = in0
