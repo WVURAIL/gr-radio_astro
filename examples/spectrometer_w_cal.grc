@@ -1,7 +1,7 @@
 options:
   parameters:
-    author: ''
-    category: Custom
+    author: DSPIRA
+    category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
     copyright: ''
@@ -10,7 +10,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: spectrometer
+    id: DSPIRA_Spectrometer
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -21,8 +21,8 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: ''
-    window_size: (1600,1200)
+    title: DSPIRA Spectrometer
+    window_size: ''
   states:
     bus_sink: false
     bus_source: false
@@ -32,35 +32,64 @@ options:
     state: enabled
 
 blocks:
+- name: clip_toggle
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: '[0,4,1,1]'
+    label: Full or Clipped Spectrum
+    label0: Clipped spectrum
+    label1: Full spectrum
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option1: '"False"'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: string
+    value: '"True"'
+    widget: radio_buttons
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 852.0]
+    rotation: 0
+    state: enabled
 - name: collect
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 0,2,1,1
-    label: '"Collect Data"'
-    label0: '"Unfiltered spectrum with no calibration"'
+    gui_hint: '[0,2,2,1]'
+    label: '"Spectrum Display"'
+    label0: '"Filtered spectrum with no calibration"'
     label1: '"Spectrum with calibration"'
     label2: '"Hot calibration"'
     label3: '"Cold calibration"'
-    label4: '"Filtered spectrum with no calibration"'
+    label4: '"Unfiltered spectrum with no calibration"'
     labels: '[]'
     num_opts: '5'
     option1: '"cal"'
     option2: '"hot"'
     option3: '"cold"'
-    option4: '"nocal"'
+    option4: '"nocal_nofilter"'
     options: '[0, 1, 2]'
     orient: Qt.QVBoxLayout
     type: string
-    value: '"nocal_nofilter"'
-    widget: combo_box
+    value: '"nocal"'
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 580]
+    coordinate: [16, 604.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: custom_window
   id: variable
   parameters:
@@ -70,9 +99,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1344, 1140]
-    rotation: 0
-    state: enabled
+    coordinate: [1336, 1252.0]
+    rotation: 180
+    state: true
 - name: freq
   id: variable
   parameters:
@@ -82,9 +111,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 12]
+    coordinate: [368, 12.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: freq_start
   id: variable
   parameters:
@@ -94,9 +123,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [424, 12]
+    coordinate: [464, 12.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: freq_step
   id: variable
   parameters:
@@ -106,57 +135,57 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [528, 12]
+    coordinate: [560, 12.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: integration_time
   id: variable
   parameters:
-    comment: Integration time in secs
-    value: '2'
+    comment: ''
+    value: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [976, 100.0]
+    coordinate: [1192, 84.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: min_integration
   id: variable
   parameters:
-    comment: At least integrate 16 times, ~6milliseconds  Keep this for normailzation
+    comment: "At least integrate 16 times, ~6milliseconds \nKeep this for normailzation"
     value: '16'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 76.0]
+    coordinate: [712, 68.0]
     rotation: 0
     state: enabled
 - name: prefix
   id: variable
   parameters:
-    comment: File path length for captured spectra
-    value: '"/home/dspradio/grc_data/"'
+    comment: ''
+    value: '"/home/john/DSPIRA_2020/hornSpectra2020/"'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1144, 92]
-    rotation: 0
-    state: enabled
-- name: recfile
+    coordinate: [1328, 84.0]
+    rotation: 180
+    state: true
+- name: rectfile
   id: variable
   parameters:
-    comment: Filename for hdf5 sink block
+    comment: ''
     value: prefix + timenow + ".h5"
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1384, 92]
+    coordinate: [488, 76.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: samp_rate
   id: variable
   parameters:
@@ -166,16 +195,16 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 84]
+    coordinate: [184, 12]
     rotation: 0
     state: enabled
 - name: save_toggle_csv
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 1,3,1,1
-    label: Write to CSV files
-    label0: Not writing to File
+    gui_hint: '[0,7,1,1]'
+    label: Write to csv files
+    label0: Not writing to file
     label1: Writing to file
     label2: ''
     label3: ''
@@ -195,36 +224,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [179, 851]
-    rotation: 0
-    state: enabled
-- name: save_toggle_hdf5
-  id: variable_qtgui_chooser
-  parameters:
-    comment: ''
-    gui_hint: 1,2,1,1
-    label: Write HDF5
-    label0: Not writing to File
-    label1: Writing to file
-    label2: ''
-    label3: ''
-    label4: ''
-    labels: '[]'
-    num_opts: '2'
-    option1: '"True"'
-    option2: '2'
-    option3: '3'
-    option4: '4'
-    options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
-    type: string
-    value: '"False"'
-    widget: radio_buttons
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [24, 852]
+    coordinate: [24, 860.0]
     rotation: 0
     state: enabled
 - name: sinc
@@ -236,9 +236,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 1132]
-    rotation: 0
-    state: enabled
+    coordinate: [960, 1252.0]
+    rotation: 180
+    state: true
 - name: sinc_sample_locations
   id: variable
   parameters:
@@ -248,15 +248,15 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1152, 1140]
-    rotation: 0
-    state: enabled
+    coordinate: [1144, 1252.0]
+    rotation: 180
+    state: true
 - name: spectrumcapture_toggle
   id: variable_qtgui_push_button
   parameters:
     comment: ''
-    gui_hint: 0,3,1,1
-    label: Capture Latest Spectrum
+    gui_hint: '[1,4,1,3]'
+    label: Capture Current Spectrum
     pressed: 'True'
     released: 'False'
     type: string
@@ -265,7 +265,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [24, 1060]
+    coordinate: [192, 732.0]
     rotation: 0
     state: enabled
 - name: timenow
@@ -277,9 +277,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [592, 1124]
+    coordinate: [320, 76.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: vec_length
   id: variable
   parameters:
@@ -289,51 +289,51 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 12]
+    coordinate: [216, 76.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: ymax
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 1,0,1,1
-    label: ymax
-    min_len: '200'
+    gui_hint: '[1,0,1,2]'
+    label: y-axis max
+    min_len: '5'
     orient: Qt.Horizontal
     rangeType: float
-    start: '0.01'
-    step: '1000'
-    stop: '1000000000000'
-    value: '500'
+    start: '0'
+    step: '10'
+    stop: '10000'
+    value: '200'
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [320, 1060]
+    coordinate: [664, 940.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: ymin
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 0,0,1,1
-    label: ymin
-    min_len: '200'
+    gui_hint: '[0,0,1,2]'
+    label: y-axis min
+    min_len: '5'
     orient: Qt.Horizontal
     rangeType: float
-    start: '-1000'
-    step: '50'
-    stop: '5000'
+    start: '-200'
+    step: '10'
+    stop: '1000'
     value: '0'
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [336, 924]
+    coordinate: [536, 940.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: blocks_add_xx_0
   id: blocks_add_xx
   parameters:
@@ -349,9 +349,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1000, 272]
+    coordinate: [976, 264.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: blocks_complex_to_real_0
   id: blocks_complex_to_real
   parameters:
@@ -365,10 +365,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [368, 568]
-    rotation: 0
-    state: enabled
-- name: blocks_complex_to_real_0_0
+    coordinate: [280.0, 400]
+    rotation: 270
+    state: true
+- name: blocks_complex_to_real_1
   id: blocks_complex_to_real
   parameters:
     affinity: ''
@@ -381,10 +381,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1500, 552]
-    rotation: 270
-    state: enabled
-- name: blocks_delay_0_0
+    coordinate: [1480, 420.0]
+    rotation: 180
+    state: true
+- name: blocks_delay_0
   id: blocks_delay
   parameters:
     affinity: ''
@@ -400,10 +400,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [368, 300]
+    coordinate: [392, 268.0]
     rotation: 0
-    state: enabled
-- name: blocks_delay_0_0_0
+    state: true
+- name: blocks_delay_0_0
   id: blocks_delay
   parameters:
     affinity: ''
@@ -419,10 +419,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 380]
+    coordinate: [392, 332.0]
     rotation: 0
-    state: enabled
-- name: blocks_delay_0_0_0_0
+    state: true
+- name: blocks_delay_0_0_0
   id: blocks_delay
   parameters:
     affinity: ''
@@ -438,9 +438,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [368, 452]
+    coordinate: [392, 396.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: blocks_integrate_xx_0_0_0
   id: blocks_integrate_xx
   parameters:
@@ -456,7 +456,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1224, 484.0]
+    coordinate: [1328, 412.0]
     rotation: 180
     state: enabled
 - name: blocks_multiply_conjugate_cc_0
@@ -472,64 +472,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1488, 368]
-    rotation: 270
-    state: enabled
+    coordinate: [1400, 296.0]
+    rotation: 0
+    state: true
 - name: blocks_multiply_const_vxx_0
-  id: blocks_multiply_const_vxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    const: custom_window[0:vec_length]
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    type: complex
-    vlen: vec_length
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [696, 444]
-    rotation: 0
-    state: enabled
-- name: blocks_multiply_const_vxx_0_0
-  id: blocks_multiply_const_vxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    const: custom_window[vec_length:2*vec_length]
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    type: complex
-    vlen: vec_length
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [696, 372]
-    rotation: 0
-    state: enabled
-- name: blocks_multiply_const_vxx_0_1
-  id: blocks_multiply_const_vxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    const: custom_window[2*vec_length:3*vec_length]
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    type: complex
-    vlen: vec_length
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [696, 292]
-    rotation: 0
-    state: enabled
-- name: blocks_multiply_const_vxx_0_2
   id: blocks_multiply_const_vxx
   parameters:
     affinity: ''
@@ -544,15 +490,69 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [696, 220]
+    coordinate: [712, 196.0]
     rotation: 0
-    state: enabled
+    state: true
+- name: blocks_multiply_const_vxx_0_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: custom_window[2*vec_length:3*vec_length]
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: vec_length
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [712, 260.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_vxx_0_0_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: custom_window[1*vec_length:2*vec_length]
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: vec_length
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [712, 324.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_vxx_0_0_0_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: custom_window[0:vec_length]
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: vec_length
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [712, 388.0]
+    rotation: 0
+    state: true
 - name: blocks_stream_to_vector_0
   id: blocks_stream_to_vector
   parameters:
     affinity: ''
     alias: ''
-    comment: strean
+    comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
     num_items: vec_length
@@ -562,9 +562,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [368, 228]
+    coordinate: [440, 208.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: blocks_stream_to_vector_0_0
   id: blocks_stream_to_vector
   parameters:
@@ -580,10 +580,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [520, 300]
+    coordinate: [536, 272.0]
     rotation: 0
-    state: enabled
-- name: blocks_stream_to_vector_0_1
+    state: true
+- name: blocks_stream_to_vector_0_0_0
   id: blocks_stream_to_vector
   parameters:
     affinity: ''
@@ -598,10 +598,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [528, 452]
+    coordinate: [536, 336.0]
     rotation: 0
-    state: enabled
-- name: blocks_stream_to_vector_0_2
+    state: true
+- name: blocks_stream_to_vector_0_0_0_0
   id: blocks_stream_to_vector
   parameters:
     affinity: ''
@@ -616,9 +616,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [528, 380]
+    coordinate: [536, 400.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: fft_vxx_0
   id: fft_vxx
   parameters:
@@ -637,23 +637,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1192, 284]
+    coordinate: [1144, 276.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: import_0
-  id: import
-  parameters:
-    alias: ''
-    comment: ''
-    imports: from datetime import datetime
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [24, 132]
-    rotation: 0
-    state: enabled
-- name: import_0_0
   id: import
   parameters:
     alias: ''
@@ -663,46 +650,61 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 76]
+    coordinate: [8, 100.0]
     rotation: 0
-    state: enabled
+    state: true
+- name: import_0_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: from datetime import datetime
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [96, 100.0]
+    rotation: 0
+    state: true
 - name: note_0
   id: note
   parameters:
     alias: ''
-    comment: Controls for scaling the graph
-    note: GRAPH OPTIONS
+    comment: 'Check/change these variables
+
+      before each run.'
+    note: USER DEFINED VARIABLES
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [328, 836]
+    coordinate: [1256, 4.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: note_0_0
   id: note
   parameters:
     alias: ''
-    comment: Check/change these variables before each run.
-    note: 'USER DEFINED VARIABLES:'
+    comment: ''
+    note: Polyphase Functions
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1128, 4]
+    coordinate: [1152, 1188.0]
     rotation: 0
     state: enabled
 - name: note_0_0_0
   id: note
   parameters:
     alias: ''
-    comment: Polyphase filter bank functions
-    note: CUSTOM FUNCTIONS
+    comment: ''
+    note: Graph Options
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1136, 1052]
+    coordinate: [592, 892.0]
     rotation: 0
     state: enabled
 - name: osmosdr_source_0
@@ -1045,8 +1047,8 @@ blocks:
     nchan: '1'
     num_mboards: '1'
     sample_rate: samp_rate
-    sync: none
-    time_source0: ''
+    sync: sync
+    time_source0: gpsdo
     time_source1: ''
     time_source2: ''
     time_source3: ''
@@ -1059,9 +1061,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [16, 252]
+    coordinate: [32, 220.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: qtgui_histogram_sink_x_0
   id: qtgui_histogram_sink_x
   parameters:
@@ -1093,7 +1095,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 9,3,1,1
+    gui_hint: '[13,7,10,3]'
     label1: ''
     label10: ''
     label2: ''
@@ -1115,7 +1117,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '""'
+    name: '"System Hearbeat"'
     nconnections: '1'
     size: '1024'
     style1: '1'
@@ -1146,9 +1148,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [560, 524]
+    coordinate: [400, 492.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: qtgui_vector_sink_f_0_0
   id: qtgui_vector_sink_f
   parameters:
@@ -1165,7 +1167,7 @@ blocks:
     alpha8: '1.0'
     alpha9: '1.0'
     autoscale: 'False'
-    average: '0.2'
+    average: '0.05'
     color1: '"blue"'
     color10: '"dark blue"'
     color2: '"red"'
@@ -1178,8 +1180,8 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 9,0,1,1
-    label1: ''
+    gui_hint: '[13,4,10,3]'
+    label1: Gain
     label10: ''
     label2: ''
     label3: ''
@@ -1191,13 +1193,13 @@ blocks:
     label9: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    name: '""'
+    name: '"Gain"'
     nconnections: '1'
     ref_level: '0'
-    showports: 'True'
+    showports: 'False'
     update_time: '0.10'
     vlen: vec_length
-    width1: '1'
+    width1: '3'
     width10: '1'
     width2: '1'
     width3: '1'
@@ -1207,19 +1209,19 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    x_axis_label: '"frequency"'
-    x_start: freq - samp_rate/2
-    x_step: samp_rate/vec_length
-    x_units: '""'
-    y_axis_label: '"System Temperature"'
+    x_axis_label: '"Frequency (MHz)"'
+    x_start: (freq - samp_rate/2)/1e6
+    x_step: (samp_rate/vec_length)/1e6
+    x_units: '"MHz"'
+    y_axis_label: '"Gain"'
     y_units: '""'
-    ymax: '400'
+    ymax: '200'
     ymin: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [652.0, 864]
+    coordinate: [1052.0, 896]
     rotation: 270
     state: enabled
 - name: qtgui_vector_sink_f_0_0_0
@@ -1237,8 +1239,8 @@ blocks:
     alpha7: '1.0'
     alpha8: '1.0'
     alpha9: '1.0'
-    autoscale: 'True'
-    average: '1.0'
+    autoscale: 'False'
+    average: '0.05'
     color1: '"blue"'
     color10: '"dark blue"'
     color2: '"red"'
@@ -1251,7 +1253,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 9,2,1,1
+    gui_hint: '[13,0,10,3]'
     label1: ''
     label10: ''
     label2: ''
@@ -1264,13 +1266,13 @@ blocks:
     label9: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    name: '""'
+    name: '"System Temperature"'
     nconnections: '1'
     ref_level: '0'
-    showports: 'True'
+    showports: 'False'
     update_time: '0.10'
     vlen: vec_length
-    width1: '1'
+    width1: '3'
     width10: '1'
     width2: '1'
     width3: '1'
@@ -1280,19 +1282,19 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    x_axis_label: '"frequency"'
-    x_start: freq - samp_rate/2
-    x_step: samp_rate/vec_length
-    x_units: '""'
-    y_axis_label: '"Gain"'
-    y_units: '""'
-    ymax: '200'
+    x_axis_label: '"Frequency (MHz)"'
+    x_start: (freq - samp_rate/2)/1e6
+    x_step: (samp_rate/vec_length)/1e6
+    x_units: '"MHz"'
+    y_axis_label: '"System Temperature"'
+    y_units: '"K"'
+    ymax: '400'
     ymin: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [852.0, 864]
+    coordinate: [1252.0, 896]
     rotation: 270
     state: enabled
 - name: qtgui_vector_sink_f_0_0_1
@@ -1311,7 +1313,7 @@ blocks:
     alpha8: '1.0'
     alpha9: '1.0'
     autoscale: 'False'
-    average: '1.0'
+    average: '0.05'
     color1: '"blue"'
     color10: '"dark blue"'
     color2: '"red"'
@@ -1324,7 +1326,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 4,0,5,6
+    gui_hint: '[2,0,10,10]'
     label1: ''
     label10: ''
     label2: ''
@@ -1337,13 +1339,13 @@ blocks:
     label9: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    name: '""'
+    name: '"Spectrum"'
     nconnections: '1'
     ref_level: '0'
-    showports: 'True'
+    showports: 'False'
     update_time: '0.10'
     vlen: vec_length
-    width1: '1'
+    width1: '2'
     width10: '1'
     width2: '1'
     width3: '1'
@@ -1353,10 +1355,10 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    x_axis_label: '"Frequency"'
-    x_start: freq - samp_rate/2
-    x_step: samp_rate/vec_length
-    x_units: '""'
+    x_axis_label: '"Frequency (MHz)"'
+    x_start: (freq - samp_rate/2)/1e6
+    x_step: (samp_rate/vec_length)/1e6
+    x_units: '"MHz"'
     y_axis_label: '"Signal"'
     y_units: '""'
     ymax: ymax
@@ -1365,7 +1367,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1036.0, 856]
+    coordinate: [844.0, 896]
     rotation: 270
     state: enabled
 - name: radio_astro_csv_filesink_0
@@ -1373,9 +1375,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    comment: 'Choose "Write to File" to write data to a .csv file
-
-      at the path specified in Prefix.'
+    comment: ''
     freq: freq
     prefix: prefix
     samp_rate: samp_rate
@@ -1385,30 +1385,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1240, 716]
-    rotation: 0
-    state: enabled
-- name: radio_astro_hdf5_sink_0_0_0
-  id: radio_astro_hdf5_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    fname: recfile
-    freq_start: freq - samp_rate/2
-    freq_step: samp_rate/vec_length
-    intype: float
-    n_inputs: '1'
-    notes: Green Bank; integration = 1 s
-    pointing: A0E75.5
-    save_toggle: save_toggle_hdf5
-    vec_length: vec_length
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1424, 940]
-    rotation: 0
+    coordinate: [680, 772.0]
+    rotation: 180
     state: enabled
 - name: radio_astro_integration_0
   id: radio_astro_integration
@@ -1424,7 +1402,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [976, 484.0]
+    coordinate: [1096, 412.0]
     rotation: 180
     state: enabled
 - name: radio_astro_systemp_calibration_0
@@ -1432,6 +1410,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    clip_toggle: clip_toggle
     collect: collect
     comment: ''
     freq: freq
@@ -1445,40 +1424,39 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [764.0, 608]
+    coordinate: [1044.0, 552]
     rotation: 270
     state: enabled
 
 connections:
 - [blocks_add_xx_0, '0', fft_vxx_0, '0']
 - [blocks_complex_to_real_0, '0', qtgui_histogram_sink_x_0, '0']
-- [blocks_complex_to_real_0_0, '0', blocks_integrate_xx_0_0_0, '0']
-- [blocks_delay_0_0, '0', blocks_stream_to_vector_0_0, '0']
-- [blocks_delay_0_0_0, '0', blocks_stream_to_vector_0_2, '0']
-- [blocks_delay_0_0_0_0, '0', blocks_stream_to_vector_0_1, '0']
+- [blocks_complex_to_real_1, '0', blocks_integrate_xx_0_0_0, '0']
+- [blocks_delay_0, '0', blocks_stream_to_vector_0_0, '0']
+- [blocks_delay_0_0, '0', blocks_stream_to_vector_0_0_0, '0']
+- [blocks_delay_0_0_0, '0', blocks_stream_to_vector_0_0_0_0, '0']
 - [blocks_integrate_xx_0_0_0, '0', radio_astro_integration_0, '0']
-- [blocks_multiply_conjugate_cc_0, '0', blocks_complex_to_real_0_0, '0']
-- [blocks_multiply_const_vxx_0, '0', blocks_add_xx_0, '3']
-- [blocks_multiply_const_vxx_0_0, '0', blocks_add_xx_0, '2']
-- [blocks_multiply_const_vxx_0_1, '0', blocks_add_xx_0, '1']
-- [blocks_multiply_const_vxx_0_2, '0', blocks_add_xx_0, '0']
-- [blocks_stream_to_vector_0, '0', blocks_multiply_const_vxx_0_2, '0']
-- [blocks_stream_to_vector_0_0, '0', blocks_multiply_const_vxx_0_1, '0']
-- [blocks_stream_to_vector_0_1, '0', blocks_multiply_const_vxx_0, '0']
-- [blocks_stream_to_vector_0_2, '0', blocks_multiply_const_vxx_0_0, '0']
+- [blocks_multiply_conjugate_cc_0, '0', blocks_complex_to_real_1, '0']
+- [blocks_multiply_const_vxx_0, '0', blocks_add_xx_0, '0']
+- [blocks_multiply_const_vxx_0_0, '0', blocks_add_xx_0, '1']
+- [blocks_multiply_const_vxx_0_0_0, '0', blocks_add_xx_0, '2']
+- [blocks_multiply_const_vxx_0_0_0_0, '0', blocks_add_xx_0, '3']
+- [blocks_stream_to_vector_0, '0', blocks_multiply_const_vxx_0, '0']
+- [blocks_stream_to_vector_0_0, '0', blocks_multiply_const_vxx_0_0, '0']
+- [blocks_stream_to_vector_0_0_0, '0', blocks_multiply_const_vxx_0_0_0, '0']
+- [blocks_stream_to_vector_0_0_0_0, '0', blocks_multiply_const_vxx_0_0_0_0, '0']
 - [fft_vxx_0, '0', blocks_multiply_conjugate_cc_0, '0']
 - [fft_vxx_0, '0', blocks_multiply_conjugate_cc_0, '1']
 - [osmosdr_source_0, '0', blocks_complex_to_real_0, '0']
+- [osmosdr_source_0, '0', blocks_delay_0, '0']
 - [osmosdr_source_0, '0', blocks_delay_0_0, '0']
 - [osmosdr_source_0, '0', blocks_delay_0_0_0, '0']
-- [osmosdr_source_0, '0', blocks_delay_0_0_0_0, '0']
 - [osmosdr_source_0, '0', blocks_stream_to_vector_0, '0']
 - [radio_astro_integration_0, '0', radio_astro_systemp_calibration_0, '0']
 - [radio_astro_systemp_calibration_0, '0', qtgui_vector_sink_f_0_0_1, '0']
 - [radio_astro_systemp_calibration_0, '0', radio_astro_csv_filesink_0, '0']
-- [radio_astro_systemp_calibration_0, '0', radio_astro_hdf5_sink_0_0_0, '0']
-- [radio_astro_systemp_calibration_0, '1', qtgui_vector_sink_f_0_0_0, '0']
-- [radio_astro_systemp_calibration_0, '2', qtgui_vector_sink_f_0_0, '0']
+- [radio_astro_systemp_calibration_0, '1', qtgui_vector_sink_f_0_0, '0']
+- [radio_astro_systemp_calibration_0, '2', qtgui_vector_sink_f_0_0_0, '0']
 
 metadata:
   file_format: 1
