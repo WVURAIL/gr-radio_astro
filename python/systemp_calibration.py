@@ -58,7 +58,7 @@ class systemp_calibration(gr.sync_block):
     (5) prefix - used in the filename to describe the pathlength; set in a Variable box. 
     (6) spectrumcapture_toggle - determines whether the spectrum is captured to a file written to the pathlength described by the prefix variable, and written with the filename = prefix + timenow + "_spectrum.csv".
     """
-    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, spectrumclip_toggle):
+    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, clip_toggle):
         gr.sync_block.__init__(self,
             name="systemp_calibration",
             in_sig=[(np.float32, int(vec_length))],
@@ -66,11 +66,11 @@ class systemp_calibration(gr.sync_block):
         
         self.vec_length = int(vec_length)
         self.collect = collect
-        self.spectrumcapture_toggle = False
         self.samp_rate = samp_rate
         self.freq = freq
         self.prefix = prefix
-        self.spectrumclip_toggle = "True"
+        self.spectrumcapture_toggle = False
+        self.clip_toggle = clip_toggle
 
          # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)
@@ -134,7 +134,7 @@ class systemp_calibration(gr.sync_block):
         out1 = output_items[1]
         out2 = output_items[2]
 
-        if self.spectrumclip_toggle == "True":
+        if self.clip_toggle == "True":
             self.spectrum_mask = self.spectrum_mask_clipped
         else:
             self.spectrum_mask = self.spectrum_mask_full
@@ -242,13 +242,16 @@ class systemp_calibration(gr.sync_block):
 
     def set_collect(self, collect):
         self.collect = collect
+        print("display changed")
 
     def set_spectrumcapture_toggle(self, spectrumcapture_toggle):
+        print("spectrum captured")
         if self.spectrumcapture_toggle == False:
             self.spectrumcapture_toggle = True
 
-    def spectrumclip_toggle(self, spectrumclip_toggle):
-        self.spectrumclip_toggle = spectrumclip_toggle
+    def set_clip_toggle(self, clip_toggle):
+        self.clip_toggle = clip_toggle
+        print("clip toggled")
 
 
     #define SPIKE REMOVAL smoothing function
