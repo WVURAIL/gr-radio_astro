@@ -58,7 +58,7 @@ class systemp_calibration(gr.sync_block):
     (5) prefix - used in the filename to describe the pathlength; set in a Variable box. 
     (6) spectrumcapture_toggle - determines whether the spectrum is captured to a file written to the pathlength described by the prefix variable, and written with the filename = prefix + timenow + "_spectrum.csv".
     """
-    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle):
+    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, clip_toggle):
         gr.sync_block.__init__(self,
             name="systemp_calibration",
             in_sig=[(np.float32, int(vec_length))],
@@ -66,10 +66,11 @@ class systemp_calibration(gr.sync_block):
         
         self.vec_length = int(vec_length)
         self.collect = collect
-        self.spectrumcapture_toggle = False
         self.samp_rate = samp_rate
         self.freq = freq
         self.prefix = prefix
+        self.spectrumcapture_toggle = False
+        self.clip_toggle = clip_toggle
 
          # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)
@@ -86,6 +87,14 @@ class systemp_calibration(gr.sync_block):
         self.data_array = np.zeros((vec_length,2))
         self.a = np.zeros(self.vec_length)
         self.x = np.zeros(vec_length)
+
+        self.Nclip_lo = 410
+        self.Nclip_hi = 410
+        self.spectrum_mask_full = np.ones(vec_length)
+        self.spectrum_mask_clipped = np.ones(vec_length)
+        self.spectrum_mask_clipped[:self.Nclip_lo] = 0
+        self.spectrum_mask_clipped[vec_length - self.Nclip_hi:] = 0
+
 
         # To do a gaussian smoothing to the data, assign values to the gaussian kernal.
         # Note: The parameter k defines the size of the window used in smoothing; "fwhm" defines the width of the gaussian fit.
@@ -125,6 +134,11 @@ class systemp_calibration(gr.sync_block):
         out1 = output_items[1]
         out2 = output_items[2]
 
+        if self.clip_toggle == "True":
+            self.spectrum_mask = self.spectrum_mask_clipped
+        else:
+            self.spectrum_mask = self.spectrum_mask_full
+
          # Check if the "collect" Chooser is changed. If "hot" or "cold" are selected, the Gain and Tsys are updated.
          # The collect variable is selected in the .grc program, as follows:
          #  "cal" = calibrated spectrum
@@ -140,8 +154,8 @@ class systemp_calibration(gr.sync_block):
             self.gauss_smoothing_spec()     # This routine smoothes the data using a Gaussian averaging.
 
             # The output is calibrated using the gain and Tsys:
-            out0[:] = self.filtered_out0/(self.gain) - self.tsys
-            self.spectrum[:] = self.filtered_out0/(self.gain) - self.tsys
+            out0[:] = (self.filtered_out0/(self.gain) - self.tsys)*self.spectrum_mask
+            self.spectrum[:] = (self.filtered_out0/(self.gain) - self.tsys)*self.spectrum_mask
 
             # The self.spectrum array is what gets output to the .csv file when the Capture Latest Spectrum button is pressed.
 
@@ -200,8 +214,8 @@ class systemp_calibration(gr.sync_block):
             self.gauss_smoothing_spec()     # This routine smoothes the data using a Gaussian averaging.
 
             # The output is the smoothed data, but not calibrated. self.filtered_out0 is the output array resulting from the smoothing routines.
-            out0[:] = self.filtered_out0
-            self.spectrum[:] = self.filtered_out0
+            out0[:] = self.filtered_out0*self.spectrum_mask
+            self.spectrum[:] = self.filtered_out0*self.spectrum_mask
     
         else:
             out0[:] = in0
@@ -228,10 +242,16 @@ class systemp_calibration(gr.sync_block):
 
     def set_collect(self, collect):
         self.collect = collect
+        print("display changed")
 
     def set_spectrumcapture_toggle(self, spectrumcapture_toggle):
+        print("spectrum captured")
         if self.spectrumcapture_toggle == False:
             self.spectrumcapture_toggle = True
+
+    def set_clip_toggle(self, clip_toggle):
+        self.clip_toggle = clip_toggle
+        print("clip toggled")
 
 
     #define SPIKE REMOVAL smoothing function

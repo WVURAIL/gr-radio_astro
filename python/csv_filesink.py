@@ -52,7 +52,7 @@ class csv_filesink(gr.sync_block):
 
         if self.save_toggle == "True":     #If true, capture the spectrum to a new .csv text file each integration.
             current_time = time.time()
-            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")
+            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
             #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
             # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
             self.textfilename = self.prefix + self.timenow + "_spectrum.csv"
