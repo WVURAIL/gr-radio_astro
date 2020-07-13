@@ -47,7 +47,8 @@ GR_PYTHON_INSTALL(
     ra_vave.py
     ra_vmedian.py 
     powerSpectrum.py
-    integration.py DESTINATION ${GR_PYTHON_DIR}/radio_astro
+    integration.py
+    vector_moving_average.py DESTINATION ${GR_PYTHON_DIR}/radio_astro
 )
 
 ########################################################################
@@ -73,3 +74,4 @@ GR_ADD_TEST(qa_ra_integrate ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_
 GR_ADD_TEST(qa_ra_vave ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_vave.py)
 GR_ADD_TEST(qa_ra_vmedian ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_vmedian.py)
 GR_ADD_TEST(qa_integration ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_integration.py)
+GR_ADD_TEST(qa_vector_moving_average ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_vector_moving_average.py)
