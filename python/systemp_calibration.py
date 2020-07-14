@@ -58,7 +58,7 @@ class systemp_calibration(gr.sync_block):
     (5) prefix - used in the filename to describe the pathlength; set in a Variable box. 
     (6) spectrumcapture_toggle - determines whether the spectrum is captured to a file written to the pathlength described by the prefix variable, and written with the filename = prefix + timenow + "_spectrum.csv".
     """
-    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, clip_toggle):
+    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, clip_toggle, az, elev, location):
         gr.sync_block.__init__(self,
             name="systemp_calibration",
             in_sig=[(np.float32, int(vec_length))],
@@ -71,6 +71,9 @@ class systemp_calibration(gr.sync_block):
         self.prefix = prefix
         self.spectrumcapture_toggle = False
         self.clip_toggle = clip_toggle
+        self.az = az
+        self.elev = elev
+        self.location = location
 
          # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)
@@ -225,10 +228,10 @@ class systemp_calibration(gr.sync_block):
 
         if self.spectrumcapture_toggle == True:     #If true, capture the spectrum to a .csv text file.
             current_time = time.time()
-            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
+            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
             #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
             # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
-            self.textfilename = self.prefix + self.timenow + "_spectrum.csv"
+            self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
             self.data_array[:,0] = self.frequencies
             self.data_array[:,1] = self.spectrum
             np.savetxt(self.textfilename, self.data_array, delimiter=',')
@@ -252,6 +255,14 @@ class systemp_calibration(gr.sync_block):
         self.clip_toggle = clip_toggle
         print("clip toggled")
 
+    def set_az(self, az):
+        self.az = az
+
+    def set_elev(self, elev):
+        self.elev = elev
+
+    def set_location(self, location):
+        self.location = location
 
     #define SPIKE REMOVAL smoothing function
     def spike_smoothing(self):

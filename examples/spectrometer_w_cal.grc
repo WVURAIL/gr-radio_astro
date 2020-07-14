@@ -21,7 +21,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: DSPIRA Spectrometer1
+    title: DSPIRA Spectrometer2
     window_size: ''
   states:
     bus_sink: false
@@ -48,7 +48,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: '[2,0,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[2,0,1,1]
     label: azimuth
     type: string
     value: '0'
@@ -63,7 +63,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: '[0,4,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[0,4,1,1]
     label: Full or Clipped Spectrum
     label0: Clipped spectrum
     label1: Full spectrum
@@ -92,7 +92,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: '[0,1,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[0,1,1,1]
     label: '"Spectrum Display"'
     label0: '"Filtered spectrum with no calibration"'
     label1: '"Spectrum with calibration"'
@@ -133,7 +133,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: '[3,0,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[3,0,1,1]
     label: elevation
     type: string
     value: '0'
@@ -184,7 +184,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: '[0,2,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[0,2,1,1]
     label: Integration Time
     label0: Short Integration
     label1: Long Integration
@@ -213,7 +213,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '.2'
+    value: '1'
   states:
     bus_sink: false
     bus_source: false
@@ -225,12 +225,27 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '2'
+    value: '5'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
     coordinate: [1040, 84.0]
+    rotation: 0
+    state: true
+- name: location
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    gui_hint: qtgui_tab_widget_0@0:[2,2,1,3]
+    label: ''
+    type: string
+    value: Anytown
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1376, 844.0]
     rotation: 0
     state: true
 - name: min_integration
@@ -273,7 +288,7 @@ blocks:
   id: variable_qtgui_push_button
   parameters:
     comment: ''
-    gui_hint: '[1,2,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[1,2,1,1]
     label: Integration Reset
     pressed: '1'
     released: '0'
@@ -302,7 +317,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: '[0,6,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[0,6,1,1]
     label: Write to csv files
     label0: Not writing to file
     label1: Writing to file
@@ -367,7 +382,7 @@ blocks:
   id: variable_qtgui_push_button
   parameters:
     comment: ''
-    gui_hint: '[1,4,1,3]'
+    gui_hint: qtgui_tab_widget_0@0:[1,4,1,3]
     label: Capture Current Spectrum
     pressed: 'True'
     released: 'False'
@@ -408,7 +423,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: '[1,0,1,1]'
+    gui_hint: qtgui_tab_widget_0@0:[1,0,1,1]
     label: y-axis max
     min_len: '5'
     orient: Qt.Horizontal
@@ -429,7 +444,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: '[0,0,1,1]'
+    gui_hint: qtgui_tab_widget_0@0 :[0,0,1,1]
     label: y-axis min
     min_len: '5'
     orient: Qt.Horizontal
@@ -657,40 +672,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [712, 388.0]
-    rotation: 0
-    state: true
-- name: blocks_null_sink_0
-  id: blocks_null_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    bus_structure_sink: '[[0,],]'
-    comment: ''
-    num_inputs: '1'
-    type: float
-    vlen: vec_length
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1344, 984.0]
-    rotation: 0
-    state: true
-- name: blocks_null_sink_0_0
-  id: blocks_null_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    bus_structure_sink: '[[0,],]'
-    comment: ''
-    num_inputs: '1'
-    type: float
-    vlen: vec_length
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1368, 1052.0]
     rotation: 0
     state: true
 - name: blocks_selector_0
@@ -1264,7 +1245,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: '[0,8,3,1]'
+    gui_hint: qtgui_tab_widget_0@0:[0,8,3,1]
     label1: ''
     label10: ''
     label2: ''
@@ -1320,6 +1301,40 @@ blocks:
     coordinate: [400, 492.0]
     rotation: 0
     state: enabled
+- name: qtgui_tab_widget_0
+  id: qtgui_tab_widget
+  parameters:
+    alias: ''
+    comment: ''
+    gui_hint: ''
+    label0: Spectrum
+    label1: System Temp/Gain
+    label10: Tab 10
+    label11: Tab 11
+    label12: Tab 12
+    label13: Tab 13
+    label14: Tab 14
+    label15: Tab 15
+    label16: Tab 16
+    label17: Tab 17
+    label18: Tab 18
+    label19: Tab 19
+    label2: Tab 2
+    label3: Tab 3
+    label4: Tab 4
+    label5: Tab 5
+    label6: Tab 6
+    label7: Tab 7
+    label8: Tab 8
+    label9: Tab 9
+    num_tabs: '2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 1100.0]
+    rotation: 0
+    state: true
 - name: qtgui_vector_sink_f_0_0
   id: qtgui_vector_sink_f
   parameters:
@@ -1349,7 +1364,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: ''
+    gui_hint: qtgui_tab_widget_0@1
     label1: Gain
     label10: ''
     label2: ''
@@ -1392,7 +1407,7 @@ blocks:
     bus_structure: null
     coordinate: [1028.0, 1136]
     rotation: 270
-    state: disabled
+    state: enabled
 - name: qtgui_vector_sink_f_0_0_0
   id: qtgui_vector_sink_f
   parameters:
@@ -1422,7 +1437,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: ''
+    gui_hint: qtgui_tab_widget_0@1
     label1: ''
     label10: ''
     label2: ''
@@ -1463,9 +1478,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1220.0, 1136]
+    coordinate: [1236.0, 1136]
     rotation: 270
-    state: disabled
+    state: enabled
 - name: qtgui_vector_sink_f_0_0_1
   id: qtgui_vector_sink_f
   parameters:
@@ -1495,7 +1510,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: '[4,0,20,10]'
+    gui_hint: qtgui_tab_widget_0@0:[4,0,20,10]
     label1: ''
     label10: ''
     label2: ''
@@ -1544,9 +1559,12 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    az: az
     comment: ''
+    elev: elev
     freq: freq
     integration_select: integration_select
+    location: location
     prefix: prefix
     samp_rate: samp_rate
     save_toggle: save_toggle_csv
@@ -1556,7 +1574,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [648, 980.0]
+    coordinate: [656, 932.0]
     rotation: 180
     state: enabled
 - name: radio_astro_integration_0
@@ -1581,10 +1599,13 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    az: az
     clip_toggle: clip_toggle
     collect: collect
     comment: ''
+    elev: elev
     freq: freq
+    location: location
     maxoutbuf: '0'
     minoutbuf: '0'
     prefix: prefix
@@ -1646,9 +1667,7 @@ connections:
 - [radio_astro_integration_0, '0', radio_astro_vector_moving_average_0, '0']
 - [radio_astro_systemp_calibration_0, '0', qtgui_vector_sink_f_0_0_1, '0']
 - [radio_astro_systemp_calibration_0, '0', radio_astro_csv_filesink_0, '0']
-- [radio_astro_systemp_calibration_0, '1', blocks_null_sink_0, '0']
 - [radio_astro_systemp_calibration_0, '1', qtgui_vector_sink_f_0_0, '0']
-- [radio_astro_systemp_calibration_0, '2', blocks_null_sink_0_0, '0']
 - [radio_astro_systemp_calibration_0, '2', qtgui_vector_sink_f_0_0_0, '0']
 - [radio_astro_vector_moving_average_0, '0', blocks_selector_0, '1']
 

@@ -4,11 +4,15 @@ category: '[radio_astro]'
 
 templates:
   imports: import radio_astro
-  make: radio_astro.systemp_calibration(${vec_length}, ${collect}, ${samp_rate}, ${freq}, ${prefix}, ${spectrumcapture_toggle}, ${clip_toggle})
+  make: radio_astro.systemp_calibration(${vec_length}, ${collect}, ${samp_rate}, ${freq}, ${prefix}, ${spectrumcapture_toggle}, ${clip_toggle}, ${az}, ${elev}, ${location})
   callbacks:
     - set_collect(${collect})
     - set_spectrumcapture_toggle(${spectrumcapture_toggle})
     - set_clip_toggle(${clip_toggle})
+    - set_az(${az})
+    - set_elev(${elev})
+    - set_location(${location})
+
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -37,6 +41,16 @@ parameters:
 - id: clip_toggle
   label: clip_toggle
   dtype: string
+- id: az
+  label: az
+  dtype: string
+- id: elev
+  label: elev
+  dtype: string
+- id: location
+  label: location
+  dtype: string
+
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
 #  Keys include:
