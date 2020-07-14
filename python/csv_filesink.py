@@ -29,7 +29,7 @@ class csv_filesink(gr.sync_block):
     """
     This block is controlled by the string variable save_toggle: if save_toggle = "True" (a string, not boolean), the data is written to a new .csv file every new integration time. The minimum integration time for the block to work is 0.1 s. 
     """
-    def __init__(self, vec_length, samp_rate, freq, prefix, save_toggle):
+    def __init__(self, vec_length, samp_rate, freq, prefix, save_toggle, integration_select, short_long_time_scale):
         gr.sync_block.__init__(self,
             name="csv_filesink",
             in_sig=[(np.float32, int(vec_length))],
@@ -40,10 +40,12 @@ class csv_filesink(gr.sync_block):
         self.freq = freq
         self.prefix = prefix
         self.save_toggle = save_toggle
+        self.integration_select = integration_select
+        self.short_long_time_scale = short_long_time_scale
 
         self.frequencies = np.arange(freq - samp_rate/2, freq + samp_rate/2, samp_rate/vec_length)[:vec_length]
         self.data_array = np.zeros((vec_length,2))
-
+        self.N_long_counter = 0
 
     def work(self, input_items, output_items):
         in0 = input_items[0]
@@ -51,17 +53,41 @@ class csv_filesink(gr.sync_block):
         # <+signal processing here+>
 
         if self.save_toggle == "True":     #If true, capture the spectrum to a new .csv text file each integration.
-            current_time = time.time()
-            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
-            #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
-            # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
-            self.textfilename = self.prefix + self.timenow + "_spectrum.csv"
-            self.data_array[:,0] = self.frequencies
-            self.data_array[:,1] = in0
-            np.savetxt(self.textfilename, self.data_array, delimiter=',')
+            if self.integration_select == 0:
+                current_time = time.time()
+                self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
+                #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
+                # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
+                self.textfilename = self.prefix + self.timenow + "_spectrum.csv"
+                self.data_array[:,0] = self.frequencies
+                self.data_array[:,1] = in0
+                np.savetxt(self.textfilename, self.data_array, delimiter=',')
 
+                self.N_long_counter = self.N_long_counter + 1  #Increase counter for long integration print to .csv
+                print(self.N_long_counter)
+
+            else:
+                if self.N_long_counter >= self.short_long_time_scale:
+                    current_time = time.time()
+                    self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
+                    #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
+                    # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
+                    self.textfilename = self.prefix + self.timenow + "_spectrum.csv"
+                    self.data_array[:,0] = self.frequencies
+                    self.data_array[:,1] = in0
+                    np.savetxt(self.textfilename, self.data_array, delimiter=',')
+                    #
+                    self.N_long_counter = 0
+                else:
+                    self.N_long_counter = self.N_long_counter + 1  #Increase counter for long integration print to .csv
+                    print(self.N_long_counter)
+            
         return len(input_items[0])
 
     def set_save_toggle(self, save_toggle):
-        self.save_toggle = save_toggle    
+        self.save_toggle = save_toggle
+
+    def set_integration_select(self, integration_select):
+        self.integration_select = integration_select 
+
 

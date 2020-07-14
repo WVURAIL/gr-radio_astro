@@ -95,7 +95,6 @@ class systemp_calibration(gr.sync_block):
         self.spectrum_mask_clipped[:self.Nclip_lo] = 0
         self.spectrum_mask_clipped[vec_length - self.Nclip_hi:] = 0
 
-
         # To do a gaussian smoothing to the data, assign values to the gaussian kernal.
         # Note: The parameter k defines the size of the window used in smoothing; "fwhm" defines the width of the gaussian fit.
         # For the hot and cold calibrations, the spectrum has no peaks in the region of interest; so set k_cal larger: k = 50.
@@ -125,7 +124,6 @@ class systemp_calibration(gr.sync_block):
         self.gauss_window_spec = self.normal_factor_spec*np.exp(-(self.gx_spec**2)/(2*self.fwhm_spec**2))
         self.gauss_window_spec = self.gauss_window_spec/self.gauss_window_spec.sum()
 
-
     def work(self, input_items, output_items):
         in0 = input_items[0]
         # Copy the input data into a simpler array:
@@ -133,6 +131,7 @@ class systemp_calibration(gr.sync_block):
         out0 = output_items[0]
         out1 = output_items[1]
         out2 = output_items[2]
+
 
         if self.clip_toggle == "True":
             self.spectrum_mask = self.spectrum_mask_clipped
