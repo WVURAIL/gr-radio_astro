@@ -244,16 +244,13 @@ class systemp_calibration(gr.sync_block):
 
     def set_collect(self, collect):
         self.collect = collect
-        print("display changed")
 
     def set_spectrumcapture_toggle(self, spectrumcapture_toggle):
-        print("spectrum captured")
         if self.spectrumcapture_toggle == False:
             self.spectrumcapture_toggle = True
 
     def set_clip_toggle(self, clip_toggle):
         self.clip_toggle = clip_toggle
-        print("clip toggled")
 
     def set_az(self, az):
         self.az = az

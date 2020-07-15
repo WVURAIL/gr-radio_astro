@@ -83,7 +83,6 @@ class csv_filesink(gr.sync_block):
                     self.N_long_counter = 0
                 else:
                     self.N_long_counter = self.N_long_counter + 1  #Increase counter for long integration print to .csv
-                    print(self.N_long_counter)
             
         return len(input_items[0])
 

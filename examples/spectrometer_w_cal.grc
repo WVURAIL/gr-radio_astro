@@ -21,7 +21,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: DSPIRA Spectrometer2
+    title: DSPIRA Spectrometer
     window_size: ''
   states:
     bus_sink: false
@@ -213,24 +213,24 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '1'
+    value: '.2'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1192, 84.0]
+    coordinate: [1192, 92.0]
     rotation: 0
     state: true
 - name: integration_time2
   id: variable
   parameters:
     comment: ''
-    value: '5'
+    value: '10'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1040, 84.0]
+    coordinate: [1040, 92.0]
     rotation: 0
     state: true
 - name: location
@@ -269,7 +269,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1328, 84.0]
+    coordinate: [1328, 92.0]
     rotation: 180
     state: true
 - name: rectfile
@@ -583,7 +583,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1464, 524.0]
+    coordinate: [1416, 548.0]
     rotation: 180
     state: enabled
 - name: blocks_multiply_conjugate_cc_0
@@ -828,7 +828,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1152, -4.0]
+    coordinate: [1152, 12.0]
     rotation: 0
     state: true
 - name: note_0_0
@@ -1246,7 +1246,7 @@ blocks:
     comment: ''
     grid: 'False'
     gui_hint: qtgui_tab_widget_0@0:[0,8,3,1]
-    label1: ''
+    label1: Histogram
     label10: ''
     label2: ''
     label3: ''
@@ -1363,7 +1363,7 @@ blocks:
     color8: '"dark red"'
     color9: '"dark green"'
     comment: ''
-    grid: 'False'
+    grid: 'True'
     gui_hint: qtgui_tab_widget_0@1
     label1: Gain
     label10: ''
@@ -1399,7 +1399,7 @@ blocks:
     x_units: '"MHz"'
     y_axis_label: '"Gain"'
     y_units: '""'
-    ymax: '200'
+    ymax: '5'
     ymin: '0'
   states:
     bus_sink: false
@@ -1436,9 +1436,9 @@ blocks:
     color8: '"dark red"'
     color9: '"dark green"'
     comment: ''
-    grid: 'False'
+    grid: 'True'
     gui_hint: qtgui_tab_widget_0@1
-    label1: ''
+    label1: Temp
     label10: ''
     label2: ''
     label3: ''
@@ -1470,7 +1470,7 @@ blocks:
     x_start: (freq - samp_rate/2)/1e6
     x_step: (samp_rate/vec_length)/1e6
     x_units: '"MHz"'
-    y_axis_label: '"System Temperature"'
+    y_axis_label: '"System Temperature (K)"'
     y_units: '"K"'
     ymax: '400'
     ymin: '0'
@@ -1509,9 +1509,9 @@ blocks:
     color8: '"dark red"'
     color9: '"dark green"'
     comment: ''
-    grid: 'False'
+    grid: 'True'
     gui_hint: qtgui_tab_widget_0@0:[4,0,20,10]
-    label1: ''
+    label1: Spectrum
     label10: ''
     label2: ''
     label3: ''
