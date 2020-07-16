@@ -213,7 +213,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '.2'
+    value: '.4'
   states:
     bus_sink: false
     bus_source: false

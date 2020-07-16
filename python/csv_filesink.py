@@ -49,9 +49,11 @@ class csv_filesink(gr.sync_block):
         self.frequencies = np.arange(freq - samp_rate/2, freq + samp_rate/2, samp_rate/vec_length)[:vec_length]
         self.data_array = np.zeros((vec_length,2))
         self.N_long_counter = 0
+        self.spectrum = np.zeros(vec_length)
 
     def work(self, input_items, output_items):
         in0 = input_items[0]
+        self.spectrum[:] = in0
 
         # <+signal processing here+>
 
@@ -63,7 +65,7 @@ class csv_filesink(gr.sync_block):
                 # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
                 self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
                 self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
-                self.data_array[:,1] = in0
+                self.data_array[:,1] = np.round(self.spectrum, decimals=4)
                 np.savetxt(self.textfilename, self.data_array, delimiter=',')
 
                 self.N_long_counter = self.N_long_counter + 1  #Increase counter for long integration print to .csv
@@ -76,7 +78,7 @@ class csv_filesink(gr.sync_block):
                     # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
                     self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
                     self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
-                    self.data_array[:,1] = in0
+                    self.data_array[:,1] = np.round(self.spectrum, decimals=4)
                     np.savetxt(self.textfilename, self.data_array, delimiter=',')
                     #
                     self.N_long_counter = 0
