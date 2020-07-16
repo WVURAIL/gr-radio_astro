@@ -52,7 +52,7 @@ class csv_filesink(gr.sync_block):
 
     def work(self, input_items, output_items):
         in0 = input_items[0]
-        
+
         # <+signal processing here+>
 
         if self.save_toggle == "True":     #If true, capture the spectrum to a new .csv text file each integration.
@@ -61,13 +61,12 @@ class csv_filesink(gr.sync_block):
                 self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
                 #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
                 # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
-                self.textfilename = self.prefix + self.az + self.elev + self.location + self.timenow + "_spectrum.csv"
-                self.data_array[:,0] = self.frequencies
+                self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
+                self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
                 self.data_array[:,1] = in0
                 np.savetxt(self.textfilename, self.data_array, delimiter=',')
 
                 self.N_long_counter = self.N_long_counter + 1  #Increase counter for long integration print to .csv
-                print(self.N_long_counter)
 
             else:
                 if self.N_long_counter >= self.short_long_time_scale-1:
@@ -76,7 +75,7 @@ class csv_filesink(gr.sync_block):
                     #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
                     # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
                     self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
-                    self.data_array[:,0] = self.frequencies
+                    self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
                     self.data_array[:,1] = in0
                     np.savetxt(self.textfilename, self.data_array, delimiter=',')
                     #

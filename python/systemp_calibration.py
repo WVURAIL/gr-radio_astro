@@ -232,8 +232,8 @@ class systemp_calibration(gr.sync_block):
             #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
             # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
             self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
-            self.data_array[:,0] = self.frequencies
-            self.data_array[:,1] = self.spectrum
+            self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
+            self.data_array[:,1] = np.round(self.spectrum, decimals=4)
             np.savetxt(self.textfilename, self.data_array, delimiter=',')
             self.spectrumcapture_toggle = False
         
