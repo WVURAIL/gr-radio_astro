@@ -233,13 +233,12 @@ class systemp_calibration(gr.sync_block):
             # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
             self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
             self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
-            self.data_array[:,1] = np.round(self.spectrum, decimals=4)
+            
             np.savetxt(self.textfilename, self.data_array, delimiter=',')
             self.spectrumcapture_toggle = False
         
         return len(output_items[0])
     
-
     #Check if collect Chooser block or spectrumcapture_toggle are changed:
 
     def set_collect(self, collect):
@@ -301,19 +300,12 @@ class systemp_calibration(gr.sync_block):
     # 1. Smoothing of spectral data. This window covers a narrower range to minimize and artificial shifting of peaks.
     def gauss_smoothing_spec(self):
         # Smooth filtered_spike data array with gaussian average, using the coefficients defined for spectrum data.
-        for i in range(self.k_spec, self.vec_length-self.k_spec-1):
-            self.filtered_out0[i] = 0
-            for j in range(i-self.k_spec, i+self.k_spec+1):
-                self.filtered_out0[i] = self.filtered_out0[i] + self.filtered_spike[j]*self.gauss_window_spec[j-i+self.k_spec]
+        self.filtered_out0 = np.convolve(self.filtered_spike,self.gauss_window_spec, mode='same')
 
     #2. Smoothing of hot and cold calibration spectra. This window covers a broader range, where we are assuming the hot
     #   and cold spectra are smooth without peaks.
     def gauss_smoothing_cal(self):
-        # Smooth filtered_spike data array with gaussian average:
-        for i in range(self.k_cal, self.vec_length-self.k_cal-1):
-            self.filtered_out0[i] = 0
-            for j in range(i-self.k_cal, i+self.k_cal+1):
-                self.filtered_out0[i] = self.filtered_out0[i] + self.filtered_spike[j]*self.gauss_window_cal[j-i+self.k_cal]
+        self.filtered_out0 = np.convolve(self.filtered_spike,self.gauss_window_cal, mode='same')
 
 
 
