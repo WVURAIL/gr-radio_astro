@@ -229,7 +229,6 @@ class systemp_calibration(gr.sync_block):
         if self.spectrumcapture_toggle == True:     #If true, capture the spectrum to a .csv text file.
             current_time = time.time()
             self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
-            print(self.spectrum)
             #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
             # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
             self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
