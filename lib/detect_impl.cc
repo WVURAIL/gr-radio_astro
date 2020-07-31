@@ -19,6 +19,7 @@
  */
 
 /* HISTORY 
+ * 20Jul26 GIL change to detection a single sample
  * 20Jun26 GIL add vector count and sample offset tags
  * 20Jun25 GIL process all provided vectors
  * 20Jun23 GIL try to find reason some events are missed
@@ -350,7 +351,9 @@ namespace gr {
 	    {rms2 = sum2*oneovern;
 	      rms = sqrt(rms2);
 		  
-	      nsigma_rms = nsigma*nsigma*rms2;
+	      // switch to test on single sample
+	      //	      nsigma_rms = nsigma*nsigma*rms2;
+	      nsigma_rms = nsigma*rms;
 	      sum2 = 0;          // restart rms sum
 	      nsum = 0;
 	      bufferfull = true; // flag buffer is now full enough
@@ -364,7 +367,10 @@ namespace gr {
 	    inext2 = 0;           // go back to beginning
 	  if (bufferfull)         // when buffer is full, find peaks
 	    {
-	      if (circular2[inext2] > nsigma_rms)
+	      if ((circular[inext2].real() > nsigma_rms) ||
+		  (circular[inext2].real() < -nsigma_rms) ||
+		  (circular[inext2].imag() > nsigma_rms) ||
+		  (circular[inext2].imag() < -nsigma_rms))
 		{ // truncate RMS for RMS matching 
 		  rms = int( rms * 100000.); 
 		  rms = rms / 100000.;   
