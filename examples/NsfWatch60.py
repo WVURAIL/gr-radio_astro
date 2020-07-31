@@ -5,7 +5,7 @@
 # Title: NSF Watch for Events whille recording spectra
 # Author: Glen Langston
 # Description: AIRSPY Mini at full speed 6 MHz samples
-# Generated: Fri Jun 26 13:22:59 2020
+# Generated: Mon Jul 27 16:45:43 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -84,6 +84,11 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         try: observers_save = self._observers_save_config.get('main', 'observers')
         except: observers_save = 'Science Aficionado'
         self.observers_save = observers_save
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(ConfigFile)
+        try: nsigmas = self._nsigmas_config.getfloat('main', 'nsigma')
+        except: nsigmas = 5.0
+        self.nsigmas = nsigmas
         self._nAves_config = ConfigParser.ConfigParser()
         self._nAves_config.read(ConfigFile)
         try: nAves = self._nAves_config.getint('main', 'nave')
@@ -135,7 +140,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         except: Azimuth_save = 90.
         self.Azimuth_save = Azimuth_save
         self.observer = observer = observers_save
-        self.nsigma = nsigma = 5.0
+        self.nsigma = nsigma = nsigmas
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
@@ -164,7 +169,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._nsigma_range = Range(0., 10., .1, 5.0, 100)
+        self._nsigma_range = Range(0., 10., .1, nsigmas, 100)
         self._nsigma_win = RangeWidget(self._nsigma_range, self.set_nsigma, 'N Sigma', "counter", float)
         self.top_grid_layout.addWidget(self._nsigma_win, 2, 6, 1, 2)
         for r in range(2, 3):
@@ -344,6 +349,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.e-6)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record,
             0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
@@ -445,6 +451,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_ra_ascii_sink_0, 0))
@@ -492,6 +499,12 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         	self._observers_save_config.add_section('main')
         self._observers_save_config.set('main', 'observers', str(self.observer))
         self._observers_save_config.write(open(self.ConfigFile, 'w'))
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsigma', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
         self._nAves_config = ConfigParser.ConfigParser()
         self._nAves_config.read(self.ConfigFile)
         if not self._nAves_config.has_section('main'):
@@ -561,6 +574,13 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
     def set_observers_save(self, observers_save):
         self.observers_save = observers_save
         self.set_observer(self.observers_save)
+
+    def get_nsigmas(self):
+        return self.nsigmas
+
+    def set_nsigmas(self, nsigmas):
+        self.nsigmas = nsigmas
+        self.set_nsigma(self.nsigmas)
 
     def get_nAves(self):
         return self.nAves
@@ -653,6 +673,12 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
     def set_nsigma(self, nsigma):
         self.nsigma = nsigma
         self.radio_astro_detect_0.set_dms( self.nsigma)
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsigma', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
 
     def get_nAve(self):
         return self.nAve
@@ -680,6 +706,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0.set_vlen( self.fftsize)
         self.radio_astro_vmedian_0.set_vlen( self.fftsize)
         self.radio_astro_ra_event_sink_0.set_vlen( self.fftsize)
+        self.radio_astro_ra_event_log_0.set_vlen( self.fftsize)
         self.radio_astro_detect_0.set_vlen( self.fftsize)
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)
@@ -819,6 +846,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_sample_rate(self.Bandwidth)
         self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth*1.e-6)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth( self.Bandwidth)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
         self._Bandwidths_config = ConfigParser.ConfigParser()

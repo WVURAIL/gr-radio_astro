@@ -5,7 +5,7 @@
 # Title: NSF Watch 9MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 9 MHz samples
-# Generated: Fri Jul 17 09:03:18 2020
+# Generated: Fri Jul 31 13:55:10 2020
 ##################################################
 
 
@@ -52,6 +52,11 @@ class NsfWatch90NoGui(gr.top_block):
         try: observers_save = self._observers_save_config.get('main', 'observers')
         except: observers_save = 'Science Aficionado'
         self.observers_save = observers_save
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(ConfigFile)
+        try: nsigmas = self._nsigmas_config.getfloat('main', 'nsigma')
+        except: nsigmas = 5.5
+        self.nsigmas = nsigmas
         self._nAves_config = ConfigParser.ConfigParser()
         self._nAves_config.read(ConfigFile)
         try: nAves = self._nAves_config.getint('main', 'nave')
@@ -121,7 +126,7 @@ class NsfWatch90NoGui(gr.top_block):
         self.Azimuth_save = Azimuth_save
         self.observer = observer = observers_save
         self.numin = numin = (Frequency - (Bandwidth/2.))
-        self.nsigma = nsigma = 5
+        self.nsigma = nsigma = nsigmas
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
@@ -158,7 +163,7 @@ class NsfWatch90NoGui(gr.top_block):
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", 2*fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
         self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', 2*fftsize, Bandwidth*1.e-6)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record,
-            0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(IF_attn), float(Gain2))
+            0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(IF_attn), float(IF_attn))
         self.radio_astro_detect_0 = radio_astro.detect(2*fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, EventMode)
         self.fft_vxx_0 = fft.fft_vcc(fftsize, True, (window.hamming(fftsize)), True, 1)
         self.blocks_stream_to_vector_0_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, 2*fftsize)
@@ -217,6 +222,12 @@ class NsfWatch90NoGui(gr.top_block):
         	self._observers_save_config.add_section('main')
         self._observers_save_config.set('main', 'observers', str(self.observer))
         self._observers_save_config.write(open(self.ConfigFile, 'w'))
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsigma', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
         self._nAves_config = ConfigParser.ConfigParser()
         self._nAves_config.read(self.ConfigFile)
         if not self._nAves_config.has_section('main'):
@@ -330,6 +341,13 @@ class NsfWatch90NoGui(gr.top_block):
     def set_observers_save(self, observers_save):
         self.observers_save = observers_save
         self.set_observer(self.observers_save)
+
+    def get_nsigmas(self):
+        return self.nsigmas
+
+    def set_nsigmas(self, nsigmas):
+        self.nsigmas = nsigmas
+        self.set_nsigma(self.nsigmas)
 
     def get_nAves(self):
         return self.nAves
@@ -482,6 +500,12 @@ class NsfWatch90NoGui(gr.top_block):
     def set_nsigma(self, nsigma):
         self.nsigma = nsigma
         self.radio_astro_detect_0.set_dms( self.nsigma)
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsigma', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
 
     def get_nAve(self):
         return self.nAve
@@ -555,6 +579,7 @@ class NsfWatch90NoGui(gr.top_block):
         self.IF_attn = IF_attn
         self.sdrplay_rsp1a_source_0.set_if_atten_db(int(self.IF_attn))
         self.radio_astro_ra_ascii_sink_0.set_gain2( float(self.IF_attn))
+        self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.IF_attn))
         self._IF_attn_save_config = ConfigParser.ConfigParser()
         self._IF_attn_save_config.read(self.ConfigFile)
         if not self._IF_attn_save_config.has_section('main'):
@@ -579,7 +604,6 @@ class NsfWatch90NoGui(gr.top_block):
 
     def set_Gain2(self, Gain2):
         self.Gain2 = Gain2
-        self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.Gain2))
 
     def get_Gain1(self):
         return self.Gain1
