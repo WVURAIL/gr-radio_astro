@@ -1,0 +1,9 @@
+# Event Log Opened on 2020-08-04T15:30:19.730671
+# Event Detection
+# bandwidth =       10.000000 MHz
+# vlen      =   4096
+#E       MJD           vector #   second  micro.sec  NV  Zero#   Peak       RMS    Event# Offset
+#V       MJD           vector #   second  micro.sec  NV  Zero#
+59065.646065618173               2 55820  69410.186   2     0 
+59065.646148690626           10003 55827 246870.124   1     0 
+59065.646238650057           20004 55835  19364.930   2     0 

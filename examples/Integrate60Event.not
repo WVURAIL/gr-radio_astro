@@ -4,7 +4,7 @@
 # OBSERVER  = Radio Observer
 # DEVICE    = airspy,bias=1,pack=1
 # DATADIR   = ../events/
-# SITE      = None Attached.  AIRSPY Test
+# SITE      = 1PPS NooElec Amplifier AIRSPY
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
@@ -30,19 +30,19 @@
 # NSPEC     = 0
 # NTIME     = 1
 # NSAMPLES  = 1024
-# EPEAK     = 4.10875183718
-# ERMS      = 0.995973393526
-# EMJD      = 58568.808999981004 
+# EPEAK     = 0.191273916002
+# ERMS      = 0.0142588548031
+# EMJD      = 59025.647628651350 
 # REFCHAN   = 1024.0
 # REFSAMPL  = 512
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2020-05-29 14:14:24.525075
+# UTC       = 2020-08-04 16:47:47.184893
 # SECONDS   =       0.0000000000 
 # LST       = 01:01:10.490
-# AZ        = 180.0
-# EL        = 90.0
+# AZ        = 30.0
+# EL        = -90.0
 # TELLON    = -79:50:22.920
 # TELLAT    = +38:25:59.160
 # RA        = 00:59:21.370

@@ -5,7 +5,7 @@
 # Title: Nsf Airspy Mini Event Detect: 6 MHz
 # Author: Glen Langston
 # Description: Event Detection using Airspy
-# Generated: Thu Jul  2 16:37:51 2020
+# Generated: Tue Aug  4 11:35:40 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -82,6 +82,11 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         try: observer_save = self._observer_save_config.get('main', 'observer')
         except: observer_save = 'Science Aficionado'
         self.observer_save = observer_save
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(ConfigFile)
+        try: nsigmas = self._nsigmas_config.getfloat('main', 'nsimga')
+        except: nsigmas = 5.5
+        self.nsigmas = nsigmas
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(ConfigFile)
         try: fftsize_save = self._fftsize_save_config.getint('main', 'samplesize')
@@ -92,11 +97,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         try: device_save = self._device_save_config.get('main', 'device')
         except: device_save = 'airspy,bias=1,pack=1'
         self.device_save = device_save
-        self._NsigmaS_config = ConfigParser.ConfigParser()
-        self._NsigmaS_config.read(ConfigFile)
-        try: NsigmaS = self._NsigmaS_config.getfloat('main', 'nsimga')
-        except: NsigmaS = 5
-        self.NsigmaS = NsigmaS
         self._Gain3s_config = ConfigParser.ConfigParser()
         self._Gain3s_config.read(ConfigFile)
         try: Gain3s = self._Gain3s_config.getfloat('main', 'gain3')
@@ -110,7 +110,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(ConfigFile)
         try: Gain1s = self._Gain1s_config.getfloat('main', 'gain1')
-        except: Gain1s = 49.
+        except: Gain1s = 14
         self.Gain1s = Gain1s
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(ConfigFile)
@@ -125,14 +125,14 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'bandwidth')
-        except: Bandwidths = 10e6
+        except: Bandwidths = 6e6
         self.Bandwidths = Bandwidths
         self._Azimuth_save_config = ConfigParser.ConfigParser()
         self._Azimuth_save_config.read(ConfigFile)
         try: Azimuth_save = self._Azimuth_save_config.getfloat('main', 'azimuth')
         except: Azimuth_save = 180.
         self.Azimuth_save = Azimuth_save
-        self.nsigma = nsigma = NsigmaS
+        self.nsigma = nsigma = nsigmas
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
         self.Observer = Observer = observer_save
@@ -150,7 +150,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self._nsigma_range = Range(0., 10., .1, NsigmaS, 100)
+        self._nsigma_range = Range(0., 10., .1, nsigmas, 100)
         self._nsigma_win = RangeWidget(self._nsigma_range, self.set_nsigma, 'N Sigma', "counter", float)
         self.top_grid_layout.addWidget(self._nsigma_win, 7, 0, 1, 2)
         for r in range(7, 8):
@@ -328,20 +328,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.rtlsdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + Device )
-        self.rtlsdr_source_0.set_sample_rate(Bandwidth)
-        self.rtlsdr_source_0.set_center_freq(Frequency, 0)
-        self.rtlsdr_source_0.set_freq_corr(0, 0)
-        self.rtlsdr_source_0.set_dc_offset_mode(0, 0)
-        self.rtlsdr_source_0.set_iq_balance_mode(0, 0)
-        self.rtlsdr_source_0.set_gain_mode(False, 0)
-        self.rtlsdr_source_0.set_gain(float(Gain1), 0)
-        self.rtlsdr_source_0.set_if_gain(float(Gain2), 0)
-        self.rtlsdr_source_0.set_bb_gain(float(Gain3), 0)
-        self.rtlsdr_source_0.set_antenna('', 0)
-        self.rtlsdr_source_0.set_bandwidth(Bandwidth, 0)
-
-        (self.rtlsdr_source_0).set_processor_affinity([3])
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
         self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.e-6)
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
@@ -447,6 +433,19 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self.osmosdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + Device )
+        self.osmosdr_source_0.set_sample_rate(Bandwidth)
+        self.osmosdr_source_0.set_center_freq(Frequency, 0)
+        self.osmosdr_source_0.set_freq_corr(0, 0)
+        self.osmosdr_source_0.set_dc_offset_mode(0, 0)
+        self.osmosdr_source_0.set_iq_balance_mode(0, 0)
+        self.osmosdr_source_0.set_gain_mode(False, 0)
+        self.osmosdr_source_0.set_gain(float(Gain1), 0)
+        self.osmosdr_source_0.set_if_gain(float(Gain2), 0)
+        self.osmosdr_source_0.set_bb_gain(float(Gain3), 0)
+        self.osmosdr_source_0.set_antenna('', 0)
+        self.osmosdr_source_0.set_bandwidth(Bandwidth, 0)
+
         self.blocks_vector_to_stream_0 = blocks.vector_to_stream(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
@@ -460,11 +459,11 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_stream_to_vector_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
+        self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
+        self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
-        self.connect((self.rtlsdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
-        self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "NsfDetect60")
@@ -484,12 +483,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
 
     def set_ConfigFile(self, ConfigFile):
         self.ConfigFile = ConfigFile
-        self._NsigmaS_config = ConfigParser.ConfigParser()
-        self._NsigmaS_config.read(self.ConfigFile)
-        if not self._NsigmaS_config.has_section('main'):
-        	self._NsigmaS_config.add_section('main')
-        self._NsigmaS_config.set('main', 'nsimga', str(self.nsigma))
-        self._NsigmaS_config.write(open(self.ConfigFile, 'w'))
         self._telescope_save_config = ConfigParser.ConfigParser()
         self._telescope_save_config.read(self.ConfigFile)
         if not self._telescope_save_config.has_section('main'):
@@ -502,6 +495,12 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         	self._observer_save_config.add_section('main')
         self._observer_save_config.set('main', 'observer', str(self.Observer))
         self._observer_save_config.write(open(self.ConfigFile, 'w'))
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsimga', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)
         if not self._fftsize_save_config.has_section('main'):
@@ -571,6 +570,13 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.observer_save = observer_save
         self.set_Observer(self.observer_save)
 
+    def get_nsigmas(self):
+        return self.nsigmas
+
+    def set_nsigmas(self, nsigmas):
+        self.nsigmas = nsigmas
+        self.set_nsigma(self.nsigmas)
+
     def get_fftsize_save(self):
         return self.fftsize_save
 
@@ -584,13 +590,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
     def set_device_save(self, device_save):
         self.device_save = device_save
         self.set_Device(self.device_save)
-
-    def get_NsigmaS(self):
-        return self.NsigmaS
-
-    def set_NsigmaS(self, NsigmaS):
-        self.NsigmaS = NsigmaS
-        self.set_nsigma(self.NsigmaS)
 
     def get_Gain3s(self):
         return self.Gain3s
@@ -646,13 +645,13 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
 
     def set_nsigma(self, nsigma):
         self.nsigma = nsigma
-        self._NsigmaS_config = ConfigParser.ConfigParser()
-        self._NsigmaS_config.read(self.ConfigFile)
-        if not self._NsigmaS_config.has_section('main'):
-        	self._NsigmaS_config.add_section('main')
-        self._NsigmaS_config.set('main', 'nsimga', str(self.nsigma))
-        self._NsigmaS_config.write(open(self.ConfigFile, 'w'))
         self.radio_astro_detect_0.set_dms( self.nsigma)
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsimga', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
 
     def get_fftsize(self):
         return self.fftsize
@@ -712,7 +711,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
     def set_Gain3(self, Gain3):
         self.Gain3 = Gain3
         Qt.QMetaObject.invokeMethod(self._Gain3_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain3)))
-        self.rtlsdr_source_0.set_bb_gain(float(self.Gain3), 0)
+        self.osmosdr_source_0.set_bb_gain(float(self.Gain3), 0)
         self._Gain3s_config = ConfigParser.ConfigParser()
         self._Gain3s_config.read(self.ConfigFile)
         if not self._Gain3s_config.has_section('main'):
@@ -726,7 +725,7 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
     def set_Gain2(self, Gain2):
         self.Gain2 = Gain2
         Qt.QMetaObject.invokeMethod(self._Gain2_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain2)))
-        self.rtlsdr_source_0.set_if_gain(float(self.Gain2), 0)
+        self.osmosdr_source_0.set_if_gain(float(self.Gain2), 0)
         self._Gain2s_config = ConfigParser.ConfigParser()
         self._Gain2s_config.read(self.ConfigFile)
         if not self._Gain2s_config.has_section('main'):
@@ -740,8 +739,8 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
     def set_Gain1(self, Gain1):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
-        self.rtlsdr_source_0.set_gain(float(self.Gain1), 0)
         self.radio_astro_ra_event_sink_0.set_gain1( float(self.Gain1))
+        self.osmosdr_source_0.set_gain(float(self.Gain1), 0)
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):
@@ -755,9 +754,9 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
     def set_Frequency(self, Frequency):
         self.Frequency = Frequency
         Qt.QMetaObject.invokeMethod(self._Frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Frequency)))
-        self.rtlsdr_source_0.set_center_freq(self.Frequency, 0)
         self.radio_astro_ra_event_sink_0.set_frequency( self.Frequency*1.E-6)
         self.radio_astro_detect_0.set_freq( self.Frequency)
+        self.osmosdr_source_0.set_center_freq(self.Frequency, 0)
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(self.ConfigFile)
         if not self._Frequencys_config.has_section('main'):
@@ -807,12 +806,12 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
     def set_Bandwidth(self, Bandwidth):
         self.Bandwidth = Bandwidth
         Qt.QMetaObject.invokeMethod(self._Bandwidth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Bandwidth)))
-        self.rtlsdr_source_0.set_sample_rate(self.Bandwidth)
-        self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
         self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth*1.e-6)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
+        self.osmosdr_source_0.set_sample_rate(self.Bandwidth)
+        self.osmosdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(self.ConfigFile)
         if not self._Bandwidths_config.has_section('main'):

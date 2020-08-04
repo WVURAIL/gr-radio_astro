@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average Astronomical Obs.
 # Author: Glen Langston -- NSF 20 May 22
 # Description: Astronomy with AIRSPY-mini  Dongle
-# Generated: Fri May 29 15:18:58 2020
+# Generated: Tue Aug  4 12:45:38 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -131,7 +131,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(ConfigFile)
         try: Gain1s = self._Gain1s_config.getfloat('main', 'gain1')
-        except: Gain1s = 49.
+        except: Gain1s = 14
         self.Gain1s = Gain1s
         self._Elevation_save_config = ConfigParser.ConfigParser()
         self._Elevation_save_config.read(ConfigFile)
@@ -361,20 +361,6 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.rtlsdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + Device )
-        self.rtlsdr_source_0.set_sample_rate(Bandwidth)
-        self.rtlsdr_source_0.set_center_freq(Frequency, 0)
-        self.rtlsdr_source_0.set_freq_corr(0, 0)
-        self.rtlsdr_source_0.set_dc_offset_mode(0, 0)
-        self.rtlsdr_source_0.set_iq_balance_mode(0, 0)
-        self.rtlsdr_source_0.set_gain_mode(False, 0)
-        self.rtlsdr_source_0.set_gain(Gain1, 0)
-        self.rtlsdr_source_0.set_if_gain(float(Gain2), 0)
-        self.rtlsdr_source_0.set_bb_gain(float(Gain3), 0)
-        self.rtlsdr_source_0.set_antenna('1', 0)
-        self.rtlsdr_source_0.set_bandwidth(Bandwidth, 0)
-
-        (self.rtlsdr_source_0).set_processor_affinity([3])
         self.radio_astro_vmedian_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
@@ -505,6 +491,19 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self.osmosdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + Device )
+        self.osmosdr_source_0.set_sample_rate(Bandwidth)
+        self.osmosdr_source_0.set_center_freq(Frequency, 0)
+        self.osmosdr_source_0.set_freq_corr(0, 0)
+        self.osmosdr_source_0.set_dc_offset_mode(0, 0)
+        self.osmosdr_source_0.set_iq_balance_mode(0, 0)
+        self.osmosdr_source_0.set_gain_mode(False, 0)
+        self.osmosdr_source_0.set_gain(float(Gain1), 0)
+        self.osmosdr_source_0.set_if_gain(float(Gain2), 0)
+        self.osmosdr_source_0.set_bb_gain(float(Gain3), 0)
+        self.osmosdr_source_0.set_antenna('', 0)
+        self.osmosdr_source_0.set_bandwidth(Bandwidth, 0)
+
         self.fft_vxx_0 = fft.fft_vcc(fftsize, True, (window.hamming(fftsize)), True, 1)
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
@@ -520,6 +519,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
+        self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
+        self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
@@ -532,8 +533,6 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.connect((self.radio_astro_vmedian_0_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_ascii_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_integrate_1, 0))
-        self.connect((self.rtlsdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
-        self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate60")
@@ -660,9 +659,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_Frequency(self, Frequency):
         self.Frequency = Frequency
         Qt.QMetaObject.invokeMethod(self._Frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Frequency)))
-        self.rtlsdr_source_0.set_center_freq(self.Frequency, 0)
         self.radio_astro_ra_integrate_1.set_frequency( self.Frequency)
         self.radio_astro_ra_ascii_sink_0.set_frequency( self.Frequency)
+        self.osmosdr_source_0.set_center_freq(self.Frequency, 0)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(self.ConfigFile)
@@ -678,10 +677,10 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.Bandwidth = Bandwidth
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
         Qt.QMetaObject.invokeMethod(self._Bandwidth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Bandwidth)))
-        self.rtlsdr_source_0.set_sample_rate(self.Bandwidth)
-        self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.radio_astro_ra_integrate_1.set_bandwidth( self.Bandwidth)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth( self.Bandwidth)
+        self.osmosdr_source_0.set_sample_rate(self.Bandwidth)
+        self.osmosdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(self.ConfigFile)
@@ -921,7 +920,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_Gain3(self, Gain3):
         self.Gain3 = Gain3
         Qt.QMetaObject.invokeMethod(self._Gain3_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain3)))
-        self.rtlsdr_source_0.set_bb_gain(float(self.Gain3), 0)
+        self.osmosdr_source_0.set_bb_gain(float(self.Gain3), 0)
         self._Gain3s_config = ConfigParser.ConfigParser()
         self._Gain3s_config.read(self.ConfigFile)
         if not self._Gain3s_config.has_section('main'):
@@ -935,9 +934,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_Gain2(self, Gain2):
         self.Gain2 = Gain2
         Qt.QMetaObject.invokeMethod(self._Gain2_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain2)))
-        self.rtlsdr_source_0.set_if_gain(float(self.Gain2), 0)
         self.radio_astro_ra_ascii_sink_0.set_gain2( float(self.Gain2))
         self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.Gain2))
+        self.osmosdr_source_0.set_if_gain(float(self.Gain2), 0)
         self._Gain2s_config = ConfigParser.ConfigParser()
         self._Gain2s_config.read(self.ConfigFile)
         if not self._Gain2s_config.has_section('main'):
@@ -951,8 +950,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_Gain1(self, Gain1):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
-        self.rtlsdr_source_0.set_gain(self.Gain1, 0)
         self.radio_astro_ra_ascii_sink_0.set_gain1( float(self.Gain1))
+        self.osmosdr_source_0.set_gain(float(self.Gain1), 0)
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):
