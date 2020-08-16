@@ -5,7 +5,7 @@
 # Title: NSF Airspy 10 MHz - No Gui
 # Author: Glen Langston
 # Description: AIRSPY Dongle at full speed 10 MHz samples
-# Generated: Sun Aug 16 12:45:24 2020
+# Generated: Sun Aug 16 12:50:23 2020
 ##################################################
 
 
