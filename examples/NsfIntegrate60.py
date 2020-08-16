@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average Astronomical Obs.
 # Author: Glen Langston -- NSF 20 May 22
 # Description: Astronomy with AIRSPY-mini  Dongle
-# Generated: Tue Aug  4 12:45:38 2020
+# Generated: Sun Aug 16 17:13:18 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -121,12 +121,12 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._Gain3s_config = ConfigParser.ConfigParser()
         self._Gain3s_config.read(ConfigFile)
         try: Gain3s = self._Gain3s_config.getfloat('main', 'gain3')
-        except: Gain3s = 14.
+        except: Gain3s = 13.
         self.Gain3s = Gain3s
         self._Gain2s_config = ConfigParser.ConfigParser()
         self._Gain2s_config.read(ConfigFile)
         try: Gain2s = self._Gain2s_config.getfloat('main', 'gain2')
-        except: Gain2s = 14.
+        except: Gain2s = 12
         self.Gain2s = Gain2s
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(ConfigFile)
@@ -368,7 +368,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, int(4**5), units, 295., 10.)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record,
-            obstype, 4**5, nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain2))
+            obstype, 4**5, nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             xmins[Xaxis],
@@ -920,6 +920,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_Gain3(self, Gain3):
         self.Gain3 = Gain3
         Qt.QMetaObject.invokeMethod(self._Gain3_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain3)))
+        self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.Gain3))
         self.osmosdr_source_0.set_bb_gain(float(self.Gain3), 0)
         self._Gain3s_config = ConfigParser.ConfigParser()
         self._Gain3s_config.read(self.ConfigFile)
@@ -935,7 +936,6 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.Gain2 = Gain2
         Qt.QMetaObject.invokeMethod(self._Gain2_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain2)))
         self.radio_astro_ra_ascii_sink_0.set_gain2( float(self.Gain2))
-        self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.Gain2))
         self.osmosdr_source_0.set_if_gain(float(self.Gain2), 0)
         self._Gain2s_config = ConfigParser.ConfigParser()
         self._Gain2s_config.read(self.ConfigFile)

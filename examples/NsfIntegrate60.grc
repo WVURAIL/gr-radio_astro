@@ -636,7 +636,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>14.</value>
+      <value>12</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -722,7 +722,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>14.</value>
+      <value>13.</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -4330,7 +4330,7 @@
     </param>
     <param>
       <key>gain3</key>
-      <value>float(Gain2)</value>
+      <value>float(Gain3)</value>
     </param>
     <param>
       <key>id</key>
