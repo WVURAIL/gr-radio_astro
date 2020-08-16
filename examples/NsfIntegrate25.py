@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
-# Title: NsfIntegrate: Average+Record Astronomical Obs.
+# Title: NsfIntegrate: 2.5 MHz with Airspy
 # Author: Glen Langston
 # Description: Astronomy with AIRSPY Dongle
-# Generated: Sun Aug 16 17:14:13 2020
+# Generated: Sun Aug 16 17:15:58 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -41,12 +41,12 @@ import time
 from gnuradio import qtgui
 
 
-class NsfIntegrate100(gr.top_block, Qt.QWidget):
+class NsfIntegrate25(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "NsfIntegrate: Average+Record Astronomical Obs.")
+        gr.top_block.__init__(self, "NsfIntegrate: 2.5 MHz with Airspy")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("NsfIntegrate: Average+Record Astronomical Obs.")
+        self.setWindowTitle("NsfIntegrate: 2.5 MHz with Airspy")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -64,14 +64,14 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate100")
+        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate25")
         self.restoreGeometry(self.settings.value("geometry", type=QtCore.QByteArray))
 
 
         ##################################################
         # Variables
         ##################################################
-        self.ObsName = ObsName = "Integrate100"
+        self.ObsName = ObsName = "Integrate25"
         self.ConfigFile = ConfigFile = ObsName+".conf"
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(ConfigFile)
@@ -81,7 +81,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = ConfigParser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'Bandwidth')
-        except: Bandwidths = 10.e6
+        except: Bandwidths = 2.5e6
         self.Bandwidths = Bandwidths
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(ConfigFile)
@@ -356,6 +356,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         for c in range(7, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.rtlsdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + Device )
+        self.rtlsdr_source_0.set_time_source('gpsdo', 0)
         self.rtlsdr_source_0.set_sample_rate(Bandwidth)
         self.rtlsdr_source_0.set_center_freq(Frequency, 0)
         self.rtlsdr_source_0.set_freq_corr(0, 0)
@@ -386,7 +387,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
             "",
             5 # Number of inputs
         )
-        self.qtgui_vector_sink_f_0_0.set_update_time(.5)
+        self.qtgui_vector_sink_f_0_0.set_update_time(.25)
         self.qtgui_vector_sink_f_0_0.set_y_axis(ymins[units], ymaxs[units])
         self.qtgui_vector_sink_f_0_0.enable_autoscale(False)
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
@@ -541,7 +542,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self.connect((self.rtlsdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate100")
+        self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate25")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -1028,7 +1029,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self._Azimuth_save_config.write(open(self.ConfigFile, 'w'))
 
 
-def main(top_block_cls=NsfIntegrate100, options=None):
+def main(top_block_cls=NsfIntegrate25, options=None):
 
     qapp = Qt.QApplication(sys.argv)
 

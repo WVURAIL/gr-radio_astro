@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>NsfIntegrate100</value>
+      <value>NsfIntegrate25</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>NsfIntegrate: Average+Record Astronomical Obs.</value>
+      <value>NsfIntegrate: 2.5 MHz with Airspy</value>
     </param>
     <param>
       <key>placement</key>
@@ -226,7 +226,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>10.e6</value>
+      <value>2.5e6</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -796,7 +796,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(976, 8)</value>
+      <value>(24, 208)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -808,7 +808,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"Integrate100"</value>
+      <value>"Integrate25"</value>
     </param>
   </block>
   <block>
@@ -1874,7 +1874,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(504, 128)</value>
+      <value>(488, 144)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2671,7 +2671,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1192, 224)</value>
+      <value>(1200, 256)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2875,7 +2875,7 @@
     </param>
     <param>
       <key>update_time</key>
-      <value>.5</value>
+      <value>.25</value>
     </param>
     <param>
       <key>vlen</key>
@@ -4667,7 +4667,7 @@
     </param>
     <param>
       <key>time_source0</key>
-      <value></value>
+      <value>gpsdo</value>
     </param>
     <param>
       <key>clock_source1</key>
