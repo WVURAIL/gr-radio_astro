@@ -5,7 +5,7 @@
 # Title: NSF Detect 9MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 9 MHz samples
-# Generated: Sat Jun 27 11:20:54 2020
+# Generated: Sat Jun 27 11:47:35 2020
 ##################################################
 
 from distutils.version import StrictVersion
