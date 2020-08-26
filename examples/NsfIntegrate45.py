@@ -339,7 +339,7 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["black", "dark green", "red", "blue", "cyan",
+        colors = ["gold", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]

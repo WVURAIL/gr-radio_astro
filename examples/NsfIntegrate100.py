@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with AIRSPY Dongle
-# Generated: Sun Aug 16 17:14:13 2020
+# Generated: Tue Aug 25 22:10:20 2020
 ##################################################
 
 from distutils.version import StrictVersion
