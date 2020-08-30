@@ -16,6 +16,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20AUG28 GIL move event logs to a separate directory
 # 20JUN26 GIL log vector tags to deterine accurate time
 # 19FEB14 GIL make tag labels compatible with C++ tags
 # 19JAN19 GIL initial version based on ra_event_sink
@@ -53,11 +54,15 @@ class ra_event_log(gr.sync_block):
         self.lastmjd = 0.
         self.lastvmjd = 0.
         self.printmjd = 0.
+        self.lastlogdate = 0
         self.bandwidth = bandwidth
         now = datetime.datetime.utcnow()
         self.startutc = now
         self.setupdir = "./"
+        self.logdir = "../eventlog"
         self.logname = str(logname)
+        self.fullname = self.logdir
+        self.lastlogname = ""
         self.emjd = 0.
         self.epeak = 0.
         self.erms = 0.
@@ -112,22 +117,48 @@ class ra_event_log(gr.sync_block):
         """
         return self.ecount
 
+    def create_logname(self):
+        """ 
+        Create the Event log name from the current date and time
+        """
+        strnow = self.startutc.isoformat()
+        datestr = strnow.split('.')  # get rid of fractions of a second
+        daypart = datestr[0]         
+#       yymmdd = daypart[2:19]     # 2019-01-19T01:23:45 -> 19-01-19T01:23:45
+        yymmdd = daypart[2:10]      # 2019-01-19T01:23:45 -> 19-01-19
+#       yymmdd = yymmdd.replace(":", "")  # -> 19-01-19T012345
+
+        logname = "Event-%s.log" % (yymmdd)  # create from date
+        return logname
+    
+        
     def set_logname(self, logname):
         """
         Read the setup files and initialize all values
         """
         logname = str(logname)
         if len(logname) < 1:   # if no log file name provided
-            strnow = self.startutc.isoformat()
-            datestr = strnow.split('.')  # get rid of fractions of a second
-            daypart = datestr[0]         
-            yymmdd = daypart[2:19]       # 2019-01-19T01:23:45 -> 19-01-19T01:23:45
-            yymmdd = yymmdd.replace(":", "")  # -> 19-01-19T012345
-
-            logname = "Event-%s.log" % (yymmdd)  # create from date
+            logname = self.create_logname()
+            
         self.logname = logname
+        # if file is same as last, the file is already initialized
+        if self.lastlogname == self.logname:
+            return
 
-        with open( self.logname, "w") as f:
+        # create the log directory if it does not exist
+        if not os.path.exists(self.logdir):
+            try:
+                os.makedirs(self.logdir)
+            except:
+                print("Can not Create Log Directory: $s" % (self.logdir))
+                exit()
+        self.fullname = self.logdir + "/" + self.logname            
+
+        # if file already exists, no need to add header
+        if os.path.exists(self.fullname):
+            return
+            
+        with open( self.fullname, "w") as f:
             outline = "# Event Log Opened on %s\n" % (self.startutc.isoformat())
             f.write(outline)
             outline = "# %s\n" % (self.note)
@@ -141,7 +172,8 @@ class ra_event_log(gr.sync_block):
             outline = "#V       MJD           vector #   second  micro.sec  NV  Zero#\n"
             f.write(outline)
             f.close()
-
+        # save new log for checking name change
+        self.lastlogname = logname
         return
     
     def set_note(self, note):
@@ -215,7 +247,10 @@ class ra_event_log(gr.sync_block):
                 self.lastmjd = self.emjd
                 outline = self.pformat % (self.emjd, self.evector, isecond, microseconds, self.env, self.voffset, self.epeak, self.erms, self.ecount, self.eoffset)
                 try:
-                    with open( self.logname, "a+") as f:
+                    # confirm log name is current, sets the full name
+                    # based on date
+                    self.set_logname( "")
+                    with open( self.fullname, "a+") as f:
                         f.write(outline)
                         f.close()
                 except:
@@ -235,7 +270,10 @@ class ra_event_log(gr.sync_block):
                 self.lastvmjd = self.vmjd
                 outline = self.vformat % (self.vmjd, self.vcount, isecond, microseconds, self.nv, self.voffset)
                 try:
-                    with open( self.logname, "a+") as f:
+                    # confirm log name is current, sets the full name
+                    # based on date
+                    self.set_logname( "")
+                    with open( self.fullname, "a+") as f:
                         f.write(outline)
                         f.close()
                 except:
