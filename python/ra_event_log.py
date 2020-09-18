@@ -16,6 +16,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20SEP17 GIL fix creating new logs every day
 # 20AUG28 GIL move event logs to a separate directory
 # 20JUN26 GIL log vector tags to deterine accurate time
 # 19FEB14 GIL make tag labels compatible with C++ tags
@@ -54,7 +55,6 @@ class ra_event_log(gr.sync_block):
         self.lastmjd = 0.
         self.lastvmjd = 0.
         self.printmjd = 0.
-        self.lastlogdate = 0
         self.bandwidth = bandwidth
         now = datetime.datetime.utcnow()
         self.startutc = now
@@ -124,20 +124,18 @@ class ra_event_log(gr.sync_block):
         strnow = self.startutc.isoformat()
         datestr = strnow.split('.')  # get rid of fractions of a second
         daypart = datestr[0]         
-#       yymmdd = daypart[2:19]     # 2019-01-19T01:23:45 -> 19-01-19T01:23:45
         yymmdd = daypart[2:10]      # 2019-01-19T01:23:45 -> 19-01-19
-#       yymmdd = yymmdd.replace(":", "")  # -> 19-01-19T012345
 
         logname = "Event-%s.log" % (yymmdd)  # create from date
         return logname
-    
         
     def set_logname(self, logname):
         """
         Read the setup files and initialize all values
         """
+
         logname = str(logname)
-        if len(logname) < 1:   # if no log file name provided
+        if logname == "":   # if no log file name provided
             logname = self.create_logname()
             
         self.logname = logname
@@ -154,8 +152,11 @@ class ra_event_log(gr.sync_block):
                 exit()
         self.fullname = self.logdir + "/" + self.logname            
 
+        self.lastlogname = logname
+
         # if file already exists, no need to add header
         if os.path.exists(self.fullname):
+            print("Using Event Log: %s" % (self.lastlogname))
             return
             
         with open( self.fullname, "w") as f:
@@ -173,7 +174,7 @@ class ra_event_log(gr.sync_block):
             f.write(outline)
             f.close()
         # save new log for checking name change
-        self.lastlogname = logname
+        print("Created New Event Log: %s" % (self.lastlogname))
         return
     
     def set_note(self, note):
