@@ -33,5 +33,7 @@ install(FILES
     radio_astro_ra_event_sink.block.yml
     radio_astro_ra_integrate.block.yml
     radio_astro_ra_vave.block.yml
-    radio_astro_ra_vmedian.block.yml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_ra_vmedian.block.yml
+    radio_astro_integration.block.yml
+    radio_astro_vector_moving_average.block.yml DESTINATION share/gnuradio/grc/blocks
 )

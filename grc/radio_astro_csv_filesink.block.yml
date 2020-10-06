@@ -4,9 +4,14 @@ category: '[radio_astro]'
 
 templates:
   imports: import radio_astro
-  make: radio_astro.csv_filesink( ${vec_length}, ${samp_rate}, ${freq}, ${prefix}, ${save_toggle})
+  make: radio_astro.csv_filesink( ${vec_length}, ${samp_rate}, ${freq}, ${prefix}, ${save_toggle}, ${integration_select}, ${short_long_time_scale}, ${az}, ${elev}, ${location})
   callbacks:
     - set_save_toggle(${save_toggle})
+    - set_integration_select(${integration_select})
+    - set_az(${az})
+    - set_elev(${elev})
+    - set_location(${location})
+
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
 #     * id (makes the value accessible as \$keyname, e.g. in the make entry)
@@ -27,6 +32,21 @@ parameters:
   dtype: string
 - id: save_toggle
   label: save_toggle
+  dtype: string
+- id: integration_select
+  label: integration_select
+  dtype: int
+- id: short_long_time_scale
+  label: short_long_time_scale
+  dtype: int
+- id: az
+  label: az
+  dtype: string
+- id: elev
+  label: elev
+  dtype: string
+- id: location
+  label: location
   dtype: string
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.

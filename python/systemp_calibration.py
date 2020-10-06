@@ -58,7 +58,7 @@ class systemp_calibration(gr.sync_block):
     (5) prefix - used in the filename to describe the pathlength; set in a Variable box. 
     (6) spectrumcapture_toggle - determines whether the spectrum is captured to a file written to the pathlength described by the prefix variable, and written with the filename = prefix + timenow + "_spectrum.csv".
     """
-    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle):
+    def __init__(self, vec_length, collect, samp_rate, freq, prefix, spectrumcapture_toggle, clip_toggle, az, elev, location):
         gr.sync_block.__init__(self,
             name="systemp_calibration",
             in_sig=[(np.float32, int(vec_length))],
@@ -66,10 +66,14 @@ class systemp_calibration(gr.sync_block):
         
         self.vec_length = int(vec_length)
         self.collect = collect
-        self.spectrumcapture_toggle = False
         self.samp_rate = samp_rate
         self.freq = freq
         self.prefix = prefix
+        self.spectrumcapture_toggle = False
+        self.clip_toggle = clip_toggle
+        self.az = az
+        self.elev = elev
+        self.location = location
 
          # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)
@@ -86,6 +90,13 @@ class systemp_calibration(gr.sync_block):
         self.data_array = np.zeros((vec_length,2))
         self.a = np.zeros(self.vec_length)
         self.x = np.zeros(vec_length)
+
+        self.Nclip_lo = 410
+        self.Nclip_hi = 410
+        self.spectrum_mask_full = np.ones(vec_length)
+        self.spectrum_mask_clipped = np.ones(vec_length)
+        self.spectrum_mask_clipped[:self.Nclip_lo] = 0
+        self.spectrum_mask_clipped[vec_length - self.Nclip_hi:] = 0
 
         # To do a gaussian smoothing to the data, assign values to the gaussian kernal.
         # Note: The parameter k defines the size of the window used in smoothing; "fwhm" defines the width of the gaussian fit.
@@ -116,7 +127,6 @@ class systemp_calibration(gr.sync_block):
         self.gauss_window_spec = self.normal_factor_spec*np.exp(-(self.gx_spec**2)/(2*self.fwhm_spec**2))
         self.gauss_window_spec = self.gauss_window_spec/self.gauss_window_spec.sum()
 
-
     def work(self, input_items, output_items):
         in0 = input_items[0]
         # Copy the input data into a simpler array:
@@ -124,6 +134,12 @@ class systemp_calibration(gr.sync_block):
         out0 = output_items[0]
         out1 = output_items[1]
         out2 = output_items[2]
+
+
+        if self.clip_toggle == "True":
+            self.spectrum_mask = self.spectrum_mask_clipped
+        else:
+            self.spectrum_mask = self.spectrum_mask_full
 
          # Check if the "collect" Chooser is changed. If "hot" or "cold" are selected, the Gain and Tsys are updated.
          # The collect variable is selected in the .grc program, as follows:
@@ -140,8 +156,8 @@ class systemp_calibration(gr.sync_block):
             self.gauss_smoothing_spec()     # This routine smoothes the data using a Gaussian averaging.
 
             # The output is calibrated using the gain and Tsys:
-            out0[:] = self.filtered_out0/(self.gain) - self.tsys
-            self.spectrum[:] = self.filtered_out0/(self.gain) - self.tsys
+            out0[:] = (self.filtered_out0/(self.gain) - self.tsys)*self.spectrum_mask
+            self.spectrum[:] = (self.filtered_out0/(self.gain) - self.tsys)*self.spectrum_mask
 
             # The self.spectrum array is what gets output to the .csv file when the Capture Latest Spectrum button is pressed.
 
@@ -200,8 +216,8 @@ class systemp_calibration(gr.sync_block):
             self.gauss_smoothing_spec()     # This routine smoothes the data using a Gaussian averaging.
 
             # The output is the smoothed data, but not calibrated. self.filtered_out0 is the output array resulting from the smoothing routines.
-            out0[:] = self.filtered_out0
-            self.spectrum[:] = self.filtered_out0
+            out0[:] = self.filtered_out0*self.spectrum_mask
+            self.spectrum[:] = self.filtered_out0*self.spectrum_mask
     
         else:
             out0[:] = in0
@@ -212,18 +228,17 @@ class systemp_calibration(gr.sync_block):
 
         if self.spectrumcapture_toggle == True:     #If true, capture the spectrum to a .csv text file.
             current_time = time.time()
-            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
+            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
             #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
             # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
-            self.textfilename = self.prefix + self.timenow + "_spectrum.csv"
-            self.data_array[:,0] = self.frequencies
-            self.data_array[:,1] = self.spectrum
+            self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
+            self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
+            self.data_array[:,1] = np.round(self.spectrum, decimals=4)
             np.savetxt(self.textfilename, self.data_array, delimiter=',')
             self.spectrumcapture_toggle = False
         
         return len(output_items[0])
     
-
     #Check if collect Chooser block or spectrumcapture_toggle are changed:
 
     def set_collect(self, collect):
@@ -233,6 +248,17 @@ class systemp_calibration(gr.sync_block):
         if self.spectrumcapture_toggle == False:
             self.spectrumcapture_toggle = True
 
+    def set_clip_toggle(self, clip_toggle):
+        self.clip_toggle = clip_toggle
+
+    def set_az(self, az):
+        self.az = az
+
+    def set_elev(self, elev):
+        self.elev = elev
+
+    def set_location(self, location):
+        self.location = location
 
     #define SPIKE REMOVAL smoothing function
     def spike_smoothing(self):
@@ -274,19 +300,12 @@ class systemp_calibration(gr.sync_block):
     # 1. Smoothing of spectral data. This window covers a narrower range to minimize and artificial shifting of peaks.
     def gauss_smoothing_spec(self):
         # Smooth filtered_spike data array with gaussian average, using the coefficients defined for spectrum data.
-        for i in range(self.k_spec, self.vec_length-self.k_spec-1):
-            self.filtered_out0[i] = 0
-            for j in range(i-self.k_spec, i+self.k_spec+1):
-                self.filtered_out0[i] = self.filtered_out0[i] + self.filtered_spike[j]*self.gauss_window_spec[j-i+self.k_spec]
+        self.filtered_out0 = np.convolve(self.filtered_spike,self.gauss_window_spec, mode='same')
 
     #2. Smoothing of hot and cold calibration spectra. This window covers a broader range, where we are assuming the hot
     #   and cold spectra are smooth without peaks.
     def gauss_smoothing_cal(self):
-        # Smooth filtered_spike data array with gaussian average:
-        for i in range(self.k_cal, self.vec_length-self.k_cal-1):
-            self.filtered_out0[i] = 0
-            for j in range(i-self.k_cal, i+self.k_cal+1):
-                self.filtered_out0[i] = self.filtered_out0[i] + self.filtered_spike[j]*self.gauss_window_cal[j-i+self.k_cal]
+        self.filtered_out0 = np.convolve(self.filtered_spike,self.gauss_window_cal, mode='same')
 
 
 

@@ -44,4 +44,6 @@ from .ra_event_sink import ra_event_sink
 from .ra_integrate import ra_integrate
 from .ra_vave import ra_vave
 from .ra_vmedian import ra_vmedian
+from .integration import integration
+from .vector_moving_average import vector_moving_average
 #
