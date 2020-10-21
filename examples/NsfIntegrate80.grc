@@ -1079,7 +1079,34 @@
     </param>
     <param>
       <key>value</key>
-      <value>12.</value>
+      <value>IF_attn</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(704, 680)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain3</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>IF_attn</value>
     </param>
   </block>
   <block>

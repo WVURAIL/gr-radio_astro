@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+20AUG26 GIL fix errors when trying to read a .not file
 20APR16 GIL add recording of tSys, tRx, tRms
 19NOV22 GIL reduce digits of spectral intensity
 19NOV08 GIL add 3 more digits to Event MJD 
@@ -28,6 +29,7 @@ HISTORY
 ##################################################
 # Imports
 ##################################################
+import os.path
 import datetime
 import copy
 import numpy as np
@@ -737,7 +739,15 @@ class Spectrum(object):
         verbose = True
         verbose = False
         # Read the file.
-        f2 = open(fullname, 'r')
+        try:
+            if os.path.isfile(fullname):
+                f2 = open(fullname, 'r')
+        except:
+            print("Can Not open File: %s" % (fullname))
+            self.nChan = 0
+            self.nSamples = 0
+            return
+        
 # read the whole file into a single variable, which is a list of every row of the file.
         inlines = f2.readlines()
         f2.close()

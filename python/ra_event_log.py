@@ -62,7 +62,8 @@ class ra_event_log(gr.sync_block):
         self.logdir = "../eventlog"
         self.logname = str(logname)
         self.fullname = self.logdir
-        self.lastlogname = ""
+        self.logmjd = 0.
+        self.lastlogmjd = 0.
         self.emjd = 0.
         self.epeak = 0.
         self.erms = 0.
@@ -121,8 +122,8 @@ class ra_event_log(gr.sync_block):
         """ 
         Create the Event log name from the current date and time
         """
-        strnow = self.startutc.isoformat()
-        datestr = strnow.split('.')  # get rid of fractions of a second
+        now = datetime.datetime.utcnow()
+        datestr = now.split('.')    # get rid of fractions of a second
         daypart = datestr[0]         
         yymmdd = daypart[2:10]      # 2019-01-19T01:23:45 -> 19-01-19
 
@@ -241,16 +242,21 @@ class ra_event_log(gr.sync_block):
                 # log the event
                 self.ecount = self.ecount + 1
                 print("Event : %15.9f %16d %9.4f %8.4f %4d" % (self.emjd, self.evector, self.epeak, self.erms, self.ecount))
-                imjd = np.int(self.emjd)
-                seconds = (self.emjd - imjd)*86400.
+                # round down to integer mjd
+                self.logmjd = np.int(self.emjd)
+                seconds = (self.emjd - self.logmjd)*86400.
                 isecond = np.int(seconds)
                 microseconds = (seconds - isecond) * 1.e6
-                self.lastmjd = self.emjd
                 outline = self.pformat % (self.emjd, self.evector, isecond, microseconds, self.env, self.voffset, self.epeak, self.erms, self.ecount, self.eoffset)
+                # create log file names here, if new mjd
+                if self.lastlogmjd != self.logmjd:
+                    self.set_logname( "")
+                    self.lastlogmjd = self.lastmjd
+                    
+                # now write the log entry
                 try:
                     # confirm log name is current, sets the full name
                     # based on date
-                    self.set_logname( "")
                     with open( self.fullname, "a+") as f:
                         f.write(outline)
                         f.close()
@@ -262,8 +268,8 @@ class ra_event_log(gr.sync_block):
                 # log the time of this vector
                 if self.vmjd > self.printmjd:
                     print("Vector: %15.9f %16d %4d %5d" % (self.vmjd, self.vcount, self.nv, self.voffset))
-                    # print every minute (24*60 = 1440 minutes in a day)
-                    self.printmjd = self.vmjd + (1./1440.)   
+                    # print every few minutes (24*60 = 1440 minutes in a day)
+                    self.printmjd = self.vmjd + (2./1440.)   
                 imjd = np.int(self.vmjd)
                 seconds = (self.vmjd - imjd)*86400.
                 isecond = np.int(seconds)
@@ -273,7 +279,6 @@ class ra_event_log(gr.sync_block):
                 try:
                     # confirm log name is current, sets the full name
                     # based on date
-                    self.set_logname( "")
                     with open( self.fullname, "a+") as f:
                         f.write(outline)
                         f.close()
