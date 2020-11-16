@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+20NOV16 GIL fix reading Longitude outside of +/-90 degrees
 20AUG26 GIL fix errors when trying to read a .not file
 20APR16 GIL add recording of tSys, tRx, tRms
 19NOV22 GIL reduce digits of spectral intensity
@@ -946,7 +947,29 @@ class Spectrum(object):
                     self.gallat = x
 # if parse telescope geographic latitude and longitude into float
                 if parts[1] == 'TELLON':
-                    self.tellon = degree2float(parts[3], parts[1])
+                    # determine whether dms is one or 3 parts
+                    dms = parts[3]
+                    dmsparts = dms.split(':')
+                    # if only one part, then it is a float
+                    if len(dmsparts) < 2:
+                        self.tellon = float(dmsparts[0])
+                    else:
+                        # allow degs, minutes and also seconds
+                        if len(dmsparts) >= 2:
+                            degs = float(dmsparts[0])
+                            mins = float(dmsparts[1])
+                        if len(dmsparts) >= 3:
+                            secs = float(dmsparts[2])
+                        # must add only positive numbers
+                        if degs < 0.:
+                            isneg = True
+                            degs = -1. * degs
+                        else:
+                            isneg = False
+                        degs = degs + (mins/60.) + (secs/3600.)
+                        if isneg: # now flip sign back if necessary
+                            degs = -degs
+                        self.tellon = degs
                 if parts[1] == 'TELLAT':
                     self.tellat = degree2float(parts[3], parts[1])
 # parse ra, dec into float
