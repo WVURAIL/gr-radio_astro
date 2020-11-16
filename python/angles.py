@@ -305,6 +305,7 @@ def deci2sexa(deci, pre=3, trunc=False, lower=None, upper=None,
         angle. The first and second parts of the sexagesimal number are
         integers and the last part is a float.
 
+
     Notes
     -----
     The given decimal number `deci` is converted into a sexagesimal
