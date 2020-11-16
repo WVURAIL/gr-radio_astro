@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: SDRPlay 8MHz Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with 8.0 MHz SDRPlay RSP 1A
-# Generated: Sun Aug 16 12:12:31 2020
+# Generated: Sun Oct  4 03:23:44 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -87,6 +87,11 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         try: fftsize_save = self._fftsize_save_config.getint('main', 'fftsize')
         except: fftsize_save = 1024
         self.fftsize_save = fftsize_save
+        self._IF_attn_save_config = ConfigParser.ConfigParser()
+        self._IF_attn_save_config.read(ConfigFile)
+        try: IF_attn_save = self._IF_attn_save_config.getfloat('main', 'ifattn')
+        except: IF_attn_save = 30
+        self.IF_attn_save = IF_attn_save
         self.Frequency = Frequency = Frequencys
         self.Bandwidth = Bandwidth = Bandwidths
         self._xaxis_save_config = ConfigParser.ConfigParser()
@@ -121,11 +126,7 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         try: IQMode_save = self._IQMode_save_config.getboolean('main', 'iqmode')
         except: IQMode_save = False
         self.IQMode_save = IQMode_save
-        self._IF_attn_save_config = ConfigParser.ConfigParser()
-        self._IF_attn_save_config.read(ConfigFile)
-        try: IF_attn_save = self._IF_attn_save_config.getfloat('main', 'ifattn')
-        except: IF_attn_save = 30
-        self.IF_attn_save = IF_attn_save
+        self.IF_attn = IF_attn = IF_attn_save
         self.H1 = H1 = 1420.406E6
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(ConfigFile)
@@ -185,8 +186,8 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         self.Telescope = Telescope = telescope_save
         self.Record = Record = 1
         self.IQMode = IQMode = IQMode_save
-        self.IF_attn = IF_attn = IF_attn_save
-        self.Gain2 = Gain2 = 12.
+        self.Gain3 = Gain3 = IF_attn
+        self.Gain2 = Gain2 = IF_attn
         self.Gain1 = Gain1 = Gain1s
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
@@ -450,7 +451,7 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["gold", "dark green", "red", "blue", "cyan",
+        colors = ["gold", "brown", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
@@ -762,6 +763,13 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         self.fftsize_save = fftsize_save
         self.set_fftsize(self.fftsize_save)
 
+    def get_IF_attn_save(self):
+        return self.IF_attn_save
+
+    def set_IF_attn_save(self, IF_attn_save):
+        self.IF_attn_save = IF_attn_save
+        self.set_IF_attn(self.IF_attn_save)
+
     def get_Frequency(self):
         return self.Frequency
 
@@ -863,12 +871,21 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         self.IQMode_save = IQMode_save
         self.set_IQMode(self.IQMode_save)
 
-    def get_IF_attn_save(self):
-        return self.IF_attn_save
+    def get_IF_attn(self):
+        return self.IF_attn
 
-    def set_IF_attn_save(self, IF_attn_save):
-        self.IF_attn_save = IF_attn_save
-        self.set_IF_attn(self.IF_attn_save)
+    def set_IF_attn(self, IF_attn):
+        self.IF_attn = IF_attn
+        Qt.QMetaObject.invokeMethod(self._IF_attn_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.IF_attn)))
+        self.set_Gain2(self.IF_attn)
+        self.sdrplay_rsp1a_source_0.set_if_atten_db(int(self.IF_attn))
+        self._IF_attn_save_config = ConfigParser.ConfigParser()
+        self._IF_attn_save_config.read(self.ConfigFile)
+        if not self._IF_attn_save_config.has_section('main'):
+        	self._IF_attn_save_config.add_section('main')
+        self._IF_attn_save_config.set('main', 'ifattn', str(self.IF_attn))
+        self._IF_attn_save_config.write(open(self.ConfigFile, 'w'))
+        self.set_Gain3(self.IF_attn)
 
     def get_H1(self):
         return self.H1
@@ -1078,19 +1095,11 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         self._IQMode_save_config.set('main', 'iqmode', str(self.IQMode))
         self._IQMode_save_config.write(open(self.ConfigFile, 'w'))
 
-    def get_IF_attn(self):
-        return self.IF_attn
+    def get_Gain3(self):
+        return self.Gain3
 
-    def set_IF_attn(self, IF_attn):
-        self.IF_attn = IF_attn
-        Qt.QMetaObject.invokeMethod(self._IF_attn_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.IF_attn)))
-        self.sdrplay_rsp1a_source_0.set_if_atten_db(int(self.IF_attn))
-        self._IF_attn_save_config = ConfigParser.ConfigParser()
-        self._IF_attn_save_config.read(self.ConfigFile)
-        if not self._IF_attn_save_config.has_section('main'):
-        	self._IF_attn_save_config.add_section('main')
-        self._IF_attn_save_config.set('main', 'ifattn', str(self.IF_attn))
-        self._IF_attn_save_config.write(open(self.ConfigFile, 'w'))
+    def set_Gain3(self, Gain3):
+        self.Gain3 = Gain3
 
     def get_Gain2(self):
         return self.Gain2

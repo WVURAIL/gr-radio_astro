@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with AIRSPY Dongle
-# Generated: Sun Jun 28 13:26:24 2020
+# Generated: Sun Oct  4 03:20:36 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -118,16 +118,6 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         except: device_save = 'rtlsdr=1,bias=1'
         self.device_save = device_save
         self.H1 = H1 = 1420.406E6
-        self._Gain3s_config = ConfigParser.ConfigParser()
-        self._Gain3s_config.read(ConfigFile)
-        try: Gain3s = self._Gain3s_config.getfloat('main', 'gain3')
-        except: Gain3s = 15
-        self.Gain3s = Gain3s
-        self._Gain2s_config = ConfigParser.ConfigParser()
-        self._Gain2s_config.read(ConfigFile)
-        try: Gain2s = self._Gain2s_config.getfloat('main', 'gain2')
-        except: Gain2s = 14.
-        self.Gain2s = Gain2s
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(ConfigFile)
         try: Gain1s = self._Gain1s_config.getfloat('main', 'gain1')
@@ -155,8 +145,18 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         self.Xaxis = Xaxis = xaxis_save
         self.Telescope = Telescope = telescope_save
         self.Record = Record = 0
-        self.Gain3 = Gain3 = Gain3s
-        self.Gain2 = Gain2 = Gain2s
+        self._Gain3s_config = ConfigParser.ConfigParser()
+        self._Gain3s_config.read(ConfigFile)
+        try: Gain3s = self._Gain3s_config.getfloat('main', 'gain3')
+        except: Gain3s = 15
+        self.Gain3s = Gain3s
+        self.Gain3 = Gain3 = 0
+        self._Gain2s_config = ConfigParser.ConfigParser()
+        self._Gain2s_config.read(ConfigFile)
+        try: Gain2s = self._Gain2s_config.getfloat('main', 'gain2')
+        except: Gain2s = 14.
+        self.Gain2s = Gain2s
+        self.Gain2 = Gain2 = 0
         self._Gain1s_0_config = ConfigParser.ConfigParser()
         self._Gain1s_0_config.read(ConfigFile)
         try: Gain1s_0 = self._Gain1s_0_config.getfloat('main', 'gain1')
@@ -267,17 +267,6 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._Gain2_tool_bar = Qt.QToolBar(self)
-        self._Gain2_tool_bar.addWidget(Qt.QLabel('Gain2'+": "))
-        self._Gain2_line_edit = Qt.QLineEdit(str(self.Gain2))
-        self._Gain2_tool_bar.addWidget(self._Gain2_line_edit)
-        self._Gain2_line_edit.returnPressed.connect(
-        	lambda: self.set_Gain2(eng_notation.str_to_num(str(self._Gain2_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._Gain2_tool_bar, 2, 4, 1, 2)
-        for r in range(2, 3):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(4, 6):
-            self.top_grid_layout.setColumnStretch(c, 1)
         self._Gain1_tool_bar = Qt.QToolBar(self)
         self._Gain1_tool_bar.addWidget(Qt.QLabel('Gain1'+": "))
         self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
@@ -365,7 +354,7 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observers_save, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, int(4**5), units, 295., 10.)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record,
-            obstype, 4**5, nAve, telescope_save, device_save, Gain1, float(Gain2), float(Gain2))
+            obstype, 4**5, nAve, telescope_save, device_save, Gain1, float(Gain2s), float(Gain3s))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             xmins[Xaxis],
@@ -387,7 +376,7 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["gold", "dark green", "red", "blue", "cyan",
+        colors = ["gold", "brown", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
@@ -503,17 +492,6 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._Gain3_tool_bar = Qt.QToolBar(self)
-        self._Gain3_tool_bar.addWidget(Qt.QLabel('Gain3'+": "))
-        self._Gain3_line_edit = Qt.QLineEdit(str(self.Gain3))
-        self._Gain3_tool_bar.addWidget(self._Gain3_line_edit)
-        self._Gain3_line_edit.returnPressed.connect(
-        	lambda: self.set_Gain3(eng_notation.str_to_num(str(self._Gain3_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._Gain3_tool_bar, 2, 6, 1, 2)
-        for r in range(2, 3):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(6, 8):
-            self.top_grid_layout.setColumnStretch(c, 1)
 
 
 
@@ -577,6 +555,18 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         	self._device_save_config.add_section('main')
         self._device_save_config.set('main', 'device', str(self.Device))
         self._device_save_config.write(open(self.ConfigFile, 'w'))
+        self._Gain3s_config = ConfigParser.ConfigParser()
+        self._Gain3s_config.read(self.ConfigFile)
+        if not self._Gain3s_config.has_section('main'):
+        	self._Gain3s_config.add_section('main')
+        self._Gain3s_config.set('main', 'gain3', str(self.Gain3))
+        self._Gain3s_config.write(open(self.ConfigFile, 'w'))
+        self._Gain2s_config = ConfigParser.ConfigParser()
+        self._Gain2s_config.read(self.ConfigFile)
+        if not self._Gain2s_config.has_section('main'):
+        	self._Gain2s_config.add_section('main')
+        self._Gain2s_config.set('main', 'gain2', str(self.Gain2))
+        self._Gain2s_config.write(open(self.ConfigFile, 'w'))
         self._Frequencys_config = ConfigParser.ConfigParser()
         self._Frequencys_config.read(self.ConfigFile)
         if not self._Frequencys_config.has_section('main'):
@@ -607,18 +597,6 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         	self._fftsize_save_config.add_section('main')
         self._fftsize_save_config.set('main', 'fftsize', str(self.fftsize))
         self._fftsize_save_config.write(open(self.ConfigFile, 'w'))
-        self._Gain3s_config = ConfigParser.ConfigParser()
-        self._Gain3s_config.read(self.ConfigFile)
-        if not self._Gain3s_config.has_section('main'):
-        	self._Gain3s_config.add_section('main')
-        self._Gain3s_config.set('main', 'gain3', str(self.Gain3))
-        self._Gain3s_config.write(open(self.ConfigFile, 'w'))
-        self._Gain2s_config = ConfigParser.ConfigParser()
-        self._Gain2s_config.read(self.ConfigFile)
-        if not self._Gain2s_config.has_section('main'):
-        	self._Gain2s_config.add_section('main')
-        self._Gain2s_config.set('main', 'gain2', str(self.Gain2))
-        self._Gain2s_config.write(open(self.ConfigFile, 'w'))
         self._Gain1s_0_config = ConfigParser.ConfigParser()
         self._Gain1s_0_config.read(self.ConfigFile)
         if not self._Gain1s_0_config.has_section('main'):
@@ -773,20 +751,6 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
         self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 ])
 
-    def get_Gain3s(self):
-        return self.Gain3s
-
-    def set_Gain3s(self, Gain3s):
-        self.Gain3s = Gain3s
-        self.set_Gain3(self.Gain3s)
-
-    def get_Gain2s(self):
-        return self.Gain2s
-
-    def set_Gain2s(self, Gain2s):
-        self.Gain2s = Gain2s
-        self.set_Gain2(self.Gain2s)
-
     def get_Gain1s(self):
         return self.Gain1s
 
@@ -927,6 +891,13 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         self.radio_astro_ra_integrate_1.set_inttype( self.Record)
         self.radio_astro_ra_ascii_sink_0.set_record( self.Record)
 
+    def get_Gain3s(self):
+        return self.Gain3s
+
+    def set_Gain3s(self, Gain3s):
+        self.Gain3s = Gain3s
+        self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.Gain3s))
+
     def get_Gain3(self):
         return self.Gain3
 
@@ -938,24 +909,27 @@ class NsfIntegrate24(gr.top_block, Qt.QWidget):
         	self._Gain3s_config.add_section('main')
         self._Gain3s_config.set('main', 'gain3', str(self.Gain3))
         self._Gain3s_config.write(open(self.ConfigFile, 'w'))
-        Qt.QMetaObject.invokeMethod(self._Gain3_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain3)))
+
+    def get_Gain2s(self):
+        return self.Gain2s
+
+    def set_Gain2s(self, Gain2s):
+        self.Gain2s = Gain2s
+        self.radio_astro_ra_ascii_sink_0.set_gain2( float(self.Gain2s))
 
     def get_Gain2(self):
         return self.Gain2
 
     def set_Gain2(self, Gain2):
         self.Gain2 = Gain2
-        Qt.QMetaObject.invokeMethod(self._Gain2_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain2)))
-        self.rtlsdr_source_0.set_if_gain(float(self.Gain2), 0)
-        self.rtlsdr_source_0.set_bb_gain(float(self.Gain2), 0)
-        self.radio_astro_ra_ascii_sink_0.set_gain2( float(self.Gain2))
-        self.radio_astro_ra_ascii_sink_0.set_gain3( float(self.Gain2))
         self._Gain2s_config = ConfigParser.ConfigParser()
         self._Gain2s_config.read(self.ConfigFile)
         if not self._Gain2s_config.has_section('main'):
         	self._Gain2s_config.add_section('main')
         self._Gain2s_config.set('main', 'gain2', str(self.Gain2))
         self._Gain2s_config.write(open(self.ConfigFile, 'w'))
+        self.rtlsdr_source_0.set_if_gain(float(self.Gain2), 0)
+        self.rtlsdr_source_0.set_bb_gain(float(self.Gain2), 0)
 
     def get_Gain1s_0(self):
         return self.Gain1s_0
