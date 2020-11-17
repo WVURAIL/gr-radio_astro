@@ -2,6 +2,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+20NOV17 GIL use angles.str2deci() for parsing string angles
 20NOV16 GIL fix reading Longitude outside of +/-90 degrees
 20AUG26 GIL fix errors when trying to read a .not file
 20APR16 GIL add recording of tSys, tRx, tRms
@@ -237,15 +238,7 @@ def degree2float(instring, hint):
     degree2float() takes an input angle string in "dd:MM:ss.sss" format or dd.dd
     and returns a floating point value in degrees
     """
-    outfloat = 0.0
-    parts = instring.split(':')
-    if len(parts) == 1:  # if only one part, then degrees
-        outfloat = float(instring)
-    elif len(parts) == 3:  # if three parts, then dd:mm:ss
-        anangle = angles.DeltaAngle(instring)
-        outfloat = anangle.d
-    else:
-        print("%s format error: %s, zero returned " % (hint, instring))
+    outfloat  = angles.str2deci( instring)
     return outfloat
 
 def hour2float(instring, hint):
@@ -947,31 +940,9 @@ class Spectrum(object):
                     self.gallat = x
 # if parse telescope geographic latitude and longitude into float
                 if parts[1] == 'TELLON':
-                    # determine whether dms is one or 3 parts
-                    dms = parts[3]
-                    dmsparts = dms.split(':')
-                    # if only one part, then it is a float
-                    if len(dmsparts) < 2:
-                        self.tellon = float(dmsparts[0])
-                    else:
-                        # allow degs, minutes and also seconds
-                        if len(dmsparts) >= 2:
-                            degs = float(dmsparts[0])
-                            mins = float(dmsparts[1])
-                        if len(dmsparts) >= 3:
-                            secs = float(dmsparts[2])
-                        # must add only positive numbers
-                        if degs < 0.:
-                            isneg = True
-                            degs = -1. * degs
-                        else:
-                            isneg = False
-                        degs = degs + (mins/60.) + (secs/3600.)
-                        if isneg: # now flip sign back if necessary
-                            degs = -degs
-                        self.tellon = degs
+                    self.tellon = angles.str2deci( parts[3])
                 if parts[1] == 'TELLAT':
-                    self.tellat = degree2float(parts[3], parts[1])
+                    self.tellat = angles.str2deci( parts[3])
 # parse ra, dec into float
                 if parts[1] == 'RA':
                     aparts = angles.phmsdms(parts[3])
