@@ -61,6 +61,7 @@ class ra_event_log(gr.sync_block):
         self.setupdir = "./"
         self.logdir = "../eventlog"
         self.logname = str(logname)
+        self.lastlogname = str(logname)
         self.fullname = self.logdir
         self.logmjd = 0.
         self.lastlogmjd = 0.
@@ -123,6 +124,7 @@ class ra_event_log(gr.sync_block):
         Create the Event log name from the current date and time
         """
         now = datetime.datetime.utcnow()
+        now = str(now)
         datestr = now.split('.')    # get rid of fractions of a second
         daypart = datestr[0]         
         yymmdd = daypart[2:10]      # 2019-01-19T01:23:45 -> 19-01-19
