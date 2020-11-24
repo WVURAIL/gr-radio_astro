@@ -57,6 +57,7 @@ are normalized i.e., [-90, 90] or [-π/2, π/2].
 See docstrings of classes and functions for documentation and examples.
 
 :author: Prasanth Nair
+:co-author: Minor updates by Glen Langston
 :contact: prasanthhn@gmail.com
 :license: BSD (http://www.opensource.org/licenses/bsd-license.php)
 """
