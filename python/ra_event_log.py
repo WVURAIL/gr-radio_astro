@@ -254,7 +254,7 @@ class ra_event_log(gr.sync_block):
                 if self.lastlogmjd != self.logmjd:
                     self.set_logname( "")
                     self.lastlogmjd = self.lastmjd
-                    
+                self.lastmjd = self.emjd
                 # now write the log entry
                 try:
                     # confirm log name is current, sets the full name
