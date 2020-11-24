@@ -16,6 +16,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20NOV24 GIL another try at fixing log mjds
 # 20SEP17 GIL fix creating new logs every day
 # 20AUG28 GIL move event logs to a separate directory
 # 20JUN26 GIL log vector tags to deterine accurate time
@@ -253,7 +254,7 @@ class ra_event_log(gr.sync_block):
                 # create log file names here, if new mjd
                 if self.lastlogmjd != self.logmjd:
                     self.set_logname( "")
-                    self.lastlogmjd = self.lastmjd
+                    self.lastlogmjd = self.logmjd
                 self.lastmjd = self.emjd
                 # now write the log entry
                 try:
