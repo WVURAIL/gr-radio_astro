@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
- * Copyright 2019 - Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com
- * 
+/*
+ * Copyright 2020 Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com.
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -91,11 +91,15 @@ namespace gr {
       gr_complex samples[MAX_VLEN];  // output event buffer 
       bool initialized = 0;   // flag initializing output
       double bufferdelay = float(MAX_VLEN/2)*1.E-6/d_bw;
+<<<<<<< HEAD
       unsigned long vcount = 0; // count of vectors processed
       unsigned long logvcount = 0; // count of last logged mjd
       long eventoffset = 0;     // index of event in block
+=======
+
+>>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
      public:
-      detect_impl(int vec_length,float dms, float f_obs, float bw, float t_int, int nt);
+      detect_impl(int vec_length, float dms, float f_obs, float bw, float t_int, int nt);
       ~detect_impl();
 
       // Where all the action really happens
@@ -124,6 +128,7 @@ namespace gr {
            gr_vector_const_void_star &input_items,
            gr_vector_void_star &output_items);
 
+      
       /* function for Modified Julian Date (MJD) */
       long ymd_to_mjd(int year, int month, int day);      
 
@@ -131,8 +136,14 @@ namespace gr {
       long ymd_to_mjd_x(int year, int month, int day);      
 
       double get_mjd();
-    }; 
+
+    };
+
   } // namespace radio_astro
 } // namespace gr
 
 #endif /* INCLUDED_RADIO_ASTRO_DETECT_IMPL_H */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f

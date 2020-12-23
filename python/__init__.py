@@ -22,28 +22,28 @@
 This is the GNU Radio RADIO_ASTRO module. Place your Python package
 description here (python/__init__.py).
 '''
+from __future__ import unicode_literals
 
 # import swig generated symbols into the radio_astro namespace
 try:
-	# this might fail if the module is python-only
-	from radio_astro_swig import *
+    # this might fail if the module is python-only
+    from .radio_astro_swig import *
 except ImportError:
-	pass
+    pass
 
 # import any pure python here
-
-from powerSpectrum import powerSpectrum
-from hdf5_sink import hdf5_sink
-from dedisperse import dedisperse
-from correlate import correlate
-from ra_integrate import ra_integrate
-from ra_vave import ra_vave
-from ra_ascii_sink import ra_ascii_sink
-from ra_vmedian import ra_vmedian
-from systemp_calibration import systemp_calibration
-from ra_event_log import ra_event_log
-from ra_event_sink import ra_event_sink
-from chart_recorder import chart_recorder
-from csv_filesink import csv_filesink
-
+from .systemp_calibration import systemp_calibration
+from .chart_recorder import chart_recorder
+from .correlate import correlate
+from .csv_filesink import csv_filesink
+from .hdf5_sink import hdf5_sink
+from .powerSpectrum import powerSpectrum
+from .ra_ascii_sink import ra_ascii_sink
+from .ra_event_log import ra_event_log
+from .ra_event_sink import ra_event_sink
+from .ra_integrate import ra_integrate
+from .ra_vave import ra_vave
+from .ra_vmedian import ra_vmedian
+from .integration import integration
+from .vector_moving_average import vector_moving_average
 #

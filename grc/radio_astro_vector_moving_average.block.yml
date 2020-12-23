@@ -1,0 +1,49 @@
+id: radio_astro_vector_moving_average
+label: vector_moving_average
+category: '[radio_astro]'
+
+templates:
+  imports: import radio_astro
+  make: radio_astro.vector_moving_average(${vec_length}, ${averaging_length}, ${reset_integration})
+  callbacks:
+    - set_reset_integration(${reset_integration})
+
+#  Make one 'parameters' list entry for every parameter you want settable from the GUI.
+#     Keys include:
+#     * id (makes the value accessible as \$keyname, e.g. in the make entry)
+#     * label (label shown in the GUI)
+#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+parameters:
+- id: vec_length
+  label: Vector Length
+  dtype: int
+- id: averaging_length
+  label: Number of averages
+  dtype: int
+
+- id: reset_integration
+  label: Reset Integration
+  dtype: int
+
+#  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
+#  Keys include:
+#      * label (an identifier for the GUI)
+#      * domain (optional - stream or message. Default is stream)
+#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+#      * vlen (optional - data stream vector length. Default is 1)
+#      * optional (optional - set to 1 for optional inputs. Default is 0)
+inputs:
+- label: in
+  domain: stream
+  dtype: float
+  vlen: ${vec_length}
+
+outputs:
+- label: out
+  domain: stream
+  dtype: float
+  vlen: ${vec_length}
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

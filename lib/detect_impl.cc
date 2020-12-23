@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
- * Copyright 2019 - Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com
- * 
- * This is free software;  you can redistribute it and/or modify
+/*
+ * Copyright 2020 Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com.
+ *
+ * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -30,11 +30,7 @@
 #endif
 
 #include <gnuradio/io_signature.h>
-#include <stdio.h>
-#include <time.h> 
 #include "detect_impl.h"
-#include <iostream>
-#include <chrono>
 
 namespace gr {
   namespace radio_astro {
@@ -45,6 +41,7 @@ namespace gr {
       return gnuradio::get_initial_sptr
         (new detect_impl(vec_length, dms, f_obs, bw, t_int, nt));
     }
+
 
     /*
      * The private constructor
@@ -59,7 +56,7 @@ namespace gr {
         d_bw(bw),
         d_t_int(t_int),
         d_nt(nt)
-    { set_vlen( vec_length);  /* initialize all imput values */
+    { set_vlen( vec_length);  /* initialize all input values */
       set_mode( nt);
       set_dms( dms);
       set_bw( bw);
@@ -140,7 +137,6 @@ namespace gr {
 
       return mjd;
     } // end of get_mjd()
-
     void
     detect_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
@@ -219,7 +215,7 @@ namespace gr {
       inext2 = vlen2 + 1;
       printf("Buffer is not full: %5d\n", inext2);
     } // end of set_vlen()
-      
+
     int
     detect_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
@@ -242,9 +238,9 @@ namespace gr {
       // Tell runtime system how many output items we produced.
       return 1;
     } // end of detect_impl:: general_work
-    
 
     int
+<<<<<<< HEAD
     detect_impl::update_buffer()
     { long i = inext2 - vlen2, length = vlen, jstart = 0;
 
@@ -301,6 +297,9 @@ namespace gr {
     
     int
     detect_impl::event(const unsigned ninputs, const gr_complex *input, gr_complex *output)
+=======
+    detect_impl::event(const gr_complex *input, gr_complex *output)
+>>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
     {
       //outbuf = (float *) //create fresh one if necessary
       float n_sigma = d_dms; // translate variables 

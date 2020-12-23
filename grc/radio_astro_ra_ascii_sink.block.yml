@@ -1,0 +1,116 @@
+id: radio_astro_ra_ascii_sink
+label: ra_ascii_sink
+category: '[radio_astro]'
+
+templates:
+  imports: import radio_astro
+  make: radio_astro.ra_ascii_sink(${noteName}, ${observers}, ${vlen}, ${frequency}, ${bandwidth}, ${azimuth}, ${elevation}, ${record}, ${obstype}, ${nmedian}, ${nave}, ${site}, ${device}, ${gain1}, ${gain2}, ${gain3})
+  callbacks:
+    - set_setup(${setup})
+    - set_observers(${observers})
+    - set_site(${site})
+    - set_device(${device})
+    - set_frequency(${frequency})
+    - set_bandwidth(${bandwidth})
+    - set_azimuth(${azimuth})
+    - set_elevation(${elevation})
+    - set_record(${record})
+    - set_obstype(${obstype})
+    - set_nmedian(${nmedian})
+    - set_nave(${nave})
+    - set_gain1(${gain1})
+    - set_gain2(${gain2})
+    - set_gain3(${gain3})
+#  Make one 'parameters' list entry for every parameter you want settable from the GUI.
+#     Keys include:
+#     * id (makes the value accessible as \$keyname, e.g. in the make entry)
+#     * label (label shown in the GUI)
+#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+parameters:
+- id: setup
+  label: Setup File
+  dtype: string
+  default: 'Watch.not'
+- id: observers
+  label: Observers
+  dtype: string
+  default: "Science Aficionados"
+- id: site
+  label: Telescope
+  dtype: string
+  default: "Moumau House"
+- id: device
+  label: Device
+  dtype: string
+  default: "trlsdr,bias=1"
+- id: frequency
+  label: Frequency (Hz)
+  dtype: float
+  default: '1420.4E6'
+- id: bandwidth
+  label: Bandwidth (Hz)
+  dtype: float
+  default: '3.0E6'
+- id: azimuth
+  label: Azimuth (d)
+  dtype: float
+  default: '180.0'
+- id: elevation
+  label: Elevation (d)
+  dtype: float
+  default: '90.0'
+- id: record
+  label: Record
+  dtype: int
+  default: '1'
+- id: obstype
+  label: Obstype
+  dtype: int
+  default: '1'
+- id: nmedian
+  label: nmedian
+  dtype: int
+  default: '4096'
+- id: nave
+  label: nave
+  dtype: int
+  default: '10'
+- id: gain1
+  label: Gain1
+  dtype: float
+  default: '14.0'
+- id: gain2
+  label: Gain2
+  dtype: float
+  default: '11'
+- id: gain3
+  label: Gain3
+  dtype: float
+  default: '11'
+- id: vlen
+  label: Vec Length
+  dtype: int
+  default: 'fftsize'
+
+#  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
+#  Keys include:
+#      * label (an identifier for the GUI)
+#      * domain (optional - stream or message. Default is stream)
+#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+#      * vlen (optional - data stream vector length. Default is 1)
+#      * optional (optional - set to 1 for optional inputs. Default is 0)
+inputs:
+- label: in
+  domain: stream
+  dtype: float
+  vlen: ${vlen}
+
+outputs:
+- label: Time_Remaining
+  domain: stream
+  dtype: float
+  vlen: 1
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

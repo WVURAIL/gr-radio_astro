@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018 Glen Langston, Quiet Skies <+YOU OR YOUR COMPANY+>.
+# Copyright 2020 Glen Langston, Quiet Skies.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,6 +12,11 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this software; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street,
+# Boston, MA 02110-1301, USA.
 #
 # HISTORY
 # 20Aug16 GIL fix some print statements
@@ -27,6 +32,7 @@
 # 18APR19 GIL fix minor typos
 # 18APR18 GIL update arguments
 # 18APR13 GIL first functioning version
+
 
 import os
 import sys
@@ -129,6 +135,7 @@ class ra_ascii_sink(gr.sync_block):
         self.set_device(device, dosave)
         self.set_record(record)
         self.save_setup()
+
 
     def forecast(self, noutput_items, ninput_items): #forcast is a no op
         """
@@ -458,5 +465,3 @@ class ra_ascii_sink(gr.sync_block):
             print('Accumulation error:  ', nv, iout)
         return iout
     # end ascii_sink()
-
-

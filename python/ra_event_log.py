@@ -1,9 +1,12 @@
 #!/usr/bin/env python
+<<<<<<< HEAD
 # This python program logs detected events, within the
 # Gnuradio Companion environment
+=======
+>>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018 Glen Langston, Quiet Skies <+YOU OR YOUR COMPANY+>.
+# Copyright 2020 Quiet Skies --  Glen Langston.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +17,11 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this software; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street,
+# Boston, MA 02110-1301, USA.
 #
 # HISTORY
 # 20NOV24 GIL another try at fixing log mjds
@@ -291,5 +299,3 @@ class ra_event_log(gr.sync_block):
             # end for all input events
         return nv
     # end event_log()
-
-

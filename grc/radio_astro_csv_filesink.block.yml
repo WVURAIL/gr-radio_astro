@@ -1,0 +1,68 @@
+id: radio_astro_csv_filesink
+label: csv_filesink
+category: '[radio_astro]'
+
+templates:
+  imports: import radio_astro
+  make: radio_astro.csv_filesink( ${vec_length}, ${samp_rate}, ${freq}, ${prefix}, ${save_toggle}, ${integration_select}, ${short_long_time_scale}, ${az}, ${elev}, ${location})
+  callbacks:
+    - set_save_toggle(${save_toggle})
+    - set_integration_select(${integration_select})
+    - set_az(${az})
+    - set_elev(${elev})
+    - set_location(${location})
+
+#  Make one 'parameters' list entry for every parameter you want settable from the GUI.
+#     Keys include:
+#     * id (makes the value accessible as \$keyname, e.g. in the make entry)
+#     * label (label shown in the GUI)
+#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+parameters:
+- id: vec_length
+  label: vec_length
+  dtype: int
+- id: samp_rate
+  label: samp_rate
+  dtype: float
+- id: freq
+  label: freq
+  dtype: float
+- id: prefix
+  label: prefix
+  dtype: string
+- id: save_toggle
+  label: save_toggle
+  dtype: string
+- id: integration_select
+  label: integration_select
+  dtype: int
+- id: short_long_time_scale
+  label: short_long_time_scale
+  dtype: int
+- id: az
+  label: az
+  dtype: string
+- id: elev
+  label: elev
+  dtype: string
+- id: location
+  label: location
+  dtype: string
+
+#  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
+#  Keys include:
+#      * label (an identifier for the GUI)
+#      * domain (optional - stream or message. Default is stream)
+#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+#      * vlen (optional - data stream vector length. Default is 1)
+#      * optional (optional - set to 1 for optional inputs. Default is 0)
+inputs:
+- label: in
+  domain: stream
+  dtype: float
+  vlen: ${vec_length}
+
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

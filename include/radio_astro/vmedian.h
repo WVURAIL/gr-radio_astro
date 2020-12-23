@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
- * Copyright 2019 Quiet Skies LLC -- Glen Langston, Proprietor.
- * 
+/*
+ * Copyright 2020 Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com.
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -28,7 +28,7 @@ namespace gr {
   namespace radio_astro {
 
     /*!
-     * \brief Vector Median of several vectors.   For 3 or 4 vectors 
+    * \brief Vector Median of several vectors.   For 3 or 4 vectors 
      * the code implements exactly the median of the values
      * for more vectors, the result is the sum of all values minus the 
      * miniumum and maximum values
@@ -55,14 +55,15 @@ namespace gr {
        * class. radio_astro::vmedian::make is the public interface for
        * creating new instances.
        */
-      static sptr make(int vec_length, int n);
 
       virtual void set_vlen(int vec_length) = 0;  // This is the nsigma parameter
       virtual void set_mode(int n) = 0;  // Number of vectors to median > 2
 
+      static sptr make(int vec_length, int n);
     };
 
   } // namespace radio_astro
 } // namespace gr
 
 #endif /* INCLUDED_RADIO_ASTRO_VMEDIAN_H */
+
