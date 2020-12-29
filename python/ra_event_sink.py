@@ -18,6 +18,7 @@ Glen Langston - 2019 September 14
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20DEC29 GIL recompute LST from event time
 # 20JUN26 GIL expect VMJD, VCOUNT, NV tags
 # 20JUN25 GIL try to eliminate duplicates; corrected get_tags call
 # 19OCT11 GIL add test for duplicate events, sensed by same RMS as last event
@@ -370,6 +371,8 @@ class ra_event_sink(gr.sync_block):
                 self.obs.ydataB = samples.imag
                 utc = jdutil.mjd_to_datetime(self.emjd)
                 self.obs.utc = utc
+                # recompute LST, RA, Dec from event time
+                self.obs.azel2radec()
                 self.obs.emjd = self.emjd
                 self.obs.epeak = self.epeak
                 self.obs.erms = self.erms

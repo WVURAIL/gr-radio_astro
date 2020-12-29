@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20DEC29 GIL recompute LST,RA, Dec from average utc time
 # 20Aug16 GIL fix some print statements
 # 20Feb16 GIL remove normalization.  Do that in post processing
 # 20Feb15 GIL fix normalization for different averaging times

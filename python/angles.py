@@ -663,7 +663,7 @@ def phmsdms(hmsdms):
 
     # pattern2: find decimal number (int or float) in string.
     pattern2 = re.compile(r"([-+]?[0-9]*\.?[0-9]+)")
-
+    
     hmsdms = hmsdms.lower()
     hdlist = pattern1.findall(hmsdms)
 
@@ -746,7 +746,7 @@ def phmsdms(hmsdms):
 
     return dict(sign=sign, units=units, vals=vals, parts=parts)
 
-def str2deci( hmsdms):
+def str2deci( hmsdms, todeg=False):
     """
     Convert an arbitrary string into floating point string (degrees)
     Added by Glen Langston for a generic parser for input angle strings
