@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 21Jan16 GIL scale save files by nave
 # 20Aug16 GIL restore writing hot/cold messages
 # 19SEP14 GIL hanning smooth reference in case of subtracting fit
 # 19JUN21 GIL more code cleanup
@@ -141,16 +142,22 @@ class ra_integrate(gr.sync_block):
         self.ref = radioastronomy.Spectrum()
         if os.path.isfile(HOTFILE):
             self.hot.read_spec_ast(HOTFILE)
+            self.hot.ydataA = self.hot.ydataA/self.hot.nave
         else:
             self.hot.read_spec_ast(self.noteName)    # read the parameters
+            self.hot.ydataA = self.hot.ydataA/self.hot.nave
         if os.path.isfile(COLDFILE):
             self.cold.read_spec_ast(COLDFILE)
+            self.cold.ydataA = self.cold.ydataA/self.cold.nave
         else:
             self.cold.read_spec_ast(self.noteName)    # read the parameters
+            self.cold.ydataA = self.cold.ydataA/self.cold.nave
         if os.path.isfile(REFFILE):
             self.ref.read_spec_ast(REFFILE)
+            self.ref.ydataA = self.ref.ydataA/self.ref.nave
         else:
             self.ref.read_spec_ast(self.noteName)    # read the parameters
+            self.ref.ydataA = self.ref.ydataA/self.ref.nave
         if self.obs.nChan != vlen:
             self.update_len(self.obs)
         if self.ave.nChan != vlen:
@@ -565,16 +572,24 @@ class ra_integrate(gr.sync_block):
                     self.ref.utc = self.ave.utc
                     self.ref.durationsec = self.ave.durationsec
                     self.ref.ydataA[0:1] = self.ref.ydataA[2]
-                # if writing files, reduce write rate
+
+# if writing files, reduce write rate
                 if (self.inttype == radioastronomy.INTSAVE) and (self.nintegrate % 20 == 1):
                     lastfile = ""
                     if self.obstype == radioastronomy.OBSHOT:
+                        self.hot.ydataA = np.maximum(self.ave.ydataB[0:self.vlen], self.epsilons[0:self.vlen])
+                        self.hot.ydataA[0:1] = self.hot.ydataA[2]
                         self.hot.write_ascii_file("./", HOTFILE)
                         lastfile = HOTFILE
                     elif self.obstype == radioastronomy.OBSCOLD:
+                        self.cold.ydataA = np.maximum(self.ave.ydataB[0:self.vlen], self.epsilons[0:self.vlen])
+                        self.cold.ydataB[0:1] = self.cold.ydataB[2]
+
                         self.cold.write_ascii_file("./", COLDFILE)
                         lastfile = COLDFILE
                     elif self.obstype == radioastronomy.OBSREF:
+                        self.ref.ydataA = np.maximum(self.ave.ydataB[0:self.vlen], self.epsilons[0:self.vlen])
+                        self.ref.ydataA[0:1] = self.ref.ydataA[2]
                         self.ref.write_ascii_file("./", REFFILE)
                         lastfile = REFFILE
                     if self.lastfile != lastfile:
@@ -582,6 +597,7 @@ class ra_integrate(gr.sync_block):
                         self.lastfile = lastfile
                 if self.inttype != radioastronomy.INTSAVE:
                     self.lastfile = ""
+
             # after flip, the first couple channels are anomoulusly large
             spec[0:1] = spec[2]
             self.ave.ydataA[0:1] = self.ave.ydataA[2]

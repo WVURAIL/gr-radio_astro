@@ -418,14 +418,11 @@ class ra_ascii_sink(gr.sync_block):
                     self.avecount = 0
                     continue
                 # distinguish hot load and regular observations
-                if self.obstype == radioastronomy.OBSREF:
-                    outname = yymmdd + '.ref'
+                if self.obs.telel > 0:
+                    outname = yymmdd + '.ast'
                 else:
-                    if self.obs.telel > 0:
-                        outname = yymmdd + '.ast'
-                    else:
-                        outname = yymmdd + '.hot'
-                #remove : from time
+                    outname = yymmdd + '.hot'
+
                 outname = outname.replace(":", "")
                 
                 self.obs.writecount = self.obs.writecount + 1
