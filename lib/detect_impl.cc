@@ -213,7 +213,7 @@ namespace gr {
       inext = 0;
       bufferfull = false;
       inext2 = vlen2 + 1;
-      printf("Buffer is not full: %5d\n", inext2);
+      printf("Buffer is not full: %5ld\n", inext2);
     } // end of set_vlen()
 
     int
@@ -240,7 +240,7 @@ namespace gr {
     } // end of detect_impl:: general_work
 
     int
-<<<<<<< HEAD
+    // <<<<<<< HEAD
     detect_impl::update_buffer()
     { long i = inext2 - vlen2, length = vlen, jstart = 0;
 
@@ -297,9 +297,9 @@ namespace gr {
     
     int
     detect_impl::event(const unsigned ninputs, const gr_complex *input, gr_complex *output)
-=======
-    detect_impl::event(const gr_complex *input, gr_complex *output)
->>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
+    // =======
+    //    detect_impl::event(const gr_complex *input, gr_complex *output)
+    // >>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
     {
       //outbuf = (float *) //create fresh one if necessary
       float n_sigma = d_dms; // translate variables 

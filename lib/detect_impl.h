@@ -91,13 +91,13 @@ namespace gr {
       gr_complex samples[MAX_VLEN];  // output event buffer 
       bool initialized = 0;   // flag initializing output
       double bufferdelay = float(MAX_VLEN/2)*1.E-6/d_bw;
-<<<<<<< HEAD
+      // <<<<<<< HEAD
       unsigned long vcount = 0; // count of vectors processed
       unsigned long logvcount = 0; // count of last logged mjd
       long eventoffset = 0;     // index of event in block
-=======
+      // =======
 
->>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
+      // >>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
      public:
       detect_impl(int vec_length, float dms, float f_obs, float bw, float t_int, int nt);
       ~detect_impl();
@@ -143,7 +143,7 @@ namespace gr {
 } // namespace gr
 
 #endif /* INCLUDED_RADIO_ASTRO_DETECT_IMPL_H */
-<<<<<<< HEAD
-=======
+// <<<<<<< HEAD
+// =======
 
->>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
+// >>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f

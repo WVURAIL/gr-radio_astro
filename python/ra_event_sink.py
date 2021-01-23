@@ -255,17 +255,17 @@ class ra_event_sink(gr.sync_block):
         self.emjd = 0.
         self.epeak = 0.
         self.erms = 1.
-        self.evector = 0L
-        self.env = 0L
+        self.evector = 0
+        self.env = 0
         self.eoffset = 0
         self.lastRms = 1.
         self.lastmjd = 0.
         self.lastvmjd = 0.
         # set of vector timing values
         self.vmjd = 0.
-        self.vcount = 0L
+        self.vcount = 0
         self.voffset = 0
-        self.nv = 0L
+        self.nv = 0
         self.obs.utc = now
         self.obs.site = self.site
         self.obs.noteA = self.noteA
@@ -404,13 +404,13 @@ class ra_event_sink(gr.sync_block):
             nout = nout+1
             # try to prevent duplicate 
             # output latest event count
-<<<<<<< HEAD
-        # report all vectors processed
-        return nv
-    # end event_sink()
+# <<<<<<< HEAD
+#        # report all vectors processed
+#        return nv
+#    # end event_sink()
 
 
-=======
+# =======
         return nout
     # end event_sink()
->>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
+# >>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
