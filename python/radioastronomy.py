@@ -477,7 +477,9 @@ class Spectrum(object):
             print("File %4d: %s (%d)" % (self.writecount, outname, self.count))
         fullname = dirname + outname
         outfile = open(fullname, 'w')
-        outfile.write('# File: ' + outname + '\n')
+#        outfile.write('# File: ' + outname + '\n')
+        outline = '# FILE      =  ' + outname + '\n'
+        outfile.write(outline)
         self.noteA = self.noteA.replace('\n', '')
         self.noteA = self.noteA.strip()
         outline = '# NOTEA     = ' + self.noteA + '\n'
@@ -537,9 +539,13 @@ class Spectrum(object):
             outfile.write(outline)
         outline = '# Count     = ' + str(self.count) + '\n'
         outfile.write(outline)
-        outline = '# CenterFreq= ' + str(self.centerFreqHz) + '\n'
+        # match SETI/GUPPI KEYWORDS
+        # https://www.cv.nrao.edu/~pdemores/GUPPI_Raw_Data_Format/
+#        outline = '# CenterFreq= ' + str(self.centerFreqHz) + '\n'
+        outline = '# OBSFREQ   = ' + str(self.centerFreqHz) + '\n'
         outfile.write(outline)
-        outline = '# Bandwidth = '  + str(self.bandwidthHz) + '\n'
+#        outline = '# Bandwidth = '  + str(self.bandwidthHz) + '\n'
+        outline = '# OBSBW     = '  + str(self.bandwidthHz) + '\n'
         outfile.write(outline)
         outline = '# Duration  = '  + str(self.durationSec) + '\n'
         outfile.write(outline)
@@ -773,6 +779,12 @@ class Spectrum(object):
                     self.seconds = float(parts[3])
                 if parts[1] == 'CENTERFREQ':
                     self.centerFreqHz = float(parts[3])
+                # SETI/GUPPI Keywords
+                if parts[1] == 'OBSFREQ':
+                    self.centerFreqHz = float(parts[3])
+                # SETI/GUPPI Keywords
+                if parts[1] == 'OBSBW':
+                    self.bandwidthHz = float(parts[3])
                 if parts[1] == 'CENTERFREQ=':
                     self.centerFreqHz = float(parts[2])
                 if parts[1] == 'BANDWIDTH':
