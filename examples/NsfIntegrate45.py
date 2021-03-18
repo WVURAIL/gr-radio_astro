@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: PlutoSDR Dongle
-# Generated: Thu May 28 22:50:32 2020
+# Generated: Thu Mar 18 12:35:26 2021
 ##################################################
 
 from distutils.version import StrictVersion
@@ -148,7 +148,7 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
         self.nAve = nAve = nAves
         self.Xaxis = Xaxis = xaxis_save
         self.Telescope = Telescope = telescope_save
-        self.Record = Record = 0
+        self.Record = Record = 1
         self.Gain2 = Gain2 = 12.
         self.Gain1 = Gain1 = Gain1s
         self.Elevation = Elevation = Elevation_save
@@ -327,7 +327,7 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
             "",
             5 # Number of inputs
         )
-        self.qtgui_vector_sink_f_0_0.set_update_time(.5)
+        self.qtgui_vector_sink_f_0_0.set_update_time(2)
         self.qtgui_vector_sink_f_0_0.set_y_axis(ymins[units], ymaxs[units])
         self.qtgui_vector_sink_f_0_0.enable_autoscale(False)
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
@@ -339,7 +339,7 @@ class NsfIntegrate45(gr.top_block, Qt.QWidget):
                   '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
                   1, 1, 1, 1, 1]
-        colors = ["gold", "dark green", "red", "blue", "cyan",
+        colors = ["yellow", "dark green", "red", "blue", "cyan",
                   "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
                   1.0, 1.0, 1.0, 1.0, 1.0]
