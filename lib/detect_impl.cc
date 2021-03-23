@@ -19,8 +19,7 @@
  */
 
 /* HISTORY 
- * 20Jul26 GIL change to detection a single sample
- * 20Jun26 GIL add vector count and sample offset tags
+ * 21Mar23 GIL make detect asyncrhonus 
  * 20Jun25 GIL process all provided vectors
  * 20Jun23 GIL try to find reason some events are missed
  */
@@ -229,7 +228,7 @@ namespace gr {
       const gr_complex *in = (const gr_complex *) input_items[0];
       gr_complex *out = (gr_complex *) output_items[0];
       unsigned ninputs = ninput_items.size();
-      int success;
+      int success = 0;
 
       // since this is a 1 to 1 process, the numbrer of inputs is
       // the same as the number of output items
@@ -240,9 +239,8 @@ namespace gr {
       consume_each (noutput_items);
 
       // Tell runtime system how many output items we produced.
-      return 1;
+      return success;
     } // end of detect_impl:: general_work
-    
 
     int
     detect_impl::update_buffer()
@@ -304,7 +302,8 @@ namespace gr {
     {
       //outbuf = (float *) //create fresh one if necessary
       float n_sigma = d_dms; // translate variables 
-      long datalen = d_vec_length * ninputs, nout = 0, jjj = 0, inext0 = inext;
+      long datalen = d_vec_length * ninputs, nout = 0, jjj = 0, inext0 = inext,
+	detected = 0;
       gr_complex rp = 0;
       double mag2 = 0, dmjd = 0;
 
@@ -338,7 +337,7 @@ namespace gr {
 	  // add a vector count log entry every second or so
 	  logvcount = vcount + 10000;
 	} // end if time to log MJD vs vector count
-      
+
       // fill the circular buffer
       for(unsigned long j=0; j < datalen; j++)
 	{ rp = input[j];
@@ -371,7 +370,8 @@ namespace gr {
 		  (circular[inext2].real() < -nsigma_rms) ||
 		  (circular[inext2].imag() > nsigma_rms) ||
 		  (circular[inext2].imag() < -nsigma_rms))
-		{ // truncate RMS for RMS matching 
+		{ // truncate RMS for RMS matching
+		  detected = 1;
 		  rms = int( rms * 100000.); 
 		  rms = rms / 100000.;   
 		  imax2 = inext2;
@@ -443,8 +443,9 @@ namespace gr {
 	  for (int iii = 0; iii <  datalen; iii++)
 	    { output[iii] = input[iii];
 	    }
+	  return 1;
 	}
-      else {
+      if (detected == 1) {
 	// repeated output the last event
 	jjj = 0;
 	for (nout = 0; nout < ninputs; nout++)
@@ -456,7 +457,8 @@ namespace gr {
 	  } // end for all input vectors
       } // end else output event
 
-      return 0;
+      // return detected event count, either 0 or 1
+      return detected;
     } // end of detect_impl::event()
 
   } /* namespace radio_astro */

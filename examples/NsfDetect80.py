@@ -5,7 +5,7 @@
 # Title: NSF Detect 8 MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 8 MHz samples
-# Generated: Sun Aug 16 12:13:04 2020
+# Generated: Tue Mar 23 14:22:06 2021
 ##################################################
 
 from distutils.version import StrictVersion
@@ -292,7 +292,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        _DebugOn_check_box = Qt.QCheckBox('DebugOn')
+        _DebugOn_check_box = Qt.QCheckBox('Monitor')
         self._DebugOn_choices = {True: True, False: False}
         self._DebugOn_choices_inv = dict((v,k) for k,v in self._DebugOn_choices.iteritems())
         self._DebugOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_DebugOn_check_box, "setChecked", Qt.Q_ARG("bool", self._DebugOn_choices_inv[i]))
@@ -387,7 +387,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
 
         self.qtgui_time_sink_x_0_0.set_y_label('Event', "")
 
-        self.qtgui_time_sink_x_0_0.enable_tags(-1, True)
+        self.qtgui_time_sink_x_0_0.enable_tags(-1, False)
         self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
         self.qtgui_time_sink_x_0_0.enable_autoscale(True)
         self.qtgui_time_sink_x_0_0.enable_grid(False)
@@ -440,7 +440,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	2
         )
 
-        self.qtgui_histogram_sink_x_0.set_update_time(1.)
+        self.qtgui_histogram_sink_x_0.set_update_time(2.)
         self.qtgui_histogram_sink_x_0.enable_autoscale(True)
         self.qtgui_histogram_sink_x_0.enable_accumulate(False)
         self.qtgui_histogram_sink_x_0.enable_grid(False)
