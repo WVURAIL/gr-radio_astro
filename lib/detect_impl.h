@@ -17,6 +17,8 @@
  * the Free Software Foundation, Inc., 51 Franklin Street,
  * Boston, MA 02110-1301, USA.
  */
+/* HISTORY */
+/* 21MAR24 GIL reduce maximum buffer size */
 
 #ifndef INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
 #define INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
@@ -29,7 +31,8 @@
 
 // #define MAX_VLEN 16384
 //#define MAX_VLEN 8192
-#define MAX_VLEN 4096
+//#define MAX_VLEN 4096
+#define MAX_VLEN 2048
 #define MAX_BUFF (2L*MAX_VLEN)
 
 // constants for calculating Modified Julian Date
@@ -84,7 +87,7 @@ namespace gr {
       double sum2 = 0;        // sum of values squared
       double rms2 = 0;        // rms squared of values in circular buffer
       long nsum = 0;          // count of samples in current sum
-      long nmaxcount = vlen*8;// count of samples until detection restarts
+      long nmaxcount = vlen;  // count of samples until detection restarts
       double oneovern = 1./double(nmaxcount);
       bool bufferfull = false;// assume buffer is not full 
       double nsigma_rms = 0;  // comparision value for event detection
@@ -94,6 +97,8 @@ namespace gr {
       unsigned long vcount = 0; // count of vectors processed
       unsigned long logvcount = 0; // count of last logged mjd
       long eventoffset = 0;     // index of event in block
+      double mjd0 = 0.;
+      long lastday = 0;
      public:
       detect_impl(int vec_length,float dms, float f_obs, float bw, float t_int, int nt);
       ~detect_impl();

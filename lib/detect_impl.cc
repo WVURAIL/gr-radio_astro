@@ -19,6 +19,8 @@
  */
 
 /* HISTORY 
+ * 21Mar24 GIL take into account the number of vectors in the detect
+ * 21Mar24 GIL allow detections 1/2 a vector after last event
  * 21Mar23 GIL make detect asyncrhonus 
  * 20Jun25 GIL process all provided vectors
  * 20Jun23 GIL try to find reason some events are missed
@@ -89,7 +91,7 @@ namespace gr {
 
     long
     detect_impl::ymd_to_mjd_x(int year, int month, int day) 
-    {
+    { 
       year += month / MonthsPerYear;
       month %= MonthsPerYear;
       // Adjust for month/year to Mar... Feb
@@ -97,7 +99,7 @@ namespace gr {
 	month += MonthsPerYear; // Months per year
 	year--;
       }
-      long d = (year / 400) * DaysPer400Years;
+      long double d = (year / 400) * DaysPer400Years;
       long y400 = (int) (year % 400);
       d += (y400 / 100) * DaysPer100Years;
       int y100 = y400 % 100;
@@ -111,11 +113,11 @@ namespace gr {
       d -= mjdOffset;
       return d;
     } /* end of int ymd_to_mjd_x() */
-
+  
     double 
-    detect_impl::get_mjd()
+    detect_impl::get_mjd( )
     {
-      long double mjd = 0, seconds = 0;
+      double mjd = 0, seconds = 0;
       struct timespec ts;
       long r = clock_gettime(CLOCK_REALTIME, &ts);
       char buff[100];
@@ -126,7 +128,15 @@ namespace gr {
       long month = ptm->tm_mon + 1;
       long day = ptm->tm_mday;
       // printf("Current date: %5d %3d %3d\n", year, month, day);
-      mjd = ymd_to_mjd_x( year, month, day);
+
+      if (lastday == day) {  // if date has not changed, use previous mjd
+	 mjd = mjd0;
+      }
+      else {
+	 mjd0 = ymd_to_mjd_x( year, month, day);
+	 mjd = mjd0;
+	 //	 printf("Mjd0: %16.6f\n", mjd0);
+      }
 
       strftime(buff, sizeof buff, "%D %T", gmtime(&ts.tv_sec));
       // printf("Current time: %s.%09ld UTC\n", buff, ts.tv_nsec);
@@ -135,7 +145,10 @@ namespace gr {
       //      seconds = seconds % 86400.;
       seconds += (1.e-9*ts.tv_nsec);
       mjd += (seconds/86400.);
-      //      printf("MJD: %15.9f + %15.9fs\n", mjd, seconds);
+
+      if (lastday != day) printf("MJD0: %15.9f + %15.9fs (%d, %d)\n", \
+				 mjd, seconds, lastday, day);
+      lastday = day;
 
       return mjd;
     } // end of get_mjd()
@@ -210,13 +223,14 @@ namespace gr {
 	}
       d_vec_length = vlen;
       vlen2 = vlen/2;
+      nmaxcount = vlen;    // set detection pause for 1 vector
       
       // vectors do not yet work;  circular = std::vector<gr_complex>(vlen);
       // now must initialize indicies
       inext = 0;
       bufferfull = false;
       inext2 = vlen2 + 1;
-      printf("Buffer is not full: %5d\n", inext2);
+      // printf("Buffer is not full: %5d\n", inext2);
     } // end of set_vlen()
       
     int
@@ -305,38 +319,14 @@ namespace gr {
       long datalen = d_vec_length * ninputs, nout = 0, jjj = 0, inext0 = inext,
 	detected = 0;
       gr_complex rp = 0;
-      double mag2 = 0, dmjd = 0;
+      double mag2 = 0, dmjd = 0.;
 
       // get time all samples arrive for any events found
       dmjd = get_mjd();
+      // buffer has N vectors are added, offset to time of first sample
+      dmjd -= ((float(vlen*ninputs)*1.e-6/d_bw)/86400.);
+
       vcount += ninputs;
-      // to reduce CPU usage, only log vector count MJDs every
-      // second or so.
-      if (vcount > logvcount)
-	{
-	  add_item_tag(0, // Port number
-		       nitems_written(0) + 1, // Offset
-		       pmt::mp("VMJD"), // Key
-		       pmt::from_double(dmjd) // Value
-		       );
-	  add_item_tag(0, // Port number
-		       nitems_written(0) + 1, // Offset
-		       pmt::mp("VCOUNT"), // Key
-		       pmt::from_uint64(vcount) // Value
-		       );
-	  add_item_tag(0, // Port number
-		       nitems_written(0) + 1, // Offset
-		       pmt::mp("NV"), // Key
-		       pmt::from_uint64(ninputs) // Value
-		       );
-	  add_item_tag(0, // Port number
-		       nitems_written(0) + 1, // Offset
-		       pmt::mp("VOFFSET"), // Key
-		       pmt::from_long(inext0) // Value
-		       );
-	  // add a vector count log entry every second or so
-	  logvcount = vcount + 10000;
-	} // end if time to log MJD vs vector count
 
       // fill the circular buffer
       for(unsigned long j=0; j < datalen; j++)
@@ -391,10 +381,10 @@ namespace gr {
 		  // time now is after all samples have arrived.
 		  // the event was found at sample inext2
 		  // first count samples since started loop
-		  bufferdelay = inext0 - inext2;
-		  if (bufferdelay < 0)
-		    bufferdelay += MAX_BUFF;
-		  dmjd -= (float(bufferdelay)*1.e-6/d_bw);
+		  // dmjd is the beginning of the buffer, now add offset.
+		  // notice the sample might have been in buffere before, so dmjd can be negative
+		  
+		  dmjd += (((j - vlen2)*1.e-6/d_bw)/86400.);
 		  // printf("Event MJD: %15.6f; Peak=%8.4f+/-%6.4f\n", dmjd, peak, rms);
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
@@ -422,7 +412,7 @@ namespace gr {
 			       pmt::from_long(ninputs) // Value
 			       );
 
-		  update_buffer();
+		  update_buffer();     // center event in samples[]
 		  nsum = 0;            // restart Sum count
 		  sum2 = 0.;           // restart RMS Sum
 		  bufferfull = false;
@@ -445,6 +435,7 @@ namespace gr {
 	    }
 	  return 1;
 	}
+
       if (detected == 1) {
 	// repeated output the last event
 	jjj = 0;
@@ -456,7 +447,36 @@ namespace gr {
 	      }
 	  } // end for all input vectors
       } // end else output event
-
+      else {
+	// to reduce CPU usage, only log vector count MJDs every
+	// second or so.
+	if (vcount > logvcount)
+	  {
+	    // printf("Mjd: %16.6d\n", dmjd);
+	    add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("VMJD"), // Key
+		       pmt::from_double(dmjd) // Value
+		       );
+	    add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("VCOUNT"), // Key
+		       pmt::from_uint64(vcount) // Value
+		       );
+	    add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("NV"), // Key
+		       pmt::from_uint64(ninputs) // Value
+		       );
+	    add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("VOFFSET"), // Key
+		       pmt::from_long(inext0) // Value
+		       );
+	    // add a vector count log entry every second or so
+	    logvcount = vcount + 10000;
+	  } // end if time to log MJD vs vector count
+      } // end else if not detected, can log vector
       // return detected event count, either 0 or 1
       return detected;
     } // end of detect_impl::event()

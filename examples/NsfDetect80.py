@@ -5,7 +5,7 @@
 # Title: NSF Detect 8 MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 8 MHz samples
-# Generated: Tue Mar 23 14:22:06 2021
+# Generated: Wed Mar 24 19:46:39 2021
 ##################################################
 
 from distutils.version import StrictVersion
@@ -176,6 +176,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         self.EventMode = EventMode = False
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
+        self.Detect = Detect = 2
         self.DebugOn = DebugOn = bool(DebugOn_save)
         self.DcOffsetMode = DcOffsetMode = DcOffsetMode_save
         self.DabNotch = DabNotch = DabNotch_save
@@ -292,7 +293,18 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        _DebugOn_check_box = Qt.QCheckBox('Monitor')
+        _Detect_check_box = Qt.QCheckBox('Detect')
+        self._Detect_choices = {True: 2, False: 0}
+        self._Detect_choices_inv = dict((v,k) for k,v in self._Detect_choices.iteritems())
+        self._Detect_callback = lambda i: Qt.QMetaObject.invokeMethod(_Detect_check_box, "setChecked", Qt.Q_ARG("bool", self._Detect_choices_inv[i]))
+        self._Detect_callback(self.Detect)
+        _Detect_check_box.stateChanged.connect(lambda i: self.set_Detect(self._Detect_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_Detect_check_box, 7, 0, 1, 1)
+        for r in range(7, 8):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 1):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        _DebugOn_check_box = Qt.QCheckBox('Debug')
         self._DebugOn_choices = {True: True, False: False}
         self._DebugOn_choices_inv = dict((v,k) for k,v in self._DebugOn_choices.iteritems())
         self._DebugOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_DebugOn_check_box, "setChecked", Qt.Q_ARG("bool", self._DebugOn_choices_inv[i]))
@@ -373,9 +385,9 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
                 bool(DebugOn), 0, 1, int(Bandwidth), BroadcastNotch, DabNotch, int(Gain1), bool(BiasOn),
                 '0')
 
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(IF_attn), Azimuth, Elevation)
         self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.e-6)
-        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
+        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Detect)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
         	fftsize, #size
         	Bandwidth, #samp_rate
@@ -902,6 +914,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         self.IF_attn = IF_attn
         Qt.QMetaObject.invokeMethod(self._IF_attn_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.IF_attn)))
         self.sdrplay_rsp1a_source_0.set_if_atten_db(int(self.IF_attn))
+        self.radio_astro_ra_event_sink_0.set_gain1( float(self.IF_attn))
         self._IF_attn_save_config = ConfigParser.ConfigParser()
         self._IF_attn_save_config.read(self.ConfigFile)
         if not self._IF_attn_save_config.has_section('main'):
@@ -928,7 +941,6 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
         self.sdrplay_rsp1a_source_0.set_lna_atten_step(int(self.Gain1))
-        self.radio_astro_ra_event_sink_0.set_gain1( float(self.Gain1))
         self._Gain1s_config = ConfigParser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):
@@ -971,6 +983,14 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	self._device_save_config.add_section('main')
         self._device_save_config.set('main', 'device', str(self.Device))
         self._device_save_config.write(open(self.ConfigFile, 'w'))
+
+    def get_Detect(self):
+        return self.Detect
+
+    def set_Detect(self, Detect):
+        self.Detect = Detect
+        self._Detect_callback(self.Detect)
+        self.radio_astro_detect_0.set_mode( self.Detect)
 
     def get_DebugOn(self):
         return self.DebugOn
