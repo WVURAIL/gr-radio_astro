@@ -19,6 +19,7 @@
  */
 
 /* HISTORY 
+ * 21Mar25 GIL fix truncation of time offset calculation
  * 21Mar24 GIL take into account the number of vectors in the detect
  * 21Mar24 GIL allow detections 1/2 a vector after last event
  * 21Mar23 GIL make detect asyncrhonus 
@@ -36,6 +37,8 @@
 #include "detect_impl.h"
 #include <iostream>
 #include <chrono>
+
+#define EPSILON 0.03    // define small value for waiting for data 
 
 namespace gr {
   namespace radio_astro {
@@ -117,7 +120,7 @@ namespace gr {
     double 
     detect_impl::get_mjd( )
     {
-      double mjd = 0, seconds = 0;
+      double mjd = 0, seconds = 0, dtd = 0.;
       struct timespec ts;
       long r = clock_gettime(CLOCK_REALTIME, &ts);
       char buff[100];
@@ -139,16 +142,19 @@ namespace gr {
       }
 
       strftime(buff, sizeof buff, "%D %T", gmtime(&ts.tv_sec));
-      // printf("Current time: %s.%09ld UTC\n", buff, ts.tv_nsec);
       
       seconds =  ptm->tm_sec + (60.*ptm->tm_min) + (3600.*ptm->tm_hour);
       //      seconds = seconds % 86400.;
       seconds += (1.e-9*ts.tv_nsec);
-      mjd += (seconds/86400.);
+      dtd = (seconds/86400.);
+      mjd += dtd;
 
-      if (lastday != day) printf("MJD0: %15.9f + %15.9fs (%d, %d)\n", \
-				 mjd, seconds, lastday, day);
-      lastday = day;
+      if (lastday != day) {
+	printf("Current time: %s.%09ld UTC\n", buff, ts.tv_nsec);
+	printf("New Day:%15.9f, %12.6fs (%15.12f, last=%ld, current=%ld)\n", \
+	       mjd, seconds, dtd, lastday, day);
+      }
+      lastday = day;  // save day so that MJD is only updated once a day
 
       return mjd;
     } // end of get_mjd()
@@ -157,8 +163,8 @@ namespace gr {
     detect_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
       /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
-      unsigned ninputs = ninput_items_required.size();
-      for(unsigned int i = 0; i < ninputs; i++)
+      long ninputs = ninput_items_required.size();
+      for(long i = 0; i < ninputs; i++)
        	    ninput_items_required[i] = noutput_items;
     }
 
@@ -187,7 +193,7 @@ namespace gr {
       d_bw = bw;
       
       printf("Input Bandwidth: %7.1f (MHz)\n", bw);
-      bufferdelay = float(MAX_VLEN/2)*1.E-6/d_bw;
+      bufferdelay = float(MAX_VLEN/2)/d_bw;
     }
       
     void 
@@ -224,7 +230,6 @@ namespace gr {
       d_vec_length = vlen;
       vlen2 = vlen/2;
       nmaxcount = vlen;    // set detection pause for 1 vector
-      
       // vectors do not yet work;  circular = std::vector<gr_complex>(vlen);
       // now must initialize indicies
       inext = 0;
@@ -241,7 +246,7 @@ namespace gr {
     {
       const gr_complex *in = (const gr_complex *) input_items[0];
       gr_complex *out = (gr_complex *) output_items[0];
-      unsigned ninputs = ninput_items.size();
+      long ninputs = ninput_items.size();
       int success = 0;
 
       // since this is a 1 to 1 process, the numbrer of inputs is
@@ -312,24 +317,30 @@ namespace gr {
   } // end of update_buffer()
     
     int
-    detect_impl::event(const unsigned ninputs, const gr_complex *input, gr_complex *output)
+    detect_impl::event(const long ninputs, const gr_complex *input, gr_complex *output)
     {
       //outbuf = (float *) //create fresh one if necessary
       float n_sigma = d_dms; // translate variables 
       long datalen = d_vec_length * ninputs, nout = 0, jjj = 0, inext0 = inext,
 	detected = 0;
       gr_complex rp = 0;
-      double mag2 = 0, dmjd = 0.;
+      double mag2 = 0, dmjd = 0., dtd = 0;
 
       // get time all samples arrive for any events found
       dmjd = get_mjd();
-      // buffer has N vectors are added, offset to time of first sample
-      dmjd -= ((float(vlen*ninputs)*1.e-6/d_bw)/86400.);
-
+      // buffer has N vectors added, offset to time of first sample
+      dtd = float(datalen);
+      dtd = dtd/d_bw;
+      if (! initialized) {
+	printf("Uninit: MJD + offset: %15.6fs, %10.6fs %ld\n", \
+	       dmjd, dtd, datalen);
+      }
+      dtd = dtd/86400.;  // convert time offset to days
+      dmjd = dmjd - dtd;
       vcount += ninputs;
 
       // fill the circular buffer
-      for(unsigned long j=0; j < datalen; j++)
+      for(long j=0; j < datalen; j++)
 	{ rp = input[j];
 	  mag2 = (rp.real()*rp.real()) + (rp.imag()*rp.imag());
 	  circular[inext] = rp;
@@ -382,10 +393,23 @@ namespace gr {
 		  // the event was found at sample inext2
 		  // first count samples since started loop
 		  // dmjd is the beginning of the buffer, now add offset.
-		  // notice the sample might have been in buffere before, so dmjd can be negative
+		  // Notice the sample might have been in buffere before,
+		  // so dt can be negative
 		  
-		  dmjd += (((j - vlen2)*1.e-6/d_bw)/86400.);
-		  // printf("Event MJD: %15.6f; Peak=%8.4f+/-%6.4f\n", dmjd, peak, rms);
+		  dtd = float(j);
+		  dtd = dtd - float(vlen2);
+		  if (ecount < 1) {
+		    printf("Event: dtd: %15.6f (delta)\n", dtd);
+		    printf("Event: bw : %15.6f (bw)\n", d_bw);
+		  }
+		  dtd = dtd/d_bw;
+		  if (ecount < 5) {
+		    printf("MJD: %15.6f; Peak=%8.4f+/-%6.4f (dt=%9.6fs)\n", \
+			   dmjd, peak, rms, dtd);
+		  }
+		  dtd = dtd / 86400.;   // convert to days
+		  dmjd = dmjd + dtd;
+		  dmjd = dmjd - dt0;    // delay through gnuradio + device
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
 			       pmt::mp("MJD"), // Key
@@ -416,16 +440,36 @@ namespace gr {
 		  nsum = 0;            // restart Sum count
 		  sum2 = 0.;           // restart RMS Sum
 		  bufferfull = false;
+		  ecount = ecount + 1;
 		} // end if an event found
 	    } // end if buffer full
 	} // end for all samples
 	      
       if (! initialized) {
-	for (int iii = 0; iii <  d_vec_length; iii++)
+	for (int iii = 0; iii <  vlen; iii++)
 	  { samples[iii] = input[iii];
 	  }
-	initialized = 1;     // no need to re-initialize the event
-      }
+	for (int iii = 0; iii <  datalen; iii++)
+	  {output[iii] = input[iii];
+	  } // end for all input vectors	    }
+	// if still zero, then not suitable for initialization
+	rp = input[vlen2]; // get middle value in input
+	if (((rp.real() < EPSILON) and (rp.real() > -EPSILON)) and 
+	    ((rp.imag() < EPSILON) and (rp.imag() > -EPSILON)))
+	  {
+	  nzero = nzero + ninputs;
+	  return 0;   // return noting no data yet
+	  }
+	else {
+	  printf("Nonzero %f, %f (%d)\n", rp.real(), rp.imag(), vlen2);
+	  dt0 = nzero * vlen / d_bw; // time until nonzero (s)
+	  printf("Non zero data found after %ld vectors\n", nzero);
+	  printf("dt0 = %12.6fs\n", dt0);
+	  dt0 = dt0/86400.;    // convert from seconds to days
+	  initialized = 1;     // no need to re-initialize the event
+	  return 1;            // show initial samples
+	} // end else not zero data in vector
+      } // end if not yet initialzed
 
       if (d_nt == 0) // if monitoring input, just output input 
 	{
@@ -452,6 +496,7 @@ namespace gr {
 	// second or so.
 	if (vcount > logvcount)
 	  {
+	    dmjd = dmjd - dt0;
 	    // printf("Mjd: %16.6d\n", dmjd);
 	    add_item_tag(0, // Port number
 		       nitems_written(0) + 1, // Offset
@@ -480,7 +525,6 @@ namespace gr {
       // return detected event count, either 0 or 1
       return detected;
     } // end of detect_impl::event()
-
   } /* namespace radio_astro */
 } /* namespace gr */
 

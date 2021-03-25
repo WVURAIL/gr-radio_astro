@@ -97,8 +97,11 @@ namespace gr {
       unsigned long vcount = 0; // count of vectors processed
       unsigned long logvcount = 0; // count of last logged mjd
       long eventoffset = 0;     // index of event in block
-      double mjd0 = 0.;
-      long lastday = 0;
+      double dt0 = 0.;          // extimate sample delay from 1st != 0  vector
+      long nzero = 0;           // count zero vectors for dt0 estimate
+      double mjd0 = 0.;         // save MJD of current day
+      long lastday = 0;         // store last day to determine new mjd0 calc
+      long ecount = 0;          // count of events detected
      public:
       detect_impl(int vec_length,float dms, float f_obs, float bw, float t_int, int nt);
       ~detect_impl();
@@ -122,7 +125,7 @@ namespace gr {
       
       int update_buffer();
 
-      int event(const unsigned ninputs, const gr_complex *input, gr_complex *output);
+      int event(const long ninputs, const gr_complex *input, gr_complex *output);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,
