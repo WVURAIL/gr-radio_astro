@@ -3,6 +3,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+21APR09 GIL add telescope altitude read/write
 20DEC28 GIL fix parsing header separately from data
 20DEC16 GIL file header
 20NOV27 GIL separate the reading of the file header from the data
@@ -442,7 +443,7 @@ class Spectrum(object):
             lst = location.sidereal_time()
             aparts = angles.phmsdms(str(lst))
             self.lst = angles.sexa2deci(aparts['sign'], *aparts['vals'], todeg=True)
-            print("lst: %s %s %7.3f" % (lst, datestr, self.lst))
+#            print("lst: %s %s %7.3f" % (lst, datestr, self.lst))
 #            self.lst = angles.sexa2deci(aparts['sign'], *aparts['vals'])
         ## Must set the date before calculating ra, dec!!!
         # compute apparent RA,DEC for date of observations
@@ -610,6 +611,8 @@ class Spectrum(object):
         outfile.write(outline)
         anglestr = angles.fmt_angle(float(self.tellat), s1=":", s2=":")
         outline = '# TELLAT    = '  + anglestr + '\n'
+        outfile.write(outline)
+        outline = '# TELALT    = '  + str(self.telelev) + '\n'
         outfile.write(outline)
         rastr = angles.fmt_angle(self.ra/15., s1=":", s2=":", pre=3) # convert to hours
         outline = '# RA        = '  + rastr[1:] + '\n'
@@ -951,6 +954,10 @@ class Spectrum(object):
                     self.tellat = angles.str2deci( parts[3]) 
                     if verbose:
                         print("TELLAT: %s %7.3f" % (parts[3], self.tellat))
+                if parts[1] == 'TELALT':
+                    self.telelev = float( parts[3]) 
+                    if verbose:
+                        print("TELALT: %s %7.3f" % (parts[3], self.telelev))
 # parse ra, dec into float
                 if parts[1] == 'RA':
                     aparts = angles.phmsdms(parts[3])
