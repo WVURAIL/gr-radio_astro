@@ -5,7 +5,7 @@
 # Title: LeftRightAudio
 # Author: Science Aficionado
 # Description: Control Left+Rigth Audio Tones and Volume
-# Generated: Tue Apr 13 11:55:53 2021
+# Generated: Tue Apr 13 13:17:03 2021
 ##################################################
 
 from distutils.version import StrictVersion
@@ -78,32 +78,32 @@ class LeftRightAudio(gr.top_block, Qt.QWidget):
         # Blocks
         ##################################################
         self._VolumeB_range = Range(0, 1, .05, .1, 1)
-        self._VolumeB_win = RangeWidget(self._VolumeB_range, self.set_VolumeB, "VolumeB", "slider", float)
-        self.top_grid_layout.addWidget(self._VolumeB_win, 3, 0, 1, 3)
-        for r in range(3, 4):
+        self._VolumeB_win = RangeWidget(self._VolumeB_range, self.set_VolumeB, "VolumeB", "dial", float)
+        self.top_grid_layout.addWidget(self._VolumeB_win, 5, 5, 1, 1)
+        for r in range(5, 6):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(5, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._VolumeA_range = Range(0, 1, .05, .1, 1)
-        self._VolumeA_win = RangeWidget(self._VolumeA_range, self.set_VolumeA, "VolumeA", "slider", float)
-        self.top_grid_layout.addWidget(self._VolumeA_win, 1, 0, 1, 3)
-        for r in range(1, 2):
+        self._VolumeA_win = RangeWidget(self._VolumeA_range, self.set_VolumeA, "VolumeA", "dial", float)
+        self.top_grid_layout.addWidget(self._VolumeA_win, 4, 5, 1, 1)
+        for r in range(4, 5):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(5, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._ToneB_range = Range(110, 6600, 110, 660, 1)
         self._ToneB_win = RangeWidget(self._ToneB_range, self.set_ToneB, 'ToneB (Hz)', "counter_slider", float)
-        self.top_grid_layout.addWidget(self._ToneB_win, 2, 0, 1, 3)
-        for r in range(2, 3):
+        self.top_grid_layout.addWidget(self._ToneB_win, 5, 0, 1, 5)
+        for r in range(5, 6):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(0, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._ToneA_range = Range(110, 11000, 110, 440, 1)
         self._ToneA_win = RangeWidget(self._ToneA_range, self.set_ToneA, 'ToneA (Hz)', "counter_slider", float)
-        self.top_grid_layout.addWidget(self._ToneA_win, 0, 0, 1, 3)
-        for r in range(0, 1):
+        self.top_grid_layout.addWidget(self._ToneA_win, 4, 0, 1, 5)
+        for r in range(4, 5):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(0, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.rational_resampler_xxx_0 = filter.rational_resampler_fff(
                 interpolation=1,
@@ -118,13 +118,13 @@ class LeftRightAudio(gr.top_block, Qt.QWidget):
         	3 #number of inputs
         )
         self.qtgui_time_sink_x_0.set_update_time(0.10)
-        self.qtgui_time_sink_x_0.set_y_axis(-1, 1)
+        self.qtgui_time_sink_x_0.set_y_axis(-.9, .9)
 
         self.qtgui_time_sink_x_0.set_y_label('Amplitude', "")
 
         self.qtgui_time_sink_x_0.enable_tags(-1, False)
         self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
-        self.qtgui_time_sink_x_0.enable_autoscale(True)
+        self.qtgui_time_sink_x_0.enable_autoscale(False)
         self.qtgui_time_sink_x_0.enable_grid(False)
         self.qtgui_time_sink_x_0.enable_axis_labels(True)
         self.qtgui_time_sink_x_0.enable_control_panel(False)
@@ -158,10 +158,10 @@ class LeftRightAudio(gr.top_block, Qt.QWidget):
             self.qtgui_time_sink_x_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win, 4, 0, 3, 3)
-        for r in range(4, 7):
+        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win, 0, 0, 2, 6)
+        for r in range(0, 2):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(0, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_freq_sink_x_0 = qtgui.freq_sink_f(
         	1024, #size
@@ -172,7 +172,7 @@ class LeftRightAudio(gr.top_block, Qt.QWidget):
         	1 #number of inputs
         )
         self.qtgui_freq_sink_x_0.set_update_time(0.10)
-        self.qtgui_freq_sink_x_0.set_y_axis(-140, 10)
+        self.qtgui_freq_sink_x_0.set_y_axis(-140, 0)
         self.qtgui_freq_sink_x_0.set_y_label('Relative Gain', 'dB')
         self.qtgui_freq_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
         self.qtgui_freq_sink_x_0.enable_autoscale(True)
@@ -205,10 +205,10 @@ class LeftRightAudio(gr.top_block, Qt.QWidget):
             self.qtgui_freq_sink_x_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_freq_sink_x_0_win = sip.wrapinstance(self.qtgui_freq_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_freq_sink_x_0_win, 7, 0, 1, 3)
-        for r in range(7, 8):
+        self.top_grid_layout.addWidget(self._qtgui_freq_sink_x_0_win, 2, 0, 2, 6)
+        for r in range(2, 4):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(0, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.blocks_multiply_const_vxx_0_2 = blocks.multiply_const_vff((0., ))
         self.blocks_add_xx_0_0 = blocks.add_vff(1)
