@@ -29,7 +29,6 @@ list(APPEND radio_astro_sources
     dedispersion_impl.cc
     detect_impl.cc
     vmedian_impl.cc
-    vmedian2_impl.cc
     vmedian3_impl.cc
 )
 
