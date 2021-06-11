@@ -3,6 +3,7 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+21JUN10 GIL fix writing different FFT sizes
 21APR09 GIL add telescope altitude read/write
 20DEC28 GIL fix parsing header separately from data
 20DEC16 GIL file header
@@ -685,7 +686,9 @@ class Spectrum(object):
                     print("Very small number of samples: ",self.nSamples)
                     print("N Chan: %5d; N  x: %5d " % (self.nChan, len(self.xdata)))
                     print("N y1  : %5d; N y2: %5d " % (len(self.ydataA), len(self.ydataB)))
-                for i in range(self.nSamples):
+                n = len(self.ydataA)
+                n = min(n, self.nSamples)
+                for i in range(n):
                     outline = pformat % (self.ydataA[i], self.ydataB[i])
                     outline = outline.replace(' 0.', ' .')
                     outline = outline.replace('-0.', '-.')
