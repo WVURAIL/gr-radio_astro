@@ -1,0 +1,14 @@
+#!/bin/bash
+#HISTORY
+#21JUL02 GIL look for processes initial vesion
+
+echo "Getting Nsf Process Group Ids"
+sleep 2
+export gid=`ps -ejf | grep 'python Nsf' | head -1 | awk -v N=3 '{print $N}'`
+
+echo "Re-nicing Group " $gid
+
+sudo renice -n -10 -g $gid
+
+
+
