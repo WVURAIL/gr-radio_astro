@@ -66,7 +66,7 @@ class png_print_spectrum(gr.sync_block):
             plt.suptitle(self.timenow + "_spectrum.png", fontdict=font1)
 
             plt.xlim([1419.5,1421.5])
-            plt.ylim([0,50000])
+            #plt.ylim([0,50000])
             ax.plot(self.frequencies/1e6, self.spectrum, linewidth=3)
             plt.axhline(linewidth=2, color='black')
             plt.axvline(x=1419.50, linewidth=3, color='black')
