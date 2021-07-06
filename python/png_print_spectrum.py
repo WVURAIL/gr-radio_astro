@@ -86,7 +86,7 @@ class png_print_spectrum(gr.sync_block):
             plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 
             #plt.plot(self.frequencies/1e6, self.spectrum)
-            plt.savefig(self.prefix + self.timenow + "_test.png")
+            plt.savefig("spectrum_" + self.prefix + self.timenow + ".png")
             plt.show
             # np.savetxt(self.textfilename, self.data_array, delimiter=',')   # write to file first to test if program works. Then I'll change to creating a graph and .png output.
             self.graphprint_toggle = "False"
