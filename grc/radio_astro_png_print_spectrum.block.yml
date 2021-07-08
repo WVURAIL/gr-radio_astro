@@ -4,9 +4,10 @@ category: '[radio_astro]'
 
 templates:
   imports: import radio_astro
-  make: radio_astro.png_print_spectrum(${vec_length}, ${samp_rate}, ${freq}, ${prefix}, ${graphprint_toggle})
+  make: radio_astro.png_print_spectrum(${vec_length}, ${samp_rate}, ${freq}, ${prefix}, ${graphprint_toggle}, ${graphinfo})
   callbacks:
     - set_graphprint_toggle(${graphprint_toggle})
+    - set_graphinfo(${graphinfo})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -30,6 +31,9 @@ parameters:
 - id: graphprint_toggle
   label: graphprint_toggle
   dtype: string
+- id: graphinfo
+  label: graphinfo
+  dtype: string  
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
 #  Keys include:

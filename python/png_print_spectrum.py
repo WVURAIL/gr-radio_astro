@@ -14,16 +14,19 @@ import matplotlib.pyplot as plt
 class png_print_spectrum(gr.sync_block):
     """
     This block enables a spectrum to be plotted as a png image file.
+    The input is
     
     Parameters:
     (1) vec_length - vector length in channels
     (2) samp_rate - used to calculate frequency values for spectrum output; set in a Variable box.
     (3) freq - center frequency used to calculate frequency values for spectrum output; set in a Variable box.
-    (4) prefix - used in the filename to describe the pathlength; set in a Variable box. 
-    (5) graphprint_toggle - string that determines whether the graph is to be printed to a .png file written to the pathlength described by the prefix variable, and written with filename = prefix + timenow + "spectrum.png"
+    (4) prefix - Variable block with id = prefix; used in the filename to describe the pathlength. 
+    (5) graphprint_toggle - string data type that is "True" or "False" to indicate whether the graph is to be printed to a .png file ("True") or not.
+    (6) graphinfo = text input in a QT GUI Entry block input by user during a run. This will show up in the title of the .png file.
+    (7) The file is written to the pathlength described by the in a Variable block with id = prefix, and written with filename format = prefix + timenow + graphinfo + ".png"
     """
 
-    def __init__(self, vec_length, samp_rate, freq, prefix, graphprint_toggle):
+    def __init__(self, vec_length, samp_rate, freq, prefix, graphprint_toggle, graphinfo):
         gr.sync_block.__init__(self,
             name="png_print_spectrum",
             in_sig=[(np.float32, int(vec_length))],
@@ -34,6 +37,7 @@ class png_print_spectrum(gr.sync_block):
         self.freq = freq
         self.prefix = prefix
         self.graphprint_toggle = graphprint_toggle
+        self.graphinfo = graphinfo
 
     # Define vectors and constants:
         self.spectrum = np.zeros(vec_length)
@@ -86,9 +90,8 @@ class png_print_spectrum(gr.sync_block):
             plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 
             #plt.plot(self.frequencies/1e6, self.spectrum)
-            plt.savefig("spectrum_" + self.prefix + self.timenow + ".png")
+            plt.savefig(self.prefix + "spectrum" + self.timenow + self.graphinfo +".png")
             plt.show
-            # np.savetxt(self.textfilename, self.data_array, delimiter=',')   # write to file first to test if program works. Then I'll change to creating a graph and .png output.
             self.graphprint_toggle = "False"
 
         return len(input_items[0])
@@ -98,5 +101,10 @@ class png_print_spectrum(gr.sync_block):
     def set_graphprint_toggle(self, graphprint_toggle):
         if self.graphprint_toggle == "False":
             self.graphprint_toggle = "True"
+
+    def set_graphinfo(self, graphinfo):
+        self.graphinfo = graphinfo
+
+
 
 
