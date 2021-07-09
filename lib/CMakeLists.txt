@@ -29,6 +29,7 @@ list(APPEND radio_astro_sources
     dedispersion_impl.cc
     detect_impl.cc
     vmedian_impl.cc
+    vmedian3_impl.cc
 )
 
 set(radio_astro_sources "${radio_astro_sources}" PARENT_SCOPE)

@@ -5,7 +5,7 @@
 # Title: NSF Watch for Events whille recording spectra
 # Author: Glen Langston
 # Description: PlutoSDR Dongle
-# Generated: Mon Oct 14 19:35:16 2019
+# Generated: Thu Mar 18 13:10:29 2021
 ##################################################
 
 from distutils.version import StrictVersion
@@ -131,11 +131,11 @@ class NsfWatch45(gr.top_block, Qt.QWidget):
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
-        self.Record = Record = 0
+        self.Record = Record = 1
         self.H1 = H1 = 1420.406E6
         self.Gain2 = Gain2 = 12.
         self.Gain1 = Gain1 = Gain1s
-        self.EventMode = EventMode = 0
+        self.EventMode = EventMode = 1
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
         self.Azimuth = Azimuth = Azimuth_save

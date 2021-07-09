@@ -18,6 +18,9 @@ Glen Langston - 2019 September 14
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20DEC29 GIL recompute LST from event time
+# 20JUN26 GIL expect VMJD, VCOUNT, NV tags
+# 20JUN25 GIL try to eliminate duplicates; corrected get_tags call
 # 19OCT11 GIL add test for duplicate events, sensed by same RMS as last event
 # 19SEP14 GIL make gain processing compatible with ra_ascii_sink.py
 # 19APR02 GIL cleanup typos
@@ -252,8 +255,17 @@ class ra_event_sink(gr.sync_block):
         self.emjd = 0.
         self.epeak = 0.
         self.erms = 1.
+        self.evector = 0L
+        self.env = 0L
+        self.eoffset = 0
         self.lastRms = 1.
         self.lastmjd = 0.
+        self.lastvmjd = 0.
+        # set of vector timing values
+        self.vmjd = 0.
+        self.vcount = 0L
+        self.voffset = 0
+        self.nv = 0L
         self.obs.utc = now
         self.obs.site = self.site
         self.obs.noteA = self.noteA
@@ -305,27 +317,51 @@ class ra_event_sink(gr.sync_block):
         # Get tags from ra_vevent block
 #        print 'preparing to get tags: ', nv
 #        tags = self.get_tags_in_window(0, 0, +self.vlen, pmt.to_pmt('event'))
-        tags = self.get_tags_in_window(0, 0, +self.vlen)
 #
+        tags = self.get_tags_in_window(0, 0, +nv)
         if len(tags) > 0:
             for tag in tags:
-#            print 'Event Tags detected in sink: ', len(tags)
+                # print 'Event Tags detected in sink: ', len(tags)
                 key = pmt.to_python(tag.key)
                 value = pmt.to_python(tag.value)
                 if key == 'MJD':
                     self.emjd = value
-#                    print 'Tag MJD : %15.9f' % (self.emjd)
+                    # print 'Tag MJD : %15.9f' % (self.emjd)
+                elif key == 'VMJD':
+                    self.vmjd = value
+                    # print 'Tag VMJD: %15.9f' % (self.emjd)
+                elif key == 'NV':
+                    self.nv = value
+                elif key == 'VCOUNT':
+                    self.vcount = value
+                elif key == 'EVECTOR':
+                    self.evector = value
+                    # print 'Tag EVECTOR: %15.9f' % (self.emjd)
+                elif key == 'ENV':
+                    self.env = value
+                elif key == 'EOFFSET':
+                    self.eoffset = value
+                elif key == 'VOFFSET':
+                    self.voffset = value
                 elif key == 'PEAK':
                     self.epeak = value
-#                    print 'Tag PEAK: %7.4f' % (self.epeak)
+                    # print 'Tag PEAK: %7.4f' % (self.epeak)
                 elif key == 'RMS':
                     self.erms = value
-#                    print 'Tag RMs : %7.4f' % (self.erms)
+                    # print 'Tag RMs : %7.4f' % (self.erms)
                 elif key != self.lasttag:
                     print('Unknown Tag: ', key, value)
                     self.lasttag = key
+
+        if self.vmjd > self.lastvmjd:
+            # print('New Vector Count tag: %15.9f %12d %3d' % \
+            #    (self.vmjd, self.vcount, self.nv))
+            self.lastvmjd = self.vmjd
+            
         nout = 0
-        for i in range(nv):
+        # assume events are not too rapid, only process last in block
+        if nv > 0:
+            i = nv - 1
             # get the length of one input
             samples = inn[i]
             # if new mjd 
@@ -335,16 +371,11 @@ class ra_event_sink(gr.sync_block):
                 self.obs.ydataB = samples.imag
                 utc = jdutil.mjd_to_datetime(self.emjd)
                 self.obs.utc = utc
+                # recompute LST, RA, Dec from event time
+                self.obs.azel2radec()
                 self.obs.emjd = self.emjd
                 self.obs.epeak = self.epeak
                 self.obs.erms = self.erms
-                if self.erms == self.lastRms:
-                    print("Duplicate Event, not writing!")
-                    print("RMS == last RMS: %7.3f" % (self.erms))
-                    nout = nout+1
-                    continue
-                else:
-                    self.lastRms = self.erms
                 # create file name from event time
                 strnow = utc.isoformat()
                 datestr = strnow.split('.')
@@ -355,7 +386,13 @@ class ra_event_sink(gr.sync_block):
                     milliseconds = "000"                 # rare case of no milliseconds
                 milliseconds = milliseconds[0:3]
                 yymmdd = daypart[2:19]
+                # try to remove duplicate tags following
+                tags = self.get_tags_in_window(0, 0, +2*self.vlen)
                 if self.record == radioastronomy.INTRECORD:
+#                    if self.erms == self.lastRms:
+#                        #print("Duplicate Event, not writing!")
+#                        print("RMS == last RMS: %7.3f" % (self.erms))
+#                        continue;
                     #remove : from time
                     yymmdd = yymmdd.replace(":", "")
                     yymmdd = yymmdd + "_" + milliseconds
@@ -365,9 +402,12 @@ class ra_event_sink(gr.sync_block):
                     self.obs.write_ascii_file(self.obs.datadir, outname)
                     print('\a')  # ring the terminal bell
                 self.ecount = self.ecount + 1
+                self.lastRms = self.erms
             nout = nout+1
+            # try to prevent duplicate 
             # output latest event count
-        return nout
+        # report all vectors processed
+        return nv
     # end event_sink()
 
 

@@ -5,7 +5,7 @@
 # Title: NsfIntegrate: SDRPlay 9MHz Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with 9.0 MHz SDRPlay RSP 1A
-# Generated: Sat Feb 15 16:20:37 2020
+# Generated: Thu Jun 18 13:38:14 2020
 ##################################################
 
 from distutils.version import StrictVersion

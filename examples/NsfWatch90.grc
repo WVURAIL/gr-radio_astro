@@ -461,7 +461,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1120, 8)</value>
+      <value>(48, 192)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -512,7 +512,7 @@
     </param>
     <param>
       <key>label</key>
-      <value>BiasOn</value>
+      <value>DabNotch</value>
     </param>
     <param>
       <key>true</key>
@@ -1084,7 +1084,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(848, 216)</value>
+      <value>(504, 488)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1193,7 +1193,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1160, 168)</value>
+      <value>(888, 320)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1400,7 +1400,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(32, 104)</value>
+      <value>(64, 120)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1780,7 +1780,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>5.0</value>
+      <value>nsigmas</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1788,7 +1788,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(488, 572)</value>
+      <value>(904, 824)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1836,6 +1836,53 @@
     </param>
   </block>
   <block>
+    <key>variable_config</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>config_file</key>
+      <value>ConfigFile</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>5.5</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(896, 960)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>nsigmas</value>
+    </param>
+    <param>
+      <key>option</key>
+      <value>nsigma</value>
+    </param>
+    <param>
+      <key>section</key>
+      <value>main</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+    <param>
+      <key>writeback</key>
+      <value>nsigma</value>
+    </param>
+  </block>
+  <block>
     <key>variable</key>
     <param>
       <key>comment</key>
@@ -1847,7 +1894,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1160, 80)</value>
+      <value>(896, 232)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2015,7 +2062,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(408, 32)</value>
+      <value>(424, 32)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2101,7 +2148,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(408, 172)</value>
+      <value>(432, 168)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2152,7 +2199,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(408, 116)</value>
+      <value>(432, 112)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2176,7 +2223,7 @@
     </param>
     <param>
       <key>num_items</key>
-      <value>4*fftsize</value>
+      <value>2*fftsize</value>
     </param>
     <param>
       <key>vlen</key>
@@ -2211,7 +2258,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 148)</value>
+      <value>(664, 144)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2262,7 +2309,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(24, 244)</value>
+      <value>(48, 264)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2309,7 +2356,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(584, 12)</value>
+      <value>(584, 0)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2855,7 +2902,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(824, 84)</value>
+      <value>(888, 72)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2875,7 +2922,7 @@
     </param>
     <param>
       <key>mode</key>
-      <value>2</value>
+      <value>EventMode</value>
     </param>
     <param>
       <key>dms</key>
@@ -2895,7 +2942,7 @@
     </param>
     <param>
       <key>vec_length</key>
-      <value>4*fftsize</value>
+      <value>2*fftsize</value>
     </param>
   </block>
   <block>
@@ -3002,6 +3049,53 @@
     </param>
   </block>
   <block>
+    <key>radio_astro_ra_event_log</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1072, 288)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>radio_astro_ra_event_log_0</value>
+    </param>
+    <param>
+      <key>logname</key>
+      <value></value>
+    </param>
+    <param>
+      <key>note</key>
+      <value>Event Detection</value>
+    </param>
+    <param>
+      <key>sample_rate</key>
+      <value>Bandwidth*1.e-6</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>2*fftsize</value>
+    </param>
+  </block>
+  <block>
     <key>radio_astro_ra_event_sink</key>
     <param>
       <key>azimuth</key>
@@ -3041,7 +3135,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(968, 44)</value>
+      <value>(1064, 48)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3077,7 +3171,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>4*fftsize</value>
+      <value>2*fftsize</value>
     </param>
   </block>
   <block>
@@ -3367,7 +3461,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(176, 12)</value>
+      <value>(192, 0)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3447,6 +3541,12 @@
   <connection>
     <source_block_id>fft_vxx_0</source_block_id>
     <sink_block_id>blocks_complex_to_mag_squared_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>radio_astro_detect_0</source_block_id>
+    <sink_block_id>radio_astro_ra_event_log_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

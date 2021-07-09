@@ -5,7 +5,7 @@
 # Title: Test Signal.  Adds a Short pulse in a narrow Band
 # Author: Glen Langston
 # Description: Diagnostic test design
-# Generated: Mon Mar 23 10:44:39 2020
+# Generated: Tue Dec  8 16:03:27 2020
 ##################################################
 
 if __name__ == '__main__':
@@ -28,6 +28,7 @@ from gnuradio import iio
 from gnuradio import qtgui
 from gnuradio.eng_option import eng_option
 from gnuradio.filter import firdes
+from gnuradio.qtgui import Range, RangeWidget
 from optparse import OptionParser
 import radio_astro
 import sip
@@ -67,20 +68,28 @@ class NsfPing(gr.top_block, Qt.QWidget):
         ##################################################
         self.OffsetMHz = OffsetMHz = 0.111
         self.FreqMHz = FreqMHz = 1398
-        self.samp_rate = samp_rate = 100000
-        self.fftsize = fftsize = 2048
+        self.samp_rate = samp_rate = 1000
+        self.nsigma = nsigma = 4.5
+        self.fftsize = fftsize = 1024
         self.Offset = Offset = OffsetMHz*1.E6
         self.Mode = Mode = 2
         self.H1 = H1 = 1420.406E6
         self.Gain1 = Gain1 = 40
         self.Frequency = Frequency = FreqMHz*1.E6
         self.EventMode = EventMode = 0
-        self.Bandwidth = Bandwidth = 4e6
+        self.Bandwidth = Bandwidth = 2e6
         self.Attn1 = Attn1 = 80
 
         ##################################################
         # Blocks
         ##################################################
+        self._nsigma_range = Range(0., 10., .1, 4.5, 100)
+        self._nsigma_win = RangeWidget(self._nsigma_range, self.set_nsigma, 'N Sigma', "counter", float)
+        self.top_grid_layout.addWidget(self._nsigma_win, 6, 2, 1, 1)
+        for r in range(6, 7):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(2, 3):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._Mode_options = (0, 2, )
         self._Mode_labels = ('Monitor', 'Detect', )
         self._Mode_tool_bar = Qt.QToolBar(self)
@@ -97,6 +106,33 @@ class NsfPing(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self._Gain1_tool_bar = Qt.QToolBar(self)
+        self._Gain1_tool_bar.addWidget(Qt.QLabel('Gain1'+": "))
+        self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
+        self._Gain1_tool_bar.addWidget(self._Gain1_line_edit)
+        self._Gain1_line_edit.returnPressed.connect(
+        	lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text().toAscii()))))
+        self.top_grid_layout.addWidget(self._Gain1_tool_bar, 0, 0, 1, 2)
+        for r in range(0, 1):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 2):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        self._EventMode_options = (0, 1, )
+        self._EventMode_labels = ('Wait', 'Write', )
+        self._EventMode_tool_bar = Qt.QToolBar(self)
+        self._EventMode_tool_bar.addWidget(Qt.QLabel('Write Mode'+": "))
+        self._EventMode_combo_box = Qt.QComboBox()
+        self._EventMode_tool_bar.addWidget(self._EventMode_combo_box)
+        for label in self._EventMode_labels: self._EventMode_combo_box.addItem(label)
+        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._EventMode_options.index(i)))
+        self._EventMode_callback(self.EventMode)
+        self._EventMode_combo_box.currentIndexChanged.connect(
+        	lambda i: self.set_EventMode(self._EventMode_options[i]))
+        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 5, 0, 1, 2)
+        for r in range(5, 6):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 2):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._Attn1_tool_bar = Qt.QToolBar(self)
         self._Attn1_tool_bar.addWidget(Qt.QLabel('Attn1'+": "))
         self._Attn1_line_edit = Qt.QLineEdit(str(self.Attn1))
@@ -108,7 +144,9 @@ class NsfPing(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.radio_astro_detect_0 = radio_astro.detect(fftsize, 5, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink('Detect40.not', fftsize, Frequency*1.E-6, Bandwidth, EventMode, 'Event Detection', 'Science Aficionados', 'My Horn', '', Gain1, 0., 90.)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth)
+        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
         	fftsize, #size
         	Bandwidth, #samp_rate
@@ -159,10 +197,10 @@ class NsfPing(gr.top_block, Qt.QWidget):
             self.qtgui_time_sink_x_0_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_time_sink_x_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_0_win, 2, 2, 5, 7)
+        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_0_win, 2, 3, 5, 6)
         for r in range(2, 7):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 9):
+        for c in range(3, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
         	fftsize,
@@ -222,7 +260,7 @@ class NsfPing(gr.top_block, Qt.QWidget):
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
-        self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_SAW_WAVE, .02, 1.00001, 0)
+        self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_SAW_WAVE, .0002, 1.00001, 0)
         self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, .15, 0)
         self.Ping = qtgui.number_sink(
             gr.sizeof_float,
@@ -230,7 +268,7 @@ class NsfPing(gr.top_block, Qt.QWidget):
             qtgui.NUM_GRAPH_HORIZ,
             1
         )
-        self.Ping.set_update_time(0.10)
+        self.Ping.set_update_time(0.5)
         self.Ping.set_title("Ramp")
 
         labels = ['Ping', '', '', '', '',
@@ -270,17 +308,6 @@ class NsfPing(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 4):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._Gain1_tool_bar = Qt.QToolBar(self)
-        self._Gain1_tool_bar.addWidget(Qt.QLabel('Gain1'+": "))
-        self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
-        self._Gain1_tool_bar.addWidget(self._Gain1_line_edit)
-        self._Gain1_line_edit.returnPressed.connect(
-        	lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text().toAscii()))))
-        self.top_grid_layout.addWidget(self._Gain1_tool_bar, 0, 0, 1, 2)
-        for r in range(0, 1):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
-            self.top_grid_layout.setColumnStretch(c, 1)
         self._FreqMHz_tool_bar = Qt.QToolBar(self)
         self._FreqMHz_tool_bar.addWidget(Qt.QLabel('Freq (MHz)'+": "))
         self._FreqMHz_line_edit = Qt.QLineEdit(str(self.FreqMHz))
@@ -291,22 +318,6 @@ class NsfPing(gr.top_block, Qt.QWidget):
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 4):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        self._EventMode_options = (0, 1, )
-        self._EventMode_labels = ('Wait', 'Write', )
-        self._EventMode_tool_bar = Qt.QToolBar(self)
-        self._EventMode_tool_bar.addWidget(Qt.QLabel('Write Mode'+": "))
-        self._EventMode_combo_box = Qt.QComboBox()
-        self._EventMode_tool_bar.addWidget(self._EventMode_combo_box)
-        for label in self._EventMode_labels: self._EventMode_combo_box.addItem(label)
-        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._EventMode_options.index(i)))
-        self._EventMode_callback(self.EventMode)
-        self._EventMode_combo_box.currentIndexChanged.connect(
-        	lambda i: self.set_EventMode(self._EventMode_options[i]))
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 5, 0, 1, 2)
-        for r in range(5, 6):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
 
 
@@ -332,6 +343,8 @@ class NsfPing(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_threshold_ff_0, 0), (self.blocks_multiply_const_vxx_0_1, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "NsfPing")
@@ -361,11 +374,20 @@ class NsfPing(gr.top_block, Qt.QWidget):
         self.samp_rate = samp_rate
         self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 
+    def get_nsigma(self):
+        return self.nsigma
+
+    def set_nsigma(self, nsigma):
+        self.nsigma = nsigma
+        self.radio_astro_detect_0.set_dms( self.nsigma)
+
     def get_fftsize(self):
         return self.fftsize
 
     def set_fftsize(self, fftsize):
         self.fftsize = fftsize
+        self.radio_astro_ra_event_sink_0.set_vlen( self.fftsize)
+        self.radio_astro_ra_event_log_0.set_vlen( self.fftsize)
         self.radio_astro_detect_0.set_vlen( self.fftsize)
 
     def get_Offset(self):
@@ -395,12 +417,14 @@ class NsfPing(gr.top_block, Qt.QWidget):
     def set_Gain1(self, Gain1):
         self.Gain1 = Gain1
         Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
+        self.radio_astro_ra_event_sink_0.set_gain1( self.Gain1)
 
     def get_Frequency(self):
         return self.Frequency
 
     def set_Frequency(self, Frequency):
         self.Frequency = Frequency
+        self.radio_astro_ra_event_sink_0.set_frequency( self.Frequency*1.E-6)
         self.radio_astro_detect_0.set_freq( self.Frequency)
         self.pluto_sink_0.set_params(int(float(self.Frequency+self.Offset)), int(float(self.Bandwidth)), int(20000000), float(self.Attn1), '', True)
 
@@ -410,12 +434,15 @@ class NsfPing(gr.top_block, Qt.QWidget):
     def set_EventMode(self, EventMode):
         self.EventMode = EventMode
         self._EventMode_callback(self.EventMode)
+        self.radio_astro_ra_event_sink_0.set_record( self.EventMode)
 
     def get_Bandwidth(self):
         return self.Bandwidth
 
     def set_Bandwidth(self, Bandwidth):
         self.Bandwidth = Bandwidth
+        self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth)
+        self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self.pluto_sink_0.set_params(int(float(self.Frequency+self.Offset)), int(float(self.Bandwidth)), int(20000000), float(self.Attn1), '', True)
@@ -430,6 +457,8 @@ class NsfPing(gr.top_block, Qt.QWidget):
 
 
 def main(top_block_cls=NsfPing, options=None):
+    if gr.enable_realtime_scheduling() != gr.RT_OK:
+        print "Error: failed to enable real-time scheduling."
 
     from distutils.version import StrictVersion
     if StrictVersion(Qt.qVersion()) >= StrictVersion("4.5.0"):

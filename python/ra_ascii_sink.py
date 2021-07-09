@@ -14,6 +14,8 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 20DEC29 GIL recompute LST,RA, Dec from average utc time
+# 20Aug16 GIL fix some print statements
 # 20Feb16 GIL remove normalization.  Do that in post processing
 # 20Feb15 GIL fix normalization for different averaging times
 # 19OCT14 GIL track down time estimate issues
@@ -111,7 +113,7 @@ class ra_ascii_sink(gr.sync_block):
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
             print('DataDir          : ', self.obs.datadir)
-        print('Observer Names   : ', self.obs.observer)
+        print("Observer Names   : %s " % ( self.obs.observer))
         # skip writing notes until the end of init
         dosave = False
         self.set_obstype(obstype)
@@ -271,14 +273,14 @@ class ra_ascii_sink(gr.sync_block):
                 self.obstype = radioastronomy.OBSCOLD
             else:
                 self.obstype = radioastronomy.OBSHOT
-        print("Observation Type : ", radioastronomy.obslabels[self.obstype])
+        print("Observation Type : %s " % (radioastronomy.obslabels[self.obstype]))
 
     def set_observers(self, observers, dosave=True):
         """
         Set the observer names to give credit for discoveries
         """
         self.obs.observer = str(observers)
-        print("Observers : ", self.obs.observer)
+        print("Observers : %s " % ( self.obs.observer))
         if dosave:
             self.save_setup()
 
@@ -288,7 +290,7 @@ class ra_ascii_sink(gr.sync_block):
         """
         self.obs.site = str(site)
         self.obs.noteA = str(site)
-        print("Telescope : ", self.obs.site)
+        print("Telescope : %s " % ( self.obs.site))
         if dosave:
             self.save_setup()
 
@@ -297,7 +299,7 @@ class ra_ascii_sink(gr.sync_block):
         The device string sets up the SDR for the observations
         """
         self.obs.device = str(device)
-        print("Device    : ", self.obs.device)
+        print("Device    : %s " % ( self.obs.device))
         if dosave:
             self.save_setup()
 
@@ -314,12 +316,12 @@ class ra_ascii_sink(gr.sync_block):
         parts = strnow.split('.')
         strnow = parts[0]
         if record == radioastronomy.INTWAIT: 
-            print("Stop  Recording  : ", strnow)
+            print("Stop  Recording  : %s " % ( strnow))
             self.startutc = now
             self.obs.writecount = 0
         # if changing state from recording to not recording
         elif self.record == radioastronomy.INTWAIT and record != radioastronomy.INTWAIT:
-            print("Start Recording  : ", strnow)
+            print("Start Recording  : %s " % ( strnow))
             self.startutc = now
             # reset the inner averaging loop to restart
             self.avecount = 0
@@ -363,18 +365,18 @@ class ra_ascii_sink(gr.sync_block):
         t = 0
 
         if li != self.vlen:
-            print('spectrum length changed! %d => %d' % (self.vlen, li))
+            print("Spectrum length changed! %d => %d" % (self.vlen, li))
             self.vlen = li
             self.obs.xdata = np.zeros(li)
             self.obs.ydataA = np.zeros(li)
             self.obs.ydataB = np.zeros(li)
             self.set_frequency(self.obs.centerfrequencyHz)
             self.set_bandwidth(self.obs.bandwidthHz)
+            print("Must restart design to change vector length")
+            exit(0)
             return 1
 
         noutports = len(output_items)
-        if noutports != 1:
-            print('!!!!!!! Unexpected number of output ports: ', noutports)
         out = output_items[0]  # all vectors in PORT 0
 
         iout = 0 # count the number of output vectors
@@ -389,7 +391,6 @@ class ra_ascii_sink(gr.sync_block):
                 # else add to sum
                 self.average_done = self.average_done + self.dt
                 self.sum = self.sum + spec
-#            print 'Done: ', self.average_done
             self.avecount = self.avecount + 1
             # if still averaging, continue
             if self.avecount < self.nave:
@@ -410,21 +411,18 @@ class ra_ascii_sink(gr.sync_block):
             daypart = datestr[0]
             yymmdd = daypart[2:19]
             if self.record != radioastronomy.INTWAIT: 
-                print('Record Duration  : %7.2fs (Expected %7.2fs)' % (duration, self.average_sec))
+                print("Record Duration  : %7.2fs (Expected %7.2fs)" % (duration, self.average_sec))
                 if duration < .8 * self.average_sec:
-                    print('Duration too short, not saving')
+                    print("Duration too short, not saving")
                     self.startutc = now
                     self.avecount = 0
                     continue
                 # distinguish hot load and regular observations
-                if self.obstype == radioastronomy.OBSREF:
-                    outname = yymmdd + '.ref'
+                if self.obs.telel > 0:
+                    outname = yymmdd + '.ast'
                 else:
-                    if self.obs.telel > 0:
-                        outname = yymmdd + '.ast'
-                    else:
-                        outname = yymmdd + '.hot'
-                #remove : from time
+                    outname = yymmdd + '.hot'
+
                 outname = outname.replace(":", "")
                 
                 self.obs.writecount = self.obs.writecount + 1

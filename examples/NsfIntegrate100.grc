@@ -304,7 +304,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(632, 584)</value>
+      <value>(560, 584)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -515,11 +515,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(496, 584)</value>
+      <value>(728, 840)</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>3,0,1,2</value>
+      <value>2,2,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -550,7 +550,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>49.</value>
+      <value>14</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -558,7 +558,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(960, 476)</value>
+      <value>(776, 592)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -586,10 +586,14 @@
     </param>
   </block>
   <block>
-    <key>variable</key>
+    <key>variable_qtgui_entry</key>
     <param>
       <key>comment</key>
       <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>Gain2s</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -597,7 +601,11 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(819, 594)</value>
+      <value>(848, 840)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>2,4,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -608,8 +616,145 @@
       <value>Gain2</value>
     </param>
     <param>
+      <key>label</key>
+      <value>Gain2</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_config</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>config_file</key>
+      <value>ConfigFile</value>
+    </param>
+    <param>
       <key>value</key>
-      <value>12.</value>
+      <value>12</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(792, 640)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain2s</value>
+    </param>
+    <param>
+      <key>option</key>
+      <value>gain2</value>
+    </param>
+    <param>
+      <key>section</key>
+      <value>main</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+    <param>
+      <key>writeback</key>
+      <value>Gain2</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_qtgui_entry</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>Gain3s</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(984, 840)</value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value>2,6,1,2</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain3</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Gain3</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable_config</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>config_file</key>
+      <value>ConfigFile</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>13.</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(816, 672)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Gain3s</value>
+    </param>
+    <param>
+      <key>option</key>
+      <value>gain3</value>
+    </param>
+    <param>
+      <key>section</key>
+      <value>main</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+    <param>
+      <key>writeback</key>
+      <value>Gain3</value>
     </param>
   </block>
   <block>
@@ -812,105 +957,6 @@
     </param>
     <param>
       <key>value</key>
-      <value>frame_save</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(368, 681)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value>8,2,1,2</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>VelFrame</value>
-    </param>
-    <param>
-      <key>label0</key>
-      <value>Topocentric</value>
-    </param>
-    <param>
-      <key>label1</key>
-      <value>LSRK</value>
-    </param>
-    <param>
-      <key>label2</key>
-      <value>Barycentric</value>
-    </param>
-    <param>
-      <key>label3</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label4</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label</key>
-      <value>Frame</value>
-    </param>
-    <param>
-      <key>labels</key>
-      <value>[]</value>
-    </param>
-    <param>
-      <key>num_opts</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option0</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>option1</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>option2</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>option3</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option4</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>options</key>
-      <value>[0, 1, 2]</value>
-    </param>
-    <param>
-      <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>widget</key>
-      <value>combo_box</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_chooser</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
       <value>xaxis_save</value>
     </param>
     <param>
@@ -923,7 +969,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>8,5,1,3</value>
+      <value>8,4,1,3</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1133,53 +1179,6 @@
     <param>
       <key>writeback</key>
       <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_config</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>config_file</key>
-      <value>ConfigFile</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(392, 948)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>frame_save</value>
-    </param>
-    <param>
-      <key>option</key>
-      <value>Frame</value>
-    </param>
-    <param>
-      <key>section</key>
-      <value>main</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>writeback</key>
-      <value>VelFrame</value>
     </param>
   </block>
   <block>
@@ -1798,7 +1797,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[1., 10., 180., 80.]</value>
+      <value>[5., 10., 180., 50.]</value>
     </param>
   </block>
   <block>
@@ -2445,7 +2444,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>8,8,1,2</value>
+      <value>8,7,1,2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2652,7 +2651,7 @@
     </param>
     <param>
       <key>average</key>
-      <value>1.0</value>
+      <value>0.2</value>
     </param>
     <param>
       <key>alias</key>
@@ -2676,7 +2675,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>2,2,6,8</value>
+      <value>3,2,5,7</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2971,7 +2970,7 @@
     </param>
     <param>
       <key>gain3</key>
-      <value>float(Gain2)</value>
+      <value>float(Gain3)</value>
     </param>
     <param>
       <key>id</key>
@@ -3356,7 +3355,7 @@
     </param>
     <param>
       <key>bb_gain0</key>
-      <value>float(Gain2)</value>
+      <value>float(Gain3)</value>
     </param>
     <param>
       <key>bw0</key>
@@ -3388,7 +3387,7 @@
     </param>
     <param>
       <key>gain0</key>
-      <value>Gain1</value>
+      <value>float(Gain1)</value>
     </param>
     <param>
       <key>ant10</key>

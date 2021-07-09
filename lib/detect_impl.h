@@ -17,6 +17,8 @@
  * the Free Software Foundation, Inc., 51 Franklin Street,
  * Boston, MA 02110-1301, USA.
  */
+/* HISTORY */
+/* 21MAR24 GIL reduce maximum buffer size */
 
 #ifndef INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
 #define INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
@@ -27,7 +29,10 @@
 #define TIME_UTC    1
 #endif
 
-#define MAX_VLEN 16384
+// #define MAX_VLEN 16384
+//#define MAX_VLEN 8192
+//#define MAX_VLEN 4096
+#define MAX_VLEN 2048
 #define MAX_BUFF (2L*MAX_VLEN)
 
 // constants for calculating Modified Julian Date
@@ -81,13 +86,22 @@ namespace gr {
       double max2 = 0;        // max value squared so far
       double sum2 = 0;        // sum of values squared
       double rms2 = 0;        // rms squared of values in circular buffer
-      double oneovern = 1./double(MAX_BUFF);
+      long nsum = 0;          // count of samples in current sum
+      long nmaxcount = vlen;  // count of samples until detection restarts
+      double oneovern = 1./double(nmaxcount);
       bool bufferfull = false;// assume buffer is not full 
       double nsigma_rms = 0;  // comparision value for event detection
       gr_complex samples[MAX_VLEN];  // output event buffer 
       bool initialized = 0;   // flag initializing output
       double bufferdelay = float(MAX_VLEN/2)*1.E-6/d_bw;
-      
+      unsigned long vcount = 0; // count of vectors processed
+      unsigned long logvcount = 0; // count of last logged mjd
+      long eventoffset = 0;     // index of event in block
+      double dt0 = 0.;          // extimate sample delay from 1st != 0  vector
+      long nzero = 0;           // count zero vectors for dt0 estimate
+      double mjd0 = 0.;         // save MJD of current day
+      long lastday = 0;         // store last day to determine new mjd0 calc
+      long ecount = 0;          // count of events detected
      public:
       detect_impl(int vec_length,float dms, float f_obs, float bw, float t_int, int nt);
       ~detect_impl();
@@ -111,7 +125,7 @@ namespace gr {
       
       int update_buffer();
 
-      int event(const gr_complex *input, gr_complex *output);
+      int event(const long ninputs, const gr_complex *input, gr_complex *output);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,
@@ -119,10 +133,10 @@ namespace gr {
            gr_vector_void_star &output_items);
 
       /* function for Modified Julian Date (MJD) */
-      int ymd_to_mjd(int year, int month, int day);      
+      long ymd_to_mjd(int year, int month, int day);      
 
       /* more accurate function for Modified Julian Date (MJD) */
-      int ymd_to_mjd_x(int year, int month, int day);      
+      long ymd_to_mjd_x(int year, int month, int day);      
 
       double get_mjd();
     }; 

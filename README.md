@@ -16,10 +16,10 @@ A summary of different Designs and devices is listed below:
 2. NsfIntegrate45 - PlutoSdr devices operating at 4.5 MHz and not dropping any samples
 3. NsfIntegrate60 - AIRSPY Mini devices at 6.0 MHz
 5. NsfIntegrate70 - PlutoSdr devices operating at 7.0 MHz but dropping samples (as high as 12 MHz works, but more samples are dropped).
-4. NsfIntegrate90 - SDRPlay RSP 1A at 9.0 MHz
+4. NsfIntegrate80 - SDRPlay RSP 1A at 8.0 MHz
 5. NsfIntegrate100 - AIRSPY at 10.0 MHz.
 
-The data analysis tools for gr-radio_astro usually run on different computers than the data acqusition.   The analysis software and documentation have moved tto the repository:
+The data analysis tools for gr-radio_astro usually run on different computers than the data acqusition.   The analysis software and documentation have moved to the repository:
 
 http://github.com/glangsto/analyze
 
@@ -63,5 +63,56 @@ If you happen to get an error along the line of "no module found xxx" then make 
 
 where `path/to/gr-XXX/python/` should be changed to the appropriate path on your PC
 
-Glen Langston --- National Science Foundation, May 20, 2020
+# Example Interface - Tests with NeSDR, NooElec HI amplifier and Small metal Horn.
+
+This example shows successful observations of the Milky Way with a minimum cost system.   The system includes
+the NsfIntegrate30.grc (and NsfIntegrate30.py) observer interface in this repository.
+
+During the observations, the interface can show spectra in raw counts or calibrated in Kelvins, as is shown by the screen
+captures of the interface during observations.
+
+<a href="docs/Pi10SmallMetalHorn-HotCold.png">
+<img src="docs/Pi10SmallMetalHorn-HotCold.png" width=600 alt="GnuRadio Observer Interfaces showing Raw Spectra in counts." align="center"> 
+</a>
+<a href="docs/Pi10SmallMetalHorn-Kelvins.png"> 
+<img src="docs/Pi10SmallMetalHorn-Kelvins.png" width=600 alt="GnuRadio Observer Interfaces showing Spectra calibrated in Kelvins." align="Center">
+</a>
+
+# Example Data
+
+After the observations, all spectra are recorded in the data directory, containing a series of ascii files,
+taged with the observation time.
+The data sub-directory contains a few minutes of observations with different SDR types.
+Data from 2020-May-29 were made with a minimum sized horn and NeSDR device operating
+at 3 MHz bandwidth.   Log include Hot load (the ground) and Cold Sky observations.
+
+The log is summarized with the "analyze S command"
+
+```
+S 20-05-29T170*
+
+and yields
+
+Count  Time    Az    El   G-Lon G-Lat  Frequency  BW   Gain    Filename
+   1 17:03:20 180.0,-90.0 340.6,  9.5:  1420.00, 3.00  40.0 - 20-05-29T170320.hot
+   3 17:04:04 180.0,-90.0 340.7,  9.4:  1420.00, 3.00  40.0 - 20-05-29T170404.hot
+   1 17:05:06 180.0, 90.0 160.8, -9.2:  1420.00, 3.00  40.0 - 20-05-29T170506.ast
+  14 17:09:50 180.0, 90.0 161.5, -8.6:  1420.00, 3.00  40.0 - 20-05-29T170950.ast
+```
+
+The hot and cold load observations are shown with the Raw plot command,"R"
+
+`R 20-05-29T170*`
+
+<a href="docs/SmallHornHotCold.png"> <img src="docs/SmallHornHotCold.png" width=600 
+alt="Raw spectra, with intensity in Counts versus Frequency on the x axis." align="center"></a>
+
+The calibrated in Temperatre, Kelvins, spectra are shown with the "T" command.
+
+`T 120. 20-05-29T170*`
+
+<a href="docs/SmallHornTcal.png"> <img src="docs/SmallHornTcal.png" width=600 
+alt="Calibrated spectra, showing the intensity in Kelvins versus velocity on the x axis." align="center"></a>
+
+Glen Langston --- National Science Foundation, May 29, 2020
 

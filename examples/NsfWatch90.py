@@ -5,7 +5,7 @@
 # Title: NSF Watch 9MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 9 MHz samples
-# Generated: Sat Feb 15 16:27:38 2020
+# Generated: Fri Jul 31 13:51:36 2020
 ##################################################
 
 from distutils.version import StrictVersion
@@ -93,6 +93,11 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         try: observers_save = self._observers_save_config.get('main', 'observers')
         except: observers_save = 'Science Aficionado'
         self.observers_save = observers_save
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(ConfigFile)
+        try: nsigmas = self._nsigmas_config.getfloat('main', 'nsigma')
+        except: nsigmas = 5.5
+        self.nsigmas = nsigmas
         self._nAves_config = ConfigParser.ConfigParser()
         self._nAves_config.read(ConfigFile)
         try: nAves = self._nAves_config.getint('main', 'nave')
@@ -162,7 +167,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.Azimuth_save = Azimuth_save
         self.observer = observer = observers_save
         self.numin = numin = (Frequency - (Bandwidth/2.))
-        self.nsigma = nsigma = 5.0
+        self.nsigma = nsigma = nsigmas
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
@@ -196,7 +201,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._nsigma_range = Range(0., 10., .1, 5.0, 100)
+        self._nsigma_range = Range(0., 10., .1, nsigmas, 100)
         self._nsigma_win = RangeWidget(self._nsigma_range, self.set_nsigma, 'N Sigma', "counter", float)
         self.top_grid_layout.addWidget(self._nsigma_win, 2, 5, 1, 2)
         for r in range(2, 3):
@@ -352,7 +357,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        _DabNotch_check_box = Qt.QCheckBox('BiasOn')
+        _DabNotch_check_box = Qt.QCheckBox('DabNotch')
         self._DabNotch_choices = {True: True, False: False}
         self._DabNotch_choices_inv = dict((v,k) for k,v in self._DabNotch_choices.iteritems())
         self._DabNotch_callback = lambda i: Qt.QMetaObject.invokeMethod(_DabNotch_check_box, "setChecked", Qt.Q_ARG("bool", self._DabNotch_choices_inv[i]))
@@ -408,10 +413,11 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", 4*fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", 2*fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', 2*fftsize, Bandwidth*1.e-6)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record,
             0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain2))
-        self.radio_astro_detect_0 = radio_astro.detect(4*fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
+        self.radio_astro_detect_0 = radio_astro.detect(2*fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, EventMode)
         self.qtgui_number_sink_0 = qtgui.number_sink(
             gr.sizeof_float,
             0,
@@ -495,7 +501,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         for c in range(0, 5):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.fft_vxx_0 = fft.fft_vcc(fftsize, True, (window.hamming(fftsize)), True, 1)
-        self.blocks_stream_to_vector_0_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, 4*fftsize)
+        self.blocks_stream_to_vector_0_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, 2*fftsize)
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
@@ -511,6 +517,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
+        self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_log_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_ra_ascii_sink_0, 0))
@@ -559,6 +566,12 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         	self._observers_save_config.add_section('main')
         self._observers_save_config.set('main', 'observers', str(self.observer))
         self._observers_save_config.write(open(self.ConfigFile, 'w'))
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsigma', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
         self._nAves_config = ConfigParser.ConfigParser()
         self._nAves_config.read(self.ConfigFile)
         if not self._nAves_config.has_section('main'):
@@ -673,6 +686,13 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.observers_save = observers_save
         self.set_observer(self.observers_save)
 
+    def get_nsigmas(self):
+        return self.nsigmas
+
+    def set_nsigmas(self, nsigmas):
+        self.nsigmas = nsigmas
+        self.set_nsigma(self.nsigmas)
+
     def get_nAves(self):
         return self.nAves
 
@@ -783,6 +803,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.Bandwidth = Bandwidth
         Qt.QMetaObject.invokeMethod(self._Bandwidth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Bandwidth)))
         self.radio_astro_ra_event_sink_0.set_sample_rate( self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_log_0.set_sample_rate( self.Bandwidth*1.e-6)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth( self.Bandwidth)
         self.radio_astro_detect_0.set_bw( self.Bandwidth)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
@@ -826,6 +847,12 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
     def set_nsigma(self, nsigma):
         self.nsigma = nsigma
         self.radio_astro_detect_0.set_dms( self.nsigma)
+        self._nsigmas_config = ConfigParser.ConfigParser()
+        self._nsigmas_config.read(self.ConfigFile)
+        if not self._nsigmas_config.has_section('main'):
+        	self._nsigmas_config.add_section('main')
+        self._nsigmas_config.set('main', 'nsigma', str(self.nsigma))
+        self._nsigmas_config.write(open(self.ConfigFile, 'w'))
 
     def get_nAve(self):
         return self.nAve
@@ -852,8 +879,9 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0.set_vlen( self.fftsize)
         self.radio_astro_vmedian_0_0.set_vlen( self.fftsize)
         self.radio_astro_vmedian_0.set_vlen( self.fftsize)
-        self.radio_astro_ra_event_sink_0.set_vlen( 4*self.fftsize)
-        self.radio_astro_detect_0.set_vlen( 4*self.fftsize)
+        self.radio_astro_ra_event_sink_0.set_vlen( 2*self.fftsize)
+        self.radio_astro_ra_event_log_0.set_vlen( 2*self.fftsize)
+        self.radio_astro_detect_0.set_vlen( 2*self.fftsize)
         self._fftsize_save_config = ConfigParser.ConfigParser()
         self._fftsize_save_config.read(self.ConfigFile)
         if not self._fftsize_save_config.has_section('main'):
@@ -947,6 +975,7 @@ class NsfWatch90(gr.top_block, Qt.QWidget):
         self.EventMode = EventMode
         self._EventMode_callback(self.EventMode)
         self.radio_astro_ra_event_sink_0.set_record( self.EventMode)
+        self.radio_astro_detect_0.set_mode( self.EventMode)
 
     def get_Elevation(self):
         return self.Elevation
