@@ -8,7 +8,7 @@
 # Title: Vector median comparison
 # Author: Glen Langston
 # Description: This GRC demo compares the outputs of average and median with straght vector plotting
-# GNU Radio version: 3.8.1.0
+# GNU Radio version: 3.8.2.0
 
 from distutils.version import StrictVersion
 
