@@ -69,13 +69,13 @@ class ra_event_log(gr.sync_block):
         self.emjd = 0.
         self.epeak = 0.
         self.erms = 0.
-        self.evector = 0L
-        self.env = 0L
+        self.evector = 0
+        self.env = 0
         self.eoffset = 0
         self.voffset = 0
         self.vmjd = 0.
-        self.vcount = 0L
-        self.nv = 0L
+        self.vcount = 0
+        self.nv = 0
         self.lasttag = ""
         self.note = str(note)
         self.pformat = "%18.12f %15d %05d %10.3f %3d %5d %10.6f %10.6f %5d %5d\n" 
