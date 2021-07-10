@@ -1,7 +1,11 @@
 #!/usr/bin/env python
+"""
+Event writing function compatible with spectrum writing functions
+Glen Langston - 2019 September 14
+"""
 # -*- coding: utf-8 -*-
 #
-# Copyright 2020 Glen Langston, Quiet Skies.
+# Copyright 2018 Glen Langston, Quiet Skies <+YOU OR YOUR COMPANY+>.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,12 +17,8 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this software; see the file COPYING.  If not, write to
-# the Free Software Foundation, Inc., 51 Franklin Street,
-# Boston, MA 02110-1301, USA.
-#
 # HISTORY
+# 20DEC29 GIL recompute LST from event time
 # 20JUN26 GIL expect VMJD, VCOUNT, NV tags
 # 20JUN25 GIL try to eliminate duplicates; corrected get_tags call
 # 19OCT11 GIL add test for duplicate events, sensed by same RMS as last event
@@ -255,17 +255,17 @@ class ra_event_sink(gr.sync_block):
         self.emjd = 0.
         self.epeak = 0.
         self.erms = 1.
-        self.evector = 0
-        self.env = 0
+        self.evector = 0L
+        self.env = 0L
         self.eoffset = 0
         self.lastRms = 1.
         self.lastmjd = 0.
         self.lastvmjd = 0.
         # set of vector timing values
         self.vmjd = 0.
-        self.vcount = 0
+        self.vcount = 0L
         self.voffset = 0
-        self.nv = 0
+        self.nv = 0L
         self.obs.utc = now
         self.obs.site = self.site
         self.obs.noteA = self.noteA
@@ -371,6 +371,8 @@ class ra_event_sink(gr.sync_block):
                 self.obs.ydataB = samples.imag
                 utc = jdutil.mjd_to_datetime(self.emjd)
                 self.obs.utc = utc
+                # recompute LST, RA, Dec from event time
+                self.obs.azel2radec()
                 self.obs.emjd = self.emjd
                 self.obs.epeak = self.epeak
                 self.obs.erms = self.erms
@@ -404,13 +406,8 @@ class ra_event_sink(gr.sync_block):
             nout = nout+1
             # try to prevent duplicate 
             # output latest event count
-# <<<<<<< HEAD
-#        # report all vectors processed
-#        return nv
-#    # end event_sink()
-
-
-# =======
-        return nout
+        # report all vectors processed
+        return nv
     # end event_sink()
-# >>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
+
+
