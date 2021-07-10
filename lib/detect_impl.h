@@ -1,22 +1,24 @@
 /* -*- c++ -*- */
-/*
- * Copyright 2020 Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com.
- *
+/* 
+ * Copyright 2019 - Quiet Skies LLC -- Glen Langston - glen.i.langston@gmail.com
+ * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- *
+ * 
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
  * Boston, MA 02110-1301, USA.
  */
+/* HISTORY */
+/* 21MAR24 GIL reduce maximum buffer size */
 
 #ifndef INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
 #define INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
@@ -29,7 +31,8 @@
 
 // #define MAX_VLEN 16384
 //#define MAX_VLEN 8192
-#define MAX_VLEN 4096
+//#define MAX_VLEN 4096
+#define MAX_VLEN 2048
 #define MAX_BUFF (2L*MAX_VLEN)
 
 // constants for calculating Modified Julian Date
@@ -84,22 +87,23 @@ namespace gr {
       double sum2 = 0;        // sum of values squared
       double rms2 = 0;        // rms squared of values in circular buffer
       long nsum = 0;          // count of samples in current sum
-      long nmaxcount = vlen*8;// count of samples until detection restarts
+      long nmaxcount = vlen;  // count of samples until detection restarts
       double oneovern = 1./double(nmaxcount);
       bool bufferfull = false;// assume buffer is not full 
       double nsigma_rms = 0;  // comparision value for event detection
       gr_complex samples[MAX_VLEN];  // output event buffer 
       bool initialized = 0;   // flag initializing output
       double bufferdelay = float(MAX_VLEN/2)*1.E-6/d_bw;
-      // <<<<<<< HEAD
       unsigned long vcount = 0; // count of vectors processed
       unsigned long logvcount = 0; // count of last logged mjd
       long eventoffset = 0;     // index of event in block
-      // =======
-
-      // >>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
+      double dt0 = 0.;          // extimate sample delay from 1st != 0  vector
+      long nzero = 0;           // count zero vectors for dt0 estimate
+      double mjd0 = 0.;         // save MJD of current day
+      long lastday = 0;         // store last day to determine new mjd0 calc
+      long ecount = 0;          // count of events detected
      public:
-      detect_impl(int vec_length, float dms, float f_obs, float bw, float t_int, int nt);
+      detect_impl(int vec_length,float dms, float f_obs, float bw, float t_int, int nt);
       ~detect_impl();
 
       // Where all the action really happens
@@ -121,14 +125,13 @@ namespace gr {
       
       int update_buffer();
 
-      int event(const unsigned ninputs, const gr_complex *input, gr_complex *output);
+      int event(const long ninputs, const gr_complex *input, gr_complex *output);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,
            gr_vector_const_void_star &input_items,
            gr_vector_void_star &output_items);
 
-      
       /* function for Modified Julian Date (MJD) */
       long ymd_to_mjd(int year, int month, int day);      
 
@@ -136,14 +139,8 @@ namespace gr {
       long ymd_to_mjd_x(int year, int month, int day);      
 
       double get_mjd();
-
-    };
-
+    }; 
   } // namespace radio_astro
 } // namespace gr
 
 #endif /* INCLUDED_RADIO_ASTRO_DETECT_IMPL_H */
-// <<<<<<< HEAD
-// =======
-
-// >>>>>>> 33a63cbd28ba7f3d4ca842a88bd3f585013aca0f
