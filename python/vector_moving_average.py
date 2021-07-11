@@ -48,17 +48,19 @@ class vector_moving_average(gr.sync_block):
         #print(input_items[0].shape)
         #seems gnuradio gives averaging_length vectors right away, 
         #with zeros till all data there.
-        self.data_history[self.history_count] = input_items[0]
-        self.history_count += 1
-        if self.history_count == self.averaging_length:
-             self.history_count = 0
+        in0_all = input_items[0]
+        for in_input, in0 in enumerate(in0_all):
+            self.data_history[self.history_count] = in0
+            self.history_count += 1
+            if self.history_count == self.averaging_length:
+                self.history_count = 0
 
-        self._sum1 = self.data_history.sum(axis=0)
-        if self.start_count < self.averaging_length:
-            self.start_count += 1
-            output_items[0][:] = self._sum1/self.start_count
-        else:
-            output_items[0][:] = self._sum1/self.averaging_length
+            self._sum1 = self.data_history.sum(axis=0)
+            if self.start_count < self.averaging_length:
+                self.start_count += 1
+                output_items[0][in_input,:] = self._sum1/self.start_count
+            else:
+                output_items[0][in_input,:] = self._sum1/self.averaging_length
         return len(output_items[0])
 
     def set_reset_integration(self, reset_integration):
