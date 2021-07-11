@@ -200,7 +200,7 @@ class systemp_calibration(gr.sync_block):
 
             # Calculate/update the system gain and temperature arrays.
  
-            self.y = self.hot/self.cold
+            self.y  = self.hot/self.cold
             self.y[self.y == 1] = 2
             self.tsys = (self.thot - self.y*self.tcold)/(self.y-1)
             self.gain = self.cold/(self.tcold + self.tsys)
@@ -220,8 +220,8 @@ class systemp_calibration(gr.sync_block):
             self.spectrum[:] = self.filtered_out0*self.spectrum_mask
     
         else:
-            out0[:] = in0
-            self.spectrum[:] = in0
+            out0[:] = self.a[:]
+            self.spectrum[:] = self.a[:]
 
         out1[:] = self.gain
         out2[:] = self.tsys
@@ -306,6 +306,3 @@ class systemp_calibration(gr.sync_block):
     #   and cold spectra are smooth without peaks.
     def gauss_smoothing_cal(self):
         self.filtered_out0 = np.convolve(self.filtered_spike,self.gauss_window_cal, mode='same')
-
-
-
