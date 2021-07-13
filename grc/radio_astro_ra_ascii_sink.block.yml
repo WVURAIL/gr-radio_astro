@@ -4,7 +4,7 @@ category: '[radio_astro]'
 
 templates:
   imports: import radio_astro
-  make: radio_astro.ra_ascii_sink(${noteName}, ${observers}, ${vlen}, ${frequency}, ${bandwidth}, ${azimuth}, ${elevation}, ${record}, ${obstype}, ${nmedian}, ${nave}, ${site}, ${device}, ${gain1}, ${gain2}, ${gain3})
+  make: radio_astro.ra_ascii_sink(${setup}, ${observers}, ${vlen}, ${frequency}, ${bandwidth}, ${azimuth}, ${elevation}, ${record}, ${obstype}, ${nmedian}, ${nave}, ${site}, ${device}, ${gain1}, ${gain2}, ${gain3})
   callbacks:
     - set_setup(${setup})
     - set_observers(${observers})
