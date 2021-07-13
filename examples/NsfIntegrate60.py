@@ -441,7 +441,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(1024, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(1024, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(1024, 4)
-        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4096, units, 295., 10.)
+        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 1, units, 295., 10.)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**5, nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
@@ -599,11 +599,11 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
-        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
+        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
+        self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
         self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
+        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0_0_0, 0))
