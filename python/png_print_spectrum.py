@@ -9,7 +9,12 @@ import numpy as np
 from gnuradio import gr
 import time
 from datetime import datetime
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+    canPlot = True
+except:
+    print("Can not import matplotlib")
+    canPlot = False
 
 class png_print_spectrum(gr.sync_block):
     """
