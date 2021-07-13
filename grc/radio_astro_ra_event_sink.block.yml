@@ -8,7 +8,7 @@ templates:
   callbacks:
     - set_setup(${setup})
     - set_vlen(${vlen})
-    - set_sample_rate(${sample_rate})
+    - set_sample_rate(${bandwidth})
     - set_record(${record})
     - set_frequency(${frequency})
     - set_note(${note})
@@ -33,8 +33,8 @@ parameters:
   label: Note
   dtype: string
   default: 'Event Detection'
-- id: observers
-  label: Observers
+- id: observer
+  label: Observer
   dtype: string
   default: "Science Aficionados"
 - id: telescope
@@ -65,7 +65,7 @@ parameters:
   label: Frequency (MHz)
   dtype: float
   default: '1420.406'
-- id: sample_rate
+- id: bandwidth
   label: Bandwidth (MHz)
   dtype: float
   default: '1.0'
