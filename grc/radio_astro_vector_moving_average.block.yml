@@ -43,13 +43,13 @@ parameters:
 inputs:
 - label: in
   domain: stream
-  dtype: float
+  dtype: ${intype}
   vlen: ${vec_length}
 
 outputs:
 - label: out
   domain: stream
-  dtype: float
+  dtype: ${intype}
   vlen: ${vec_length}
 
 #  'file_format' specifies the version of the GRC yml format used in the file
