@@ -41,10 +41,11 @@ class vector_moving_average(gr.sync_block):
             in_sig=[(datatype, int(vec_length))],
             out_sig=[(datatype, int(vec_length))])
         #self.set_history(averaging_length)
+        self.datatype = datatype
         self.averaging_length = averaging_length
         self.vec_length = vec_length
-        self._sum1 = np.zeros(self.vec_length)
-        self.data_history = np.zeros((self.averaging_length, self.vec_length))
+        self._sum1 = np.zeros(self.vec_length, dtype=self.datatype)
+        self.data_history = np.zeros((self.averaging_length, self.vec_length), dtype=self.datatype)
         self.history_count = 0
         self.start_count = 0
         self.reset_integration = reset_integration
@@ -72,7 +73,7 @@ class vector_moving_average(gr.sync_block):
         return len(output_items[0])
 
     def set_reset_integration(self, reset_integration):
-        self.data_history = np.zeros((self.averaging_length, self.vec_length))
+        self.data_history = np.zeros((self.averaging_length, self.vec_length), dtype=self.datatype)
         self.history_count = 0
         self.start_count = 0
         # I don't actually use reset integration variable, just the callback.
