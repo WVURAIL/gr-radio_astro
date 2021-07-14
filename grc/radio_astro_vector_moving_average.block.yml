@@ -4,7 +4,7 @@ category: '[radio_astro]'
 
 templates:
   imports: import radio_astro
-  make: radio_astro.vector_moving_average(${vec_length}, ${averaging_length}, ${reset_integration})
+  make: radio_astro.vector_moving_average(${intype},${vec_length}, ${averaging_length}, ${reset_integration})
   callbacks:
     - set_reset_integration(${reset_integration})
 
@@ -14,6 +14,14 @@ templates:
 #     * label (label shown in the GUI)
 #     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 parameters:
+- id: intype
+  label: IO Type
+  dtype: enum
+  default: 'Complex'
+  options: ['complex', 'float', 'int']
+  option_labels: ['Complex', 'Float', 'Int']
+  option_attributes:
+    type: [complex, float, int]
 - id: vec_length
   label: Vector Length
   dtype: int

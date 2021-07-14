@@ -27,11 +27,19 @@ class vector_moving_average(gr.sync_block):
     """
     docstring for block vector_moving_average
     """
-    def __init__(self, vec_length, averaging_length, reset_integration):
+    def __init__(self, intype, vec_length, averaging_length, reset_integration):
+        if intype == complex:
+            datatype = np.complex64
+        elif intype == float:
+            datatype = np.float32
+        elif intype == int:
+            datatype = np.int32
+        else:
+            raise
         gr.sync_block.__init__(self,
             name="vector moving average",
-            in_sig=[(np.float32, int(vec_length))],
-            out_sig=[(np.float32, int(vec_length))])
+            in_sig=[(datatype, int(vec_length))],
+            out_sig=[(datatype, int(vec_length))])
         #self.set_history(averaging_length)
         self.averaging_length = averaging_length
         self.vec_length = vec_length

@@ -72,6 +72,7 @@ blocks:
     label4: ''
     labels: '[]'
     num_opts: '2'
+    option0: '"True"'
     option1: '"False"'
     option2: '2'
     option3: '3'
@@ -101,6 +102,7 @@ blocks:
     label4: '"Unfiltered spectrum with no calibration"'
     labels: '[]'
     num_opts: '5'
+    option0: '"nocal"'
     option1: '"cal"'
     option2: '"hot"'
     option3: '"cold"'
@@ -193,6 +195,7 @@ blocks:
     label4: ''
     labels: '[]'
     num_opts: '2'
+    option0: '0'
     option1: '1'
     option2: '2'
     option3: '3'
@@ -326,6 +329,7 @@ blocks:
     label4: ''
     labels: '[]'
     num_opts: '2'
+    option0: '"False"'
     option1: '"True"'
     option2: '2'
     option3: '3'
@@ -1626,6 +1630,7 @@ blocks:
     alias: ''
     averaging_length: short_long_time_scale
     comment: ''
+    intype: float
     maxoutbuf: '0'
     minoutbuf: '0'
     reset_integration: reset_integration_button
