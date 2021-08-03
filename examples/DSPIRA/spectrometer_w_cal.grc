@@ -926,7 +926,7 @@ blocks:
     ant7: ''
     ant8: ''
     ant9: ''
-    args: airspy=1,bias=1,pack=0
+    args: airspy=0,bias=1,pack=0
     bb_gain0: '10'
     bb_gain1: '20'
     bb_gain10: '20'
