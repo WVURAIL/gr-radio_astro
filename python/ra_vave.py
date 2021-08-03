@@ -1,7 +1,10 @@
+"""
+Vector Average for radio astronomy
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2020 Quiet Skies LLC Glen Langston.
+# Copyright 2018 Quiet Skies LLC
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +21,6 @@
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
 #
-
 
 import numpy
 from gnuradio import gr

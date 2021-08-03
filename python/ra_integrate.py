@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2020 Glen Langston, Quiet Skies.
+# Copyright 2018 Glen Langston, Quiet Skies
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 21Jan16 GIL scale save files by nave
+# 20Aug16 GIL restore writing hot/cold messages
 # 19SEP14 GIL hanning smooth reference in case of subtracting fit
 # 19JUN21 GIL more code cleanup
 # 19JUN20 GIL subtract baseline from ref.   Integrate ref for 5 seconds
@@ -31,6 +33,8 @@
 # 18APR20 GIL first functioning version
 # 18APR11 GIL first functioning version
 # 18APR01 GIL initial version
+
+#from __future__ import print_function
 
 import os
 import sys
@@ -94,14 +98,15 @@ class ra_integrate(gr.sync_block):
         self.vlen = vlen
         self.nintegrate = 1
         self.noteName = str(noteName)
+        self.lastfile = ""
         noteParts = self.noteName.split('.')
         #always use .not extension for notes files
         self.noteName = noteParts[0]+'.not'
         if len(noteParts) > 2:
-            print('!!! Warning, unexpected Notes File name! ')
-            print('!!! Using file: ',self.noteName)
+            print("!!! Warning, unexpected Notes File name! ")
+            print("!!! Using file: %s " % (self.noteName))
         if os.path.isfile( self.noteName):
-            print('Setup File       : ', self.noteName)
+            print("Setup File       : %s " % ( self.noteName))
         else:
             if os.path.isfile( "Watch.not"):
                 try:
@@ -137,16 +142,22 @@ class ra_integrate(gr.sync_block):
         self.ref = radioastronomy.Spectrum()
         if os.path.isfile(HOTFILE):
             self.hot.read_spec_ast(HOTFILE)
+            self.hot.ydataA = self.hot.ydataA/self.hot.nave
         else:
             self.hot.read_spec_ast(self.noteName)    # read the parameters
+            self.hot.ydataA = self.hot.ydataA/self.hot.nave
         if os.path.isfile(COLDFILE):
             self.cold.read_spec_ast(COLDFILE)
+            self.cold.ydataA = self.cold.ydataA/self.cold.nave
         else:
             self.cold.read_spec_ast(self.noteName)    # read the parameters
+            self.cold.ydataA = self.cold.ydataA/self.cold.nave
         if os.path.isfile(REFFILE):
             self.ref.read_spec_ast(REFFILE)
+            self.ref.ydataA = self.ref.ydataA/self.ref.nave
         else:
             self.ref.read_spec_ast(self.noteName)    # read the parameters
+            self.ref.ydataA = self.ref.ydataA/self.ref.nave
         if self.obs.nChan != vlen:
             self.update_len(self.obs)
         if self.ave.nChan != vlen:
@@ -170,7 +181,7 @@ class ra_integrate(gr.sync_block):
         self.xindex = np.arange(self.vlen)       # array of integers
         self.yfit = self.obs.ydataA[self.xfit]   # sub-array of fittable data
         self.allchan  = np.array(list(range(self.vlen)))
-        print('Setup File       : ', self.noteName)
+        print('Setup File       : %s' % (self.noteName))
         self.obs.read_spec_ast(self.noteName)    # read the parameters
         self.obs.observer = observers
         self.ave.read_spec_ast(self.noteName)    # read the parameters
@@ -180,8 +191,8 @@ class ra_integrate(gr.sync_block):
         nd = len(self.obs.datadir)
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
-            print('DataDir          : ', self.obs.datadir)
-        print('Observer Names   : ', self.obs.observer)
+            print("DataDir          : %s " % (self.obs.datadir))
+        print("Observer Names   : %s " % (self.obs.observer))
         self.obstypes = list(range(radioastronomy.NOBSTYPES))
         self.intstatus = list(range(radioastronomy.NINTTYPES))
         self.set_frequency(frequency)
@@ -282,7 +293,7 @@ class ra_integrate(gr.sync_block):
         self.hot.telaz = self.obs.telaz
         self.cold.telaz = self.obs.telaz
         self.ref.telaz = self.obs.telaz
-        print("Setting Azimuth  : %6.1f d" % self.obs.telaz)
+        print("Setting Azimuth  : %6.1f d" % (self.obs.telaz))
 
     def set_elevation(self, elevation):
         """
@@ -293,7 +304,7 @@ class ra_integrate(gr.sync_block):
         self.hot.telaz = self.obs.telel
         self.cold.telaz = self.obs.telel
         self.ref.telaz = self.obs.telel
-        print("Setting Elevation: %6.1f d" % self.obs.telel)
+        print("Setting Elevation: %6.1f d" % (self.obs.telel))
 
     def set_nmedian(self, nmedian):
         """
@@ -333,14 +344,14 @@ class ra_integrate(gr.sync_block):
                 self.obstype = radioastronomy.OBSCOLD
             else:
                 self.obstype = radioastronomy.OBSHOT
-        print("Observation Type : ", radioastronomy.obslabels[self.obstype])
+        print("Observation Type : %s " % (radioastronomy.obslabels[self.obstype]))
 
     def set_inttype(self, inttype):
         """
         Update the recording integration type, one of WAIT, RECORD or Save
         """
         self.inttype = int(inttype)
-        print("Integration Type : ", radioastronomy.intlabels[self.inttype])
+        print("Integration Type : %s" % (radioastronomy.intlabels[self.inttype]))
         
     def set_observers(self, observers):
         """
@@ -352,7 +363,7 @@ class ra_integrate(gr.sync_block):
         self.ref.observer = observers
         self.cold.observers = observers
         self.hot.observers = observers
-        print("Observers : ", self.obs.observer)
+        print("Observers : %s " % ( self.obs.observer))
 
     def set_units(self, units):
         """
@@ -362,7 +373,7 @@ class ra_integrate(gr.sync_block):
             self.units = int(units)
         else:
             self.units = 0
-        print("Units     : ", radioastronomy.unitlabels[self.units])
+        print("Units     : %s" % (radioastronomy.unitlabels[self.units]))
 
     def set_tcold(self, tcold):
         """
@@ -372,7 +383,7 @@ class ra_integrate(gr.sync_block):
         if tcold < 3.:
             tcold = 3.
         self.tcold = tcold
-        print("T_cold    : ", self.tcold)
+        print("T_cold    : %7.2f" % (self.tcold))
 
     def set_thot(self, thot):
         """
@@ -382,7 +393,7 @@ class ra_integrate(gr.sync_block):
         if thot < 50.:
             thot = 295.
         self.thot = thot
-        print("T_hot     : ", self.thot)
+        print("T_hot     : %7.2f " % (self.thot))
 
     def set_record(self, record):
         """
@@ -395,11 +406,11 @@ class ra_integrate(gr.sync_block):
         parts = strnow.split('.')
         strnow = parts[0]
         if record == radioastronomy.INTWAIT:
-            print("Stop  Averaging  : ", strnow)
+            print("Stop  Averaging  : %s " % ( strnow))
             self.stoputc = now
         # only restart averaging if not in averaging state
         elif self.record == radioastronomy.INTWAIT:
-            print("Start Averaging  : ", strnow)
+            print("Start Averaging  : %s " % ( strnow))
             self.startutc = now
         self.record = int(record)
 
@@ -561,14 +572,32 @@ class ra_integrate(gr.sync_block):
                     self.ref.utc = self.ave.utc
                     self.ref.durationsec = self.ave.durationsec
                     self.ref.ydataA[0:1] = self.ref.ydataA[2]
-                # if writing files, reduce write rate
+
+# if writing files, reduce write rate
                 if (self.inttype == radioastronomy.INTSAVE) and (self.nintegrate % 20 == 1):
+                    lastfile = ""
                     if self.obstype == radioastronomy.OBSHOT:
+                        self.hot.ydataA = np.maximum(self.ave.ydataB[0:self.vlen], self.epsilons[0:self.vlen])
+                        self.hot.ydataA[0:1] = self.hot.ydataA[2]
                         self.hot.write_ascii_file("./", HOTFILE)
+                        lastfile = HOTFILE
                     elif self.obstype == radioastronomy.OBSCOLD:
+                        self.cold.ydataA = np.maximum(self.ave.ydataB[0:self.vlen], self.epsilons[0:self.vlen])
+                        self.cold.ydataB[0:1] = self.cold.ydataB[2]
+
                         self.cold.write_ascii_file("./", COLDFILE)
+                        lastfile = COLDFILE
                     elif self.obstype == radioastronomy.OBSREF:
+                        self.ref.ydataA = np.maximum(self.ave.ydataB[0:self.vlen], self.epsilons[0:self.vlen])
+                        self.ref.ydataA[0:1] = self.ref.ydataA[2]
                         self.ref.write_ascii_file("./", REFFILE)
+                        lastfile = REFFILE
+                    if self.lastfile != lastfile:
+                        print("Wrote %s " % ( lastfile))
+                        self.lastfile = lastfile
+                if self.inttype != radioastronomy.INTSAVE:
+                    self.lastfile = ""
+
             # after flip, the first couple channels are anomoulusly large
             spec[0:1] = spec[2]
             self.ave.ydataA[0:1] = self.ave.ydataA[2]
@@ -643,9 +672,7 @@ class ra_integrate(gr.sync_block):
                         # will keep showing last short reference until next is ready
                         self.shortlast = refs
                         self.nshort = 0   # restart sum on next cycle
-                        print("")
-                        print("New Ref")
-                        print("")
+                        print("\nNew Ref\n")
                     else:
                         refs = self.shortlast
                     # end if subtracting baseline
@@ -683,3 +710,5 @@ class ra_integrate(gr.sync_block):
         # end for all input vectors
         return nout
     # end ra_integrate()
+
+

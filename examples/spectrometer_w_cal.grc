@@ -48,8 +48,8 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: qtgui_tab_widget_0@0:[2,0,1,1]
-    label: azimuth
+    gui_hint: qtgui_tab_widget_0@0:[2,0,1,2]
+    label: azimuth (hit 'Enter' after typing)
     type: string
     value: '0'
   states:
@@ -133,8 +133,8 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: qtgui_tab_widget_0@0:[3,0,1,1]
-    label: elevation
+    gui_hint: qtgui_tab_widget_0@0:[3,0,1,2]
+    label: elevation (hit 'Enter' after typing)
     type: string
     value: '0'
   states:
@@ -178,6 +178,38 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [560, 12.0]
+    rotation: 0
+    state: true
+- name: graphinfo
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    gui_hint: 'qtgui_tab_widget_0@0 '
+    label: Info added to png filename (hit 'Enter' after typing)
+    type: string
+    value: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 1004.0]
+    rotation: 0
+    state: true
+- name: graphprint_toggle
+  id: variable_qtgui_push_button
+  parameters:
+    comment: ''
+    gui_hint: 'qtgui_tab_widget_0@0 '
+    label: Print Graph to File
+    pressed: '"True"'
+    released: '"False"'
+    type: string
+    value: '"False"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 1004.0]
     rotation: 0
     state: true
 - name: integration_select
@@ -225,7 +257,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '10'
+    value: '30'
   states:
     bus_sink: false
     bus_source: false
@@ -237,8 +269,8 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: qtgui_tab_widget_0@0:[2,2,1,3]
-    label: ''
+    gui_hint: qtgui_tab_widget_0@0:[2,3,1,4]
+    label: location (hit 'Enter' after typing)
     type: string
     value: Anytown
   states:
@@ -264,7 +296,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '"/home/john/DSPIRA_2020/hornSpectra2020/"'
+    value: '"/home/john/dspira_2021/"'
   states:
     bus_sink: false
     bus_source: false
@@ -437,7 +469,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [632, 1188.0]
+    coordinate: [568, 1204.0]
     rotation: 0
     state: true
 - name: ymin
@@ -458,7 +490,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 1188.0]
+    coordinate: [456, 1204.0]
     rotation: 0
     state: true
 - name: blocks_add_xx_0
@@ -854,7 +886,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [568, 1132.0]
+    coordinate: [504, 1156.0]
     rotation: 0
     state: enabled
 - name: osmosdr_source_0
@@ -894,7 +926,7 @@ blocks:
     ant7: ''
     ant8: ''
     ant9: ''
-    args: airspy=0,bias=1,pack=0
+    args: airspy=1,bias=0,pack=0
     bb_gain0: '10'
     bb_gain1: '20'
     bb_gain10: '20'
@@ -1267,7 +1299,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '"System Hearbeat"'
+    name: '"System Heartbeat"'
     nconnections: '1'
     size: '1024'
     style1: '1'
@@ -1594,6 +1626,25 @@ blocks:
     coordinate: [1280, 412.0]
     rotation: 180
     state: enabled
+- name: radio_astro_png_print_spectrum_0
+  id: radio_astro_png_print_spectrum
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    freq: freq
+    graphinfo: graphinfo
+    graphprint_toggle: graphprint_toggle
+    prefix: prefix
+    samp_rate: samp_rate
+    vec_length: vec_length
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [424, 948.0]
+    rotation: 180
+    state: true
 - name: radio_astro_systemp_calibration_0
   id: radio_astro_systemp_calibration
   parameters:
@@ -1626,6 +1677,7 @@ blocks:
     alias: ''
     averaging_length: short_long_time_scale
     comment: ''
+    intype: float
     maxoutbuf: '0'
     minoutbuf: '0'
     reset_integration: reset_integration_button
@@ -1667,6 +1719,7 @@ connections:
 - [radio_astro_integration_0, '0', radio_astro_vector_moving_average_0, '0']
 - [radio_astro_systemp_calibration_0, '0', qtgui_vector_sink_f_0_0_1, '0']
 - [radio_astro_systemp_calibration_0, '0', radio_astro_csv_filesink_0, '0']
+- [radio_astro_systemp_calibration_0, '0', radio_astro_png_print_spectrum_0, '0']
 - [radio_astro_systemp_calibration_0, '1', qtgui_vector_sink_f_0_0, '0']
 - [radio_astro_systemp_calibration_0, '2', qtgui_vector_sink_f_0_0_0, '0']
 - [radio_astro_vector_moving_average_0, '0', blocks_selector_0, '1']

@@ -1,0 +1,30 @@
+127.0.0.1	localhost
+127.0.1.1	raspberrypi
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+192.168.1.101 host101
+192.168.1.102 host102
+192.168.1.103 host103
+192.168.1.104 host104
+192.168.1.105 host105
+192.168.1.106 host106
+192.168.1.107 host107
+192.168.1.108 host108
+192.168.1.109 host109
+192.168.1.110 host110
+192.168.1.199 host199
+192.168.1.200 host200
+192.168.1.201 host201
+192.168.1.202 host202
+192.168.1.203 host203
+192.168.1.204 host204
+192.168.1.205 host205
+192.168.1.206 host206
+192.168.1.207 host207
+192.168.1.208 host208

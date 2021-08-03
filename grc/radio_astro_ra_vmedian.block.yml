@@ -4,7 +4,7 @@ category: '[radio_astro]'
 
 templates:
   imports: import radio_astro
-  make: radio_astro.ra_vmedian(${vlen}, ${vdecimate})
+  make: radio_astro.ra_vmedian(${vlen}, ${decimate})
   callbacks:
     - set_decimate(${decimate})
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
@@ -13,14 +13,14 @@ templates:
 #     * label (label shown in the GUI)
 #     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 parameters:
-- id: vdecimate
+- id: decimate
   label: Vec Median
   dtype: int
   default: '4'
 - id: vlen
   label: Vec Length
   dtype: int
-  default: '128'
+  default: '1024'
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
 #  Keys include:
@@ -35,7 +35,12 @@ inputs:
   dtype: float
   vlen: ${vlen}
   optional: 0
-
+outputs:
+- label: out
+  domain: stream
+  dtype: float
+  vlen: ${vlen}
+  
 
 #  'file_format' specifies the version of the GRC yml format used in the file
 #  and should usually not be changed.

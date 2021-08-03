@@ -6,10 +6,10 @@ templates:
   imports: import radio_astro
   make: radio_astro.ra_event_log(${logname}, ${note}, ${vlen}, ${bandwidth})
   callbacks:
-    - set_logname(${logsetup})
+    - set_logname(${logname})
     - set_note(${note})
     - set_vlen(${vlen})
-    - set_sample_rate(${sample_rate})
+    - set_sample_rate(${bandwidth})
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
 #     * id (makes the value accessible as \$keyname, e.g. in the make entry)
@@ -23,8 +23,8 @@ parameters:
   label: Note
   dtype: string
   default: 'Event Detection'
-- id: sample_rate
-  label: Sample Rate (MHz)
+- id: bandwidth
+  label: Bandwidth (MHz)
   dtype: float
   default: "1.0"
 - id: vlen

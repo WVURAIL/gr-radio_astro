@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+# This python program logs detected events, within the
+# Gnuradio Companion environment
 # -*- coding: utf-8 -*-
 #
-# Copyright 2020 Quiet Skies --  Glen Langston.
+# Copyright 2018 Glen Langston, Quiet Skies <+YOU OR YOUR COMPANY+>.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,12 +15,11 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this software; see the file COPYING.  If not, write to
-# the Free Software Foundation, Inc., 51 Franklin Street,
-# Boston, MA 02110-1301, USA.
-#
 # HISTORY
+# 20NOV24 GIL another try at fixing log mjds
+# 20SEP17 GIL fix creating new logs every day
+# 20AUG28 GIL move event logs to a separate directory
+# 20JUN26 GIL log vector tags to deterine accurate time
 # 19FEB14 GIL make tag labels compatible with C++ tags
 # 19JAN19 GIL initial version based on ra_event_sink
 
@@ -53,26 +54,48 @@ class ra_event_log(gr.sync_block):
         self.vlen = vlen
         self.ecount = 0
         self.lastmjd = 0.
+        self.lastvmjd = 0.
+        self.printmjd = 0.
         self.bandwidth = bandwidth
         now = datetime.datetime.utcnow()
         self.startutc = now
         self.setupdir = "./"
+        self.logdir = "../eventlog"
         self.logname = str(logname)
-        self.eventmjd = 0.
-        self.emagnitude = 0.
+        self.lastlogname = str(logname)
+        self.fullname = self.logdir
+        self.logmjd = 0.
+        self.lastlogmjd = 0.
+        self.emjd = 0.
+        self.epeak = 0.
         self.erms = 0.
+        self.evector = 0
+        self.env = 0
+        self.eoffset = 0
+        self.voffset = 0
+        self.vmjd = 0.
+        self.vcount = 0
+        self.nv = 0
+        self.lasttag = ""
         self.note = str(note)
-        self.pformat = "%04d %18.12f %05d %10.3f %10.6f %10.6f\n" 
+        self.pformat = "%18.12f %15d %05d %10.3f %3d %5d %10.6f %10.6f %5d %5d\n" 
+        self.vformat = "%18.12f %15d %05d %10.3f %3d %5d \n" 
         self.set_note( note)          # should set all values before opening log file
         self.set_sample_rate( bandwidth)
         self.set_logname(logname)
-
+        
     def forecast(self, noutput_items, ninput_items): #forcast is a no op
         """
         The work block always processes all inputs
         """
         ninput_items = noutput_items
         return ninput_items
+
+    def set_vlen(self, vlen):
+        """
+        Save vector length
+        """
+        self.vlen = int(vlen)
 
     def set_sample_rate(self, bandwidth):
         """
@@ -97,22 +120,50 @@ class ra_event_log(gr.sync_block):
         """
         return self.ecount
 
+    def create_logname(self):
+        """ 
+        Create the Event log name from the current date and time
+        """
+        now = datetime.datetime.utcnow()
+        now = str(now)
+        datestr = now.split('.')    # get rid of fractions of a second
+        daypart = datestr[0]         
+        yymmdd = daypart[2:10]      # 2019-01-19T01:23:45 -> 19-01-19
+
+        logname = "Event-%s.log" % (yymmdd)  # create from date
+        return logname
+        
     def set_logname(self, logname):
         """
         Read the setup files and initialize all values
         """
+
         logname = str(logname)
-        if len(logname) < 1:   # if no log file name provided
-            strnow = self.startutc.isoformat()
-            datestr = strnow.split('.')  # get rid of fractions of a second
-            daypart = datestr[0]         
-            yymmdd = daypart[2:19]       # 2019-01-19T01:23:45 -> 19-01-19T01:23:45
-            yymmdd = yymmdd.replace(":", "")  # -> 19-01-19T012345
-
-            logname = "Event-%s.log" % (yymmdd)  # create from date
+        if logname == "":   # if no log file name provided
+            logname = self.create_logname()
+            
         self.logname = logname
+        # if file is same as last, the file is already initialized
+        if self.lastlogname == self.logname:
+            return
 
-        with open( self.logname, "w") as f:
+        # create the log directory if it does not exist
+        if not os.path.exists(self.logdir):
+            try:
+                os.makedirs(self.logdir)
+            except:
+                print("Can not Create Log Directory: $s" % (self.logdir))
+                exit()
+        self.fullname = self.logdir + "/" + self.logname            
+
+        self.lastlogname = logname
+
+        # if file already exists, no need to add header
+        if os.path.exists(self.fullname):
+            print("Using Event Log: %s" % (self.lastlogname))
+            return
+            
+        with open( self.fullname, "w") as f:
             outline = "# Event Log Opened on %s\n" % (self.startutc.isoformat())
             f.write(outline)
             outline = "# %s\n" % (self.note)
@@ -121,10 +172,13 @@ class ra_event_log(gr.sync_block):
             f.write(outline)
             outline = "# vlen      = %6d\n" % (self.vlen)
             f.write(outline)
-            outline = "#  N      MJD          second  micro.sec    Peak       RMS\n"
+            outline = "#E       MJD           vector #   second  micro.sec  NV  Zero#   Peak       RMS    Event# Offset\n"
+            f.write(outline)
+            outline = "#V       MJD           vector #   second  micro.sec  NV  Zero#\n"
             f.write(outline)
             f.close()
-
+        # save new log for checking name change
+        print("Created New Event Log: %s" % (self.lastlogname))
         return
     
     def set_note(self, note):
@@ -145,7 +199,7 @@ class ra_event_log(gr.sync_block):
         
         # get any tags of a new detected event
 #        tags = self.get_tags_in_window(0, 0, +self.vlen, pmt.to_pmt('event'))
-        tags = self.get_tags_in_window(0, 0, +self.vlen)
+        tags = self.get_tags_in_window(0, 0, +nv)
         # if there are tags, then a new event was detected
         if len(tags) > 0:
             for tag in tags:
@@ -153,36 +207,89 @@ class ra_event_log(gr.sync_block):
                 key = pmt.to_python(tag.key)
                 value = pmt.to_python(tag.value)
                 if key == 'MJD':
-                    self.eventmjd = value
-#                    print 'Tag MJD : %15.9f' % (self.eventmjd)
+                    self.emjd = value
+#                    print 'Tag MJD : %15.9f' % (self.emjd)
+                elif key == 'VMJD':
+                    self.vmjd = value
+                    # print 'Tag VMJD: %15.9f' % (self.vmjd)
                 elif key == 'PEAK':
-                    self.emagnitude = value
-#                    print 'Tag PEAK: %7.4f' % (self.emagnitude)
+                    self.epeak = value
+#                    print 'Tag PEAK: %7.4f' % (self.epeak)
                 elif key == 'RMS':
                     self.erms = value
 #                    print 'Tag RMs : %7.4f' % (self.erms)
-                else:
-                    print('Unknown Tag: ', value)
+                elif key == 'VCOUNT':
+                    self.vcount = value
+                    # print 'Tag VCOUNT: %15.9f' % (self.vcount)
+                elif key == 'EVECTOR':
+                    self.evector = value
+                    # print 'Tag VMJD: %15.9f' % (self.emjd)
+                elif key == 'ENV':
+                    self.env = value
+                elif key == 'EOFFSET':
+                    self.eoffset = value
+                elif key == 'VOFFSET':
+                    self.voffset = value
+                elif key == 'NV':
+                    self.nv = value
+                    # print 'Tag NV  : %15d' % (self.nv)
+                elif key != self.lasttag:
+                    print('Unknown Tag: ', key, value)
+                    self.lasttag = key
 
-        # for all input vectors
-        for i in range(nv):
+        i = nv - 1
+        # expect only one event in tag group
+        if i > -1:
             # if a new Modified Julian Day, then an event was detected
-            if self.eventmjd > self.lastmjd:
+            if self.emjd > self.lastmjd:
                 # log the event
                 self.ecount = self.ecount + 1
-                print("\nEvent   Logged: %15.9f (MJD) %9.4f %8.4f" % (self.eventmjd, self.emagnitude, self.erms))
-                imjd = np.int(self.eventmjd)
-                seconds = (self.eventmjd - imjd)*86400.
+                print("Event : %15.9f %16d %9.4f %8.4f %4d" % (self.emjd, self.evector, self.epeak, self.erms, self.ecount))
+                # round down to integer mjd
+                self.logmjd = np.int(self.emjd)
+                seconds = (self.emjd - self.logmjd)*86400.
                 isecond = np.int(seconds)
                 microseconds = (seconds - isecond) * 1.e6
-                self.lastmjd = self.eventmjd
-                outline = self.pformat % (self.ecount, self.eventmjd, isecond, microseconds, self.emagnitude, self.erms)
+                outline = self.pformat % (self.emjd, self.evector, isecond, microseconds, self.env, self.voffset, self.epeak, self.erms, self.ecount, self.eoffset)
+                # create log file names here, if new mjd
+                if self.lastlogmjd != self.logmjd:
+                    self.set_logname( "")
+                    self.lastlogmjd = self.logmjd
+                self.lastmjd = self.emjd
+                # now write the log entry
                 try:
-                    with open( self.logname, "a+") as f:
+                    # confirm log name is current, sets the full name
+                    # based on date
+                    with open( self.fullname, "a+") as f:
                         f.write(outline)
                         f.close()
                 except:
-                    continue
+                    print("Can Not Log")
+                
+            # also log vector time tags to interpolate accurate time
+            if self.vmjd > self.lastvmjd:
+                # log the time of this vector
+                if self.vmjd > self.printmjd:
+                    print("Vector: %15.9f %16d %4d %5d" % (self.vmjd, self.vcount, self.nv, self.voffset))
+                    # print every few minutes (24*60 = 1440 minutes in a day)
+                    self.printmjd = self.vmjd + (2./1440.)   
+                imjd = np.int(self.vmjd)
+                seconds = (self.vmjd - imjd)*86400.
+                isecond = np.int(seconds)
+                microseconds = (seconds - isecond) * 1.e6
+                self.lastvmjd = self.vmjd
+                outline = self.vformat % (self.vmjd, self.vcount, isecond, microseconds, self.nv, self.voffset)
+                try:
+                    # confirm log name is current, sets the full name
+                    # based on date
+                    with open( self.fullname, "a+") as f:
+                        f.write(outline)
+                        f.close()
+                except:
+                    print("Can Not Log")
+                
             # end for all input events
         return nv
     # end event_log()
+
+

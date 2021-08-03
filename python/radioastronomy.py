@@ -1,7 +1,16 @@
+#Python 
 """
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+21JUN10 GIL fix writing different FFT sizes
+21APR09 GIL add telescope altitude read/write
+20DEC28 GIL fix parsing header separately from data
+20DEC16 GIL file header
+20NOV27 GIL separate the reading of the file header from the data
+20NOV17 GIL use angles.str2deci() for parsing string angles
+20NOV16 GIL fix reading Longitude outside of +/-90 degrees
+20AUG26 GIL fix errors when trying to read a .not file
 20APR16 GIL add recording of tSys, tRx, tRms
 19NOV22 GIL reduce digits of spectral intensity
 19NOV08 GIL add 3 more digits to Event MJD 
@@ -28,6 +37,7 @@ HISTORY
 ##################################################
 # Imports
 ##################################################
+import os.path
 import datetime
 import copy
 import numpy as np
@@ -234,15 +244,7 @@ def degree2float(instring, hint):
     degree2float() takes an input angle string in "dd:MM:ss.sss" format or dd.dd
     and returns a floating point value in degrees
     """
-    outfloat = 0.0
-    parts = instring.split(':')
-    if len(parts) == 1:  # if only one part, then degrees
-        outfloat = float(instring)
-    elif len(parts) == 3:  # if three parts, then dd:mm:ss
-        anangle = angles.DeltaAngle(instring)
-        outfloat = anangle.d
-    else:
-        print("%s format error: %s, zero returned " % (hint, instring))
+    outfloat  = angles.str2deci( instring)
     return outfloat
 
 def hour2float(instring, hint):
@@ -429,7 +431,7 @@ class Spectrum(object):
         """
         if ephemOK:
             location = ephem.Observer()
-            location.lon = str(self.tellon)
+            location.lon = str(self.tellon) # at this point lon,lat are in degrees
             location.lat = str(self.tellat)
             location.elevation = self.telelev
         strnow = self.utc.isoformat()
@@ -442,6 +444,8 @@ class Spectrum(object):
             lst = location.sidereal_time()
             aparts = angles.phmsdms(str(lst))
             self.lst = angles.sexa2deci(aparts['sign'], *aparts['vals'], todeg=True)
+#            print("lst: %s %s %7.3f" % (lst, datestr, self.lst))
+#            self.lst = angles.sexa2deci(aparts['sign'], *aparts['vals'])
         ## Must set the date before calculating ra, dec!!!
         # compute apparent RA,DEC for date of observations
             ra_a, dec_a = location.radec_of(str(self.telaz), str(self.telel))
@@ -475,7 +479,9 @@ class Spectrum(object):
             print("File %4d: %s (%d)" % (self.writecount, outname, self.count))
         fullname = dirname + outname
         outfile = open(fullname, 'w')
-        outfile.write('# File: ' + outname + '\n')
+#        outfile.write('# File: ' + outname + '\n')
+        outline = '# FILE      =  ' + outname + '\n'
+        outfile.write(outline)
         self.noteA = self.noteA.replace('\n', '')
         self.noteA = self.noteA.strip()
         outline = '# NOTEA     = ' + self.noteA + '\n'
@@ -535,9 +541,13 @@ class Spectrum(object):
             outfile.write(outline)
         outline = '# Count     = ' + str(self.count) + '\n'
         outfile.write(outline)
-        outline = '# CenterFreq= ' + str(self.centerFreqHz) + '\n'
+        # match SETI/GUPPI KEYWORDS
+        # https://www.cv.nrao.edu/~pdemores/GUPPI_Raw_Data_Format/
+#        outline = '# CenterFreq= ' + str(self.centerFreqHz) + '\n'
+        outline = '# OBSFREQ   = ' + str(self.centerFreqHz) + '\n'
         outfile.write(outline)
-        outline = '# Bandwidth = '  + str(self.bandwidthHz) + '\n'
+#        outline = '# Bandwidth = '  + str(self.bandwidthHz) + '\n'
+        outline = '# OBSBW     = '  + str(self.bandwidthHz) + '\n'
         outfile.write(outline)
         outline = '# Duration  = '  + str(self.durationSec) + '\n'
         outfile.write(outline)
@@ -603,6 +613,8 @@ class Spectrum(object):
         anglestr = angles.fmt_angle(float(self.tellat), s1=":", s2=":")
         outline = '# TELLAT    = '  + anglestr + '\n'
         outfile.write(outline)
+        outline = '# TELALT    = '  + str(self.telelev) + '\n'
+        outfile.write(outline)
         rastr = angles.fmt_angle(self.ra/15., s1=":", s2=":", pre=3) # convert to hours
         outline = '# RA        = '  + rastr[1:] + '\n'
         outfile.write(outline)
@@ -665,6 +677,7 @@ class Spectrum(object):
             if leny > self.nSamples:
                 self.nSamples = leny
                 print("Y array length and N Sample miss match:", leny, self.nSamples)
+                print("Y array length and N Sample miss match:", leny, self.nSamples)
             if TIMEPARTS == 2:             # if not writing time
                 outline = "#   I       Q\n"
                 outfile.write(outline)
@@ -673,7 +686,9 @@ class Spectrum(object):
                     print("Very small number of samples: ",self.nSamples)
                     print("N Chan: %5d; N  x: %5d " % (self.nChan, len(self.xdata)))
                     print("N y1  : %5d; N y2: %5d " % (len(self.ydataA), len(self.ydataB)))
-                for i in range(self.nSamples):
+                n = len(self.ydataA)
+                n = min(n, self.nSamples)
+                for i in range(n):
                     outline = pformat % (self.ydataA[i], self.ydataB[i])
                     outline = outline.replace(' 0.', ' .')
                     outline = outline.replace('-0.', '-.')
@@ -728,37 +743,25 @@ class Spectrum(object):
         outname = yymmdd + extension
         self.write_ascii_file(dirname, outname)
 
-    def read_spec_ast(self, fullname):
+    def parse_spec_header(self, inlines):
+        """ 
+        Take input lines read and parse the header lines until reaching
+        The data.
         """
-        Read an ascii radio Spectrum file or an event in radio samples and
-        fill a Spectrum object
-        """
-        # turn on/off printing
-        verbose = True
-        verbose = False
-        # Read the file.
-        f2 = open(fullname, 'r')
-# read the whole file into a single variable, which is a list of every row of the file.
-        inlines = f2.readlines()
-        f2.close()
-
-# initialize some variable to be lists:
-        x1 = []
-        y1 = []
-        y2 = []
-        datacount = 0
         linecount = 0
-
-# scan the rows of the file stored in lines, and put the values into some variables:
+        verbose = False
+        #  scan the rows of the file stored in lines, and put the values into some variables:
         for line in inlines:
             parts = line.split()
+            # exit when reaching end of the header
             if linecount == 0:
                 parts[1] = parts[1].upper()
-                if parts[1] != 'FILE:':
+                if ((not parts[1] != 'FILE:') and (not parts[1] != "FILE")):
                     print("")
                     print("read_spec_ascii input error!")
                     print("")
-                    print("Input not an NSF Spectrum file:", fullname)
+                    print("First Line: %s" % ( parts[1]))
+                    print("Input not an NSF Spectrum file: %s" % (fullname))
                     exit()
             linecount = linecount + 1
 # if a very short or blank line
@@ -766,6 +769,10 @@ class Spectrum(object):
                 continue
             if linecount == 2:
                 self.noteA = line[2:].replace('\n', '')
+            if line[0] != "#":
+                return linecount
+            if line.strip() == "# END":
+                return linecount
 # if a comment or parameter line, decode value
             if line[0] == '#':
 # parse keywords as upper case: ie Ra == RA
@@ -778,6 +785,12 @@ class Spectrum(object):
                     self.seconds = float(parts[3])
                 if parts[1] == 'CENTERFREQ':
                     self.centerFreqHz = float(parts[3])
+                # SETI/GUPPI Keywords
+                if parts[1] == 'OBSFREQ':
+                    self.centerFreqHz = float(parts[3])
+                # SETI/GUPPI Keywords
+                if parts[1] == 'OBSBW':
+                    self.bandwidthHz = float(parts[3])
                 if parts[1] == 'CENTERFREQ=':
                     self.centerFreqHz = float(parts[2])
                 if parts[1] == 'BANDWIDTH':
@@ -787,11 +800,12 @@ class Spectrum(object):
                 if parts[1] == 'DELTAX':
                     self.deltaFreq = float(parts[3])
                 if parts[1] == 'LST':
-                    lstparts = angles.phmsdms(parts[3])
-                    x = angles.sexa2deci(lstparts['sign'], *lstparts['vals'])
-                    self.lst = x*15. # convert back to degrees
+                    # as of 20 Dec 2, the LST seems to be poorly set in raw data files
+                    self.lst = angles.str2deci(parts[3], todeg=True)
+#                    print("%s %7.3f" % (parts[3], self.lst))
+#                    self.lst = x*15. # convert back to degrees
                     if verbose:
-                        print(parts[3], x)
+                        print(parts[3], self.lst)
                 if parts[1] == 'AZ':
                     self.telaz = degree2float(parts[3], parts[1])
                 if parts[1] == 'EL':
@@ -936,9 +950,17 @@ class Spectrum(object):
                     self.gallat = x
 # if parse telescope geographic latitude and longitude into float
                 if parts[1] == 'TELLON':
-                    self.tellon = degree2float(parts[3], parts[1])
+                    self.tellon = angles.str2deci( parts[3])
+                    if verbose:
+                        print("TELLON: %s %7.3f" % (parts[3], self.tellon))
                 if parts[1] == 'TELLAT':
-                    self.tellat = degree2float(parts[3], parts[1])
+                    self.tellat = angles.str2deci( parts[3]) 
+                    if verbose:
+                        print("TELLAT: %s %7.3f" % (parts[3], self.tellat))
+                if parts[1] == 'TELALT':
+                    self.telelev = float( parts[3]) 
+                    if verbose:
+                        print("TELALT: %s %7.3f" % (parts[3], self.telelev))
 # parse ra, dec into float
                 if parts[1] == 'RA':
                     aparts = angles.phmsdms(parts[3])
@@ -960,13 +982,58 @@ class Spectrum(object):
                     x = angles.sexa2deci(aparts['sign'], *aparts['vals'])
                     self.az_sun = x
 # this is the end of the if first character is a # IF statement
-                continue
+
 # sometimes there are user comments in the top few lines; ignore
             if linecount < 5:
                 continue
+        # should not return from here, as end of header is detected above
+        return linecount
+    
+    def read_spec_ast(self, fullname, doDebug=False):
+        """
+        Read an ascii radio Spectrum file or an event in radio samples and
+        fill a Spectrum object
+        """
+        # turn on/off printing
+        verbose = True
+        verbose = False
+        # Read the file.
+        try:
+            if os.path.isfile(fullname):
+                f2 = open(fullname, 'r')
+            else:
+                print("Not a valid file name: %s" % (fullname))
+                self.nChan = 0
+                self.nSamples = 0
+                return
+        except:
+            print("Can Not open File: %s" % (fullname))
+            self.nChan = 0
+            self.nSamples = 0
+            return
+        
+# read the whole file into a single variable, which is a list of every row of the file.
+        inlines = f2.readlines()
+        f2.close()
+
+# initialize some variable to be lists:
+        x1 = []
+        y1 = []
+        y2 = []
+
+        linecount = self.parse_spec_header( inlines)
+        datastart = linecount - 1
+        datacount = 0
+        if doDebug:
+            print ("%3d Header lines; First data line: %s" % \
+                   ( linecount,inlines[datastart]))
+        # all remaining are data
+        inlines = inlines[datastart:]
+        # for all remaining lines in file
+        for line in inlines:
 # start data processing
             datacount = datacount+1
-            p = line.split()
+            p = line.split(" ")
             nparts = len(p)
             if nparts < 2:
                 continue
@@ -1015,12 +1082,19 @@ class Spectrum(object):
                         y2.append(0.0)
 
         # at this point all data and header keywords are read
-        self.ydataA = np.array(y1)           # always transfer values series
-        nData = len(self.ydataA)
+        y1 = np.array(y1)           # always transfer values series
+        nData = len(y1)
+        self.ydataA[0:nData] = y1           # always transfer values series
         if self.nSpec > 0:
-            self.xdata = np.array(x1)        # transfer x axis; channels or time
-            if self.nSpec > 1:               # if more than one spectrum
-                self.ydataB = np.array(y2)   # transfer it too
+            if nData != self.nChan:
+                print( "Warning: channel expected not read count: %d != %d" \
+                       % (self.nChan, nData))
+                print("For file: %s" % (fullname))
+            x1 = np.array(x1)
+            self.xdata[0:nData] = x1       # transfer x axis; channels or time
+            if self.nSpec > 1:             # if more than one spectrum
+                y2 = np.array(y2)
+                self.ydata[0:nData] = y2   # transfer it too
             self.nChan = nData
             self.nSamples = 0
         if self.nTime > 0:
