@@ -52,52 +52,53 @@ class png_print_spectrum(gr.sync_block):
         self.a = np.zeros(self.vec_length)    
 
     def work(self, input_items, output_items):
-        in0 = input_items[0]
-        self.spectrum[:] = in0
+        inp0 = input_items[0]
+        for in0 in inp0:
+            self.spectrum[:] = in0
 
-        if self.graphprint_toggle == "True":     #If true, write the spectrum to a .png file.
-            current_time = time.time()
-            self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
-            # write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
-            # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
-            self.textfilename = self.prefix + self.timenow + "_test.csv"
-            self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
-            self.data_array[:,1] = np.round(self.spectrum, decimals=4)
-            
-            # Set up graph and write to png file:
-            
-            font1 = {'family': 'serif', 'color': 'darkred', 'weight': 'bold', 'size': 20,}
+            if self.graphprint_toggle == "True":     #If true, write the spectrum to a .png file.
+                current_time = time.time()
+                self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
+                # write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
+                # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
+                self.textfilename = self.prefix + self.timenow + "_test.csv"
+                self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
+                self.data_array[:,1] = np.round(self.spectrum, decimals=4)
+                
+                # Set up graph and write to png file:
+                
+                font1 = {'family': 'serif', 'color': 'darkred', 'weight': 'bold', 'size': 20,}
 
-            font2 = {'family': 'serif', 'color':  'darkblue','weight': 'bold','size': 28,}
+                font2 = {'family': 'serif', 'color':  'darkblue','weight': 'bold','size': 28,}
 
-            fig, ax = plt.subplots(1, figsize=(16, 12))
-            plt.title("Spectrum collected at " + self.timenow, fontdict=font2)
-            plt.suptitle(self.timenow + "_spectrum.png", fontdict=font1)
+                fig, ax = plt.subplots(1, figsize=(16, 12))
+                plt.title("Spectrum collected at " + self.timenow, fontdict=font2)
+                plt.suptitle(self.timenow + "_spectrum.png", fontdict=font1)
 
-            plt.xlim([1419.5,1421.5])
-            #plt.ylim([0,50000])
-            ax.plot(self.frequencies/1e6, self.spectrum, linewidth=3)
-            plt.axhline(linewidth=2, color='black')
-            plt.axvline(x=1419.50, linewidth=3, color='black')
-            plt.axvline(x=1420.41, linewidth=2, color='r')  # indicate unshifted HI peak position.
-            plt.xlabel("Frequency (MHz)", fontdict=font1)
-            plt.ylabel("Signal", fontdict=font1)
+                plt.xlim([1419.5,1421.5])
+                #plt.ylim([0,50000])
+                ax.plot(self.frequencies/1e6, self.spectrum, linewidth=3)
+                plt.axhline(linewidth=2, color='black')
+                plt.axvline(x=1419.50, linewidth=3, color='black')
+                plt.axvline(x=1420.41, linewidth=2, color='r')  # indicate unshifted HI peak position.
+                plt.xlabel("Frequency (MHz)", fontdict=font1)
+                plt.ylabel("Signal", fontdict=font1)
 
-            #Set tick marks
-            ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
-            ax.xaxis.set_minor_locator(plt.MultipleLocator(.01))
+                #Set tick marks
+                ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
+                ax.xaxis.set_minor_locator(plt.MultipleLocator(.01))
 
-            # Add grid lines
-            plt.grid(b=True, which='major', color='#666666', linestyle='-', linewidth=1)
+                # Add grid lines
+                plt.grid(b=True, which='major', color='#666666', linestyle='-', linewidth=1)
 
-            # Show the minor grid lines with very faint and almost transparent grey lines
-            plt.minorticks_on()
-            plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
+                # Show the minor grid lines with very faint and almost transparent grey lines
+                plt.minorticks_on()
+                plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 
-            #plt.plot(self.frequencies/1e6, self.spectrum)
-            plt.savefig(self.prefix + "spectrum" + self.timenow + self.graphinfo +".png")
-            plt.show
-            self.graphprint_toggle = "False"
+                #plt.plot(self.frequencies/1e6, self.spectrum)
+                plt.savefig(self.prefix + "spectrum" + self.timenow + self.graphinfo +".png")
+                plt.show
+                self.graphprint_toggle = "False"
 
         return len(input_items[0])
     
