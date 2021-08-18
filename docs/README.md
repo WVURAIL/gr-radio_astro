@@ -34,3 +34,34 @@ git clone https://github.com/WVURAIL/gr-radio_astro.git
        2.  Go to the following by typing: `cd /usr/local/lib/python3.8/dist-packages` or `cd /usr/local/lib/python3.9/dist-packages` for the appropriate python version. 
        3.  Type `ln -s /usr/local/lib/python3/dist-packages/radio_astro`   
 
+
+# Running from a bootable USB Fllash Drive with preinstalled software:
+
+[Instructions to set up a persistant USB flash with preinstalled software drive are here](https://wvurail.org//dspira-lessons/Install_Ubuntu_spectrometer_onFlashdrive)
+
+# Installng on a Raspberry Pi. 
+
+## Supported Raspberry Pi Devices
+
+*All devices must have RAM greater than 4GB*
+1. Raspberry Pi 4 Model B
+2. Raspberry Pi 400
+
+
+## Installing Ubuntu image with radio astronomy preinstalled  on a Raspberry Pi
+This image requires a minimum of 16GB of space on the SD card. 
+1. Download the image [here](https://drive.google.com/file/d/1KzfgMEwgwTTZUaCeNR5kRgLj9MfMKyAh/view?usp=sharing)
+2. Unzip the `.zip` file.
+3. Use [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to install this image. 
+   1. Insert SD card into your card reader on your computer
+   2. Open Raspberry Pi imager.
+   3. Click `Choose OS`, and choose `Use Custom`. 
+   4. Select the correct image file downloaded in step 1 and 2 from your system.
+   5. Click `Choose storage` and select your inserted SD card.
+   6. Click write. 
+   7. More info [here](https://www.raspberrypi.org/documentation/installation/installing-images/) and a [video](https://www.youtube.com/watch?v=ntaXWS8Lk34) 
+4. Insert SD card to Raspberry Pi and power it up.
+5. The default user name is `pi`, with password `raspberry`. Change the password after first boot. 
+
+
+
