@@ -30,9 +30,9 @@ git clone https://github.com/WVURAIL/gr-radio_astro.git
    
 8. Edit your `.bashrc` file and add this to the bottom to set Python path: `export PYTHONPATH=/usr/local/lib/python3/dist-packages:/usr/local/lib/python3.8/dist-packages:$PYTHONPATH`
 9. Additionally you can create appropriate symbolic links
-       1.  Check which python is the installed version of GNURadio by opening  `gnuradio-companion` in a terminal window and click on `Help --> About` and noting the python version on the dialog box that opens.  
-       2.  Go to the following by typing: `cd /usr/local/lib/python3.8/dist-packages` or `cd /usr/local/lib/python3.9/dist-packages` for the appropriate python version. 
-       3.  Type `ln -s /usr/local/lib/python3/dist-packages/radio_astro`   
+   1.  Check which python is the installed version of GNURadio by opening  `gnuradio-companion` in a terminal window and click on `Help --> About` and noting the python version on the dialog box that opens.  
+   2.  Go to the following by typing: `cd /usr/local/lib/python3.8/dist-packages` or `cd /usr/local/lib/python3.9/dist-packages` for the appropriate python version. 
+   3.  Type `ln -s /usr/local/lib/python3/dist-packages/radio_astro`   
 
 
 # Running from a bootable USB Fllash Drive with preinstalled software:
