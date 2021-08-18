@@ -32,6 +32,7 @@ class ra_vmedian(gr.decim_block):
     Vector Median with Decimation.   Only one vector is returned for N input.
     Highest and lowest values in each channel are discard and remainder averaged.
     This block is intended to reduce the downstream CPU load.
+    This block is implimented in python.
     """
     def __init__(self, vlen, vdecimate):
         gr.decim_block.__init__(self,

@@ -391,8 +391,8 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
-        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.E-6)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+".not", fftsize, Frequency*1.E-6, 1.0, EventMode, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, 1.0)
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Mode)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
             fftsize, #size
@@ -518,8 +518,8 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
+        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_stream_to_vector_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
@@ -881,8 +881,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self.radio_astro_detect_0.set_bw(self.Bandwidth)
-        self.radio_astro_ra_event_log_0.set_sample_rate(self.Bandwidth*1.E-6)
-        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth*1.E-6)
 
     def get_Azimuth(self):
         return self.Azimuth

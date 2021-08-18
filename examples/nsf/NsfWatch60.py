@@ -156,7 +156,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self._fftsize_save_config = configparser.ConfigParser()
         self._fftsize_save_config.read(ConfigFile)
         try: fftsize_save = self._fftsize_save_config.getint('main', 'fftsize')
-        except: fftsize_save = 1024
+        except: fftsize_save = 2048
         self.fftsize_save = fftsize_save
         self._device_save_config = configparser.ConfigParser()
         self._device_save_config.read(ConfigFile)
@@ -166,17 +166,17 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self._Gain3s_config = configparser.ConfigParser()
         self._Gain3s_config.read(ConfigFile)
         try: Gain3s = self._Gain3s_config.getfloat('main', 'gain3')
-        except: Gain3s = 14.
+        except: Gain3s = 0.
         self.Gain3s = Gain3s
         self._Gain2s_config = configparser.ConfigParser()
         self._Gain2s_config.read(ConfigFile)
         try: Gain2s = self._Gain2s_config.getfloat('main', 'gain2')
-        except: Gain2s = 14.
+        except: Gain2s = 0.
         self.Gain2s = Gain2s
         self._Gain1s_config = configparser.ConfigParser()
         self._Gain1s_config.read(ConfigFile)
         try: Gain1s = self._Gain1s_config.getfloat('main', 'gain1')
-        except: Gain1s = 14.
+        except: Gain1s = 21.
         self.Gain1s = Gain1s
         self._Frequencys_config = configparser.ConfigParser()
         self._Frequencys_config.read(ConfigFile)
@@ -191,7 +191,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self._Bandwidths_config = configparser.ConfigParser()
         self._Bandwidths_config.read(ConfigFile)
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'Bandwidth')
-        except: Bandwidths = 10.e6
+        except: Bandwidths = 6.e6
         self.Bandwidths = Bandwidths
         self._Azimuth_save_config = configparser.ConfigParser()
         self._Azimuth_save_config.read(ConfigFile)
@@ -401,8 +401,8 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
-        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth*1.E-6)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, 1.0)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, 0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
         self.qtgui_number_sink_0 = qtgui.number_sink(
@@ -922,8 +922,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.radio_astro_detect_0.set_bw(self.Bandwidth)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth(self.Bandwidth)
-        self.radio_astro_ra_event_log_0.set_sample_rate(self.Bandwidth*1.E-6)
-        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth*1E-6)
 
     def get_Azimuth(self):
         return self.Azimuth

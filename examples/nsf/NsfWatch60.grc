@@ -87,7 +87,7 @@ blocks:
     option: Bandwidth
     section: main
     type: real
-    value: 10.e6
+    value: 6.e6
     writeback: Bandwidth
   states:
     bus_sink: false
@@ -240,7 +240,7 @@ blocks:
     option: gain1
     section: main
     type: real
-    value: '14.'
+    value: '21.'
     writeback: Gain1
   states:
     bus_sink: false
@@ -272,13 +272,13 @@ blocks:
     option: gain2
     section: main
     type: real
-    value: '14.'
+    value: '0.'
     writeback: Gain2
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [880, 744]
+    coordinate: [882, 744]
     rotation: 0
     state: enabled
 - name: Gain3
@@ -304,7 +304,7 @@ blocks:
     option: gain3
     section: main
     type: real
-    value: '14.'
+    value: '0.'
     writeback: Gain3
   states:
     bus_sink: false
@@ -410,7 +410,7 @@ blocks:
     option: fftsize
     section: main
     type: int
-    value: '1024'
+    value: '2048'
     writeback: fftsize
   states:
     bus_sink: false
@@ -567,7 +567,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [632, 288]
+    coordinate: [613, 288]
     rotation: 180
     state: enabled
 - name: blocks_stream_to_vector_0_0
@@ -606,7 +606,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [816, 256]
+    coordinate: [814, 257]
     rotation: 180
     state: enabled
 - name: note_1
@@ -1186,7 +1186,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: '1.0'
     comment: ''
     logname: ''
     note: Event Detection
@@ -1204,7 +1204,7 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth*1E-6
     comment: ''
     device: Device
     elevation: Elevation
@@ -1237,7 +1237,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 352]
+    coordinate: [614, 353]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0
