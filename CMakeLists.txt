@@ -105,6 +105,12 @@ set(GR_PKG_LIBEXEC_DIR  ${GR_LIBEXEC_DIR}/${CMAKE_PROJECT_NAME})
 # On Apple only, set install name and use rpath correctly, if not already set
 ########################################################################
 if(APPLE)
+    #Assume using default macports install. 
+    #Should do this a better way...
+    set(CMAKE_INSTALL_PREFIX /opt/local/)
+    SET (PYTHON_LIBRARY "-framework Python" CACHE FILEPATH "Python 
+Framework" FORCE)
+    set(GR_PYTHON_DIR Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/)
     if(NOT CMAKE_INSTALL_NAME_DIR)
         set(CMAKE_INSTALL_NAME_DIR
             ${CMAKE_INSTALL_PREFIX}/${GR_LIBRARY_DIR} CACHE
