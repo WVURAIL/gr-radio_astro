@@ -110,7 +110,7 @@ if(APPLE)
     set(CMAKE_INSTALL_PREFIX /opt/local/)
     SET (PYTHON_LIBRARY "-framework Python" CACHE FILEPATH "Python 
 Framework" FORCE)
-    set(GR_PYTHON_DIR Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/)
+    set(GR_PYTHON_DIR Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/)
     if(NOT CMAKE_INSTALL_NAME_DIR)
         set(CMAKE_INSTALL_NAME_DIR
             ${CMAKE_INSTALL_PREFIX}/${GR_LIBRARY_DIR} CACHE
