@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from ra_ascii_sink import ra_ascii_sink
 
 class qa_ra_ascii_sink(gr_unittest.TestCase):

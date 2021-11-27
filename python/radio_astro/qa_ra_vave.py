@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from ra_vave import ra_vave
 
 class qa_ra_vave(gr_unittest.TestCase):

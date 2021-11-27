@@ -42,7 +42,7 @@ import datetime
 import numpy as np
 from gnuradio import gr
 import copy
-from . import radioastronomy
+from gnuradio.radio_astro import radioastronomy
 
 # this block has 5 output spectra:
 # 1st is just the input spectrum

@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from vector_moving_average import vector_moving_average
 
 class qa_vector_moving_average(gr_unittest.TestCase):

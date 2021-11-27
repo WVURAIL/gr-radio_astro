@@ -21,7 +21,7 @@
 #ifndef INCLUDED_RADIO_ASTRO_VMEDIAN_H
 #define INCLUDED_RADIO_ASTRO_VMEDIAN_H
 
-#include <radio_astro/api.h>
+#include <gnuradio/radio_astro/api.h>
 #include <gnuradio/block.h>
 
 namespace gr {

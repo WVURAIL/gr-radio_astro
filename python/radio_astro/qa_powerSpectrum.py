@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from powerSpectrum import powerSpectrum
 
 class qa_powerSpectrum(gr_unittest.TestCase):

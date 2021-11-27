@@ -21,7 +21,7 @@
 #ifndef INCLUDED_RADIO_ASTRO_DEDISPERSION_IMPL_H
 #define INCLUDED_RADIO_ASTRO_DEDISPERSION_IMPL_H
 
-#include <radio_astro/dedispersion.h>
+#include <gnuradio/radio_astro/dedispersion.h>
 
 namespace gr {
   namespace radio_astro {

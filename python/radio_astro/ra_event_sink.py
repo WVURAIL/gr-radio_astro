@@ -34,7 +34,7 @@ import datetime
 import numpy as np
 from gnuradio import gr
 import pmt
-from . import radioastronomy
+from gnuradio.radio_astro import radioastronomy
 
 try:
     from . import jdutil

@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from chart_recorder import chart_recorder
 
 class qa_chart_recorder(gr_unittest.TestCase):

@@ -20,8 +20,8 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
-from systemp_calibration import systemp_calibration
+# from gnuradio import blocks
+from gnuradio.radio_astro import systemp_calibration
 
 class qa_systemp_calibration(gr_unittest.TestCase):
 

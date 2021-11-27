@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from csv_filesink import csv_filesink
 
 class qa_csv_filesink(gr_unittest.TestCase):

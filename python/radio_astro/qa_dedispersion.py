@@ -20,8 +20,15 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
-import radio_astro_swig as radio_astro
+# from gnuradio import blocks
+try:
+  from gnuradio.radio_astro import dedispersion
+except ImportError:
+    import os
+    import sys
+    dirname, filename = os.path.split(os.path.abspath(__file__))
+    sys.path.append(os.path.join(dirname, "bindings"))
+    from gnuradio.radio_astro import dedispersion
 
 class qa_dedispersion(gr_unittest.TestCase):
 

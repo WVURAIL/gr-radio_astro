@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from ra_vmedian import ra_vmedian
 
 class qa_ra_vmedian(gr_unittest.TestCase):

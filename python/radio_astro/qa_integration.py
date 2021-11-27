@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from integration import integration
 
 class qa_integration(gr_unittest.TestCase):

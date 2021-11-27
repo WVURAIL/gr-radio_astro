@@ -34,7 +34,7 @@ import sys
 import datetime
 import numpy as np
 from gnuradio import gr
-from . import radioastronomy
+from gnuradio.radio_astro import radioastronomy
 
 class ra_ascii_sink(gr.sync_block):
     """

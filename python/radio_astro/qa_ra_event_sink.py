@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from ra_event_sink import ra_event_sink
 
 class qa_ra_event_sink(gr_unittest.TestCase):

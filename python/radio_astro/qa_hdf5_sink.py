@@ -20,7 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
-from gnuradio import blocks
+# from gnuradio import blocks
 from hdf5_sink import hdf5_sink
 
 class qa_hdf5_sink(gr_unittest.TestCase):
