@@ -52,7 +52,7 @@ namespace gr {
     class RADIO_ASTRO_API detect : virtual public gr::block
     {
      public:
-      typedef boost::shared_ptr<detect> sptr;
+      typedef std::shared_ptr<detect> sptr;
 
       /*!
        * \brief Return a shared_ptr to a new instance of radio_astro::detect.

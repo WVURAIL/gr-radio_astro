@@ -31,8 +31,8 @@ namespace gr {
     dedispersion::sptr
     dedispersion::make(int vec_length, float dms, float f_obs, float bw, float t_int, int nt)
     {
-      return gnuradio::get_initial_sptr
-        (new dedispersion_impl(vec_length, dms, f_obs, bw, t_int, nt));
+      return gnuradio::make_block_sptr<dedispersion_impl>(
+          vec_length, dms, f_obs, bw, t_int, nt);
     }
 
 

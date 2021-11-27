@@ -35,7 +35,7 @@ namespace gr {
     class RADIO_ASTRO_API dedispersion : virtual public gr::block
     {
      public:
-      typedef boost::shared_ptr<dedispersion> sptr;
+      typedef std::shared_ptr<dedispersion> sptr;
 
       /*!
        * \brief Return a shared_ptr to a new instance of radio_astro::dedispersion.

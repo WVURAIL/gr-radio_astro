@@ -46,8 +46,8 @@ namespace gr {
     detect::sptr
     detect::make(int vec_length, float dms, float f_obs, float bw, float t_int, int nt)
     {
-      return gnuradio::get_initial_sptr
-        (new detect_impl(vec_length, dms, f_obs, bw, t_int, nt));
+      return gnuradio::make_block_sptr<detect_impl>(
+          vec_length, dms, f_obs, bw, t_int, nt);
     }
 
     /*
