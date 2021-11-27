@@ -22,6 +22,24 @@ add_subdirectory(bindings)
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
+    systemp_calibration.py
+    chart_recorder.py
+    correlate.py
+    csv_filesink.py
+    hdf5_sink.py
+    radioastronomy.py
+    jdutil.py
+    angles.py
+    ra_ascii_sink.py
+    ra_event_log.py
+    ra_event_sink.py
+    ra_integrate.py
+    ra_vave.py
+    ra_vmedian.py 
+    powerSpectrum.py
+    integration.py
+    vector_moving_average.py
+    png_print_spectrum.py
     DESTINATION ${GR_PYTHON_DIR}/gnuradio/radio_astro
 )
 
