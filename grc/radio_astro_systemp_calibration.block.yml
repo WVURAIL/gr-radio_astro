@@ -3,7 +3,7 @@ label: systemp_calibration
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.systemp_calibration(${vec_length}, ${collect}, ${samp_rate}, ${freq}, ${prefix}, ${spectrumcapture_toggle}, ${clip_toggle}, ${az}, ${elev}, ${location})
   callbacks:
     - set_collect(${collect})

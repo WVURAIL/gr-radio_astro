@@ -3,7 +3,7 @@ label: chart_recorder
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.chart_recorder(${scan_length}, ${chart_run}, ${save_to_file}, ${prefix}, ${integration_time})
   callbacks:
     - save_file(${save_to_file})

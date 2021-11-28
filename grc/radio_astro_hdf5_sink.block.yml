@@ -3,7 +3,7 @@ label: hdf5_sink
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.hdf5_sink(${intype}, ${n_inputs}, ${vec_length}, ${save_toggle}, ${fname}, ${pointing}, ${freq_start}, ${freq_step}, ${notes})
   callbacks:
     - set_save_toggle(${save_toggle})

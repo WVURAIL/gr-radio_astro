@@ -3,7 +3,7 @@ label: ra_integrate
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.ra_integrate(${setup}, ${observers}, ${vlen}, ${frequency}, ${bandwidth}, ${azimuth}, ${elevation}, ${inttype}, ${obstype}, ${nmedian}, ${units}, ${thot}, ${tcold})
   callbacks:
     - set_setup(${setup})

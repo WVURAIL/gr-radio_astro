@@ -3,7 +3,7 @@ label: vector_moving_average
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.vector_moving_average(${intype},${vec_length}, ${averaging_length}, ${reset_integration})
   callbacks:
     - set_reset_integration(${reset_integration})

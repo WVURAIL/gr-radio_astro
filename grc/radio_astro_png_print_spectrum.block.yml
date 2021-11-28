@@ -3,7 +3,7 @@ label: png_print_spectrum
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.png_print_spectrum(${vec_length}, ${samp_rate}, ${freq}, ${prefix}, ${graphprint_toggle}, ${graphinfo})
   callbacks:
     - set_graphprint_toggle(${graphprint_toggle})
