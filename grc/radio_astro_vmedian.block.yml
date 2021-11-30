@@ -3,7 +3,7 @@ label: vmedian
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.vmedian(${vec_length}, ${n})
   callbacks:
     - set_mode(${n})
