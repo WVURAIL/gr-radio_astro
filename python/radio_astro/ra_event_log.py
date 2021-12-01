@@ -84,13 +84,6 @@ class ra_event_log(gr.sync_block):
         self.set_sample_rate( bandwidth)
         self.set_logname(logname)
         
-    def forecast(self, noutput_items, ninput_items): #forcast is a no op
-        """
-        The work block always processes all inputs
-        """
-        ninput_items = noutput_items
-        return ninput_items
-
     def set_vlen(self, vlen):
         """
         Save vector length

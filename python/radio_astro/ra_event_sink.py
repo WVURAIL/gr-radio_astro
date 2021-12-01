@@ -94,13 +94,6 @@ class ra_event_sink(gr.sync_block):
         # report newly discovered tags once
         self.lasttag = ""
 
-    def forecast(self, noutput_items, ninput_items): #forcast is a no op
-        """
-        The work block always processes all inputs
-        """
-        ninput_items = noutput_items
-        return ninput_items
-
     def set_sample_rate(self, bandwidthMHz, doSave=True):
         """
         Set the sample rate for these event detections.
