@@ -24,7 +24,7 @@ Radio Astronomy Vector Median
 # 19JUN20 GIL try to optimize 
 #
 
-import numpy
+import numpy as np
 from gnuradio import gr
 
 class ra_vmedian(gr.decim_block):
@@ -37,14 +37,14 @@ class ra_vmedian(gr.decim_block):
     def __init__(self, vlen, vdecimate):
         gr.decim_block.__init__(self,
                                 name="ra_vmedian",
-                                in_sig=[(numpy.float32, int(vlen))],   # input 1 Spectrum
-                                out_sig=[(numpy.float32, int(vlen))],  # output 1 Spectrum
+                                in_sig=[(np.float32, int(vlen))],   # input 1 Spectrum
+                                out_sig=[(np.float32, int(vlen))],  # output 1 Spectrum
                                 decim=int(vdecimate))
         self.vlen = int(vlen)
         self.vdecimate = int(vdecimate)
-        self.vsum = numpy.zeros(self.vlen)
-        self.vmin = numpy.zeros(self.vlen)
-        self.vmax = numpy.zeros(self.vlen)
+        self.vsum = np.zeros(self.vlen)
+        self.vmin = np.zeros(self.vlen)
+        self.vmax = np.zeros(self.vlen)
         self.count = 0
         if self.vdecimate < 3:
             print('Vector Median, not enough inputs: ', self.vdecimate, ' Using 3')
@@ -55,7 +55,12 @@ class ra_vmedian(gr.decim_block):
         """
         forecast the number of spectra required to get an output
         """
+
         if noutput_items is None:
+            ninput_items = np.zeros(1, dtype=int)
+            ninput_items[0] = self.vdecimate
+        elif np.isscalar(noutput_items):
+            ninput_items = np.zeros(1, dtype=int)
             ninput_items[0] = self.vdecimate
         else:
             for i in range(len(noutput_items)):
@@ -90,8 +95,8 @@ class ra_vmedian(gr.decim_block):
                 self.count = 1
             else:
                 self.vsum[0:ncp] = self.vsum[0:ncp] + ini[0:ncp]
-                self.vmin = numpy.minimum(self.vmin, ini)
-                self.vmax = numpy.maximum(self.vmax, ini)
+                self.vmin = np.minimum(self.vmin, ini)
+                self.vmax = np.maximum(self.vmax, ini)
                 self.count = self.count + 1
 
             # if time to mornalize sum and output

@@ -22,7 +22,7 @@ Vector Average for radio astronomy
 # Boston, MA 02110-1301, USA.
 #
 
-import numpy
+import numpy as np
 from gnuradio import gr
 
 class ra_vave(gr.decim_block):
@@ -33,23 +33,28 @@ class ra_vave(gr.decim_block):
     def __init__(self, vlen, vdecimate):
         gr.decim_block.__init__(self,
                                 name="ra_vave",
-                                in_sig=[(numpy.float32, int(vlen))],   # in 1 spectrum
-                                out_sig=[(numpy.float32, int(vlen))],  # out 1 spectrum
+                                in_sig=[(np.float32, int(vlen))],   # in 1 spectrum
+                                out_sig=[(np.float32, int(vlen))],  # out 1 spectrum
                                 decim=int(vdecimate))
         self.vlen = int(vlen)
         self.vdecimate = int(vdecimate)
         self.set_decimate(vdecimate)
-        self.sum = numpy.zeros(self.vlen)
+        self.sum = np.zeros(self.vlen)
         self.count = 0
 
     def forecast(self, noutput_items, ninput_items):
         """
         Indicate the number of inputs required to get 1 output spectrum
         """
-        if noutput_items is None:
-            return self.vdecimate
-        for i in range(len(noutput_items)):
-            ninput_items[i] = noutput_items[i]*self.vdecimate
+        if noutput_items is None:     # avoid setting None or scalars 
+            ninput_items = np.zeros(1, dtype=int)
+            ninput_items[0] = self.vdecimate
+        elif np.isscalar(noutput_items):
+            ninput_items = np.zeros(1, dtype=int)
+            ninput_items[0] = self.vdecimate
+        else:
+            for i in range(len(noutput_items)):
+                ninput_items[i] = noutput_items[i]*self.vdecimate
         return ninput_items
 
     def work(self, input_items, output_items):
