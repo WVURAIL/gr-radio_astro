@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -23,12 +24,11 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: Vector averaging and median comparison
-    window_size: ''
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 20]
+    coordinate: [592, 20.0]
     rotation: 0
     state: enabled
 
@@ -278,8 +278,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [55, 463]
-    rotation: 0
+    coordinate: [140.0, 376]
+    rotation: 270
     state: enabled
 - name: fft_vxx_0
   id: fft_vxx
