@@ -298,6 +298,24 @@ class ra_event_sink(gr.sync_block):
         """
         return self.record
 
+    def forecast(self, noutput_items, ninputs):
+        """
+        forecast the number of spectra required to get required outputs
+        inputs:
+           noutput_items: number of desired output vectors
+           ninputs: number of input data streams (ie block input ports).
+        outputs:
+           ninputs_needed: number of input vectors needed to produce an output
+        """
+        # create an integer array of zeros noutput_items long
+        ninputs_needed = [0] * ninputs
+        # for all input streams
+        for i in range(ninputs):
+            ninputs_needed[i] = self.gateway.history()
+                
+        return ninputs_needed
+    # end of forecast()
+
     def work(self, input_items, output_items):
         """
         Work averages all input vectors and outputs one vector for each N inputs

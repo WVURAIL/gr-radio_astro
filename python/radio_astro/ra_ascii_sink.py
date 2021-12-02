@@ -131,11 +131,6 @@ class ra_ascii_sink(gr.sync_block):
         self.set_record(record)
         self.save_setup()
 
-    def forecast(self, noutput_items, ninput_items): #forcast is a no op
-        """
-        The work block always processes all inputs
-        """
-        return ninput_items
 
     def set_frequency(self, frequency, dosave=True):
         self.obs.centerFreqHz = np.float(frequency)
@@ -381,7 +376,6 @@ class ra_ascii_sink(gr.sync_block):
 
         iout = 0 # count the number of output vectors
         for i in range(nv):
-            # get the length of one input
             spec = inn[i]
             # if just starting a sum
             if self.avecount == 0:

@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 21Dec02 GIL Update forecast
 # 21Jan16 GIL scale save files by nave
 # 20Aug16 GIL restore writing hot/cold messages
 # 19SEP14 GIL hanning smooth reference in case of subtracting fit
@@ -228,12 +229,22 @@ class ra_integrate(gr.sync_block):
         self.obs.nchan = self.vlen
         self.obs.refchan = self.vlen/2.
 
-    def forecast(self, noutput_items, ninput_items): #forcast is a no-op
+    def forecast(self, noutput_items, ninputs):
         """
-        Predict how many vectors will be output for each input == same number
+        forecast the number of spectra required to get required outputs
+        inputs:
+           noutput_items: number of desired output vectors
+           ninputs: number of input data streams (ie block input ports).
+        outputs:
+           ninputs_needed: number of input vectors needed to produce an output
         """
-        ninput_items = noutput_items
-        return ninput_items
+        # create an integer array of zeros noutput_items long
+        ninputs_needed = [0] * ninputs
+        for i in range(ninputs):
+            ninputs_needed[i] = self.gateway.history()
+                
+        return ninputs_needed
+    # end of forecast()
 
     def set_frequency(self, frequency):
         """
