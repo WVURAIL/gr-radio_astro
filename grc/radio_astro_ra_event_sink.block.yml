@@ -3,7 +3,7 @@ label: ra_event_sink
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.ra_event_sink(${setup}, ${vlen}, ${frequency}, ${bandwidth}, ${record}, ${note}, ${observer}, ${telescope}, ${device}, ${gain1}, ${azimuth}, ${elevation})
   callbacks:
     - set_setup(${setup})

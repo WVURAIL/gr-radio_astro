@@ -21,7 +21,7 @@
 #ifndef INCLUDED_RADIO_ASTRO_VMEDIAN_IMPL_H
 #define INCLUDED_RADIO_ASTRO_VMEDIAN_IMPL_H
 
-#include <radio_astro/vmedian.h>
+#include <gnuradio/radio_astro/vmedian.h>
 
 #define MAX_VLEN 16384
 

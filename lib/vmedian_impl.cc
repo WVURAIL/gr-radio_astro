@@ -35,8 +35,8 @@ namespace gr {
     vmedian::sptr
     vmedian::make(int vec_length, int n)
     {
-      return gnuradio::get_initial_sptr
-        (new vmedian_impl(vec_length, n));
+      return gnuradio::make_block_sptr<vmedian_impl>(
+          vec_length, n);
     }
 
     /*

@@ -23,7 +23,7 @@
 #ifndef INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
 #define INCLUDED_RADIO_ASTRO_DETECT_IMPL_H
 
-#include <radio_astro/detect.h>
+#include <gnuradio/radio_astro/detect.h>
 
 #ifndef TIME_UTC                   // must define utc time flag
 #define TIME_UTC    1

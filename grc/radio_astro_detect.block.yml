@@ -3,7 +3,7 @@ label: detect
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.detect(${vec_length}, ${dms}, ${f_obs}, ${bw}, ${t_int}, ${mode})
   callbacks:
     - set_dms(${dms})

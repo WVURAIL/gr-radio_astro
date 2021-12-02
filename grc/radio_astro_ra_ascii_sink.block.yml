@@ -3,7 +3,7 @@ label: ra_ascii_sink
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.ra_ascii_sink(${setup}, ${observers}, ${vlen}, ${frequency}, ${bandwidth}, ${azimuth}, ${elevation}, ${record}, ${obstype}, ${nmedian}, ${nave}, ${site}, ${device}, ${gain1}, ${gain2}, ${gain3})
   callbacks:
     - set_setup(${setup})

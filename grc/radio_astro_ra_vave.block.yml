@@ -3,7 +3,7 @@ label: ra_vave
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.ra_vave(${vlen}, ${decimate})
   callbacks:
     - set_decimate(${decimate})

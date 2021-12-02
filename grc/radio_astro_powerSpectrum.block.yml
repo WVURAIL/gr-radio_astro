@@ -3,7 +3,7 @@ label: powerSpectrum
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.powerSpectrum(${vec_length})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.

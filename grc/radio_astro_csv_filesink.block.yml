@@ -3,7 +3,7 @@ label: csv_filesink
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.csv_filesink( ${vec_length}, ${samp_rate}, ${freq}, ${prefix}, ${save_toggle}, ${integration_select}, ${short_long_time_scale}, ${az}, ${elev}, ${location})
   callbacks:
     - set_save_toggle(${save_toggle})

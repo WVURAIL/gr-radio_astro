@@ -1,6 +1,6 @@
 # gr-radio_astro
 
-This package provides GNUradio OOT modules and `grc` flowgraphs that fascilates Radio Astronomy Observations with software defined radio devices.
+This package provides GNUradio OOT modules and `grc` flowgraphs that facilates Radio Astronomy Observations with software defined radio devices.
 
 There are two flavors of this projects:
 
@@ -35,11 +35,11 @@ git clone https://github.com/WVURAIL/gr-radio_astro.git
    3.  Type `ln -s /usr/local/lib/python3/dist-packages/radio_astro`   
 
 
-# Running from a bootable USB Fllash Drive with preinstalled software:
+# Running from a bootable USB Flash Drive with preinstalled software:
 
 [Instructions to set up a persistant USB flash with preinstalled software drive are here](https://wvurail.org//dspira-lessons/Install_Ubuntu_spectrometer_onFlashdrive)
 
-# Installng on a Raspberry Pi. 
+# Installing on a Raspberry Pi. 
 
 ## Supported Raspberry Pi Devices
 
@@ -62,6 +62,3 @@ This image requires a minimum of 16GB of space on the SD card.
    7. More info [here](https://www.raspberrypi.org/documentation/installation/installing-images/) and a [video](https://www.youtube.com/watch?v=ntaXWS8Lk34) 
 4. Insert SD card to Raspberry Pi and power it up.
 5. The default user name is `pi`, with password `raspberry`. Change the password after first boot. 
-
-
-

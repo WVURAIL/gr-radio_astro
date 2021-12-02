@@ -3,7 +3,7 @@ label: integration
 category: '[radio_astro]'
 
 templates:
-  imports: import radio_astro
+  imports: from gnuradio import radio_astro
   make: radio_astro.integration(${vec_length}, ${n_integrations})
   callbacks:
     - set_n_integrations(${n_integrations})
