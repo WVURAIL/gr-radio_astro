@@ -51,22 +51,25 @@ class ra_vmedian(gr.decim_block):
             self.vdecimate = 3
         self.set_decimate(self.vdecimate)
 
-    def forecast(self, noutput_items, ninput_items):
+    def forecast(self, noutput_items, ninputs):
         """
-        forecast the number of spectra required to get an output
+        forecast the number of spectra required to get required outputs
+        inputs:
+           noutput_items: number of desired output vectors
+           ninputs: number of input data streams.
+        outputs:
+           ninputs_needed: number of input vectors needed to produce an output
         """
-
-        if noutput_items is None:
-            ninput_items = np.zeros(1, dtype=int)
-            ninput_items[0] = self.vdecimate
-        elif np.isscalar(noutput_items):
-            ninput_items = np.zeros(1, dtype=int)
-            ninput_items[0] = self.vdecimate
-        else:
-            for i in range(len(noutput_items)):
-                ninput_items[i] = noutput_items[i]*self.vdecimate
-        return ninput_items
-
+        # create an integer array of zeros noutput_items long
+        ninputs_needed = [0] * ninputs
+        for i in range(ninputs):
+#            ninputs_needed[i] = (self.vdecimate*noutput_items) + \
+            ninputs_needed[i] = (self.vdecimate*noutput_items) + \
+                self.gateway.history() - 1
+                
+        return ninputs_needed
+    # end of forecast()
+    
     def work(self, input_items, output_items):
         """
         Work averages all input vectors and outputs one vector for each N inputs
