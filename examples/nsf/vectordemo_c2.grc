@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -23,7 +24,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: Vector median comparison
-    window_size: ''
   states:
     bus_sink: false
     bus_source: false
@@ -33,6 +33,21 @@ options:
     state: enabled
 
 blocks:
+- name: decimate
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Decimate
+    type: int
+    value: '4'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1152, 72.0]
+    rotation: 0
+    state: true
 - name: fftsize
   id: variable
   parameters:
@@ -222,7 +237,7 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    n: '4'
+    n: decimate
     type: float
     vlen: fftsize
   states:
@@ -240,7 +255,7 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    n: '4'
+    n: decimate
     type: float
     vlen: fftsize
   states:
@@ -389,8 +404,8 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    n: '4'
-    vec_length: '1024'
+    n: decimate
+    vec_length: fftsize
   states:
     bus_sink: false
     bus_source: false
@@ -406,8 +421,8 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    n: '4'
-    vec_length: '1024'
+    n: decimate
+    vec_length: fftsize
   states:
     bus_sink: false
     bus_source: false
