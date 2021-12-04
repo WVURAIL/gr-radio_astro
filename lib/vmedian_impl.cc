@@ -18,6 +18,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
+/* HISTORY
+** 21Dec04 GIL Limit decimate to Gnuradio max vector queue
+*/
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -71,8 +75,18 @@ namespace gr {
 
     void 
     vmedian_impl::set_mode ( int n)
-    {
-      printf("Medianing %d vectors", n);
+    { char * errmsg = NULL;
+      
+      if (n < 3) {
+	fprintf( stderr, "Decimation requires at least 3 vectors\n");
+        n = 4;
+      }
+      else if (n > MAX_DECIMATE) {
+	fprintf(stderr, "GnuRadio Max vector Limit: %d\n", MAX_DECIMATE);
+        n = MAX_DECIMATE;
+      }
+
+      fprintf(stderr, "Medianing %d vectors\n", n);
       d_n = n;
       d_n1 = d_n - 1;
       d_n2 = d_n - 2;
@@ -125,7 +139,9 @@ namespace gr {
 
     int
     vmedian_impl::vmedian(const float *input, float *output)
-    {
+    { /* Inputs are an input vector and an output vector of values
+	 nout is either 0 or 1, depending on whether the count is complete
+       */
       int nout = 0;
 
       if ( count == 0) 

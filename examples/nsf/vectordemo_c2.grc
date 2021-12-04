@@ -37,7 +37,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 0,0,1,2
     label: Decimate
     type: int
     value: '4'
@@ -45,7 +45,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1152, 72.0]
+    coordinate: [872, 20.0]
     rotation: 0
     state: true
 - name: fftsize
@@ -57,7 +57,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [704, 12]
+    coordinate: [664, 20.0]
     rotation: 0
     state: enabled
 - name: samp_rate
@@ -69,31 +69,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 12]
-    rotation: 0
-    state: enabled
-- name: variable_0
-  id: variable
-  parameters:
-    comment: ''
-    value: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [832, 4]
-    rotation: 0
-    state: enabled
-- name: variable_1
-  id: variable
-  parameters:
-    comment: ''
-    value: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [312, 56]
+    coordinate: [248, 12.0]
     rotation: 0
     state: enabled
 - name: analog_noise_source_x_0
@@ -174,7 +150,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [635, 553]
+    coordinate: [688, 460.0]
     rotation: 0
     state: enabled
 - name: blocks_add_const_vxx_0_1
@@ -183,7 +159,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: '[100.]*fftsize'
+    const: '[50.]*fftsize'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -192,7 +168,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [594, 358]
+    coordinate: [688, 372.0]
     rotation: 0
     state: enabled
 - name: blocks_add_xx_0
@@ -210,7 +186,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [266, 122]
+    coordinate: [280, 128.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_mag_0
@@ -226,8 +202,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [819, 158]
-    rotation: 0
+    coordinate: [892.0, 160]
+    rotation: 270
     state: enabled
 - name: blocks_keep_one_in_n_0
   id: blocks_keep_one_in_n
@@ -237,14 +213,14 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    n: decimate
+    n: min(decimate,15)
     type: float
     vlen: fftsize
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 358]
+    coordinate: [344, 372.0]
     rotation: 0
     state: enabled
 - name: blocks_keep_one_in_n_0_0
@@ -255,14 +231,14 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    n: decimate
+    n: min(decimate,15)
     type: float
     vlen: fftsize
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [430, 358]
+    coordinate: [528, 372.0]
     rotation: 0
     state: enabled
 - name: blocks_stream_to_vector_0
@@ -280,7 +256,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [368, 158]
+    coordinate: [392, 160.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle_0
@@ -299,8 +275,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [51, 399]
-    rotation: 0
+    coordinate: [236.0, 272]
+    rotation: 270
     state: enabled
 - name: fft_vxx_0
   id: fft_vxx
@@ -320,7 +296,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [563, 128]
+    coordinate: [592, 124.0]
     rotation: 0
     state: enabled
 - name: qtgui_vector_sink_f_0
@@ -387,13 +363,13 @@ blocks:
     x_units: '""'
     y_axis_label: '"y-Axis"'
     y_units: '""'
-    ymax: '150'
+    ymax: '100'
     ymin: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [860, 327]
+    coordinate: [920, 380.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0
@@ -410,7 +386,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 553]
+    coordinate: [368, 460.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0
@@ -427,7 +403,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [440, 553]
+    coordinate: [528, 460.0]
     rotation: 0
     state: enabled
 

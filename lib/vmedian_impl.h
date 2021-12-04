@@ -23,7 +23,8 @@
 
 #include <gnuradio/radio_astro/vmedian.h>
 
-#define MAX_VLEN 16384
+#define MAX_VLEN (16384)
+#define MAX_DECIMATE (14)
 
 namespace gr {
   namespace radio_astro {
