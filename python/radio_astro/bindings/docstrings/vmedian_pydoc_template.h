@@ -25,3 +25,9 @@
  static const char *__doc_gr_radio_astro_vmedian_make = R"doc()doc";
 
   
+ static const char *__doc_gr_radio_astro_vmedian_set_vlen = R"doc()doc";
+
+  
+ static const char *__doc_gr_radio_astro_vmedian_set_mode = R"doc()doc";
+
+  

@@ -32,28 +32,22 @@ void bind_vmedian(py::module& m)
 
     using vmedian    = gr::radio_astro::vmedian;
 
-
     py::class_<vmedian, gr::block, gr::basic_block,
         std::shared_ptr<vmedian>>(m, "vmedian", D(vmedian))
 
         .def(py::init(&vmedian::make),
            D(vmedian,make)
         )
-        
 
+        .def("set_vlen",
+             &vmedian::set_vlen,
+             py::arg("vec_length"),
+             D(vmedian, set_vlen))
 
+        .def("set_mode",
+             &vmedian::set_mode,
+             py::arg("n"),
+             D(vmedian, set_mode))
 
         ;
-
-
-
-
 }
-
-
-
-
-
-
-
-
