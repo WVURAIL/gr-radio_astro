@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(detect.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(f5a10bd3e08ff521c9fc6a21d3175fb4)                     */
+/* BINDTOOL_HEADER_FILE_HASH(c89588e5e9c841fff8ab893bb3369c15)
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -32,7 +32,6 @@ void bind_detect(py::module& m)
 
     using detect    = gr::radio_astro::detect;
 
-
     py::class_<detect, gr::block, gr::basic_block,
         std::shared_ptr<detect>>(m, "detect", D(detect))
 
@@ -40,14 +39,42 @@ void bind_detect(py::module& m)
            D(detect,make)
         )
         
+        .def("set_vlen",
+             &detect::set_vlen,
+             py::arg("vec_length"),
+             D(detect, set_vlen))
 
+        .def("set_dms",
+             &detect::set_dms,
+             py::arg("dms"),
+             D(detect, set_dms))
 
+        .def("set_bw",
+             &detect::set_bw,
+             py::arg("bw"),
+             D(detect, set_bw))
+
+        .def("set_freq",
+             &detect::set_freq,
+             py::arg("freq"),
+             D(detect, set_freq))
+
+        .def("set_dt",
+             &detect::set_dt,
+             py::arg("t_int"),
+             D(detect, set_dt))
+
+        .def("set_mode",
+             &detect::set_mode,
+             py::arg("nt"),
+             D(detect, set_mode))
+
+      
 
         ;
 
-
-
-
+    
+    
 }
 
 

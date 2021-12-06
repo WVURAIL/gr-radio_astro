@@ -66,13 +66,15 @@ namespace gr {
    
       virtual void set_dms(float dms) = 0;  // This is the nsigma parameter
 
-      virtual void set_vlen(int vec_length) = 0;  // This is the nsigma parameter
-      virtual void set_mode(int nt) = 0;  // Data stream (mode == 0) or event
-
       virtual void set_bw(float bw) = 0;
 
       virtual void set_freq(float f_obs) = 0;
+
+      virtual void set_dt(float t_int) = 0;
+
+      virtual void set_mode(int nt) = 0;  // Data stream (mode == 0) or event
       
+      virtual void set_vlen(int vec_length) = 0;  // Vector Length
    
     };
 

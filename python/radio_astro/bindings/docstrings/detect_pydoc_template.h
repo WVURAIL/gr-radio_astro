@@ -14,14 +14,23 @@
   and will be overwritten during the build process
  */
 
-
- 
  static const char *__doc_gr_radio_astro_detect = R"doc()doc";
-
 
  static const char *__doc_gr_radio_astro_detect_detect = R"doc()doc";
 
-
  static const char *__doc_gr_radio_astro_detect_make = R"doc()doc";
+
+ static const char *__doc_gr_radio_astro_detect_set_vlen = R"doc()doc";
+  
+ static const char *__doc_gr_radio_astro_detect_set_dms = R"doc()doc";
+
+ static const char *__doc_gr_radio_astro_detect_set_bw = R"doc()doc";
+
+ static const char *__doc_gr_radio_astro_detect_set_freq = R"doc()doc";
+
+ static const char *__doc_gr_radio_astro_detect_set_dt = R"doc()doc";
+
+ static const char *__doc_gr_radio_astro_detect_set_mode = R"doc()doc";
+
 
   
