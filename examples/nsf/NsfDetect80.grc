@@ -279,22 +279,35 @@ blocks:
     rotation: 0
     state: enabled
 - name: Detect
-  id: variable_qtgui_check_box
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    'false': '0'
-    gui_hint: 7,0,1,1
-    label: Detect
-    'true': '2'
+    gui_hint: 7,0,1,2
+    label: Event
+    label0: Monitor
+    label1: Detect
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '2'
+    option1: '0'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
     type: int
     value: '2'
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [240, 692]
+    coordinate: [32, 220.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Device
   id: variable_qtgui_entry
   parameters:
@@ -421,18 +434,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [992, 472]
-    rotation: 0
-    state: enabled
-- name: Gain2
-  id: variable
-  parameters:
-    comment: ''
-    value: '12.'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [832, 596]
     rotation: 0
     state: enabled
 - name: H1
@@ -703,6 +704,18 @@ blocks:
     coordinate: [1176, 672]
     rotation: 0
     state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: Bandwidth
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 164.0]
+    rotation: 0
+    state: enabled
 - name: telescope_save
   id: variable_config
   parameters:
@@ -751,7 +764,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [424, 144]
+    coordinate: [416, 192.0]
     rotation: 0
     state: enabled
 - name: blocks_vector_to_stream_0
@@ -803,7 +816,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 5,0,1,2
+    gui_hint: 5,0,2,3
     label1: I
     label10: ''
     label2: Q
@@ -890,7 +903,7 @@ blocks:
     ctrlpanel: 'False'
     entags: 'False'
     grid: 'False'
-    gui_hint: 3,2,4,6
+    gui_hint: 3,3,4,6
     label1: I
     label10: ''
     label2: Q
@@ -1039,12 +1052,12 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     output_type: fc32
-    rf_gRdB: '3'
+    rf_gRdB: Gain1
     rf_notch_filter: 'True'
     rsp_selector: ''
-    sample_rate: 8000e3
-    sample_sequence_gaps_check: 'False'
-    show_gain_changes: 'False'
+    sample_rate: samp_rate
+    sample_sequence_gaps_check: 'True'
+    show_gain_changes: 'True'
   states:
     bus_sink: false
     bus_source: false

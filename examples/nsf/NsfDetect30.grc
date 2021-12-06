@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: Nsf Airspy Mini 3 MHz Event detect
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -441,7 +441,7 @@ blocks:
     gui_hint: 7,0,1,2
     label: N Sigma
     min_len: '100'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0.'
     step: '.1'
@@ -537,7 +537,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 136]
+    coordinate: [280, 136.0]
     rotation: 0
     state: enabled
 - name: blocks_vector_to_stream_0
@@ -999,7 +999,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 272]
+    coordinate: [456, 276.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0
@@ -1117,7 +1117,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 96]
+    coordinate: [456, 92.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_event_log_0
@@ -1148,7 +1148,7 @@ blocks:
     device: Device
     elevation: Elevation
     frequency: Frequency*1.E-6
-    gain1: float(Gain1)
+    gain1: float(Gain2)
     note: Event Detection
     observer: Observer
     record: EventMode
