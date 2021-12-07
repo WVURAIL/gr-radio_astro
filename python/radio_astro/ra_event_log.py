@@ -16,6 +16,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 21DEC07 GIL reduce prints to once a minute
 # 20NOV24 GIL another try at fixing log mjds
 # 20SEP17 GIL fix creating new logs every day
 # 20AUG28 GIL move event logs to a separate directory
@@ -77,6 +78,8 @@ class ra_event_log(gr.sync_block):
         self.vcount = 0
         self.nv = 0
         self.lasttag = ""
+        self.lastprintmjd = 0         # keep track of prints
+        self.printdelta = (1./1440.)  # print every minute, 1440 minutes/day
         self.note = str(note)
         self.pformat = "%18.12f %15d %05d %10.3f %3d %5d %10.6f %10.6f %5d %5d\n" 
         self.vformat = "%18.12f %15d %05d %10.3f %3d %5d \n" 
@@ -254,7 +257,11 @@ class ra_event_log(gr.sync_block):
             if self.emjd > self.lastmjd:
                 # log the event
                 self.ecount = self.ecount + 1
-                print("Event : %15.9f %16d %9.4f %8.4f %4d" % (self.emjd, self.evector, self.epeak, self.erms, self.ecount))
+                if self.emjd - self.lastprintmjd > self.printdelta:
+                    print("Event : %15.9f %16d %9.4f %8.4f %4d" % \
+                          (self.emjd, self.evector, self.epeak, \
+                           self.erms, self.ecount))
+                    self.lastprintmjd = self.emjd
                 # round down to integer mjd
                 self.logmjd = np.int(self.emjd)
                 seconds = (self.emjd - self.logmjd)*86400.

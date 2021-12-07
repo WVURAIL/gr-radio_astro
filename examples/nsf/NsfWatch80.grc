@@ -771,7 +771,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 32]
+    coordinate: [480, 32.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_mag_squared_0
@@ -926,7 +926,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [624, 4.0]
+    coordinate: [688, 4.0]
     rotation: 0
     state: enabled
 - name: qtgui_number_sink_0
@@ -1178,15 +1178,15 @@ blocks:
     affinity: ''
     agc_set_point: '-30'
     alias: ''
-    bandwidth: 8000e3
+    bandwidth: '0'
     biasT: 'True'
     center_freq: Frequency
     comment: ''
     dab_notch_filter: 'True'
-    dc_offset_mode: 'False'
-    debug_mode: 'False'
+    dc_offset_mode: 'True'
+    debug_mode: 'True'
     freq_corr: '0'
-    if_gRdB: Gain2
+    if_gRdB: IF_attn
     iq_balance_mode: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -1195,13 +1195,13 @@ blocks:
     rf_notch_filter: 'True'
     rsp_selector: ''
     sample_rate: samp_rate
-    sample_sequence_gaps_check: 'True'
+    sample_sequence_gaps_check: 'False'
     show_gain_changes: 'True'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 36.0]
+    coordinate: [208, 20.0]
     rotation: 0
     state: true
 

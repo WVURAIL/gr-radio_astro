@@ -18,6 +18,7 @@ Glen Langston - 2019 September 14
 # GNU General Public License for more details.
 #
 # HISTORY
+# 21DEC07 GIL reduce printout of events to once a minute
 # 20DEC29 GIL recompute LST from event time
 # 20JUN26 GIL expect VMJD, VCOUNT, NV tags
 # 20JUN25 GIL try to eliminate duplicates; corrected get_tags call

@@ -1357,7 +1357,7 @@ blocks:
     agc_set_point: '-30'
     alias: ''
     bandwidth: '0'
-    biasT: 'True'
+    biasT: 'False'
     center_freq: Frequency
     comment: ''
     dab_notch_filter: 'True'
@@ -1373,7 +1373,7 @@ blocks:
     rf_notch_filter: 'True'
     rsp_selector: ''
     sample_rate: samp_rate
-    sample_sequence_gaps_check: 'True'
+    sample_sequence_gaps_check: 'False'
     show_gain_changes: 'True'
   states:
     bus_sink: false

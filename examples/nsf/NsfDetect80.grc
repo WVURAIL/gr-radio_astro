@@ -291,15 +291,15 @@ blocks:
     label4: ''
     labels: '[]'
     num_opts: '2'
-    option0: '2'
-    option1: '0'
+    option0: '0'
+    option1: '1'
     option2: '2'
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
     orient: Qt.QVBoxLayout
     type: int
-    value: '2'
+    value: '1'
     widget: radio_buttons
   states:
     bus_sink: false
@@ -1040,12 +1040,12 @@ blocks:
     agc_set_point: '-30'
     alias: ''
     bandwidth: '0'
-    biasT: 'False'
+    biasT: 'True'
     center_freq: Frequency
     comment: ''
     dab_notch_filter: 'True'
     dc_offset_mode: 'False'
-    debug_mode: 'False'
+    debug_mode: 'True'
     freq_corr: '0'
     if_gRdB: IF_attn
     iq_balance_mode: 'False'
