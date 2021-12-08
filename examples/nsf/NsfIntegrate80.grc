@@ -1374,7 +1374,7 @@ blocks:
     rsp_selector: ''
     sample_rate: samp_rate
     sample_sequence_gaps_check: 'False'
-    show_gain_changes: 'True'
+    show_gain_changes: 'False'
   states:
     bus_sink: false
     bus_source: false

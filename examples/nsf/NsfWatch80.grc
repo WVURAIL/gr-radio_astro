@@ -1179,7 +1179,7 @@ blocks:
     agc_set_point: '-30'
     alias: ''
     bandwidth: '0'
-    biasT: 'True'
+    biasT: 'False'
     center_freq: Frequency
     comment: ''
     dab_notch_filter: 'True'

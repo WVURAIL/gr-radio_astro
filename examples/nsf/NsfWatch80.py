@@ -389,7 +389,7 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         self.sdrplay3_rsp1a_0.set_agc_setpoint(-30)
         self.sdrplay3_rsp1a_0.set_rf_notch_filter(True)
         self.sdrplay3_rsp1a_0.set_dab_notch_filter(True)
-        self.sdrplay3_rsp1a_0.set_biasT(True)
+        self.sdrplay3_rsp1a_0.set_biasT(False)
         self.sdrplay3_rsp1a_0.set_debug_mode(True)
         self.sdrplay3_rsp1a_0.set_sample_sequence_gaps_check(False)
         self.sdrplay3_rsp1a_0.set_show_gain_changes(True)
@@ -562,8 +562,8 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_1, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.radio_astro_detect_0, 0))
