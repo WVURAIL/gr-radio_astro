@@ -2,20 +2,21 @@
 # NOTEA     = Event Detection
 # NOTEB     = Event Detection
 # OBSERVER  = Radio Observer
-# DEVICE    = airspy,bias=1
+# DEVICE    = airspy,bias=0
 # DATADIR   = ../events/
-# SITE      = GPIOLabs 8"horn Pi#7
+# SITE      = Small-horn Pi#11
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
 # TELTYPE   = Pyramid Horn
 # FRAME     = TOPO
-# GAIN1     = 21.0
+# GAIN1     = 17.0
 # GAIN2     = 11.0
 # GAIN3     = 11.0
 # GAIN4     = 0.0
 # Count     = 1
-# OBSFREQ   = 1420500000.0
+# REFFREQ   = 1420405751.768
+# OBSFREQ   = 1421500000.0
 # OBSBW     = 6000000.0
 # Duration  = 0.689015
 # DeltaX    = 5859.375
@@ -38,11 +39,11 @@
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2021-08-18 14:24:28.200243
+# UTC       = 2021-12-09 11:29:29.266804
 # SECONDS   =       0.0000000000 
-# LST       = 00:00:00.002
-# AZ        = 180.0
-# EL        = 65.0
+# LST       = 00:00:00.000
+# AZ        = 0.0
+# EL        = 45.0
 # TELLON    = -79:50:22.920
 # TELLAT    = +38:25:59.160
 # TELALT    = 0.0
@@ -57,7 +58,9 @@
 # POLANGLE  = 0.0
 # TELSIZEAM = 1.0
 # TELSIZEBM = 1.0
-# AST_VERS  = 05.01
+# AST_VERS  = 5.0.1
+# N  Frequency  Intensity 
+#       (Hz)    (Counts) 
 #   I       Q
 0.00000 .00000
 0.00000 .00000
