@@ -685,15 +685,12 @@ class Spectrum(object):
         doFreq     Flag writting frequency or velocity
         doHeader   Flag writting data header, or only intenisities
         """
-        if self.writecount > 0:
-            print("File %4d: %s (%d)" % (self.writecount, outname, self.count))
         fullname = dirname + outname
         outfile = open(fullname, 'w')
 
         # if writing the observation summary header
         if doHeader:
             self.write_ascii_header( outfile, outname, doFreq=doFreq)
-            
     
         if self.nTime > 0:            # if an event
             self.nSpec = 0            # then not a spectrum
