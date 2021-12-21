@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: Average+Record Astronomical Obs.'
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -36,7 +36,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,7,1,2
+    gui_hint: 0,6,1,2
     label: Azimuth
     type: real
     value: Azimuth_save
@@ -68,7 +68,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,5,1,2
+    gui_hint: 1,4,1,2
     label: Bandwidth
     type: real
     value: Bandwidths
@@ -127,7 +127,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,7,1,2
+    gui_hint: 1,6,1,2
     label: Elevation
     type: real
     value: Elevation_save
@@ -159,7 +159,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,5,1,2
+    gui_hint: 0,4,1,2
     label: Freq. Hz
     type: real
     value: Frequencys
@@ -311,8 +311,8 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 6,0,1,1
-    label: Rec
+    gui_hint: 5,0,1,2
+    label: 'Rec:'
     label0: '! ! Wait ! !'
     label1: AVERAGE
     label2: Save
@@ -326,15 +326,15 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
-    value: '0'
-    widget: combo_box
+    value: '1'
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [0, 589]
+    coordinate: [40, 676.0]
     rotation: 0
     state: enabled
 - name: Telescope
@@ -356,7 +356,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 8,4,1,3
+    gui_hint: 7,4,1,3
     label: Xaxis
     label0: Frequency (MHz)
     label1: Velocity (km/sec)
@@ -511,8 +511,8 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 7,0,1,1
-    label: Obs
+    gui_hint: 6,0,1,2
+    label: 'Obs:'
     label0: Survey
     label1: Hot/Cold
     label2: Ref
@@ -526,15 +526,15 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [122, 630]
+    coordinate: [160, 676.0]
     rotation: 0
     state: enabled
 - name: telescope_save
@@ -558,7 +558,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 8,0,1,1
+    gui_hint: 7,0,1,2
     label: Units
     label0: Counts
     label1: dB
@@ -573,15 +573,15 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [245, 691]
+    coordinate: [280, 676.0]
     rotation: 0
     state: enabled
 - name: xaxis_save
@@ -691,7 +691,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 128]
+    coordinate: [504, 72.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_mag_squared_0
@@ -725,7 +725,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 32]
+    coordinate: [512, 168.0]
     rotation: 0
     state: enabled
 - name: fft_vxx_0
@@ -746,7 +746,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 0]
+    coordinate: [704, 148.0]
     rotation: 0
     state: enabled
 - name: note_1
@@ -793,7 +793,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 4,0,2,2
+    gui_hint: 4,0,1,2
     label1: I
     label10: ''
     label2: Q
@@ -846,7 +846,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [680, 108]
+    coordinate: [728, 4.0]
     rotation: 0
     state: enabled
 - name: qtgui_number_sink_0
@@ -878,7 +878,7 @@ blocks:
     factor8: '1'
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 8,7,1,2
+    gui_hint: 7,7,1,1
     label1: 'T Remains:'
     label10: ''
     label2: ''
@@ -941,7 +941,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 3,2,5,7
+    gui_hint: 3,2,4,6
     label1: Latest
     label10: ''
     label2: Median
@@ -958,7 +958,7 @@ blocks:
     nconnections: '5'
     ref_level: 0.5*(ymins[units] + ymaxs[units])
     showports: 'True'
-    update_time: '.5'
+    update_time: '1'
     vlen: fftsize
     width1: '1'
     width10: '1'

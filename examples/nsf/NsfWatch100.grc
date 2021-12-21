@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: NSF Watch for Events whille recording spectra
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -36,7 +36,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,6,1,2
+    gui_hint: 0,5,1,2
     label: Azimuth
     type: real
     value: Azimuth_save
@@ -68,7 +68,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,4,1,2
+    gui_hint: 1,3,1,2
     label: Bandwidth
     type: real
     value: Bandwidths
@@ -112,7 +112,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 2,0,1,2
+    gui_hint: 2,0,1,3
     label: Dev
     type: string
     value: device_save
@@ -127,7 +127,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,6,1,2
+    gui_hint: 1,5,1,2
     label: Elevation
     type: real
     value: Elevation_save
@@ -135,7 +135,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [800, 520]
+    coordinate: [800, 524.0]
     rotation: 0
     state: enabled
 - name: Elevation_save
@@ -159,7 +159,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 2 ,4, 1, 2
+    gui_hint: 4, 3, 1, 2
     label: Event Mode
     label0: '! ! Wait ! !'
     label1: Write
@@ -174,22 +174,22 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [208, 728]
+    coordinate: [168, 732.0]
     rotation: 0
     state: enabled
 - name: Frequency
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,4,1,2
+    gui_hint: 0,3,1,2
     label: Freq. Hz
     type: real
     value: Frequencys
@@ -197,7 +197,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [624, 432]
+    coordinate: [648, 428.0]
     rotation: 0
     state: enabled
 - name: Frequencys
@@ -221,7 +221,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 3,2,1,2
+    gui_hint: 3,0,1,2
     label: Gain1
     type: real
     value: Gain1s
@@ -253,7 +253,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 3,4,1,2
+    gui_hint: 3,2,1,2
     label: Gain2
     type: real
     value: Gain2s
@@ -261,7 +261,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [752, 616]
+    coordinate: [744, 620.0]
     rotation: 0
     state: enabled
 - name: Gain2s
@@ -285,7 +285,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 3,6,1,2
+    gui_hint: 3,4,1,2
     label: Gain3
     type: real
     value: Gain3s
@@ -329,7 +329,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 2,2,1,2
+    gui_hint: 4,0,1,2
     label: Spec. Mode
     label0: '! ! Wait ! !'
     label1: AVERAGE
@@ -344,22 +344,22 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 704]
+    coordinate: [32, 732.0]
     rotation: 0
     state: enabled
 - name: Telescope
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,0,1,2
+    gui_hint: 1,0,1,3
     label: Tel
     type: string
     value: telescope_save
@@ -391,7 +391,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,2,1,2
+    gui_hint: 2,5,1,2
     label: FFT_size
     type: int
     value: fftsize_save
@@ -423,7 +423,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,2,1,2
+    gui_hint: 2,3,1,2
     label: N_Ave.
     type: int
     value: nAves
@@ -455,10 +455,10 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 2,6,1,2
+    gui_hint: 5,4,1,2
     label: N Sigma
     min_len: '100'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0.'
     step: '.1'
@@ -469,7 +469,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [384, 736]
+    coordinate: [288, 732.0]
     rotation: 0
     state: enabled
 - name: nsigmas
@@ -493,7 +493,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,0,1,2
+    gui_hint: 0,0,1,3
     label: Who
     type: string
     value: observers_save
@@ -653,7 +653,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 4,0,2,4
+    gui_hint: 5,0,1,4
     label1: I
     label10: ''
     label2: Q
@@ -689,7 +689,7 @@ blocks:
     style8: '1'
     style9: '1'
     type: float
-    update_time: '1.'
+    update_time: '2'
     width1: '1'
     width10: '1'
     width2: '1'
@@ -738,7 +738,7 @@ blocks:
     factor8: '1'
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 4,5,1,2
+    gui_hint: 4,6,1,1
     label1: 'T Remains:'
     label10: ''
     label2: ''
