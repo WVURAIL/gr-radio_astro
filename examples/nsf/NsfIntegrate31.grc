@@ -279,7 +279,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [10, 599]
+    coordinate: [8, 692.0]
     rotation: 0
     state: enabled
 - name: Telescope
@@ -294,7 +294,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [336, 484.0]
+    coordinate: [288, 572.0]
     rotation: 0
     state: enabled
 - name: Xaxis
@@ -432,7 +432,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [344, 396.0]
+    coordinate: [288, 492.0]
     rotation: 0
     state: enabled
 - name: observers_save
@@ -479,7 +479,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [133, 660]
+    coordinate: [128, 692.0]
     rotation: 0
     state: enabled
 - name: samp_rate
@@ -538,7 +538,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 681]
+    coordinate: [256, 692.0]
     rotation: 0
     state: enabled
 - name: xaxis_save
@@ -866,7 +866,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [320, 584]
+    coordinate: [360, 388.0]
     rotation: 0
     state: enabled
 - name: qtgui_vector_sink_f_0_0

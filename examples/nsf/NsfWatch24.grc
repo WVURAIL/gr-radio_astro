@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: NSF Watch SDR
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -36,7 +36,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,6,1,2
+    gui_hint: 0,6,1,1
     label: Azimuth
     type: real
     value: Azimuth_save
@@ -69,7 +69,7 @@ blocks:
   parameters:
     comment: ''
     gui_hint: 1,4,1,2
-    label: Bandwidth
+    label: Bandwidth (Hz)
     type: real
     value: Bandwidths
   states:
@@ -127,7 +127,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,6,1,2
+    gui_hint: 1,6,1,1
     label: Elevation
     type: real
     value: Elevation_save
@@ -237,18 +237,15 @@ blocks:
     rotation: 0
     state: enabled
 - name: Gain2
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 2,4,1,2
-    label: Gain2
-    type: real
     value: Gain2s
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [536, 720]
+    coordinate: [624, 612.0]
     rotation: 0
     state: enabled
 - name: Gain2s
@@ -269,18 +266,15 @@ blocks:
     rotation: 0
     state: enabled
 - name: Gain3
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 2,6,1,2
-    label: Gain3
-    type: real
     value: Gain3s
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [656, 720]
+    coordinate: [720, 612.0]
     rotation: 0
     state: enabled
 - name: Gain3s
@@ -441,10 +435,10 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 4,5,1,3
+    gui_hint: 4,5,1,1
     label: N Sigma
     min_len: '100'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0.'
     step: '.1'
@@ -737,7 +731,7 @@ blocks:
     factor8: '1'
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 3,5,1,3
+    gui_hint: 3,5,1,1
     label1: 'T Remains:'
     label10: ''
     label2: ''
@@ -783,7 +777,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     mode: EventMode
-    t_int: fftsize*1.e-6/Bandwidth
+    t_int: fftsize/Bandwidth
     vec_length: 2*fftsize
   states:
     bus_sink: false
@@ -850,7 +844,7 @@ blocks:
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(Gain1)
     note: Event Detection
     observer: Observer

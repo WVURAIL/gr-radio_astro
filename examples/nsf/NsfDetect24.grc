@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'Nsf RTLSDR Event Detect: 2.4MHz'
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -237,18 +237,15 @@ blocks:
     rotation: 0
     state: enabled
 - name: Gain2
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 2,4,1,2
-    label: Gain2
-    type: real
     value: Gain2s
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [752, 584]
+    coordinate: [768, 580.0]
     rotation: 0
     state: enabled
 - name: Gain2s
@@ -269,18 +266,15 @@ blocks:
     rotation: 0
     state: enabled
 - name: Gain3
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 2,6,1,2
-    label: Gain3
-    type: real
     value: Gain3s
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [872, 584]
+    coordinate: [864, 580.0]
     rotation: 0
     state: enabled
 - name: Gain3s
@@ -319,10 +313,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '2'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -428,7 +422,7 @@ blocks:
     gui_hint: 7,0,1,2
     label: N Sigma
     min_len: '100'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0.'
     step: '.1'
@@ -489,7 +483,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [296, 256]
+    coordinate: [312, 256.0]
     rotation: 0
     state: enabled
 - name: blocks_stream_to_vector_0
@@ -507,7 +501,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [296, 136]
+    coordinate: [320, 136.0]
     rotation: 0
     state: enabled
 - name: blocks_vector_to_stream_0
@@ -612,7 +606,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [488, 225]
+    coordinate: [512, 228.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0
@@ -644,7 +638,7 @@ blocks:
     color9: dark green
     comment: ''
     ctrlpanel: 'False'
-    entags: 'True'
+    entags: 'False'
     grid: 'False'
     gui_hint: 3,2,5,6
     label1: I
@@ -724,13 +718,13 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     mode: Mode
-    t_int: fftsize*1.e-6/Bandwidth
+    t_int: fftsize/Bandwidth
     vec_length: fftsize
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 92]
+    coordinate: [512, 92.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_event_log_0
@@ -756,11 +750,11 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(Gain1)
     note: Event Detection
     observer: Observer
