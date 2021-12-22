@@ -16,6 +16,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 21DEC21 GIL take integer part of MJD if UTC is present
 # 21DEC07 GIL reduce prints to once a minute
 # 20NOV24 GIL another try at fixing log mjds
 # 20SEP17 GIL fix creating new logs every day
@@ -68,6 +69,7 @@ class ra_event_log(gr.sync_block):
         self.logmjd = 0.
         self.lastlogmjd = 0.
         self.emjd = 0.
+        self.eutc = 0.
         self.epeak = 0.
         self.erms = 0.
         self.evector = 0
@@ -75,6 +77,7 @@ class ra_event_log(gr.sync_block):
         self.eoffset = 0
         self.voffset = 0
         self.vmjd = 0.
+        self.vutc = 0.
         self.vcount = 0
         self.nv = 0
         self.lasttag = ""
@@ -222,8 +225,14 @@ class ra_event_log(gr.sync_block):
                 if key == 'MJD':
                     self.emjd = value
 #                    print 'Tag MJD : %15.9f' % (self.emjd)
+                if key == 'UTC':
+                    self.eutc = value
+#                    print 'Tag UTC : %15.9f' % (self.eutc)
                 elif key == 'VMJD':
                     self.vmjd = value
+                    # print 'Tag VMJD: %15.9f' % (self.vmjd)
+                elif key == 'VUTC':
+                    self.vutc = value
                     # print 'Tag VMJD: %15.9f' % (self.vmjd)
                 elif key == 'PEAK':
                     self.epeak = value
@@ -249,7 +258,25 @@ class ra_event_log(gr.sync_block):
                 elif key != self.lasttag:
                     print('Unknown Tag: ', key, value)
                     self.lasttag = key
-
+        # if receive an event utc
+        if self.eutc != 0.:
+            if self.ecount < 2:
+                print("Event %.9f" % (self.emjd))
+            self.emjd = double(int(self.emjd))
+            if self.ecount < 2:
+                print("Event %.0f %%0.9f" % (self.emjd, self.eutc))
+            # transfer to 
+            self.emjd += self.eutc
+            self.eutc = 0.
+        if self.vutc != 0.:
+            if self.ecount < 2:
+                print("Event %.9f" % (self.vmjd))
+            self.vmjd = double(int(self.vmjd))
+            if self.ecount < 2:
+                print("Event %.0f %%0.9f" % (self.vmjd, self.vutc))
+            # transfer to 
+            self.vmjd += self.vutc
+            self.vutc = 0.
         i = nv - 1
         # expect only one event in tag group
         if i > -1:

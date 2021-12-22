@@ -18,6 +18,8 @@ Glen Langston - 2019 September 14
 # GNU General Public License for more details.
 #
 # HISTORY
+# 21Dec21 GIL finish up MJD + UTC processin
+# 21Dec10 GIL separate MJD and UTC to increase precision of transfer
 # 21DEC07 GIL reduce printout of events to once a minute
 # 20DEC29 GIL recompute LST from event time
 # 20JUN26 GIL expect VMJD, VCOUNT, NV tags
@@ -247,6 +249,7 @@ class ra_event_sink(gr.sync_block):
         self.eventutc = now
         # set default events values
         self.emjd = 0.
+        self.eutc = 0.
         self.epeak = 0.
         self.erms = 1.
         self.evector = 0
@@ -257,6 +260,7 @@ class ra_event_sink(gr.sync_block):
         self.lastvmjd = 0.
         # set of vector timing values
         self.vmjd = 0.
+        self.vutc = 0.
         self.vcount = 0
         self.voffset = 0
         self.nv = 0
@@ -339,9 +343,13 @@ class ra_event_sink(gr.sync_block):
                 if key == 'MJD':
                     self.emjd = value
                     # print 'Tag MJD : %15.9f' % (self.emjd)
+                elif key == 'UTC':
+                    self.eutc = utc;
                 elif key == 'VMJD':
                     self.vmjd = value
                     # print 'Tag VMJD: %15.9f' % (self.emjd)
+                elif key == 'VUTC':
+                    self.vutc = utc
                 elif key == 'NV':
                     self.nv = value
                 elif key == 'VCOUNT':
@@ -396,7 +404,8 @@ class ra_event_sink(gr.sync_block):
                     milliseconds = datestr[1]            # need to add milliseconds to file name
                 else:
                     milliseconds = "000"                 # rare case of no milliseconds
-                milliseconds = milliseconds[0:3]
+                milliseconds = milliseconds[0:3]     # millisconds to 100 micro
+                microseconds = "%04d00" % milliseconds
                 yymmdd = daypart[2:19]
                 # try to remove duplicate tags following
                 tags = self.get_tags_in_window(0, 0, +2*self.vlen)
@@ -406,8 +415,27 @@ class ra_event_sink(gr.sync_block):
 #                        print("RMS == last RMS: %7.3f" % (self.erms))
 #                        continue;
                     #remove : from time
-                    yymmdd = yymmdd.replace(":", "")
-                    yymmdd = yymmdd + "_" + milliseconds
+                    # if new version of code with sepearate UTC part of time
+                    # eutc is in untis of fractions of a day
+                    if self.eutc != 0.:
+                        hour,minute,sec,micro = jdutil.day_to_hmsm( self.eutc)
+                        emjd = int(self.emjd)
+                        hhmmss = "%02d%02d%02d" % (hour,minute,sec)
+                        jd = jdutil.mjd_to_jd( self.emjd)
+                        yy,mm,dd = jdutil.jd_to_date(jd)
+                        yy = yy % 100   # only need the last 2 digits
+                        dd = int(dd)
+                        yymmdd = "%02d%02d%02d" % (yy,mm, dd)
+                        microseconds = "%06d" % micro
+                        if self.ecount < 2:
+                            print("MJD: %.0f %0.9f" % ( emjd, e.utc))
+                            print("MJD: %.0f %0.9f" % ( self.emjd))
+                        self.emjd = double(emjd) + double(self.eutc)
+                        self.eutc = double(0.0)
+                    else:
+                        yymmdd = yymmdd.replace(":", "")
+                    microseconds = "%06d" % micro
+                    yymmdd = yymmdd + "_" + microseconds
                     outname = yymmdd + '.eve'   # tag as an event
                     self.obs.writecount = self.obs.writecount + 1
                     # need to keep track of total number of spectra averaged
