@@ -344,12 +344,12 @@ class ra_event_sink(gr.sync_block):
                     self.emjd = value
                     # print 'Tag MJD : %15.9f' % (self.emjd)
                 elif key == 'UTC':
-                    self.eutc = utc;
+                    self.eutc = value;
                 elif key == 'VMJD':
                     self.vmjd = value
                     # print 'Tag VMJD: %15.9f' % (self.emjd)
                 elif key == 'VUTC':
-                    self.vutc = utc
+                    self.vutc = value
                 elif key == 'NV':
                     self.nv = value
                 elif key == 'VCOUNT':
@@ -405,7 +405,7 @@ class ra_event_sink(gr.sync_block):
                 else:
                     milliseconds = "000"                 # rare case of no milliseconds
                 milliseconds = milliseconds[0:3]     # millisconds to 100 micro
-                microseconds = "%04d00" % milliseconds
+                microseconds = "%04d00" % int(milliseconds)
                 yymmdd = daypart[2:19]
                 # try to remove duplicate tags following
                 tags = self.get_tags_in_window(0, 0, +2*self.vlen)
@@ -418,7 +418,7 @@ class ra_event_sink(gr.sync_block):
                     # if new version of code with sepearate UTC part of time
                     # eutc is in untis of fractions of a day
                     if self.eutc != 0.:
-                        hour,minute,sec,micro = jdutil.day_to_hmsm( self.eutc)
+                        hour,minute,sec,micro = jdutil.days_to_hmsm( self.eutc)
                         emjd = int(self.emjd)
                         hhmmss = "%02d%02d%02d" % (hour,minute,sec)
                         jd = jdutil.mjd_to_jd( self.emjd)
@@ -428,10 +428,10 @@ class ra_event_sink(gr.sync_block):
                         yymmdd = "%02d%02d%02d" % (yy,mm, dd)
                         microseconds = "%06d" % micro
                         if self.ecount < 2:
-                            print("MJD: %.0f %0.9f" % ( emjd, e.utc))
+                            print("MJD: %.0f %0.9f" % ( emjd, self.eutc))
                             print("MJD: %.0f %0.9f" % ( self.emjd))
-                        self.emjd = double(emjd) + double(self.eutc)
-                        self.eutc = double(0.0)
+                        self.emjd = float(emjd) + float(self.eutc)
+                        self.eutc = float(0.0)
                     else:
                         yymmdd = yymmdd.replace(":", "")
                     microseconds = "%06d" % micro

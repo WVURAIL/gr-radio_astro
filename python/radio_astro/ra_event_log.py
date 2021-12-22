@@ -262,18 +262,18 @@ class ra_event_log(gr.sync_block):
         if self.eutc != 0.:
             if self.ecount < 2:
                 print("Event %.9f" % (self.emjd))
-            self.emjd = double(int(self.emjd))
+            self.emjd = float(int(self.emjd))
             if self.ecount < 2:
-                print("Event %.0f %%0.9f" % (self.emjd, self.eutc))
+                print("Event %.0f %0.9f" % (self.emjd, self.eutc))
             # transfer to 
             self.emjd += self.eutc
             self.eutc = 0.
         if self.vutc != 0.:
             if self.ecount < 2:
                 print("Event %.9f" % (self.vmjd))
-            self.vmjd = double(int(self.vmjd))
+            self.vmjd = float(int(self.vmjd))
             if self.ecount < 2:
-                print("Event %.0f %%0.9f" % (self.vmjd, self.vutc))
+                print("Event %.0f %0.9f" % (self.vmjd, self.vutc))
             # transfer to 
             self.vmjd += self.vutc
             self.vutc = 0.
