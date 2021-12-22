@@ -24,13 +24,13 @@ parameters:
   dtype: string
   default: 'Event Detection'
 - id: bandwidth
-  label: Bandwidth (MHz)
+  label: Bandwidth (Hz)
   dtype: float
   default: "1.0"
 - id: vlen
   label: Vec Length
   dtype: int
-  default: '128'
+  default: 'fftsize'
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
 #  Keys include:

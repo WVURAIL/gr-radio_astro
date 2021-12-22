@@ -62,17 +62,17 @@ parameters:
   dtype: int
   default: '0'
 - id: frequency
-  label: Frequency (MHz)
+  label: Frequency (Hz)
   dtype: float
-  default: '1420.406'
+  default: '1420.406e6'
 - id: bandwidth
-  label: Bandwidth (MHz)
+  label: Bandwidth (Hz)
   dtype: float
-  default: '1.0'
+  default: '2.e6'
 - id: vlen
   label: Vec Length
   dtype: int
-  default: '128'
+  default: 'fftsize'
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
 #  Keys include:
