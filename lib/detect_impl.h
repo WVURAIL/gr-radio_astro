@@ -93,6 +93,7 @@ namespace gr {
       double nsigma_rms = 0;  // comparision value for event detection
       gr_complex samples[MAX_VLEN];  // output event buffer 
       bool initialized = 0;   // flag initializing output
+      long printcount = 0;    // limit print messages
       double bufferdelay = float(MAX_VLEN/2)*1.E-6/d_bw;
       unsigned long vcount = 0; // count of vectors processed
       unsigned long logvcount = 0; // count of last logged mjd

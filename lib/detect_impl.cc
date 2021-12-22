@@ -392,21 +392,20 @@ namespace gr {
 	detected = 0;
       gr_complex rp = 0;
       double mag2 = 0, mjd = 0., dtd = 0, utc = 0;
-      static long printcount = 0;
       
       // get time all samples arrive for any events found
       mjd = get_mjdutc( &utc);
       // buffer has N vectors added, offset to time of first sample
       dtd = float(datalen);
       dtd = dtd/d_bw;
-      if (! initialized) {
-	if (printcount < 5) {
-	  printf("Uninit: MJD: %.9f + offset: %15.6f+%10.6fs %ld\n",\
-		 mjd, utc, dtd, datalen);
-	  printcount++;
-	}
-	
-      }
+      //      if (! initialized) {
+	//	if (printcount < 5) {
+	//printf("Uninit: MJD: %.9f + offset: %15.6f+%10.6fs %ld\n",	\
+	//	 mjd, utc, dtd, datalen);
+	//	}
+	//	printcount++;
+      // } /* end if not initialized */
+      
       utc += (dtd/86400.);  // convert time offset to days
       vcount += ninputs;
 
