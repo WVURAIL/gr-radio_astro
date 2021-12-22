@@ -1,0 +1,131 @@
+21a22,23
+>  * 21Dec21 GIL patch C++ errors
+>  * 21Dec10 GIL separate mjd and UTC calculations
+120a123,143
+>     detect_impl::get_utc( )
+>     // get_utc() returns the time of day of cpu clock in utc fractions of a day
+>     {
+>       double utc = 0, seconds = 0, dtd = 0.;
+>       struct timespec ts;
+>       long r = clock_gettime(CLOCK_REALTIME, &ts);
+>       char buff[100];
+>       time_t now = time(NULL);
+>       struct tm *ptm = gmtime(&now);
+> 
+>       strftime(buff, sizeof buff, "%D %T", gmtime(&ts.tv_sec));
+>       
+>       seconds =  ptm->tm_sec + (60.*ptm->tm_min) + (3600.*ptm->tm_hour);
+>       //      seconds = seconds % 86400.;
+>       seconds += (1.e-9*ts.tv_nsec);
+>       utc = (seconds/86400.);
+> 
+>       return utc;
+>     } // end of get_utc()
+> 
+>     double 
+161a185,228
+>     double 
+>     detect_impl::get_mjdutc( double * oututc)
+>     // get_mjdutc returns an integer MJD and
+>     // passes the cpu clock utc (fraction of a day) back as an pointer
+>     {
+>       double seconds = 0, utc = 0.;
+>       struct timespec ts;
+>       long r = clock_gettime(CLOCK_REALTIME, &ts), mjd = 0;
+>       char buff[100];
+>       time_t now = time(NULL);
+>       struct tm *ptm = gmtime(&now);
+> 
+>       long year = ptm->tm_year + 1900;
+>       long month = ptm->tm_mon + 1;
+>       long day = ptm->tm_mday;
+>       // printf("Current date: %5d %3d %3d\n", year, month, day);
+> 
+>       if (lastday == day) {  // if date has not changed, use previous mjd
+> 	 mjd = mjd0;
+>       }
+>       else {
+> 	 mjd0 = ymd_to_mjd_x( year, month, day);
+> 	 mjd = mjd0;
+> 	 //	 printf("Mjd0: %16.6f\n", mjd0);
+>       }
+> 
+>       strftime(buff, sizeof buff, "%D %T", gmtime(&ts.tv_sec));
+>       
+>       seconds =  ptm->tm_sec + (60.*ptm->tm_min) + (3600.*ptm->tm_hour);
+>       //      seconds = seconds % 86400.;
+>       seconds += (1.e-9*ts.tv_nsec);
+>       utc = (seconds/86400.);
+>       *oututc = utc;     /* pass fraction of a day back */
+>       
+>       if (lastday != day) {
+> 	printf("Current time: %s.%09ld UTC\n", buff, ts.tv_nsec);
+> 	printf("New Day:%15.9f, %12.6fs (%15.12f, last=%ld, current=%ld)\n", \
+> 	       mjd, seconds, utc, lastday, day);
+> 	lastday = day;  // save day so that MJD is only updated once a day
+>       }
+> 
+>       return mjd;
+>     } // end of get_mjdutc()
+> 
+325c392
+< 	detected = 0;
+---
+> 	detected = 0, mjd = 0;
+327c394
+<       double mag2 = 0, dmjd = 0., dtd = 0;
+---
+>       double mag2 = 0, dmjd = 0., dtd = 0, utc = 0;
+331c398
+<       dmjd = get_mjd();
+---
+>       mjd = get_mjdutc( &utc);
+337,338c404,405
+< 	  printf("Uninit: MJD + offset: %15.6fs, %10.6fs %ld\n",\
+< 		 dmjd, dtd, datalen);
+---
+> 	  printf("Uninit: MJD: %d + offset: %15.6f+%10.6fs %ld\n",\
+> 		 mjd, utc, dtd, datalen);
+343,344c410
+<       dtd = dtd/86400.;  // convert time offset to days
+<       dmjd = dmjd - dtd;
+---
+>       utc += (dtd/86400.);  // convert time offset to days
+360d425
+< 	      //	      nsigma_rms = nsigma*nsigma*rms2;
+385,386d449
+< 		  // printf( "N-sigma Peak found: %7.1f\n", peak/rms);
+< 		  // add tags to event
+415,417c478,482
+< 		  dtd = dtd / 86400.;   // convert to days
+< 		  dmjd = dmjd + dtd;
+< 		  dmjd = dmjd - dt0;    // delay through gnuradio + device
+---
+> 		  utc -= (dtd/86400.);   // convert to days
+> 		  utc -= dt0;    // delay through gnuradio + device (days)
+> 		  dmjd = mjd;
+> 		  /* if utc is present the receive side code should
+> 		     take integer MJD and add fraction of a day utc. */
+424a490,494
+> 			       pmt::mp("UTC"), // Key
+> 			       pmt::from_double(utc) // Value
+> 			       );
+> 		  add_item_tag(0, // Port number
+> 			       nitems_written(0) + 1, // Offset
+504c574,575
+< 	    dmjd = dmjd - dt0;
+---
+> 	    dmjd = mjd;
+> 	    utc -= dt0;
+512a584,588
+> 		       pmt::mp("VUTC"), // Key
+> 		       pmt::from_double(utc) // Value
+> 		       );
+> 	    add_item_tag(0, // Port number
+> 		       nitems_written(0) + 1, // Offset
+526,527c602,603
+< 	    // add a vector count log entry every second or so
+< 	    logvcount = vcount + 10000;
+---
+> 	    // add a vector count log entry every 10 seconds or so
+> 	    logvcount = vcount + 100000;

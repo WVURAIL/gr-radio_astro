@@ -19,6 +19,8 @@
  */
 
 /* HISTORY 
+ * 21Dec21 GIL patch C++ errors
+ * 21Dec10 GIL separate mjd and UTC calculations
  * 21Mar25 GIL fix truncation of time offset calculation
  * 21Mar24 GIL take into account the number of vectors in the detect
  * 21Mar24 GIL allow detections 1/2 a vector after last event
@@ -118,6 +120,27 @@ namespace gr {
     } /* end of int ymd_to_mjd_x() */
   
     double 
+    detect_impl::get_utc( )
+    // get_utc() returns the time of day of cpu clock in utc fractions of a day
+    {
+      double utc = 0, seconds = 0, dtd = 0.;
+      struct timespec ts;
+      long r = clock_gettime(CLOCK_REALTIME, &ts);
+      char buff[100];
+      time_t now = time(NULL);
+      struct tm *ptm = gmtime(&now);
+
+      strftime(buff, sizeof buff, "%D %T", gmtime(&ts.tv_sec));
+      
+      seconds =  ptm->tm_sec + (60.*ptm->tm_min) + (3600.*ptm->tm_hour);
+      //      seconds = seconds % 86400.;
+      seconds += (1.e-9*ts.tv_nsec);
+      utc = (seconds/86400.);
+
+      return utc;
+    } // end of get_utc()
+
+    double 
     detect_impl::get_mjd( )
     {
       double mjd = 0, seconds = 0, dtd = 0.;
@@ -158,6 +181,50 @@ namespace gr {
 
       return mjd;
     } // end of get_mjd()
+
+    double 
+    detect_impl::get_mjdutc( double * oututc)
+    // get_mjdutc returns an integer MJD and
+    // passes the cpu clock utc (fraction of a day) back as an pointer
+    {
+      double seconds = 0, utc = 0., mjd = 0.;
+      struct timespec ts;
+      long r = clock_gettime(CLOCK_REALTIME, &ts);
+      char buff[100];
+      time_t now = time(NULL);
+      struct tm *ptm = gmtime(&now);
+
+      long year = ptm->tm_year + 1900;
+      long month = ptm->tm_mon + 1;
+      long day = ptm->tm_mday;
+      // printf("Current date: %5d %3d %3d\n", year, month, day);
+
+      if (lastday == day) {  // if date has not changed, use previous mjd
+	 mjd = mjd0;
+      }
+      else {
+	 mjd0 = ymd_to_mjd_x( year, month, day);
+	 mjd = mjd0;
+	 //	 printf("Mjd0: %16.6f\n", mjd0);
+      }
+
+      strftime(buff, sizeof buff, "%D %T", gmtime(&ts.tv_sec));
+      
+      seconds =  ptm->tm_sec + (60.*ptm->tm_min) + (3600.*ptm->tm_hour);
+      seconds += (1.e-9*ts.tv_nsec);
+      utc = seconds/86400.;
+      *oututc = utc;     /* pass fraction of a day back */
+      
+      if (lastday != day) {
+	printf("Current time: %s.%09ld UTC\n", buff, ts.tv_nsec);
+	printf("New Day:%15.9f, %12.6fs (%15.12f, last=%ld, current=%ld)\n", \
+	       mjd, seconds, utc, lastday, day);
+	lastday = day;  // save day so that MJD is only updated once a day
+      }
+
+      mjd = mjd + utc;
+      return mjd;
+    } // end of get_mjdutc()
 
     void
     detect_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
@@ -324,24 +391,23 @@ namespace gr {
       long datalen = d_vec_length * ninputs, nout = 0, jjj = 0, inext0 = inext,
 	detected = 0;
       gr_complex rp = 0;
-      double mag2 = 0, dmjd = 0., dtd = 0;
+      double mag2 = 0, mjd = 0., dtd = 0, utc = 0;
       static long printcount = 0;
       
       // get time all samples arrive for any events found
-      dmjd = get_mjd();
+      mjd = get_mjdutc( &utc);
       // buffer has N vectors added, offset to time of first sample
       dtd = float(datalen);
       dtd = dtd/d_bw;
       if (! initialized) {
 	if (printcount < 5) {
-	  printf("Uninit: MJD + offset: %15.6fs, %10.6fs %ld\n",\
-		 dmjd, dtd, datalen);
+	  printf("Uninit: MJD: %.9f + offset: %15.6f+%10.6fs %ld\n",\
+		 mjd, utc, dtd, datalen);
 	  printcount++;
 	}
 	
       }
-      dtd = dtd/86400.;  // convert time offset to days
-      dmjd = dmjd - dtd;
+      utc += (dtd/86400.);  // convert time offset to days
       vcount += ninputs;
 
       // fill the circular buffer
@@ -357,7 +423,6 @@ namespace gr {
 	      rms = sqrt(rms2);
 		  
 	      // switch to test on single sample
-	      //	      nsigma_rms = nsigma*nsigma*rms2;
 	      nsigma_rms = nsigma*rms;
 	      sum2 = 0;          // restart rms sum
 	      nsum = 0;
@@ -382,8 +447,6 @@ namespace gr {
 		  rms = rms / 100000.;   
 		  imax2 = inext2;
 		  peak = sqrt(circular2[inext2]);
-		  // printf( "N-sigma Peak found: %7.1f\n", peak/rms);
-		  // add tags to event
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
 			       pmt::mp("PEAK"), // Key
@@ -410,15 +473,21 @@ namespace gr {
 		  dtd = dtd/d_bw;
 		  if (ecount < 5) {
 		    printf("MJD: %15.6f; Peak=%8.4f+/-%6.4f (dt=%9.6fs)\n", \
-			   dmjd, peak, rms, dtd);
+			   mjd, peak, rms, dtd);
 		  }
-		  dtd = dtd / 86400.;   // convert to days
-		  dmjd = dmjd + dtd;
-		  dmjd = dmjd - dt0;    // delay through gnuradio + device
+		  utc -= (dtd/86400.);   // convert to days
+		  utc -= dt0;    // delay through gnuradio + device (days)
+		  /* if utc is present the receive side code should
+		     take integer MJD and add fraction of a day utc. */
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
 			       pmt::mp("MJD"), // Key
-			       pmt::from_double(dmjd) // Value
+			       pmt::from_double(mjd) // Value
+			       );
+		  add_item_tag(0, // Port number
+			       nitems_written(0) + 1, // Offset
+			       pmt::mp("UTC"), // Key
+			       pmt::from_double(utc) // Value
 			       );
 		  add_item_tag(0, // Port number
 			       nitems_written(0) + 1, // Offset
@@ -501,12 +570,17 @@ namespace gr {
 	// second or so.
 	if (vcount > logvcount)
 	  {
-	    dmjd = dmjd - dt0;
+	    utc -= dt0;
 	    // printf("Mjd: %16.6d\n", dmjd);
 	    add_item_tag(0, // Port number
 		       nitems_written(0) + 1, // Offset
 		       pmt::mp("VMJD"), // Key
-		       pmt::from_double(dmjd) // Value
+		       pmt::from_double(mjd) // Value
+		       );
+	    add_item_tag(0, // Port number
+		       nitems_written(0) + 1, // Offset
+		       pmt::mp("VUTC"), // Key
+		       pmt::from_double(utc) // Value
 		       );
 	    add_item_tag(0, // Port number
 		       nitems_written(0) + 1, // Offset
@@ -523,8 +597,8 @@ namespace gr {
 		       pmt::mp("VOFFSET"), // Key
 		       pmt::from_long(inext0) // Value
 		       );
-	    // add a vector count log entry every second or so
-	    logvcount = vcount + 10000;
+	    // add a vector count log entry every 10 seconds or so
+	    logvcount = vcount + 100000;
 	  } // end if time to log MJD vs vector count
       } // end else if not detected, can log vector
       // return detected event count, either 0 or 1

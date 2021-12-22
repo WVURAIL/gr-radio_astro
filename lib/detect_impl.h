@@ -139,6 +139,10 @@ namespace gr {
       long ymd_to_mjd_x(int year, int month, int day);      
 
       double get_mjd();
+
+      double get_utc();
+
+      double get_mjdutc( double * utc); // returns long MJD
     }; 
   } // namespace radio_astro
 } // namespace gr
