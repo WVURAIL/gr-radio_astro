@@ -113,9 +113,10 @@ namespace gr {
       //      set nsigma for a detection;
       void set_dms( float dms);
 
-      //      set the bandwidth, in MHz
+      //      set the bandwidth, in Hz
       void set_bw( float bw);
 
+      //      set the frequency, in Hz
       void set_freq( float f_obs);
 
       void set_dt( float t_int);

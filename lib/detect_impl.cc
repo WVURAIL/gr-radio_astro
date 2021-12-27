@@ -19,6 +19,7 @@
  */
 
 /* HISTORY 
+ * 21Dec27 GIL complete conversion of inputs from MHz to Hz.
  * 21Dec21 GIL patch C++ errors
  * 21Dec10 GIL separate mjd and UTC calculations
  * 21Mar25 GIL fix truncation of time offset calculation
@@ -253,21 +254,26 @@ namespace gr {
     void 
     detect_impl::set_bw ( float bw)
     {
-      if (bw < 0.01)
-	{printf("Input Bandwidth too small: %10.6f (MHz)\n", bw);
-	 bw = 1.0;
+      if (bw < 1000.)
+	{printf("Input Bandwidth too small: %12.3f (Hz)\n", bw);
+	 bw = 2.5e6;
 	}
       d_bw = bw;
       
-      printf("Input Bandwidth: %7.1f (MHz)\n", bw);
+      printf("Input Bandwidth: %7.1f (MHz)\n", bw*1.e-6);
       bufferdelay = float(MAX_VLEN/2)/d_bw;
     }
       
     void 
     detect_impl::set_freq ( float freq)
     {
+      if (freq < 1000.)
+	{
+	  printf("Input Frequency too low: %12.3f (Hz)\n", freq);
+	  freq = 1421.e6;
+	}
       d_f_obs = freq;
-      printf("Input Frequency: %7.1f (MHz)\n", d_f_obs);
+      printf("Input Frequency: %7.3f (MHz)\n", d_f_obs*1.e-6);
     }
       
     void 
