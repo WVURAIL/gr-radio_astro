@@ -24,10 +24,10 @@ parameters:
   label: N Sigma
   dtype: float
 - id: f_obs
-  label: f_obs
+  label: f_obs (Hz)
   dtype: float
 - id: bw
-  label: bw (MHz)
+  label: bw (Hz)
   dtype: float
 - id: t_int
   label: t_int
