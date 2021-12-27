@@ -16,6 +16,8 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 21DEC27 GIL finish all frequencies in Hz
+# 21DEC22 GIL all frequencies in Hz
 # 21DEC21 GIL take integer part of MJD if UTC is present
 # 21DEC07 GIL reduce prints to once a minute
 # 20NOV24 GIL another try at fixing log mjds
@@ -101,11 +103,11 @@ class ra_event_log(gr.sync_block):
         Set the sample rate to know the time resolution
         """
         bandwidth = np.float(bandwidth)
-        if bandwidth == 0:
+        if bandwidth < 10000.:
             print("Invalid Bandwidth: ", bandwidth)
             return
         self.bandwidth = bandwidth
-        print("Setting Bandwidth: %10.6f MHz" % (self.bandwidth))
+        print("Setting Bandwidth: %10.6f MHz" % (1.E-6*self.bandwidth))
 
     def get_sample_rate(self):
         """
@@ -167,7 +169,7 @@ class ra_event_log(gr.sync_block):
             f.write(outline)
             outline = "# %s\n" % (self.note)
             f.write(outline)
-            outline = "# bandwidth = %15.6f MHz\n" % (self.bandwidth)
+            outline = "# bandwidth = %15.6f Hz\n" % (self.bandwidth)
             f.write(outline)
             outline = "# vlen      = %6d\n" % (self.vlen)
             f.write(outline)

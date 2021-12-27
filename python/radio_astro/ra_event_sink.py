@@ -18,6 +18,8 @@ Glen Langston - 2019 September 14
 # GNU General Public License for more details.
 #
 # HISTORY
+# 21Dec27 GIL finish all units in Hz, not MHz
+# 21Dec22 GIL all units in Hz, not MHz
 # 21Dec21 GIL finish up MJD + UTC processin
 # 21Dec10 GIL separate MJD and UTC to increase precision of transfer
 # 21DEC07 GIL reduce printout of events to once a minute
@@ -58,8 +60,8 @@ class ra_event_sink(gr.sync_block):
     Parameters are
     1) ConfigFileName
     2) Vector length in Channels
-    3) Frequency (MHz)
-    4) Bandwidth (MHz)
+    3) Frequency (Hz)
+    4) Bandwidth (Hz)
     5) Record Flag
     This block is intended to reduce the downstream CPU load.
     """
@@ -86,8 +88,8 @@ class ra_event_sink(gr.sync_block):
         self.device = str(device)
         self.telaz = float(azimuth)
         self.telel = float(elevation)
-        self.bandwidthMHz = float(bandwidth)
-        self.frequencyMHz = float(frequency)
+        self.bandwidthHz = float(bandwidth)
+        self.frequencyHz = float(frequency)
         self.gain1 = float(gain1)
         self.obs = radioastronomy.Spectrum(nChan=0, nSamples=vlen)
         # now transfer parameters to the observations file
@@ -97,33 +99,41 @@ class ra_event_sink(gr.sync_block):
         # report newly discovered tags once
         self.lasttag = ""
 
-    def set_sample_rate(self, bandwidthMHz, doSave=True):
+    def set_sample_rate(self, bandwidthHz, doSave=True):
         """
         Set the sample rate for these event detections.
         The sample rate determines the time resolution
         """
-        self.bandwidthMHz = np.float(bandwidthMHz)
-        if self.bandwidthMHz <= 0.0001:
-            print("Invalid Bandwidth: ", self.bandwidthMHz)
-            self.bandwidthMHz = 1.
-        if self.bandwidthMHz >= 1000.:
-            print("Invalid Bandwidth: ", self.bandwidthMHz)
-            self.bandwidthMHz = 1.
-        self.obs.bandwidthHz = self.bandwidthMHz*1.E6  # observation units Hzo
+        self.bandwidthHz = np.float(bandwidthHz)
+        if self.bandwidthHz <= 10000.:
+            print("Invalid Bandwidth: ", self.bandwidthHz)
+            self.bandwidthHz = 2.5e6
+        if self.bandwidthHz > 50.e6:
+            print("Invalid Bandwidth: ", self.bandwidthHz)
+            self.bandwidthHz = 10.e6
         print("Setting Bandwidth: %10.6f MHz" % (1.E-6*self.obs.bandwidthHz))
         self.obs.dt = 1./np.fabs(self.obs.bandwidthHz)
         t = -self.obs.dt * self.obs.refSample
-        print("NChan = %5d; NSamples = %5d" % (self.obs.nChan, self.obs.nSamples))
-        print("N x   = %5d; N y      = %5d" % (len(self.obs.xdata), len(self.obs.ydataA)))
+        print("NChan = %5d; NSamples = %5d" % \
+              (self.obs.nChan, self.obs.nSamples))
+        print("N x   = %5d; N y      = %5d" % \
+              (len(self.obs.xdata), len(self.obs.ydataA)))
         for iii in range(self.vlen):
             self.obs.xdata[iii] = t
             t = t + self.obs.dt
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
-    def set_frequency(self, frequencyMHz, doSave=True):
-        self.frequencyMHz = np.float(frequencyMHz)
-        self.obs.centerFreqHz = self.frequencyMHz*1.E6  # observation units Hz
+    def set_frequency(self, frequencyHz, doSave=True):
+        """
+        Set the frequency (Hz) of the center of the observations
+        """
+        frequencyHz = float(frequencyHz)
+        if frequencyHz < 10000.:
+            print("Invalid Frequency: %12.3f (Hz)" % (self.freqeuncyHz))
+            frequencyHz + 2.5e6
+            
+        self.frequencyHz = frequencyHz
         if doSave:
             self.obs.write_ascii_file(self.setupdir, self.noteName)
 
@@ -270,8 +280,7 @@ class ra_event_sink(gr.sync_block):
         self.obs.device = self.device
         self.obs.telaz = self.telaz
         self.obs.telel = self.telel
-        self.obs.centerFreqHz = self.frequencyMHz*1.E6
-        self.obs.bandwidthHz = self.bandwidthMHz*1.E6
+        self.obs.centerFreqHz = self.frequencyHz
         self.obs.gains[0] = self.gain1
 
         self.obs.datadir = "../events/"          # writing events not spectra
@@ -282,7 +291,7 @@ class ra_event_sink(gr.sync_block):
         if self.obs.datadir[nd-1] != '/':
             self.obs.datadir = self.obs.datadir + "/"
             print('DataDir          : ', self.obs.datadir)
-        self.set_sample_rate(self.bandwidthMHz, doSave=doSave)
+        self.set_sample_rate(self.bandwidthHz, doSave=doSave)
 
     def set_record(self, record):
         """
@@ -425,17 +434,17 @@ class ra_event_sink(gr.sync_block):
                         yy,mm,dd = jdutil.jd_to_date(jd)
                         yy = yy % 100   # only need the last 2 digits
                         dd = int(dd)
-                        yymmdd = "%02d%02d%02d" % (yy,mm, dd)
+                        yymmdd = "%02d-%02d-%02d" % (yy,mm, dd)
                         microseconds = "%06d" % micro
                         if self.ecount < 2:
                             print("MJD: %.0f %0.9f" % ( emjd, self.eutc))
-                            print("MJD: %.0f %0.9f" % ( self.emjd))
+                            print("MJD: %0.9f" % ( self.emjd))
                         self.emjd = float(emjd) + float(self.eutc)
                         self.eutc = float(0.0)
+                        milliseconds = microseconds[0:3]
                     else:
                         yymmdd = yymmdd.replace(":", "")
-                    microseconds = "%06d" % micro
-                    yymmdd = yymmdd + "_" + microseconds
+                    yymmdd = yymmdd + "T" + hhmmss + "_" + microseconds
                     outname = yymmdd + '.eve'   # tag as an event
                     self.obs.writecount = self.obs.writecount + 1
                     # need to keep track of total number of spectra averaged
