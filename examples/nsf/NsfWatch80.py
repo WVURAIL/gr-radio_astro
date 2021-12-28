@@ -215,10 +215,10 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._nsigma_range = Range(0., 10., .1, nsigmas, 100)
         self._nsigma_win = RangeWidget(self._nsigma_range, self.set_nsigma, "N Sigma", "counter", float, QtCore.Qt.Horizontal)
-        self.top_grid_layout.addWidget(self._nsigma_win, 2, 5, 1, 2)
+        self.top_grid_layout.addWidget(self._nsigma_win, 2, 6, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(5, 7):
+        for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._nAve_tool_bar = Qt.QToolBar(self)
         self._nAve_tool_bar.addWidget(Qt.QLabel("N_Ave." + ": "))
@@ -258,20 +258,29 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._Record_labels = ['! ! Wait ! !', 'AVERAGE']
         # Create the combo box
-        self._Record_tool_bar = Qt.QToolBar(self)
-        self._Record_tool_bar.addWidget(Qt.QLabel("Spec. Mode" + ": "))
-        self._Record_combo_box = Qt.QComboBox()
-        self._Record_tool_bar.addWidget(self._Record_combo_box)
-        for _label in self._Record_labels: self._Record_combo_box.addItem(_label)
-        self._Record_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Record_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Record_options.index(i)))
-        self._Record_callback(self.Record)
-        self._Record_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_Record(self._Record_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._Record_tool_bar, 3, 2, 1, 3)
+        self._Record_group_box = Qt.QGroupBox("Spec. Mode" + ": ")
+        self._Record_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._Record_button_group = variable_chooser_button_group()
+        self._Record_group_box.setLayout(self._Record_box)
+        for i, _label in enumerate(self._Record_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._Record_box.addWidget(radio_button)
+            self._Record_button_group.addButton(radio_button, i)
+        self._Record_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Record_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._Record_options.index(i)))
+        self._Record_callback(self.Record)
+        self._Record_button_group.buttonClicked[int].connect(
+            lambda i: self.set_Record(self._Record_options[i]))
+        self.top_grid_layout.addWidget(self._Record_group_box, 3, 0, 1, 3)
         for r in range(3, 4):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 5):
+        for c in range(0, 3):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._IF_attn_tool_bar = Qt.QToolBar(self)
         self._IF_attn_tool_bar.addWidget(Qt.QLabel("IF_attn" + ": "))
@@ -290,10 +299,10 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         self._Gain1_tool_bar.addWidget(self._Gain1_line_edit)
         self._Gain1_line_edit.returnPressed.connect(
             lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._Gain1_tool_bar, 3, 0, 1, 2)
-        for r in range(3, 4):
+        self.top_grid_layout.addWidget(self._Gain1_tool_bar, 2, 2, 1, 2)
+        for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
+        for c in range(2, 4):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Frequency_tool_bar = Qt.QToolBar(self)
         self._Frequency_tool_bar.addWidget(Qt.QLabel("Freq. Hz" + ": "))
@@ -311,20 +320,29 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._EventMode_labels = ['! ! Wait ! !', 'Write']
         # Create the combo box
-        self._EventMode_tool_bar = Qt.QToolBar(self)
-        self._EventMode_tool_bar.addWidget(Qt.QLabel("Event Mode" + ": "))
-        self._EventMode_combo_box = Qt.QComboBox()
-        self._EventMode_tool_bar.addWidget(self._EventMode_combo_box)
-        for _label in self._EventMode_labels: self._EventMode_combo_box.addItem(_label)
-        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._EventMode_options.index(i)))
-        self._EventMode_callback(self.EventMode)
-        self._EventMode_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_EventMode(self._EventMode_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 2, 2, 1, 3)
-        for r in range(2, 3):
+        self._EventMode_group_box = Qt.QGroupBox("Event Mode" + ": ")
+        self._EventMode_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._EventMode_button_group = variable_chooser_button_group()
+        self._EventMode_group_box.setLayout(self._EventMode_box)
+        for i, _label in enumerate(self._EventMode_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._EventMode_box.addWidget(radio_button)
+            self._EventMode_button_group.addButton(radio_button, i)
+        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._EventMode_options.index(i)))
+        self._EventMode_callback(self.EventMode)
+        self._EventMode_button_group.buttonClicked[int].connect(
+            lambda i: self.set_EventMode(self._EventMode_options[i]))
+        self.top_grid_layout.addWidget(self._EventMode_group_box, 3, 3, 1, 3)
+        for r in range(3, 4):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 5):
+        for c in range(3, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Elevation_tool_bar = Qt.QToolBar(self)
         self._Elevation_tool_bar.addWidget(Qt.QLabel("Elevation" + ": "))
@@ -398,7 +416,7 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, 1.0, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(IF_attn), Azimuth, Elevation)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency, Bandwidth, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(IF_attn), Azimuth, Elevation)
         self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, 1.0)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, 0, 4**5, nAve, telescope_save, device_save, float(IF_attn), float(Gain2), float(Gain1))
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize/Bandwidth, EventMode)
@@ -434,10 +452,10 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
 
         self.qtgui_number_sink_0.enable_autoscale(False)
         self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.qwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 3, 5, 1, 3)
+        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 3, 6, 1, 2)
         for r in range(3, 4):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(5, 8):
+        for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
             fftsize,
@@ -562,8 +580,8 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
+        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_1, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.radio_astro_detect_0, 0))
@@ -805,8 +823,8 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self.radio_astro_detect_0.set_freq(self.Frequency)
         self.radio_astro_ra_ascii_sink_0.set_frequency(self.Frequency)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
         self.sdrplay3_rsp1a_0.set_center_freq(self.Frequency)
 
     def get_Elevation_save(self):
@@ -867,6 +885,7 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
         self.set_samp_rate(self.Bandwidth)
         self.radio_astro_detect_0.set_bw(self.Bandwidth)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth(self.Bandwidth)
+        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth)
 
     def get_Azimuth_save(self):
         return self.Azimuth_save

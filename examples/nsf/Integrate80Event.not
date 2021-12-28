@@ -10,7 +10,7 @@
 # COUNTRY   = US
 # TELTYPE   = Pyramid Horn
 # FRAME     = TOPO
-# GAIN1     = 48.0
+# GAIN1     = 42.0
 # GAIN2     = 11.0
 # GAIN3     = 11.0
 # GAIN4     = 0.0
@@ -39,11 +39,11 @@
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2021-12-09 14:54:52.992253
+# UTC       = 2021-12-28 03:19:19.956370
 # SECONDS   =       0.0000000000 
-# LST       = 00:58:17.819
+# LST       = 00:00:00.000
 # AZ        = 0.0
-# EL        = 45.0
+# EL        = 65.0
 # TELLON    = -79:50:22.920
 # TELLAT    = +38:25:59.160
 # TELALT    = 0.0

@@ -329,7 +329,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 2 ,2, 1, 3
+    gui_hint: 3 ,3, 1, 3
     label: Event Mode
     label0: '! ! Wait ! !'
     label1: Write
@@ -344,10 +344,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '1'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -391,7 +391,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 3,0,1,2
+    gui_hint: 2,2,1,2
     label: Gain1
     type: real
     value: Gain1s
@@ -525,7 +525,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 3,2,1,3
+    gui_hint: 3,0,1,3
     label: Spec. Mode
     label0: '! ! Wait ! !'
     label1: AVERAGE
@@ -540,10 +540,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '1'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -651,7 +651,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 2,5,1,2
+    gui_hint: 2,6,1,2
     label: N Sigma
     min_len: '100'
     orient: QtCore.Qt.Horizontal
@@ -958,7 +958,7 @@ blocks:
     factor8: '1'
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 3,5,1,3
+    gui_hint: 3,6,1,2
     label1: 'T Remains:'
     label10: ''
     label2: ''
@@ -1067,11 +1067,11 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: '1.0'
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(IF_attn)
     note: Event Detection
     observer: Observer

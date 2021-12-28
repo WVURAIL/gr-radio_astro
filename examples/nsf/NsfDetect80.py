@@ -302,7 +302,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         # Create the combo box
         # Create the radio buttons
         self._Detect_group_box = Qt.QGroupBox("Event" + ": ")
-        self._Detect_box = Qt.QVBoxLayout()
+        self._Detect_box = Qt.QHBoxLayout()
         class variable_chooser_button_group(Qt.QButtonGroup):
             def __init__(self, parent=None):
                 Qt.QButtonGroup.__init__(self, parent)
@@ -369,9 +369,9 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         self.sdrplay3_rsp1a_0.set_debug_mode(True)
         self.sdrplay3_rsp1a_0.set_sample_sequence_gaps_check(True)
         self.sdrplay3_rsp1a_0.set_show_gain_changes(True)
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, 1.0, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(IF_attn), Azimuth, Elevation)
-        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, 1.0)
-        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, Detect)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency, Bandwidth, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(IF_attn), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth)
+        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize/Bandwidth, Detect)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
             fftsize, #size
             Bandwidth, #samp_rate
@@ -571,8 +571,8 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
+        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
@@ -803,8 +803,8 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         self._Frequencys_config.write(open(self.ConfigFile, 'w'))
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
         self.radio_astro_detect_0.set_freq(self.Frequency)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
         self.sdrplay3_rsp1a_0.set_center_freq(self.Frequency)
 
     def get_Elevation_save(self):
@@ -865,6 +865,8 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         self.set_samp_rate(self.Bandwidth)
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.Bandwidth)
         self.radio_astro_detect_0.set_bw(self.Bandwidth)
+        self.radio_astro_ra_event_log_0.set_sample_rate(self.Bandwidth)
+        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth)
 
     def get_Azimuth_save(self):
         return self.Azimuth_save

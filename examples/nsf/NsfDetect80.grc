@@ -297,7 +297,7 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '1'
     widget: radio_buttons
@@ -981,7 +981,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     mode: Detect
-    t_int: fftsize*1.e-6/Bandwidth
+    t_int: fftsize/Bandwidth
     vec_length: fftsize
   states:
     bus_sink: false
@@ -995,7 +995,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    bandwidth: '1.0'
+    bandwidth: Bandwidth
     comment: ''
     logname: ''
     note: Event Detection
@@ -1013,11 +1013,11 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: '1.0'
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(IF_attn)
     note: Event Detection
     observer: Observer

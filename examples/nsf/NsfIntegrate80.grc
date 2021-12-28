@@ -1149,7 +1149,7 @@ blocks:
     alpha9: '1.0'
     autoscale: 'False'
     average: '1.0'
-    color1: '"black"'
+    color1: '"yellow"'
     color10: '"dark blue"'
     color2: '"dark green"'
     color3: '"red"'
@@ -1177,7 +1177,7 @@ blocks:
     name: '""'
     nconnections: '5'
     ref_level: 0.5*(ymins[units] + ymaxs[units])
-    showports: 'True'
+    showports: 'False'
     update_time: '.5'
     vlen: fftsize
     width1: '1'
