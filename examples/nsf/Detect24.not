@@ -10,13 +10,13 @@
 # COUNTRY   = US
 # TELTYPE   = Bubble Wrap Horn
 # FRAME     = TOPO
-# GAIN1     = 45.0
+# GAIN1     = 50.0
 # GAIN2     = 0.0
 # GAIN3     = 0.0
 # GAIN4     = 0.0
 # Count     = 0
 # REFFREQ   = 1420405751.768
-# OBSFREQ   = 1421000000000000.0
+# OBSFREQ   = 1421000000.0
 # OBSBW     = 1000000.0
 # Duration  = 0.0
 # DeltaX    = 1.0
@@ -39,7 +39,7 @@
 # NAVE      = 20
 # NMEDIAN   = 4096
 # Fft_rate  = 5000
-# UTC       = 2021-12-22 18:28:14.801756
+# UTC       = 2021-12-28 02:59:19.151556
 # SECONDS   =       0.0000000000 
 # LST       = 00:00:00.000
 # AZ        = 180.0

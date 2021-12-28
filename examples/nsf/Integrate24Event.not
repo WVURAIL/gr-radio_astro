@@ -4,19 +4,19 @@
 # OBSERVER  = Radio Observer
 # DEVICE    = rtlsdr=0,bias=1
 # DATADIR   = ../events/
-# SITE      = NooElecAmp RTLSDR Dongle Test
+# SITE      = RTLSDR Dongle Test
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
 # TELTYPE   = Pyramid Horn
 # FRAME     = TOPO
-# GAIN1     = 45.0
+# GAIN1     = 50.0
 # GAIN2     = 11.0
 # GAIN3     = 11.0
 # GAIN4     = 0.0
 # Count     = 1024
 # REFFREQ   = 1420405751.768
-# OBSFREQ   = 1420000000000000.0
+# OBSFREQ   = 1421000000.0
 # OBSBW     = 2400000.0
 # Duration  = 0.689015
 # DeltaX    = 5859.375
@@ -39,9 +39,9 @@
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2021-12-22 18:31:18.610496
+# UTC       = 2021-12-28 03:02:28.276141
 # SECONDS   =       0.0000000000 
-# LST       = 00:00:01.088
+# LST       = 00:00:00.005
 # AZ        = 180.0
 # EL        = 90.0
 # TELLON    = -79:50:22.920

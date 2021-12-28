@@ -923,7 +923,7 @@ blocks:
     alpha9: '1.0'
     autoscale: 'False'
     average: '1.0'
-    color1: '"black"'
+    color1: '"yellow"'
     color10: '"dark blue"'
     color2: '"dark green"'
     color3: '"red"'
@@ -951,7 +951,7 @@ blocks:
     name: '""'
     nconnections: '5'
     ref_level: 0.5*(ymins[units] + ymaxs[units])
-    showports: 'True'
+    showports: 'False'
     update_time: '.5'
     vlen: fftsize
     width1: '1'
@@ -1463,7 +1463,7 @@ blocks:
     nchan: '1'
     num_mboards: '1'
     sample_rate: Bandwidth
-    sync: sync
+    sync: pc_clock
     time_source0: ''
     time_source1: ''
     time_source2: ''
