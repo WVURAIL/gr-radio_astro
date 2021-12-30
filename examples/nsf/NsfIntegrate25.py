@@ -8,7 +8,7 @@
 # Title: NsfIntegrate: 2.5 MHz with Airspy
 # Author: Glen Langston
 # Description: Astronomy with AIRSPY Dongle
-# GNU Radio version: 3.8.2.0
+# GNU Radio version: 3.10.0.0-rc1
 
 from distutils.version import StrictVersion
 
@@ -36,72 +36,19 @@ import sys
 import signal
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
+from gnuradio import radio_astro
+import configparser
 import osmosdr
 import time
-import radio_astro
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
+
+
 
 from gnuradio import qtgui
 
 class NsfIntegrate25(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "NsfIntegrate: 2.5 MHz with Airspy")
+        gr.top_block.__init__(self, "NsfIntegrate: 2.5 MHz with Airspy", catch_exceptions=True)
         Qt.QWidget.__init__(self)
         self.setWindowTitle("NsfIntegrate: 2.5 MHz with Airspy")
         qtgui.util.check_set_qss()
@@ -234,12 +181,12 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         # Blocks
         ##################################################
         # Create the options list
-        self._units_options = (0, 1, 2, 3, )
+        self._units_options = [0, 1, 2, 3]
         # Create the labels list
-        self._units_labels = ('Counts', 'dB', 'Kelvins', 'K - Fit', )
+        self._units_labels = ['Counts', 'dB', 'Kelvins', 'K - Fit']
         # Create the combo box
         self._units_tool_bar = Qt.QToolBar(self)
-        self._units_tool_bar.addWidget(Qt.QLabel('Units' + ": "))
+        self._units_tool_bar.addWidget(Qt.QLabel("Units" + ": "))
         self._units_combo_box = Qt.QComboBox()
         self._units_tool_bar.addWidget(self._units_combo_box)
         for _label in self._units_labels: self._units_combo_box.addItem(_label)
@@ -248,18 +195,18 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         self._units_combo_box.currentIndexChanged.connect(
             lambda i: self.set_units(self._units_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._units_tool_bar, 8, 0, 1, 1)
+        self.top_grid_layout.addWidget(self._units_tool_bar, 8, 0, 1, 2)
         for r in range(8, 9):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 1):
+        for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         # Create the options list
-        self._obstype_options = (0, 1, 3, )
+        self._obstype_options = [0, 1, 3]
         # Create the labels list
-        self._obstype_labels = ('Survey', 'Hot/Cold', 'Ref', )
+        self._obstype_labels = ['Survey', 'Hot/Cold', 'Ref']
         # Create the combo box
         self._obstype_tool_bar = Qt.QToolBar(self)
-        self._obstype_tool_bar.addWidget(Qt.QLabel('Obs' + ": "))
+        self._obstype_tool_bar.addWidget(Qt.QLabel("Obs" + ": "))
         self._obstype_combo_box = Qt.QComboBox()
         self._obstype_tool_bar.addWidget(self._obstype_combo_box)
         for _label in self._obstype_labels: self._obstype_combo_box.addItem(_label)
@@ -268,13 +215,13 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         self._obstype_combo_box.currentIndexChanged.connect(
             lambda i: self.set_obstype(self._obstype_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._obstype_tool_bar, 7, 0, 1, 1)
+        self.top_grid_layout.addWidget(self._obstype_tool_bar, 7, 0, 1, 2)
         for r in range(7, 8):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 1):
+        for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._observer_tool_bar = Qt.QToolBar(self)
-        self._observer_tool_bar.addWidget(Qt.QLabel('Who' + ": "))
+        self._observer_tool_bar.addWidget(Qt.QLabel("Who" + ": "))
         self._observer_line_edit = Qt.QLineEdit(str(self.observer))
         self._observer_tool_bar.addWidget(self._observer_line_edit)
         self._observer_line_edit.returnPressed.connect(
@@ -285,7 +232,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._nAve_tool_bar = Qt.QToolBar(self)
-        self._nAve_tool_bar.addWidget(Qt.QLabel('N_Ave.' + ": "))
+        self._nAve_tool_bar.addWidget(Qt.QLabel("N_Ave." + ": "))
         self._nAve_line_edit = Qt.QLineEdit(str(self.nAve))
         self._nAve_tool_bar.addWidget(self._nAve_line_edit)
         self._nAve_line_edit.returnPressed.connect(
@@ -296,7 +243,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(2, 4):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._fftsize_tool_bar = Qt.QToolBar(self)
-        self._fftsize_tool_bar.addWidget(Qt.QLabel('FFT_size' + ": "))
+        self._fftsize_tool_bar.addWidget(Qt.QLabel("FFT_size" + ": "))
         self._fftsize_line_edit = Qt.QLineEdit(str(self.fftsize))
         self._fftsize_tool_bar.addWidget(self._fftsize_line_edit)
         self._fftsize_line_edit.returnPressed.connect(
@@ -307,12 +254,12 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(2, 4):
             self.top_grid_layout.setColumnStretch(c, 1)
         # Create the options list
-        self._Xaxis_options = (0, 1, 2, )
+        self._Xaxis_options = [0, 1, 2]
         # Create the labels list
-        self._Xaxis_labels = ('Frequency (MHz)', 'Velocity (km/sec)', 'Channels', )
+        self._Xaxis_labels = ['Frequency (MHz)', 'Velocity (km/sec)', 'Channels']
         # Create the combo box
         self._Xaxis_tool_bar = Qt.QToolBar(self)
-        self._Xaxis_tool_bar.addWidget(Qt.QLabel('Xaxis' + ": "))
+        self._Xaxis_tool_bar.addWidget(Qt.QLabel("Xaxis" + ": "))
         self._Xaxis_combo_box = Qt.QComboBox()
         self._Xaxis_tool_bar.addWidget(self._Xaxis_combo_box)
         for _label in self._Xaxis_labels: self._Xaxis_combo_box.addItem(_label)
@@ -327,12 +274,12 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(4, 7):
             self.top_grid_layout.setColumnStretch(c, 1)
         # Create the options list
-        self._Record_options = (0, 1, 2, )
+        self._Record_options = [0, 1, 2]
         # Create the labels list
-        self._Record_labels = ('! ! Wait ! !', 'AVERAGE', 'Save', )
+        self._Record_labels = ['! ! Wait ! !', 'AVERAGE', 'Save']
         # Create the combo box
         self._Record_tool_bar = Qt.QToolBar(self)
-        self._Record_tool_bar.addWidget(Qt.QLabel('Rec' + ": "))
+        self._Record_tool_bar.addWidget(Qt.QLabel("Rec" + ": "))
         self._Record_combo_box = Qt.QComboBox()
         self._Record_tool_bar.addWidget(self._Record_combo_box)
         for _label in self._Record_labels: self._Record_combo_box.addItem(_label)
@@ -341,13 +288,13 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         self._Record_combo_box.currentIndexChanged.connect(
             lambda i: self.set_Record(self._Record_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._Record_tool_bar, 6, 0, 1, 1)
+        self.top_grid_layout.addWidget(self._Record_tool_bar, 6, 0, 1, 2)
         for r in range(6, 7):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 1):
+        for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Gain3_tool_bar = Qt.QToolBar(self)
-        self._Gain3_tool_bar.addWidget(Qt.QLabel('Gain3' + ": "))
+        self._Gain3_tool_bar.addWidget(Qt.QLabel("Gain3" + ": "))
         self._Gain3_line_edit = Qt.QLineEdit(str(self.Gain3))
         self._Gain3_tool_bar.addWidget(self._Gain3_line_edit)
         self._Gain3_line_edit.returnPressed.connect(
@@ -358,7 +305,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Gain2_tool_bar = Qt.QToolBar(self)
-        self._Gain2_tool_bar.addWidget(Qt.QLabel('Gain2' + ": "))
+        self._Gain2_tool_bar.addWidget(Qt.QLabel("Gain2" + ": "))
         self._Gain2_line_edit = Qt.QLineEdit(str(self.Gain2))
         self._Gain2_tool_bar.addWidget(self._Gain2_line_edit)
         self._Gain2_line_edit.returnPressed.connect(
@@ -369,7 +316,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Gain1_tool_bar = Qt.QToolBar(self)
-        self._Gain1_tool_bar.addWidget(Qt.QLabel('Gain1' + ": "))
+        self._Gain1_tool_bar.addWidget(Qt.QLabel("Gain1" + ": "))
         self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
         self._Gain1_tool_bar.addWidget(self._Gain1_line_edit)
         self._Gain1_line_edit.returnPressed.connect(
@@ -380,7 +327,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(2, 4):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Frequency_tool_bar = Qt.QToolBar(self)
-        self._Frequency_tool_bar.addWidget(Qt.QLabel('Freq. Hz' + ": "))
+        self._Frequency_tool_bar.addWidget(Qt.QLabel("Freq. Hz" + ": "))
         self._Frequency_line_edit = Qt.QLineEdit(str(self.Frequency))
         self._Frequency_tool_bar.addWidget(self._Frequency_line_edit)
         self._Frequency_line_edit.returnPressed.connect(
@@ -391,7 +338,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(5, 7):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Elevation_tool_bar = Qt.QToolBar(self)
-        self._Elevation_tool_bar.addWidget(Qt.QLabel('Elevation' + ": "))
+        self._Elevation_tool_bar.addWidget(Qt.QLabel("Elevation" + ": "))
         self._Elevation_line_edit = Qt.QLineEdit(str(self.Elevation))
         self._Elevation_tool_bar.addWidget(self._Elevation_line_edit)
         self._Elevation_line_edit.returnPressed.connect(
@@ -402,7 +349,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(7, 9):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Device_tool_bar = Qt.QToolBar(self)
-        self._Device_tool_bar.addWidget(Qt.QLabel('Dev' + ": "))
+        self._Device_tool_bar.addWidget(Qt.QLabel("Dev" + ": "))
         self._Device_line_edit = Qt.QLineEdit(str(self.Device))
         self._Device_tool_bar.addWidget(self._Device_line_edit)
         self._Device_line_edit.returnPressed.connect(
@@ -413,7 +360,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Bandwidth_tool_bar = Qt.QToolBar(self)
-        self._Bandwidth_tool_bar.addWidget(Qt.QLabel('Bandwidth' + ": "))
+        self._Bandwidth_tool_bar.addWidget(Qt.QLabel("Bandwidth" + ": "))
         self._Bandwidth_line_edit = Qt.QLineEdit(str(self.Bandwidth))
         self._Bandwidth_tool_bar.addWidget(self._Bandwidth_line_edit)
         self._Bandwidth_line_edit.returnPressed.connect(
@@ -424,7 +371,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         for c in range(5, 7):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._Azimuth_tool_bar = Qt.QToolBar(self)
-        self._Azimuth_tool_bar.addWidget(Qt.QLabel('Azimuth' + ": "))
+        self._Azimuth_tool_bar.addWidget(Qt.QLabel("Azimuth" + ": "))
         self._Azimuth_line_edit = Qt.QLineEdit(str(self.Azimuth))
         self._Azimuth_tool_bar.addWidget(self._Azimuth_line_edit)
         self._Azimuth_line_edit.returnPressed.connect(
@@ -456,7 +403,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observers_save, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, 4096, units, 295., 10.)
+        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observers_save, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, 4**5, units, 295., 10.)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, 4**5, nAve, telescope_save, device_save, Gain1, float(Gain2), float(Gain3))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
@@ -465,7 +412,8 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
             "",
             'Intensity',
             "",
-            5 # Number of inputs
+            5, # Number of inputs
+            None # parent
         )
         self.qtgui_vector_sink_f_0_0.set_update_time(.25)
         self.qtgui_vector_sink_f_0_0.set_y_axis(ymins[units], ymaxs[units])
@@ -479,7 +427,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
             '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
             1, 1, 1, 1, 1]
-        colors = ["black", "dark green", "red", "blue", "cyan",
+        colors = ["gold", "dark green", "red", "blue", "cyan",
             "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, 1.0]
@@ -493,7 +441,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
             self.qtgui_vector_sink_f_0_0.set_line_color(i, colors[i])
             self.qtgui_vector_sink_f_0_0.set_line_alpha(i, alphas[i])
 
-        self._qtgui_vector_sink_f_0_0_win = sip.wrapinstance(self.qtgui_vector_sink_f_0_0.pyqwidget(), Qt.QWidget)
+        self._qtgui_vector_sink_f_0_0_win = sip.wrapinstance(self.qtgui_vector_sink_f_0_0.qwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_vector_sink_f_0_0_win, 3, 2, 5, 7)
         for r in range(3, 8):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -503,7 +451,8 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
             gr.sizeof_float,
             0,
             qtgui.NUM_GRAPH_NONE,
-            1
+            1,
+            None # parent
         )
         self.qtgui_number_sink_0.set_update_time(1.)
         self.qtgui_number_sink_0.set_title("")
@@ -529,7 +478,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
             self.qtgui_number_sink_0.set_factor(i, factor[i])
 
         self.qtgui_number_sink_0.enable_autoscale(False)
-        self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.pyqwidget(), Qt.QWidget)
+        self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.qwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 8, 7, 1, 2)
         for r in range(8, 9):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -541,7 +490,8 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
             -.5,
             .5,
             "",
-            2
+            2,
+            None # parent
         )
 
         self.qtgui_histogram_sink_x_0.set_update_time(1.)
@@ -575,7 +525,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
             self.qtgui_histogram_sink_x_0.set_line_marker(i, markers[i])
             self.qtgui_histogram_sink_x_0.set_line_alpha(i, alphas[i])
 
-        self._qtgui_histogram_sink_x_0_win = sip.wrapinstance(self.qtgui_histogram_sink_x_0.pyqwidget(), Qt.QWidget)
+        self._qtgui_histogram_sink_x_0_win = sip.wrapinstance(self.qtgui_histogram_sink_x_0.qwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_histogram_sink_x_0_win, 4, 0, 2, 2)
         for r in range(4, 6):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -586,7 +536,7 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
         self._Telescope_tool_bar = Qt.QToolBar(self)
-        self._Telescope_tool_bar.addWidget(Qt.QLabel('Tel' + ": "))
+        self._Telescope_tool_bar.addWidget(Qt.QLabel("Tel" + ": "))
         self._Telescope_line_edit = Qt.QLineEdit(str(self.Telescope))
         self._Telescope_tool_bar.addWidget(self._Telescope_line_edit)
         self._Telescope_line_edit.returnPressed.connect(
@@ -602,17 +552,17 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_2, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
-        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
-        self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
         self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
+        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
+        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
+        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
+        self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_ascii_sink_0, 0))
@@ -626,6 +576,9 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "NsfIntegrate25")
         self.settings.setValue("geometry", self.saveGeometry())
+        self.stop()
+        self.wait()
+
         event.accept()
 
     def get_ObsName(self):
@@ -1113,7 +1066,6 @@ class NsfIntegrate25(gr.top_block, Qt.QWidget):
 
 
 
-
 def main(top_block_cls=NsfIntegrate25, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
@@ -1128,6 +1080,9 @@ def main(top_block_cls=NsfIntegrate25, options=None):
     tb.show()
 
     def sig_handler(sig=None, frame=None):
+        tb.stop()
+        tb.wait()
+
         Qt.QApplication.quit()
 
     signal.signal(signal.SIGINT, sig_handler)
@@ -1137,11 +1092,6 @@ def main(top_block_cls=NsfIntegrate25, options=None):
     timer.start(500)
     timer.timeout.connect(lambda: None)
 
-    def quitting():
-        tb.stop()
-        tb.wait()
-
-    qapp.aboutToQuit.connect(quitting)
     qapp.exec_()
 
 if __name__ == '__main__':

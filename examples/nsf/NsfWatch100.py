@@ -387,9 +387,9 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1.E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, 0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
-        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency, Bandwidth, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, int(Record), 0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
+        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize/Bandwidth, int(2))
         self.qtgui_number_sink_0 = qtgui.number_sink(
             gr.sizeof_float,
             0,
@@ -484,8 +484,8 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_1, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.radio_astro_detect_0, 0))
@@ -776,7 +776,7 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
     def set_Record(self, Record):
         self.Record = Record
         self._Record_callback(self.Record)
-        self.radio_astro_ra_ascii_sink_0.set_record(self.Record)
+        self.radio_astro_ra_ascii_sink_0.set_record(int(self.Record))
 
     def get_Gain3(self):
         return self.Gain3
@@ -838,8 +838,8 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
         self._Frequencys_config.write(open(self.ConfigFile, 'w'))
         self.radio_astro_detect_0.set_freq(self.Frequency)
         self.radio_astro_ra_ascii_sink_0.set_frequency(self.Frequency)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
         self.rtlsdr_source_0.set_center_freq(self.Frequency, 0)
 
     def get_EventMode(self):
@@ -893,7 +893,7 @@ class NsfWatch100(gr.top_block, Qt.QWidget):
         self._Bandwidths_config.write(open(self.ConfigFile, 'w'))
         self.radio_astro_detect_0.set_bw(self.Bandwidth)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth(self.Bandwidth)
-        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth*1.E-6)
+        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth)
         self.rtlsdr_source_0.set_sample_rate(self.Bandwidth)
         self.rtlsdr_source_0.set_bandwidth(self.Bandwidth, 0)
 

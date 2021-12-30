@@ -993,8 +993,8 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    xmax: '.5'
-    xmin: -.5
+    xmax: '.4'
+    xmin: -.4
   states:
     bus_sink: false
     bus_source: false
@@ -1110,8 +1110,8 @@ blocks:
     f_obs: Frequency
     maxoutbuf: '0'
     minoutbuf: '0'
-    mode: Mode
-    t_int: fftsize*1.e-6/Bandwidth
+    mode: int(Mode)
+    t_int: fftsize/Bandwidth
     vec_length: fftsize
   states:
     bus_sink: false
@@ -1125,7 +1125,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     logname: ''
     note: Event Detection
@@ -1143,11 +1143,11 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(Gain1)
     note: Event Detection
     observer: Observer

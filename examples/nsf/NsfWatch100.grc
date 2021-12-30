@@ -783,8 +783,8 @@ blocks:
     f_obs: Frequency
     maxoutbuf: '0'
     minoutbuf: '0'
-    mode: '2'
-    t_int: fftsize*1.e-6/Bandwidth
+    mode: int(2)
+    t_int: fftsize/Bandwidth
     vec_length: fftsize
   states:
     bus_sink: false
@@ -813,7 +813,7 @@ blocks:
     nmedian: 4**5
     observers: observer
     obstype: '0'
-    record: Record
+    record: int(Record)
     setup: ObsName+".not"
     site: telescope_save
     vlen: fftsize
@@ -830,11 +830,11 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(Gain1)
     note: Event Detection
     observer: Observer

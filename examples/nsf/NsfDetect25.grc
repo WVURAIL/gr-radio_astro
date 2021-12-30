@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'Nsf Airspy Event Detect: 2.5 MHz'
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -182,7 +182,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [800, 576]
+    coordinate: [40, 580.0]
     rotation: 0
     state: enabled
 - name: Frequency
@@ -441,7 +441,7 @@ blocks:
     gui_hint: 7,0,1,2
     label: N Sigma
     min_len: '100'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0.'
     step: '.1'
@@ -503,7 +503,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 604]
+    coordinate: [232, 532.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_float_0
@@ -1110,8 +1110,8 @@ blocks:
     f_obs: Frequency
     maxoutbuf: '0'
     minoutbuf: '0'
-    mode: Mode
-    t_int: fftsize*1.e-6/Bandwidth
+    mode: int(Mode)
+    t_int: fftsize/Bandwidth
     vec_length: fftsize
   states:
     bus_sink: false
@@ -1125,7 +1125,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     logname: ''
     note: Event Detection
@@ -1143,11 +1143,11 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(Gain1)
     note: Event Detection
     observer: Observer

@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: NSF Watch for Events whille Recording Spectra
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -458,7 +458,7 @@ blocks:
     gui_hint: 2,6,1,2
     label: N Sigma
     min_len: '100'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0.'
     step: '.1'
@@ -824,17 +824,34 @@ blocks:
     coordinate: [48, 328]
     rotation: 0
     state: enabled
+- name: radio_astro_ra_event_log_0
+  id: radio_astro_ra_event_log
+  parameters:
+    affinity: ''
+    alias: ''
+    bandwidth: Bandwidth
+    comment: ''
+    logname: ''
+    note: Event Detection
+    vlen: fftsize
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1160, 284.0]
+    rotation: 0
+    state: true
 - name: radio_astro_ra_event_sink_0
   id: radio_astro_ra_event_sink
   parameters:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(Gain1)
     note: Event Detection
     observer: Observer
@@ -846,7 +863,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1080, 24]
+    coordinate: [1136, 20.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0
@@ -1274,7 +1291,7 @@ blocks:
     nchan: '1'
     num_mboards: '1'
     sample_rate: Bandwidth
-    sync: sync
+    sync: pc_clock
     time_source0: ''
     time_source1: ''
     time_source2: ''
@@ -1299,6 +1316,7 @@ connections:
 - [blocks_stream_to_vector_0_0, '0', fft_vxx_0, '0']
 - [blocks_stream_to_vector_0_0, '0', radio_astro_detect_0, '0']
 - [fft_vxx_0, '0', blocks_complex_to_mag_squared_0, '0']
+- [radio_astro_detect_0, '0', radio_astro_ra_event_log_0, '0']
 - [radio_astro_detect_0, '0', radio_astro_ra_event_sink_0, '0']
 - [radio_astro_ra_ascii_sink_0, '0', qtgui_number_sink_0, '0']
 - [radio_astro_vmedian_0, '0', radio_astro_ra_ascii_sink_0, '0']

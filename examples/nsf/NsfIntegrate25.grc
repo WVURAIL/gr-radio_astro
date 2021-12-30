@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: 2.5 MHz with Airspy'
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -311,7 +311,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 6,0,1,1
+    gui_hint: 6,0,1,2
     label: Rec
     label0: '! ! Wait ! !'
     label1: AVERAGE
@@ -511,7 +511,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 7,0,1,1
+    gui_hint: 7,0,1,2
     label: Obs
     label0: Survey
     label1: Hot/Cold
@@ -558,7 +558,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 8,0,1,1
+    gui_hint: 8,0,1,2
     label: Units
     label0: Counts
     label1: dB
@@ -846,7 +846,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [680, 108]
+    coordinate: [696, 108.0]
     rotation: 0
     state: enabled
 - name: qtgui_number_sink_0
@@ -957,7 +957,7 @@ blocks:
     name: '""'
     nconnections: '5'
     ref_level: 0.5*(ymins[units] + ymaxs[units])
-    showports: 'True'
+    showports: 'False'
     update_time: '.25'
     vlen: fftsize
     width1: '1'
@@ -1029,7 +1029,7 @@ blocks:
     inttype: Record
     maxoutbuf: '0'
     minoutbuf: '0'
-    nmedian: '4096'
+    nmedian: 4**5
     observers: observers_save
     obstype: obstype
     setup: ObsName+".not"
