@@ -1,6 +1,7 @@
 options:
   parameters:
     author: DSPIRA
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: DSPIRA Spectrometer
-    window_size: ''
   states:
     bus_sink: false
     bus_source: false
@@ -462,7 +462,7 @@ blocks:
     gui_hint: qtgui_tab_widget_0@0:[1,0,1,1]
     label: y-axis max
     min_len: '5'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0'
     step: '10'
@@ -483,7 +483,7 @@ blocks:
     gui_hint: qtgui_tab_widget_0@0 :[0,0,1,1]
     label: y-axis min
     min_len: '5'
-    orient: Qt.Horizontal
+    orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '-200'
     step: '10'
@@ -931,7 +931,7 @@ blocks:
     ant8: ''
     ant9: ''
     args: airspy=0,bias=1,pack=0
-    bb_gain0: '10'
+    bb_gain0: '0'
     bb_gain1: '20'
     bb_gain10: '20'
     bb_gain11: '20'
@@ -1100,7 +1100,7 @@ blocks:
     freq7: 100e6
     freq8: 100e6
     freq9: 100e6
-    gain0: '17'
+    gain0: '21'
     gain1: '10'
     gain10: '10'
     gain11: '10'
@@ -1164,7 +1164,7 @@ blocks:
     gain_mode7: 'False'
     gain_mode8: 'False'
     gain_mode9: 'False'
-    if_gain0: '12'
+    if_gain0: '0'
     if_gain1: '20'
     if_gain10: '20'
     if_gain11: '20'
@@ -1317,7 +1317,7 @@ blocks:
     style8: '1'
     style9: '1'
     type: float
-    update_time: '0.10'
+    update_time: '1'
     width1: '1'
     width10: '1'
     width2: '1'
@@ -1328,8 +1328,8 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    xmax: '1'
-    xmin: '-1'
+    xmax: '.5'
+    xmin: -.5
   states:
     bus_sink: false
     bus_source: false
