@@ -18,6 +18,7 @@ Glen Langston - 2019 September 14
 # GNU General Public License for more details.
 #
 # HISTORY
+# 21Dec30 GIL shorten name to millisconds, not microseconds time
 # 21Dec27 GIL finish all units in Hz, not MHz
 # 21Dec22 GIL all units in Hz, not MHz
 # 21Dec21 GIL finish up MJD + UTC processin
@@ -444,7 +445,7 @@ class ra_event_sink(gr.sync_block):
                         milliseconds = microseconds[0:3]
                     else:
                         yymmdd = yymmdd.replace(":", "")
-                    yymmdd = yymmdd + "T" + hhmmss + "_" + microseconds
+                    yymmdd = yymmdd + "T" + hhmmss + "_" + milliseconds
                     outname = yymmdd + '.eve'   # tag as an event
                     self.obs.writecount = self.obs.writecount + 1
                     # need to keep track of total number of spectra averaged
