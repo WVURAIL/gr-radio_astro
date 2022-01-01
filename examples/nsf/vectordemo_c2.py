@@ -8,7 +8,7 @@
 # Title: Vector median comparison
 # Author: Glen Langston
 # Description: This GRC demo compares the outputs of average and median with straght vector plotting
-# GNU Radio version: 3.8.2.0
+# GNU Radio version: 3.10.0.0-rc1
 
 from distutils.version import StrictVersion
 
@@ -23,6 +23,7 @@ if __name__ == '__main__':
             print("Warning: failed to XInitThreads()")
 
 from PyQt5 import Qt
+from gnuradio import eng_notation
 from gnuradio import qtgui
 import sip
 from gnuradio import analog
@@ -35,15 +36,16 @@ import sys
 import signal
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
-from gnuradio import eng_notation
-import radio_astro
+from gnuradio import radio_astro
+
+
 
 from gnuradio import qtgui
 
 class vectordemo_c2(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Vector median comparison")
+        gr.top_block.__init__(self, "Vector median comparison", catch_exceptions=True)
         Qt.QWidget.__init__(self)
         self.setWindowTitle("Vector median comparison")
         qtgui.util.check_set_qss()
@@ -76,16 +78,26 @@ class vectordemo_c2(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.variable_1 = variable_1 = 0
-        self.variable_0 = variable_0 = 0
         self.samp_rate = samp_rate = 2e6
         self.fftsize = fftsize = 1024
+        self.decimate = decimate = 4
 
         ##################################################
         # Blocks
         ##################################################
-        self.radio_astro_vmedian_0_0 = radio_astro.vmedian(1024, 4)
-        self.radio_astro_vmedian_0 = radio_astro.vmedian(1024, 4)
+        self._decimate_tool_bar = Qt.QToolBar(self)
+        self._decimate_tool_bar.addWidget(Qt.QLabel("Decimate" + ": "))
+        self._decimate_line_edit = Qt.QLineEdit(str(self.decimate))
+        self._decimate_tool_bar.addWidget(self._decimate_line_edit)
+        self._decimate_line_edit.returnPressed.connect(
+            lambda: self.set_decimate(int(str(self._decimate_line_edit.text()))))
+        self.top_grid_layout.addWidget(self._decimate_tool_bar, 0, 0, 1, 2)
+        for r in range(0, 1):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 2):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, decimate)
+        self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, decimate)
         self.qtgui_vector_sink_f_0 = qtgui.vector_sink_f(
             fftsize,
             0,
@@ -93,10 +105,11 @@ class vectordemo_c2(gr.top_block, Qt.QWidget):
             "x-Axis",
             "y-Axis",
             "",
-            2 # Number of inputs
+            2, # Number of inputs
+            None # parent
         )
         self.qtgui_vector_sink_f_0.set_update_time(0.10)
-        self.qtgui_vector_sink_f_0.set_y_axis(0, 150)
+        self.qtgui_vector_sink_f_0.set_y_axis(0, 100)
         self.qtgui_vector_sink_f_0.enable_autoscale(False)
         self.qtgui_vector_sink_f_0.enable_grid(True)
         self.qtgui_vector_sink_f_0.set_x_axis_units("")
@@ -121,16 +134,16 @@ class vectordemo_c2(gr.top_block, Qt.QWidget):
             self.qtgui_vector_sink_f_0.set_line_color(i, colors[i])
             self.qtgui_vector_sink_f_0.set_line_alpha(i, alphas[i])
 
-        self._qtgui_vector_sink_f_0_win = sip.wrapinstance(self.qtgui_vector_sink_f_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_vector_sink_f_0_win)
+        self._qtgui_vector_sink_f_0_win = sip.wrapinstance(self.qtgui_vector_sink_f_0.qwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_vector_sink_f_0_win)
         self.fft_vxx_0 = fft.fft_vcc(fftsize, True, window.blackmanharris(1024), False, 1)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*fftsize, samp_rate,True)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
-        self.blocks_keep_one_in_n_0_0 = blocks.keep_one_in_n(gr.sizeof_float*fftsize, 4)
-        self.blocks_keep_one_in_n_0 = blocks.keep_one_in_n(gr.sizeof_float*fftsize, 4)
+        self.blocks_keep_one_in_n_0_0 = blocks.keep_one_in_n(gr.sizeof_float*fftsize, min(decimate,15))
+        self.blocks_keep_one_in_n_0 = blocks.keep_one_in_n(gr.sizeof_float*fftsize, min(decimate,15))
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(fftsize)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
-        self.blocks_add_const_vxx_0_1 = blocks.add_const_vff([100.]*fftsize)
+        self.blocks_add_const_vxx_0_1 = blocks.add_const_vff([50.]*fftsize)
         self.blocks_add_const_vxx_0_0 = blocks.add_const_vff([0.]*fftsize)
         self.analog_sig_source_x_0_0 = analog.sig_source_c(samp_rate, analog.GR_COS_WAVE, 2e5, .05, 0, 0)
         self.analog_sig_source_x_0 = analog.sig_source_c(samp_rate, analog.GR_COS_WAVE, 3e5, .1, 0, 0)
@@ -161,19 +174,10 @@ class vectordemo_c2(gr.top_block, Qt.QWidget):
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "vectordemo_c2")
         self.settings.setValue("geometry", self.saveGeometry())
+        self.stop()
+        self.wait()
+
         event.accept()
-
-    def get_variable_1(self):
-        return self.variable_1
-
-    def set_variable_1(self, variable_1):
-        self.variable_1 = variable_1
-
-    def get_variable_0(self):
-        return self.variable_0
-
-    def set_variable_0(self, variable_0):
-        self.variable_0 = variable_0
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -190,8 +194,20 @@ class vectordemo_c2(gr.top_block, Qt.QWidget):
     def set_fftsize(self, fftsize):
         self.fftsize = fftsize
         self.blocks_add_const_vxx_0_0.set_k([0.]*self.fftsize)
-        self.blocks_add_const_vxx_0_1.set_k([100.]*self.fftsize)
+        self.blocks_add_const_vxx_0_1.set_k([50.]*self.fftsize)
+        self.radio_astro_vmedian_0.set_vlen(self.fftsize)
+        self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
 
+    def get_decimate(self):
+        return self.decimate
+
+    def set_decimate(self, decimate):
+        self.decimate = decimate
+        Qt.QMetaObject.invokeMethod(self._decimate_line_edit, "setText", Qt.Q_ARG("QString", str(self.decimate)))
+        self.blocks_keep_one_in_n_0.set_n(min(self.decimate,15))
+        self.blocks_keep_one_in_n_0_0.set_n(min(self.decimate,15))
+        self.radio_astro_vmedian_0.set_mode(self.decimate)
+        self.radio_astro_vmedian_0_0.set_mode(self.decimate)
 
 
 
@@ -210,6 +226,9 @@ def main(top_block_cls=vectordemo_c2, options=None):
     tb.show()
 
     def sig_handler(sig=None, frame=None):
+        tb.stop()
+        tb.wait()
+
         Qt.QApplication.quit()
 
     signal.signal(signal.SIGINT, sig_handler)
@@ -219,11 +238,6 @@ def main(top_block_cls=vectordemo_c2, options=None):
     timer.start(500)
     timer.timeout.connect(lambda: None)
 
-    def quitting():
-        tb.stop()
-        tb.wait()
-
-    qapp.aboutToQuit.connect(quitting)
     qapp.exec_()
 
 if __name__ == '__main__':
