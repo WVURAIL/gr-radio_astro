@@ -44,7 +44,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [424, 800]
+    coordinate: [416, 700.0]
     rotation: 0
     state: enabled
 - name: Azimuth_save
@@ -61,7 +61,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [416, 872]
+    coordinate: [408, 764.0]
     rotation: 0
     state: enabled
 - name: Bandwidth
@@ -76,7 +76,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [760, 800]
+    coordinate: [752, 700.0]
     rotation: 0
     state: enabled
 - name: Bandwidths
@@ -87,13 +87,13 @@ blocks:
     option: bandwidth
     section: main
     type: real
-    value: 10e6
+    value: 3e6
     writeback: Bandwidth
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [760, 872]
+    coordinate: [752, 764.0]
     rotation: 0
     state: enabled
 - name: ConfigFile
@@ -120,7 +120,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [160, 800]
+    coordinate: [152, 700.0]
     rotation: 0
     state: enabled
 - name: Elevation
@@ -135,7 +135,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [536, 800]
+    coordinate: [528, 700.0]
     rotation: 0
     state: enabled
 - name: Elevation_save
@@ -152,7 +152,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [528, 872]
+    coordinate: [520, 764.0]
     rotation: 0
     state: enabled
 - name: EventMode
@@ -182,7 +182,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 608]
+    coordinate: [32, 540.0]
     rotation: 0
     state: enabled
 - name: Frequency
@@ -197,7 +197,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 800]
+    coordinate: [632, 700.0]
     rotation: 0
     state: enabled
 - name: Frequencys
@@ -214,7 +214,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 872]
+    coordinate: [632, 764.0]
     rotation: 0
     state: enabled
 - name: Gain1
@@ -340,7 +340,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 400]
+    coordinate: [32, 380.0]
     rotation: 0
     state: enabled
 - name: ObsName
@@ -367,7 +367,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [872, 800]
+    coordinate: [864, 700.0]
     rotation: 0
     state: enabled
 - name: Telescope
@@ -382,7 +382,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 800]
+    coordinate: [24, 700.0]
     rotation: 0
     state: enabled
 - name: device_save
@@ -399,7 +399,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [152, 872]
+    coordinate: [144, 764.0]
     rotation: 0
     state: enabled
 - name: fftsize
@@ -414,7 +414,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 800]
+    coordinate: [296, 700.0]
     rotation: 0
     state: enabled
 - name: fftsize_save
@@ -431,7 +431,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 872]
+    coordinate: [296, 764.0]
     rotation: 0
     state: enabled
 - name: nsigma
@@ -486,7 +486,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [872, 872]
+    coordinate: [864, 764.0]
     rotation: 0
     state: enabled
 - name: telescope_save
@@ -503,7 +503,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 872]
+    coordinate: [24, 764.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_float_0
@@ -519,7 +519,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 304]
+    coordinate: [264, 304.0]
     rotation: 0
     state: enabled
 - name: blocks_stream_to_vector_0
@@ -537,7 +537,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 136.0]
+    coordinate: [288, 136.0]
     rotation: 0
     state: enabled
 - name: blocks_vector_to_stream_0
@@ -555,7 +555,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [680, 16]
+    coordinate: [680, 24.0]
     rotation: 0
     state: enabled
 - name: osmosdr_source_0
@@ -1031,7 +1031,7 @@ blocks:
     color9: dark green
     comment: ''
     ctrlpanel: 'False'
-    entags: 'True'
+    entags: 'False'
     grid: 'False'
     gui_hint: 3,2,5,6
     label1: I
@@ -1096,7 +1096,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [864, 0]
+    coordinate: [912, 4.0]
     rotation: 0
     state: enabled
 - name: radio_astro_detect_0
@@ -1110,14 +1110,14 @@ blocks:
     f_obs: Frequency
     maxoutbuf: '0'
     minoutbuf: '0'
-    mode: Mode
-    t_int: fftsize*1.e-6/Bandwidth
+    mode: int(Mode)
+    t_int: fftsize/Bandwidth
     vec_length: fftsize
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [456, 92.0]
+    coordinate: [472, 92.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_event_log_0
@@ -1143,11 +1143,11 @@ blocks:
     affinity: ''
     alias: ''
     azimuth: Azimuth
-    bandwidth: Bandwidth*1.E-6
+    bandwidth: Bandwidth
     comment: ''
     device: Device
     elevation: Elevation
-    frequency: Frequency*1.E-6
+    frequency: Frequency
     gain1: float(Gain2)
     note: Event Detection
     observer: Observer

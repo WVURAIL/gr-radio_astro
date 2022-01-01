@@ -1,6 +1,7 @@
 options:
   parameters:
     author: Glen Langston -- NSF 20 May 22
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -22,7 +23,6 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: Average Astronomical Obs.'
-    window_size: '[1400,1100]'
   states:
     bus_sink: false
     bus_source: false
@@ -299,7 +299,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '"Integrate60"'
+    value: '"Integrate30"'
   states:
     bus_sink: false
     bus_source: false

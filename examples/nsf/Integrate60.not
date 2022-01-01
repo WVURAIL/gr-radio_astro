@@ -1,16 +1,16 @@
 # FILE      =  Integrate60.not
-# NOTEA     = Small-horn Pi#11
+# NOTEA     = Pi 4 Test
 # NOTEB     = Spectral Integration AIRSPY-mini Test
 # OBSERVER  = Science Aficionado
 # DEVICE    = airspy,bias=0
 # DATADIR   = ../data/
-# SITE      = Small-horn Pi#11
+# SITE      = Pi 4 Test
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
 # TELTYPE   = Bubble Wrap  Horn
 # FRAME     = TOPO
-# GAIN1     = 17.0
+# GAIN1     = 21.0
 # GAIN2     = 0.0
 # GAIN3     = 0.0
 # GAIN4     = 0.0
@@ -39,9 +39,9 @@
 # NAVE      = 450
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2021-12-09 11:29:29.292443
+# UTC       = 2022-01-01 20:43:42.155526
 # SECONDS   =       0.0000000000 
-# LST       = 00:00:01.546
+# LST       = 00:00:00.000
 # AZ        = 0.0
 # EL        = 45.0
 # TELLON    = -79:50:22.920

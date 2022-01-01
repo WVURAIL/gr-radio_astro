@@ -1297,7 +1297,7 @@ blocks:
     name: '""'
     nconnections: '5'
     ref_level: 0.5*(ymins[units] + ymaxs[units])
-    showports: 'True'
+    showports: 'False'
     update_time: '.5'
     vlen: fftsize
     width1: '1'
@@ -1322,7 +1322,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1168, 240]
+    coordinate: [1192, 240.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_ascii_sink_0
@@ -1369,7 +1369,7 @@ blocks:
     inttype: Record
     maxoutbuf: '0'
     minoutbuf: '0'
-    nmedian: '1'
+    nmedian: 4**5
     observers: observer
     obstype: obstype
     setup: ObsName+".not"

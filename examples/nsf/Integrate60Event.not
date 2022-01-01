@@ -4,13 +4,13 @@
 # OBSERVER  = Radio Observer
 # DEVICE    = airspy,bias=0
 # DATADIR   = ../events/
-# SITE      = Small-horn Pi#11
+# SITE      = Pi 4 Test
 # CITY      = Green Bank
 # REGION    = West Virginia
 # COUNTRY   = US
 # TELTYPE   = Pyramid Horn
 # FRAME     = TOPO
-# GAIN1     = 17.0
+# GAIN1     = 21.0
 # GAIN2     = 11.0
 # GAIN3     = 11.0
 # GAIN4     = 0.0
@@ -39,7 +39,7 @@
 # NAVE      = 2
 # NMEDIAN   = 1024
 # Fft_rate  = 5000
-# UTC       = 2021-12-09 11:29:29.266804
+# UTC       = 2022-01-01 20:32:48.712579
 # SECONDS   =       0.0000000000 
 # LST       = 00:00:00.000
 # AZ        = 0.0

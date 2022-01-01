@@ -353,10 +353,10 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency*1.E-6, Bandwidth*1E-6, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
-        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, 1.0)
+        self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency, Bandwidth, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
+        self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, 0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
-        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize*1.e-6/Bandwidth, 2)
+        self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize/Bandwidth, 2)
         self.qtgui_number_sink_0 = qtgui.number_sink(
             gr.sizeof_float,
             0,
@@ -823,8 +823,8 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_center_freq(self.Frequency, 0)
         self.radio_astro_detect_0.set_freq(self.Frequency)
         self.radio_astro_ra_ascii_sink_0.set_frequency(self.Frequency)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
-        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency*1.E-6)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
+        self.radio_astro_ra_event_sink_0.set_frequency(self.Frequency)
 
     def get_EventMode(self):
         return self.EventMode
@@ -879,7 +879,8 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_bandwidth(self.Bandwidth, 0)
         self.radio_astro_detect_0.set_bw(self.Bandwidth)
         self.radio_astro_ra_ascii_sink_0.set_bandwidth(self.Bandwidth)
-        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth*1E-6)
+        self.radio_astro_ra_event_log_0.set_sample_rate(self.Bandwidth)
+        self.radio_astro_ra_event_sink_0.set_sample_rate(self.Bandwidth)
 
     def get_Azimuth(self):
         return self.Azimuth
