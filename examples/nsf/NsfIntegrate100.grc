@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: Average+Record Astronomical Obs.'
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -615,14 +616,14 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [984, 500]
+    coordinate: [1008, 492.0]
     rotation: 0
     state: enabled
 - name: xmins
   id: variable
   parameters:
     comment: ''
-    value: '[numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]'
+    value: '[numin*1E-6, (H1 - numin)*(3E5/H1), 0, 0. ]'
   states:
     bus_sink: false
     bus_source: false
@@ -641,6 +642,18 @@ blocks:
     bus_structure: null
     coordinate: [1184, 752]
     rotation: 0
+    state: enabled
+- name: xunits
+  id: variable
+  parameters:
+    comment: ''
+    value: '[ "MHz", "km.sec", "Channel"]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1200, 404.0]
+    rotation: 180
     state: enabled
 - name: ymaxs
   id: variable
@@ -973,9 +986,9 @@ blocks:
     x_axis_label: '""'
     x_start: xmins[Xaxis]
     x_step: xsteps[Xaxis]
-    x_units: '""'
+    x_units: xunits[Xaxis]
     y_axis_label: Intensity
-    y_units: '""'
+    y_units: yunits[units]
     ymax: ymaxs[units]
     ymin: ymins[units]
   states:

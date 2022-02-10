@@ -8,9 +8,9 @@
 # Title: NSF Watch 8MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 8 MHz samples
-# GNU Radio version: 3.10.0.0-rc1
+# GNU Radio version: 3.10.0.0-rc4
 
-from distutils.version import StrictVersion
+from packaging.version import Version as StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -574,7 +574,6 @@ class NsfWatch80(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(6, 7):
             self.top_grid_layout.setColumnStretch(c, 1)
-
 
 
         ##################################################

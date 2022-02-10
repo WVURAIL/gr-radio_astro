@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: SDRPlay 8MHz Astronomical Obs.'
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -354,7 +355,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1232, 948]
+    coordinate: [1208, 948.0]
     rotation: 0
     state: enabled
 - name: Gain1
@@ -369,7 +370,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 588]
+    coordinate: [400, 580.0]
     rotation: 0
     state: enabled
 - name: Gain1s
@@ -437,7 +438,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 848]
+    coordinate: [672, 868.0]
     rotation: 0
     state: enabled
 - name: IF_attn_save
@@ -522,10 +523,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '1'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -545,7 +546,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 488]
+    coordinate: [368, 484.0]
     rotation: 0
     state: enabled
 - name: Xaxis
@@ -700,7 +701,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1192, 508]
+    coordinate: [1184, 476.0]
     rotation: 0
     state: enabled
 - name: obstype
@@ -722,10 +723,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -759,7 +760,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1168, 476]
+    coordinate: [1168, 428.0]
     rotation: 0
     state: enabled
 - name: units
@@ -781,15 +782,15 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [240, 660]
+    coordinate: [240, 644.0]
     rotation: 0
     state: enabled
 - name: xaxis_save
@@ -830,12 +831,12 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '[numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]'
+    value: '[numin*1E-6, (H1 - numin)*(3E5/H1), 0 , 0]'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1216, 832]
+    coordinate: [1200, 836.0]
     rotation: 0
     state: enabled
 - name: xsteps
@@ -847,7 +848,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1184, 752]
+    coordinate: [1200, 764.0]
     rotation: 0
     state: enabled
 - name: xunits
@@ -859,7 +860,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [208, 124.0]
+    coordinate: [1192, 692.0]
     rotation: 180
     state: enabled
 - name: ymaxs
@@ -895,7 +896,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1200, 680]
+    coordinate: [1192, 628.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_float_0
@@ -1013,7 +1014,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 4,0,2,2
+    gui_hint: 4,0,2,3
     label1: I
     label10: ''
     label2: Q
@@ -1098,7 +1099,7 @@ blocks:
     factor8: '1'
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 8,8,1,2
+    gui_hint: 8,8,1,1
     label1: 'T Remains:'
     label10: ''
     label2: ''
@@ -1129,7 +1130,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [240, 384]
+    coordinate: [264, 452.0]
     rotation: 0
     state: enabled
 - name: qtgui_vector_sink_f_0_0
@@ -1161,7 +1162,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 2,2,6,7
+    gui_hint: 2,3,6,6
     label1: Latest
     label10: ''
     label2: Median
@@ -1193,7 +1194,7 @@ blocks:
     x_axis_label: '""'
     x_start: xmins[Xaxis]
     x_step: xsteps[Xaxis]
-    x_units: xunits[units]
+    x_units: xunits[Xaxis]
     y_axis_label: Intensity
     y_units: '""'
     ymax: ymaxs[units]
@@ -1356,7 +1357,7 @@ blocks:
     affinity: ''
     agc_set_point: '-30'
     alias: ''
-    bandwidth: '0'
+    bandwidth: 8000e3
     biasT: 'False'
     center_freq: Frequency
     comment: ''
@@ -1374,7 +1375,7 @@ blocks:
     rsp_selector: ''
     sample_rate: samp_rate
     sample_sequence_gaps_check: 'False'
-    show_gain_changes: 'False'
+    show_gain_changes: 'True'
   states:
     bus_sink: false
     bus_source: false

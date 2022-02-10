@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: NSF Watch 8MHz SDRPlay
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false

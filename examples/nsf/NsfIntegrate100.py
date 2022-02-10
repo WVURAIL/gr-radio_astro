@@ -8,9 +8,9 @@
 # Title: NsfIntegrate: Average+Record Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with AIRSPY Dongle
-# GNU Radio version: 3.10.0.0-rc1
+# GNU Radio version: 3.10.1.1
 
-from distutils.version import StrictVersion
+from packaging.version import Version as StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -156,8 +156,9 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)", "Intensity (K)"]
         self.ymins = ymins = [ 0.01,  -20,  90.,-5.]
         self.ymaxs = ymaxs = [5., 10., 180., 50.]
+        self.xunits = xunits = [ "MHz", "km.sec", "Channel"]
         self.xsteps = xsteps = [Bandwidth*1.E-6/fftsize, -Bandwidth*3.E5/(H1*fftsize), 1]
-        self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]
+        self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0, 0. ]
         self._xaxis_save_0_config = configparser.ConfigParser()
         self._xaxis_save_0_config.read(ConfigFile)
         try: xaxis_save_0 = self._xaxis_save_0_config.getint('main', 'Xaxis')
@@ -445,15 +446,15 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self.qtgui_vector_sink_f_0_0.set_y_axis(ymins[units], ymaxs[units])
         self.qtgui_vector_sink_f_0_0.enable_autoscale(False)
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
-        self.qtgui_vector_sink_f_0_0.set_x_axis_units("")
-        self.qtgui_vector_sink_f_0_0.set_y_axis_units("")
+        self.qtgui_vector_sink_f_0_0.set_x_axis_units(xunits[Xaxis])
+        self.qtgui_vector_sink_f_0_0.set_y_axis_units(yunits[units])
         self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(ymins[units] + ymaxs[units]))
 
         labels = ['Latest', 'Median', 'Hot', 'Cold', 'Ref',
             '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
             1, 1, 1, 1, 1]
-        colors = ["gold", "dark green", "red", "blue", "cyan",
+        colors = ["black", "dark green", "red", "blue", "cyan",
             "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, 1.0]
@@ -574,7 +575,6 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setColumnStretch(c, 1)
 
 
-
         ##################################################
         # Connections
         ##################################################
@@ -585,10 +585,10 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
-        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
         self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
+        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_ascii_sink_0, 0))
@@ -791,7 +791,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
 
     def set_numin(self, numin):
         self.numin = numin
-        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 ])
+        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0, 0. ])
 
     def get_nAves(self):
         return self.nAves
@@ -832,7 +832,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
 
     def set_H1(self, H1):
         self.H1 = H1
-        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 ])
+        self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0, 0. ])
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
 
     def get_Gain3s(self):
@@ -875,6 +875,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
 
     def set_yunits(self, yunits):
         self.yunits = yunits
+        self.qtgui_vector_sink_f_0_0.set_y_axis_units(self.yunits[self.units])
 
     def get_ymins(self):
         return self.ymins
@@ -891,6 +892,13 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self.ymaxs = ymaxs
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
         self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+
+    def get_xunits(self):
+        return self.xunits
+
+    def set_xunits(self, xunits):
+        self.xunits = xunits
+        self.qtgui_vector_sink_f_0_0.set_x_axis_units(self.xunits[self.Xaxis])
 
     def get_xsteps(self):
         return self.xsteps
@@ -920,6 +928,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self._units_callback(self.units)
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
         self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+        self.qtgui_vector_sink_f_0_0.set_y_axis_units(self.yunits[self.units])
         self.radio_astro_ra_integrate_1.set_units(self.units)
 
     def get_obstype(self):
@@ -978,6 +987,7 @@ class NsfIntegrate100(gr.top_block, Qt.QWidget):
         self._xaxis_save_0_config.set('main', 'Xaxis', str(self.Xaxis))
         self._xaxis_save_0_config.write(open(self.ConfigFile, 'w'))
         self.qtgui_vector_sink_f_0_0.set_x_axis(self.xmins[self.Xaxis], self.xsteps[self.Xaxis])
+        self.qtgui_vector_sink_f_0_0.set_x_axis_units(self.xunits[self.Xaxis])
 
     def get_Telescope(self):
         return self.Telescope
