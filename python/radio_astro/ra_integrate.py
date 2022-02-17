@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 22Feb17 GIL when fitting a baseline average for exactly 5 seconds
 # 21Dec02 GIL Update forecast
 # 21Jan16 GIL scale save files by nave
 # 20Aug16 GIL restore writing hot/cold messages
@@ -128,8 +129,6 @@ class ra_integrate(gr.sync_block):
         self.shortave = np.zeros(self.vlen)
         self.shortlast = np.zeros(self.vlen)
         self.nshort=0
-        self.maxshort=20                         # count before restart sum
-        self.oneovermax = float(1./self.maxshort)# normalization factor
         self.obs.nchan = self.vlen
         self.obs.refchan = self.vlen/2.
         self.obs.observer = observers
@@ -649,7 +648,9 @@ class ra_integrate(gr.sync_block):
                 colds = TSYS * self.cold.ydataA * oneoverhot
                 cold[nout] = TSYS * self.cold.ydataA * oneoverhot
                 refs = TSYS * self.ref.ydataA * oneoverhot
-                if self.units == radioastronomy.UNITBASELINE: # if subtracting a baseline
+
+                # subtracting a baseline
+                if self.units == radioastronomy.UNITBASELINE:
                     # select the channels at the edges
                     self.yfit = outs[self.xfit]
                     thefit = np.polyfit( self.xfit, self.yfit, 1)
@@ -670,22 +671,27 @@ class ra_integrate(gr.sync_block):
                     else:
                         self.shortave = self.shortave + spec
                         self.nshort = self.nshort + 1
-                    if self.nshort >= self.maxshort:
-                        self.shortlast = self.oneovermax * self.shortave
-                        self.shortlast = TSYS * self.shortlast * oneoverhot
-                        self.yfit = self.shortlast[self.xfit]
-                        thefit = np.polyfit( self.xfit, self.yfit, 1)
-                        temps = self.shortlast - ((self.xindex*thefit[0]) + thefit[1])
-                        # hanning smooth
-                        refs = 2.*temps
-                        refs[1:self.vlen-1] += (temps[0:self.vlen-2] + temps[2:self.vlen])
-                        refs = 0.25*refs
-                        # will keep showing last short reference until next is ready
-                        self.shortlast = refs
-                        self.nshort = 0   # restart sum on next cycle
-                        print("\nNew Ref\n")
-                    else:
-                        refs = self.shortlast
+                # time to end short sum.
+                dt = now - self.printutc
+                # recompute the short average 
+                if dt.total_seconds() > self.printinterval and \
+                  self.nshort > 0:
+                    oneovern = 1./float(self.nshort)
+                    self.shortlast = oneovern * self.shortave
+                    self.shortlast = TSYS * self.shortlast * oneoverhot
+                    self.yfit = self.shortlast[self.xfit]
+                    thefit = np.polyfit( self.xfit, self.yfit, 1)
+                    temps = self.shortlast - ((self.xindex*thefit[0]) + thefit[1])
+                    # hanning smooth
+                    refs = 2.*temps
+                    refs[1:self.vlen-1] += (temps[0:self.vlen-2] + temps[2:self.vlen])
+                    refs = 0.25*refs
+                    # will keep showing last short reference until next is ready
+                    self.shortlast = refs
+                    self.nshort = 0   # restart sum on next cycle
+                    print("\nNew Ref\n")
+                else:
+                    refs = self.shortlast
                     # end if subtracting baseline
                 out[nout] = outs
                 ave[nout] = aves
@@ -696,9 +702,9 @@ class ra_integrate(gr.sync_block):
 
             self.stoputc = now
             dt = now - self.printutc
+
             # if time to print
             if dt.total_seconds() > self.printinterval:
-
                 strnow = now.isoformat()
                 datestr = strnow.split('.')
                 daypart = datestr[0]
