@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: Average+Record Astronomical Obs.'
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -640,7 +641,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '[1., 10., 180., 80.]'
+    value: '[2., 10., 300., 50.]'
   states:
     bus_sink: false
     bus_source: false
@@ -652,7 +653,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '[ 0.01,  -20,  90.,-5.] '
+    value: '[ 0.01,  -20,  100.,-5.] '
   states:
     bus_sink: false
     bus_source: false
@@ -685,7 +686,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 136]
+    coordinate: [512, 32.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_mag_squared_0
@@ -719,7 +720,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 32]
+    coordinate: [520, 168.0]
     rotation: 0
     state: enabled
 - name: fft_vxx_0
@@ -740,7 +741,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 0]
+    coordinate: [704, 132.0]
     rotation: 0
     state: enabled
 - name: note_1
@@ -834,13 +835,13 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    xmax: '.5'
-    xmin: -.5
+    xmax: '.4'
+    xmin: -.4
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 108]
+    coordinate: [704, 4.0]
     rotation: 0
     state: enabled
 - name: qtgui_number_sink_0
@@ -968,7 +969,7 @@ blocks:
     x_start: xmins[Xaxis]
     x_step: xsteps[Xaxis]
     x_units: '""'
-    y_axis_label: Intensity
+    y_axis_label: yunits[units]
     y_units: '""'
     ymax: ymaxs[units]
     ymin: ymins[units]
