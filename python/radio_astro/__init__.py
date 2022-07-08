@@ -16,7 +16,7 @@ import os
 try:
     # this might fail if the module is python-only
     from .radio_astro_python import *
-except ModuleNotFoundError:
+except ImportError:
     pass
 
 # import any pure python here
