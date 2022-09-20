@@ -8,9 +8,9 @@
 # Title: NSF Detect 8 MHz SDRPlay
 # Author: Glen Langston
 # Description: SDRPlay RSP1A, 8 MHz samples
-# GNU Radio version: 3.10.0.0-rc1
+# GNU Radio version: 3.10.1.1
 
-from distutils.version import StrictVersion
+from packaging.version import Version as StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -229,6 +229,17 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        _IQMode_check_box = Qt.QCheckBox("IQMode")
+        self._IQMode_choices = {True: True, False: False}
+        self._IQMode_choices_inv = dict((v,k) for k,v in self._IQMode_choices.items())
+        self._IQMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_IQMode_check_box, "setChecked", Qt.Q_ARG("bool", self._IQMode_choices_inv[i]))
+        self._IQMode_callback(self.IQMode)
+        _IQMode_check_box.stateChanged.connect(lambda i: self.set_IQMode(self._IQMode_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_IQMode_check_box, 9, 4, 1, 2)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(4, 6):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._IF_attn_tool_bar = Qt.QToolBar(self)
         self._IF_attn_tool_bar.addWidget(Qt.QLabel("IF_attn" + ": "))
         self._IF_attn_line_edit = Qt.QLineEdit(str(self.IF_attn))
@@ -324,6 +335,61 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        _DebugOn_check_box = Qt.QCheckBox("Debug")
+        self._DebugOn_choices = {True: True, False: False}
+        self._DebugOn_choices_inv = dict((v,k) for k,v in self._DebugOn_choices.items())
+        self._DebugOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_DebugOn_check_box, "setChecked", Qt.Q_ARG("bool", self._DebugOn_choices_inv[i]))
+        self._DebugOn_callback(self.DebugOn)
+        _DebugOn_check_box.stateChanged.connect(lambda i: self.set_DebugOn(self._DebugOn_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_DebugOn_check_box, 2, 6, 1, 2)
+        for r in range(2, 3):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(6, 8):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        _DcOffsetMode_check_box = Qt.QCheckBox("DcOffsetMode")
+        self._DcOffsetMode_choices = {True: True, False: False}
+        self._DcOffsetMode_choices_inv = dict((v,k) for k,v in self._DcOffsetMode_choices.items())
+        self._DcOffsetMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_DcOffsetMode_check_box, "setChecked", Qt.Q_ARG("bool", self._DcOffsetMode_choices_inv[i]))
+        self._DcOffsetMode_callback(self.DcOffsetMode)
+        _DcOffsetMode_check_box.stateChanged.connect(lambda i: self.set_DcOffsetMode(self._DcOffsetMode_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_DcOffsetMode_check_box, 9, 0, 1, 2)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 2):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        _DabNotch_check_box = Qt.QCheckBox("DabNotch")
+        self._DabNotch_choices = {True: True, False: False}
+        self._DabNotch_choices_inv = dict((v,k) for k,v in self._DabNotch_choices.items())
+        self._DabNotch_callback = lambda i: Qt.QMetaObject.invokeMethod(_DabNotch_check_box, "setChecked", Qt.Q_ARG("bool", self._DabNotch_choices_inv[i]))
+        self._DabNotch_callback(self.DabNotch)
+        _DabNotch_check_box.stateChanged.connect(lambda i: self.set_DabNotch(self._DabNotch_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_DabNotch_check_box, 9, 6, 1, 1)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(6, 7):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        _BroadcastNotch_check_box = Qt.QCheckBox("BroadcastNotch")
+        self._BroadcastNotch_choices = {True: True, False: False}
+        self._BroadcastNotch_choices_inv = dict((v,k) for k,v in self._BroadcastNotch_choices.items())
+        self._BroadcastNotch_callback = lambda i: Qt.QMetaObject.invokeMethod(_BroadcastNotch_check_box, "setChecked", Qt.Q_ARG("bool", self._BroadcastNotch_choices_inv[i]))
+        self._BroadcastNotch_callback(self.BroadcastNotch)
+        _BroadcastNotch_check_box.stateChanged.connect(lambda i: self.set_BroadcastNotch(self._BroadcastNotch_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_BroadcastNotch_check_box, 9, 2, 1, 2)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(2, 4):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        _BiasOn_check_box = Qt.QCheckBox("BiasOn")
+        self._BiasOn_choices = {True: True, False: False}
+        self._BiasOn_choices_inv = dict((v,k) for k,v in self._BiasOn_choices.items())
+        self._BiasOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_BiasOn_check_box, "setChecked", Qt.Q_ARG("bool", self._BiasOn_choices_inv[i]))
+        self._BiasOn_callback(self.BiasOn)
+        _BiasOn_check_box.stateChanged.connect(lambda i: self.set_BiasOn(self._BiasOn_choices[bool(i)]))
+        self.top_grid_layout.addWidget(_BiasOn_check_box, 9, 7, 1, 1)
+        for r in range(9, 10):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(7, 8):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self._Bandwidth_tool_bar = Qt.QToolBar(self)
         self._Bandwidth_tool_bar.addWidget(Qt.QLabel("Bandwidth" + ": "))
         self._Bandwidth_line_edit = Qt.QLineEdit(str(self.Bandwidth))
@@ -355,18 +421,18 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         )
         self.sdrplay3_rsp1a_0.set_sample_rate(samp_rate)
         self.sdrplay3_rsp1a_0.set_center_freq(Frequency)
-        self.sdrplay3_rsp1a_0.set_bandwidth(0)
+        self.sdrplay3_rsp1a_0.set_bandwidth(8000e3)
         self.sdrplay3_rsp1a_0.set_gain_mode(False)
         self.sdrplay3_rsp1a_0.set_gain(-IF_attn, 'IF')
         self.sdrplay3_rsp1a_0.set_gain(-Gain1, 'RF')
         self.sdrplay3_rsp1a_0.set_freq_corr(0)
-        self.sdrplay3_rsp1a_0.set_dc_offset_mode(False)
-        self.sdrplay3_rsp1a_0.set_iq_balance_mode(False)
+        self.sdrplay3_rsp1a_0.set_dc_offset_mode(bool(DcOffsetMode))
+        self.sdrplay3_rsp1a_0.set_iq_balance_mode(bool(IQMode))
         self.sdrplay3_rsp1a_0.set_agc_setpoint(-30)
-        self.sdrplay3_rsp1a_0.set_rf_notch_filter(True)
-        self.sdrplay3_rsp1a_0.set_dab_notch_filter(True)
-        self.sdrplay3_rsp1a_0.set_biasT(True)
-        self.sdrplay3_rsp1a_0.set_debug_mode(True)
+        self.sdrplay3_rsp1a_0.set_rf_notch_filter(bool(BroadcastNotch))
+        self.sdrplay3_rsp1a_0.set_dab_notch_filter(bool(DabNotch))
+        self.sdrplay3_rsp1a_0.set_biasT(bool(BiasOn))
+        self.sdrplay3_rsp1a_0.set_debug_mode(bool(DebugOn))
         self.sdrplay3_rsp1a_0.set_sample_sequence_gaps_check(True)
         self.sdrplay3_rsp1a_0.set_show_gain_changes(True)
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency, Bandwidth, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(IF_attn), Azimuth, Elevation)
@@ -499,80 +565,13 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         self.blocks_vector_to_stream_0 = blocks.vector_to_stream(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_stream_to_vector_0_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
-        _IQMode_check_box = Qt.QCheckBox("IQMode")
-        self._IQMode_choices = {True: True, False: False}
-        self._IQMode_choices_inv = dict((v,k) for k,v in self._IQMode_choices.items())
-        self._IQMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_IQMode_check_box, "setChecked", Qt.Q_ARG("bool", self._IQMode_choices_inv[i]))
-        self._IQMode_callback(self.IQMode)
-        _IQMode_check_box.stateChanged.connect(lambda i: self.set_IQMode(self._IQMode_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_IQMode_check_box, 9, 4, 1, 2)
-        for r in range(9, 10):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(4, 6):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        _DebugOn_check_box = Qt.QCheckBox("Debug")
-        self._DebugOn_choices = {True: True, False: False}
-        self._DebugOn_choices_inv = dict((v,k) for k,v in self._DebugOn_choices.items())
-        self._DebugOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_DebugOn_check_box, "setChecked", Qt.Q_ARG("bool", self._DebugOn_choices_inv[i]))
-        self._DebugOn_callback(self.DebugOn)
-        _DebugOn_check_box.stateChanged.connect(lambda i: self.set_DebugOn(self._DebugOn_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_DebugOn_check_box, 2, 6, 1, 2)
-        for r in range(2, 3):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(6, 8):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        _DcOffsetMode_check_box = Qt.QCheckBox("DcOffsetMode")
-        self._DcOffsetMode_choices = {True: True, False: False}
-        self._DcOffsetMode_choices_inv = dict((v,k) for k,v in self._DcOffsetMode_choices.items())
-        self._DcOffsetMode_callback = lambda i: Qt.QMetaObject.invokeMethod(_DcOffsetMode_check_box, "setChecked", Qt.Q_ARG("bool", self._DcOffsetMode_choices_inv[i]))
-        self._DcOffsetMode_callback(self.DcOffsetMode)
-        _DcOffsetMode_check_box.stateChanged.connect(lambda i: self.set_DcOffsetMode(self._DcOffsetMode_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_DcOffsetMode_check_box, 9, 0, 1, 2)
-        for r in range(9, 10):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 2):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        _DabNotch_check_box = Qt.QCheckBox("DabNotch")
-        self._DabNotch_choices = {True: True, False: False}
-        self._DabNotch_choices_inv = dict((v,k) for k,v in self._DabNotch_choices.items())
-        self._DabNotch_callback = lambda i: Qt.QMetaObject.invokeMethod(_DabNotch_check_box, "setChecked", Qt.Q_ARG("bool", self._DabNotch_choices_inv[i]))
-        self._DabNotch_callback(self.DabNotch)
-        _DabNotch_check_box.stateChanged.connect(lambda i: self.set_DabNotch(self._DabNotch_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_DabNotch_check_box, 9, 6, 1, 1)
-        for r in range(9, 10):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(6, 7):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        _BroadcastNotch_check_box = Qt.QCheckBox("BroadcastNotch")
-        self._BroadcastNotch_choices = {True: True, False: False}
-        self._BroadcastNotch_choices_inv = dict((v,k) for k,v in self._BroadcastNotch_choices.items())
-        self._BroadcastNotch_callback = lambda i: Qt.QMetaObject.invokeMethod(_BroadcastNotch_check_box, "setChecked", Qt.Q_ARG("bool", self._BroadcastNotch_choices_inv[i]))
-        self._BroadcastNotch_callback(self.BroadcastNotch)
-        _BroadcastNotch_check_box.stateChanged.connect(lambda i: self.set_BroadcastNotch(self._BroadcastNotch_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_BroadcastNotch_check_box, 9, 2, 1, 2)
-        for r in range(9, 10):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 4):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        _BiasOn_check_box = Qt.QCheckBox("BiasOn")
-        self._BiasOn_choices = {True: True, False: False}
-        self._BiasOn_choices_inv = dict((v,k) for k,v in self._BiasOn_choices.items())
-        self._BiasOn_callback = lambda i: Qt.QMetaObject.invokeMethod(_BiasOn_check_box, "setChecked", Qt.Q_ARG("bool", self._BiasOn_choices_inv[i]))
-        self._BiasOn_callback(self.BiasOn)
-        _BiasOn_check_box.stateChanged.connect(lambda i: self.set_BiasOn(self._BiasOn_choices[bool(i)]))
-        self.top_grid_layout.addWidget(_BiasOn_check_box, 9, 7, 1, 1)
-        for r in range(9, 10):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(7, 8):
-            self.top_grid_layout.setColumnStretch(c, 1)
-
 
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_stream_to_vector_0_0_0, 0), (self.radio_astro_detect_0, 0))
         self.connect((self.blocks_vector_to_stream_0, 0), (self.qtgui_time_sink_x_0_0, 0))
         self.connect((self.radio_astro_detect_0, 0), (self.blocks_vector_to_stream_0, 0))
@@ -969,6 +968,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	self._IQMode_save_config.add_section('main')
         self._IQMode_save_config.set('main', 'iqmode', str(self.IQMode))
         self._IQMode_save_config.write(open(self.ConfigFile, 'w'))
+        self.sdrplay3_rsp1a_0.set_iq_balance_mode(bool(self.IQMode))
 
     def get_IF_attn(self):
         return self.IF_attn
@@ -1061,6 +1061,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	self._DebugOn_save_config.add_section('main')
         self._DebugOn_save_config.set('main', 'debugon', str(self.DebugOn))
         self._DebugOn_save_config.write(open(self.ConfigFile, 'w'))
+        self.sdrplay3_rsp1a_0.set_debug_mode(bool(self.DebugOn))
 
     def get_DcOffsetMode(self):
         return self.DcOffsetMode
@@ -1074,6 +1075,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	self._DcOffsetMode_save_config.add_section('main')
         self._DcOffsetMode_save_config.set('main', 'dcoffsetmode', str(self.DcOffsetMode))
         self._DcOffsetMode_save_config.write(open(self.ConfigFile, 'w'))
+        self.sdrplay3_rsp1a_0.set_dc_offset_mode(bool(self.DcOffsetMode))
 
     def get_DabNotch(self):
         return self.DabNotch
@@ -1087,6 +1089,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	self._DabNotch_save_config.add_section('main')
         self._DabNotch_save_config.set('main', 'dabnotch', str(self.DabNotch))
         self._DabNotch_save_config.write(open(self.ConfigFile, 'w'))
+        self.sdrplay3_rsp1a_0.set_dab_notch_filter(bool(self.DabNotch))
 
     def get_BroadcastNotch(self):
         return self.BroadcastNotch
@@ -1100,6 +1103,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	self._BroadcastNotch_save_config.add_section('main')
         self._BroadcastNotch_save_config.set('main', 'broadcastnotch', str(self.BroadcastNotch))
         self._BroadcastNotch_save_config.write(open(self.ConfigFile, 'w'))
+        self.sdrplay3_rsp1a_0.set_rf_notch_filter(bool(self.BroadcastNotch))
 
     def get_BiasOn(self):
         return self.BiasOn
@@ -1113,6 +1117,7 @@ class NsfDetect80(gr.top_block, Qt.QWidget):
         	self._BiasOn_save_config.add_section('main')
         self._BiasOn_save_config.set('main', 'biason', str(self.BiasOn))
         self._BiasOn_save_config.write(open(self.ConfigFile, 'w'))
+        self.sdrplay3_rsp1a_0.set_biasT(bool(self.BiasOn))
 
     def get_Azimuth(self):
         return self.Azimuth

@@ -1180,20 +1180,20 @@ blocks:
     agc_set_point: '-30'
     alias: ''
     bandwidth: '0'
-    biasT: 'False'
+    biasT: bool(BiasOn)
     center_freq: Frequency
     comment: ''
-    dab_notch_filter: 'True'
-    dc_offset_mode: 'True'
-    debug_mode: 'True'
+    dab_notch_filter: bool(DabNotch)
+    dc_offset_mode: bool(DcOffsetMode)
+    debug_mode: bool(DebugOn)
     freq_corr: '0'
     if_gRdB: IF_attn
-    iq_balance_mode: 'False'
+    iq_balance_mode: bool(IQMode)
     maxoutbuf: '0'
     minoutbuf: '0'
     output_type: fc32
     rf_gRdB: Gain1
-    rf_notch_filter: 'True'
+    rf_notch_filter: bool(BroadcastNotch)
     rsp_selector: ''
     sample_rate: samp_rate
     sample_sequence_gaps_check: 'False'
