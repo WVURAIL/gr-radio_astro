@@ -39,6 +39,9 @@ git clone https://github.com/WVURAIL/gr-radio_astro.git
 
 [Instructions to set up a persistant USB flash with preinstalled software drive are here](https://wvurail.org//dspira-lessons/Install_Ubuntu_spectrometer_onFlashdrive)
 
+---- 
+TODO: Update for 3.10 below the instructions are for 3.8
+
 # Installing on a Raspberry Pi. 
 
 ## Supported Raspberry Pi Devices
