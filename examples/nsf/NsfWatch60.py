@@ -8,9 +8,9 @@
 # Title: NSF Watch for Events whille recording spectra
 # Author: Glen Langston
 # Description: AIRSPY Mini at full speed 6 MHz samples
-# GNU Radio version: 3.10.0.0-rc1
+# GNU Radio version: 3.10.1.1
 
-from distutils.version import StrictVersion
+from packaging.version import Version as StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -155,12 +155,12 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
-        self.Record = Record = 0
+        self.Record = Record = 1
         self.Gain3 = Gain3 = Gain3s
         self.Gain2 = Gain2 = Gain2s
         self.Gain1 = Gain1 = Gain1s
         self.Frequency = Frequency = Frequencys
-        self.EventMode = EventMode = 0
+        self.EventMode = EventMode = 1
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
         self.Bandwidth = Bandwidth = Bandwidths
@@ -460,7 +460,6 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
-
 
 
         ##################################################

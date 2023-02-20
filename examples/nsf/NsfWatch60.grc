@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: NSF Watch for Events whille recording spectra
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -176,7 +177,7 @@ blocks:
     options: '[0, 1, 2]'
     orient: Qt.QVBoxLayout
     type: int
-    value: '0'
+    value: '1'
     widget: combo_box
   states:
     bus_sink: false
@@ -346,7 +347,7 @@ blocks:
     options: '[0, 1, 2]'
     orient: Qt.QVBoxLayout
     type: int
-    value: '0'
+    value: '1'
     widget: combo_box
   states:
     bus_sink: false
