@@ -133,8 +133,8 @@ class ra_ascii_sink(gr.sync_block):
 
 
     def set_frequency(self, frequency, dosave=True):
-        self.obs.centerFreqHz = np.float(frequency)
-        deltaNu = self.obs.bandwidthHz/np.float(self.vlen)
+        self.obs.centerFreqHz = float(frequency)
+        deltaNu = self.obs.bandwidthHz/float(self.vlen)
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
         print("Setting Frequency: %10.0f Hz" % (self.obs.centerFreqHz))
@@ -145,8 +145,8 @@ class ra_ascii_sink(gr.sync_block):
             self.save_setup()
 
     def set_bandwidth(self, bandwidth, dosave=True):
-        self.obs.bandwidthHz = np.float(bandwidth)
-        deltaNu = self.obs.bandwidthHz/np.float(self.vlen)
+        self.obs.bandwidthHz = float(bandwidth)
+        deltaNu = self.obs.bandwidthHz/float(self.vlen)
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
         print("Setting Bandwidth: %10.0f Hz" % (self.obs.bandwidthHz))
@@ -166,7 +166,7 @@ class ra_ascii_sink(gr.sync_block):
         """
         Record telescope azimuth for astronomical calculations
         """
-        self.obs.telaz = np.float(azimuth)
+        self.obs.telaz = float(azimuth)
         print("Setting Azimuth  : %6.1f d" % self.obs.telaz)
         if dosave:
             self.save_setup()
@@ -175,7 +175,7 @@ class ra_ascii_sink(gr.sync_block):
         """
         Record telescope elevation for astronmical calculations
         """
-        self.obs.telel = np.float(elevation)
+        self.obs.telel = float(elevation)
         print("Setting Elevation: %6.1f d" % self.obs.telel)
         if dosave:
             self.save_setup()

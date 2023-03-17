@@ -16,6 +16,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 23Mar13 GIL no more np.float() or np.int()
 # 21DEC27 GIL finish all frequencies in Hz
 # 21DEC22 GIL all frequencies in Hz
 # 21DEC21 GIL take integer part of MJD if UTC is present
@@ -102,7 +103,7 @@ class ra_event_log(gr.sync_block):
         """
         Set the sample rate to know the time resolution
         """
-        bandwidth = np.float(bandwidth)
+        bandwidth = float(bandwidth)
         if bandwidth < 10000.:
             print("Invalid Bandwidth: ", bandwidth)
             return
@@ -292,9 +293,9 @@ class ra_event_log(gr.sync_block):
                            self.erms, self.ecount))
                     self.lastprintmjd = self.emjd
                 # round down to integer mjd
-                self.logmjd = np.int(self.emjd)
+                self.logmjd = int(self.emjd)
                 seconds = (self.emjd - self.logmjd)*86400.
-                isecond = np.int(seconds)
+                isecond = int(seconds)
                 microseconds = (seconds - isecond) * 1.e6
                 outline = self.pformat % (self.emjd, self.evector, isecond, microseconds, self.env, self.voffset, self.epeak, self.erms, self.ecount, self.eoffset)
                 # create log file names here, if new mjd
@@ -319,9 +320,9 @@ class ra_event_log(gr.sync_block):
                     print("Vector: %15.9f %16d %4d %5d" % (self.vmjd, self.vcount, self.nv, self.voffset))
                     # print every few minutes (24*60 = 1440 minutes in a day)
                     self.printmjd = self.vmjd + (2./1440.)   
-                imjd = np.int(self.vmjd)
+                imjd = int(self.vmjd)
                 seconds = (self.vmjd - imjd)*86400.
-                isecond = np.int(seconds)
+                isecond = int(seconds)
                 microseconds = (seconds - isecond) * 1.e6
                 self.lastvmjd = self.vmjd
                 outline = self.vformat % (self.vmjd, self.vcount, isecond, microseconds, self.nv, self.voffset)

@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 23Mar13 GIL no more np.float()
 # 22Feb17 GIL when fitting a baseline average for exactly 5 seconds
 # 21Dec02 GIL Update forecast
 # 21Jan16 GIL scale save files by nave
@@ -249,12 +250,12 @@ class ra_integrate(gr.sync_block):
         """
         Update the observing center frequency
         """
-        self.obs.centerFreqHz = np.float(frequency)
-        self.ref.centerFreqHz = np.float(frequency)
-        self.ave.centerFreqHz = np.float(frequency)
-        self.hot.centerFreqHz = np.float(frequency)
-        self.cold.centerFreqHz = np.float(frequency)
-        deltaNu = self.obs.bandwidthHz/np.float(self.vlen)
+        self.obs.centerFreqHz = float(frequency)
+        self.ref.centerFreqHz = float(frequency)
+        self.ave.centerFreqHz = float(frequency)
+        self.hot.centerFreqHz = float(frequency)
+        self.cold.centerFreqHz = float(frequency)
+        deltaNu = self.obs.bandwidthHz/float(self.vlen)
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
         print("Setting Frequency: %10.0f Hz" % (self.obs.centerFreqHz))
@@ -269,12 +270,12 @@ class ra_integrate(gr.sync_block):
         """
         Set the observing bandwidth
         """
-        self.obs.bandwidthHz = np.float(bandwidth)
-        self.ave.bandwidthHz = np.float(bandwidth)
-        self.hot.bandwidthHz = np.float(bandwidth)
-        self.cold.bandwidthHz = np.float(bandwidth)
-        self.ref.bandwidthHz = np.float(bandwidth)
-        deltaNu = self.obs.bandwidthHz/np.float(self.vlen)
+        self.obs.bandwidthHz = float(bandwidth)
+        self.ave.bandwidthHz = float(bandwidth)
+        self.hot.bandwidthHz = float(bandwidth)
+        self.cold.bandwidthHz = float(bandwidth)
+        self.ref.bandwidthHz = float(bandwidth)
+        deltaNu = self.obs.bandwidthHz/float(self.vlen)
         n0 = self.obs.centerFreqHz - (self.obs.bandwidthHz/2.)
         nu = n0
         if len(self.ave.xdata) != self.vlen:
@@ -298,7 +299,7 @@ class ra_integrate(gr.sync_block):
         """
         Record the Telescope Azimuth for coordinate calculations
         """
-        self.obs.telaz = np.float(azimuth)
+        self.obs.telaz = float(azimuth)
         self.ave.telaz = self.obs.telaz
         self.hot.telaz = self.obs.telaz
         self.cold.telaz = self.obs.telaz
@@ -309,7 +310,7 @@ class ra_integrate(gr.sync_block):
         """
         Record the Telescope Elevation for coordinate calculations
         """
-        self.obs.telel = np.float(elevation)
+        self.obs.telel = float(elevation)
         self.ave.telaz = self.obs.telel
         self.hot.telaz = self.obs.telel
         self.cold.telaz = self.obs.telel
@@ -544,7 +545,7 @@ class ra_integrate(gr.sync_block):
             else: # else averaging and maybe writing
                 self.ave.ydataB = self.ave.ydataB + spec
                 self.nintegrate = self.nintegrate + 1
-                oneovern = 1./np.float(self.nintegrate)
+                oneovern = 1./float(self.nintegrate)
                 self.ave.ydataA = oneovern*self.ave.ydataB
                 # total number of spectra averaged 
                 # is the number medianed times the number averaged
