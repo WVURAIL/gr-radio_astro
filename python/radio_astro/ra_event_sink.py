@@ -105,7 +105,7 @@ class ra_event_sink(gr.sync_block):
         Set the sample rate for these event detections.
         The sample rate determines the time resolution
         """
-        self.bandwidthHz = np.float(bandwidthHz)
+        self.bandwidthHz = float(bandwidthHz)
         if self.bandwidthHz <= 10000.:
             print("Invalid Bandwidth: ", self.bandwidthHz)
             self.bandwidthHz = 2.5e6
