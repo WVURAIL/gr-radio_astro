@@ -1,0 +1,947 @@
+options:
+  parameters:
+    author: Glen Langston
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: Astronomy with 8.0 MHz SDRPlay RSP 1A
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: bokeh_gui
+    hier_block_src_path: '.:'
+    id: NsfDetect80Web
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: 'Web display Nsf Detect: SDRPlay 8MHz Astronomical Obs.'
+    window_size: (600,800)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [0, 0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: Azimuth
+  id: variable_bokehgui_textbox
+  parameters:
+    comment: ''
+    label: Azimuth
+    type: real
+    value: float( Azimuth_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [504, 124.0]
+    rotation: 0
+    state: true
+- name: Azimuth_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: azimuth
+    section: main
+    type: real
+    value: '90.'
+    writeback: Azimuth
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [920, 956.0]
+    rotation: 0
+    state: enabled
+- name: Bandwidth
+  id: variable_bokehgui_label
+  parameters:
+    comment: ''
+    label: ''
+    type: real
+    value: float(Bandwidths)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 124.0]
+    rotation: 0
+    state: true
+- name: Bandwidths
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: bandwidth
+    section: main
+    type: real
+    value: 8.e6
+    writeback: Bandwidth
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 652.0]
+    rotation: 0
+    state: enabled
+- name: BiasOn
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(BiasOn_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [544, 860.0]
+    rotation: 0
+    state: true
+- name: BiasOn_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: biason
+    section: main
+    type: bool
+    value: 'False'
+    writeback: BiasOn
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [528, 960]
+    rotation: 0
+    state: enabled
+- name: BroadcastNotch
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(BroadcastNotch_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [304, 868.0]
+    rotation: 0
+    state: true
+- name: BroadcastNotch_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: broadcastnotch
+    section: main
+    type: bool
+    value: 'False'
+    writeback: BroadcastNotch
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 960]
+    rotation: 0
+    state: enabled
+- name: ConfigFile
+  id: variable
+  parameters:
+    comment: ''
+    value: ObsName+".conf"
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 116.0]
+    rotation: 0
+    state: enabled
+- name: DabNotch
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(DabNotch_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [760, 868.0]
+    rotation: 0
+    state: true
+- name: DabNotch_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: dabnotch
+    section: main
+    type: bool
+    value: 'False'
+    writeback: DabNotch
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [784, 956.0]
+    rotation: 0
+    state: enabled
+- name: DcOffsetMode
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(DcOffset_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [176, 868.0]
+    rotation: 0
+    state: true
+- name: DcOffset_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: dcoffsetmode
+    section: main
+    type: bool
+    value: 'False'
+    writeback: DcOffsetMode
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 960]
+    rotation: 0
+    state: enabled
+- name: DebugOn
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(DebugOn_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 868.0]
+    rotation: 0
+    state: true
+- name: DebugOn_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: debugon
+    section: main
+    type: bool
+    value: 'False'
+    writeback: DebugOn
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 960]
+    rotation: 0
+    state: enabled
+- name: Detect
+  id: variable_bokehgui_radiobutton
+  parameters:
+    comment: ''
+    inline: 'True'
+    label0: Monitor
+    label1: Detect
+    label2: Hot
+    label3: Ref
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    type: int
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 244.0]
+    rotation: 0
+    state: true
+- name: Device
+  id: variable
+  parameters:
+    comment: ''
+    value: device_save
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [512, 428.0]
+    rotation: 0
+    state: true
+- name: Elevation
+  id: variable_bokehgui_textbox
+  parameters:
+    comment: ''
+    label: Elevation
+    type: real
+    value: float(Elevation_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 132.0]
+    rotation: 0
+    state: true
+- name: Elevation_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: elevation
+    section: main
+    type: real
+    value: '90.'
+    writeback: Elevation
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 468.0]
+    rotation: 0
+    state: enabled
+- name: EventMode
+  id: variable_bokehgui_checkbox
+  parameters:
+    comment: ''
+    'false': 'False'
+    inline: 'True'
+    label: Event Write
+    'true': 'True'
+    type: bool
+    value: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [512, 212.0]
+    rotation: 0
+    state: true
+- name: Frequency
+  id: variable_bokehgui_label
+  parameters:
+    comment: ''
+    label: ''
+    type: real
+    value: float(Frequencys)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 132.0]
+    rotation: 0
+    state: true
+- name: Frequencys
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: Frequency
+    section: main
+    type: real
+    value: 1420.4e6
+    writeback: Frequency
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [848, 652.0]
+    rotation: 0
+    state: enabled
+- name: Gain1
+  id: variable
+  parameters:
+    comment: ''
+    value: Gain1s
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 436.0]
+    rotation: 0
+    state: true
+- name: Gain1s
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: gain1
+    section: main
+    type: real
+    value: '49.'
+    writeback: Gain1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 492.0]
+    rotation: 0
+    state: enabled
+- name: Gain2
+  id: variable
+  parameters:
+    comment: ''
+    value: IF_attn
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 300.0]
+    rotation: 0
+    state: enabled
+- name: Gain3
+  id: variable
+  parameters:
+    comment: ''
+    value: IF_attn
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 236.0]
+    rotation: 0
+    state: enabled
+- name: H1
+  id: variable
+  parameters:
+    comment: ''
+    value: 1420.406E6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [816, 316.0]
+    rotation: 0
+    state: enabled
+- name: IF_attn
+  id: variable
+  parameters:
+    comment: ''
+    value: float(IF_attn_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [672, 868.0]
+    rotation: 0
+    state: true
+- name: IF_attn_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: ifattn
+    section: main
+    type: real
+    value: '30'
+    writeback: IF_attn
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 960]
+    rotation: 0
+    state: enabled
+- name: IQMode
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(IQMode_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 868.0]
+    rotation: 0
+    state: true
+- name: IQMode_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: iqmode
+    section: main
+    type: bool
+    value: 'False'
+    writeback: IQMode
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 960]
+    rotation: 0
+    state: enabled
+- name: ObsName
+  id: variable
+  parameters:
+    comment: ''
+    value: '"Integrate80"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 444.0]
+    rotation: 0
+    state: enabled
+- name: Observer
+  id: variable_bokehgui_label
+  parameters:
+    comment: ''
+    label: ''
+    type: string
+    value: observers_save
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 276.0]
+    rotation: 0
+    state: true
+- name: Samples
+  id: variable_bokehgui_label
+  parameters:
+    comment: ''
+    label: N samples
+    type: int
+    value: int(fftsize_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [808, 380.0]
+    rotation: 0
+    state: true
+- name: Telescope
+  id: variable_bokehgui_label
+  parameters:
+    comment: ''
+    label: ''
+    type: string
+    value: telescope_save
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 204.0]
+    rotation: 0
+    state: true
+- name: device_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: device
+    section: main
+    type: string
+    value: airspy,bias=1,pack=1
+    writeback: Device
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [512, 492.0]
+    rotation: 0
+    state: enabled
+- name: fftsize
+  id: variable
+  parameters:
+    comment: ''
+    value: fftsize_save
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 396.0]
+    rotation: 0
+    state: true
+- name: fftsize_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: fftsize
+    section: main
+    type: int
+    value: '1024'
+    writeback: fftsize
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 468.0]
+    rotation: 0
+    state: enabled
+- name: nAve
+  id: variable
+  parameters:
+    comment: ''
+    value: int(nAves)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 436.0]
+    rotation: 0
+    state: enabled
+- name: nAves
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: nave
+    section: main
+    type: int
+    value: '20'
+    writeback: nAve
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 652.0]
+    rotation: 0
+    state: enabled
+- name: nsigma
+  id: variable_bokehgui_textbox
+  parameters:
+    comment: ''
+    label: N Sigma
+    type: real
+    value: nsigmas
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 252.0]
+    rotation: 0
+    state: true
+- name: nsigmas
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: nsigma
+    section: main
+    type: real
+    value: '5.5'
+    writeback: nsigma
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 340.0]
+    rotation: 0
+    state: enabled
+- name: observer
+  id: variable
+  parameters:
+    comment: ''
+    value: observers_save
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 500.0]
+    rotation: 0
+    state: true
+- name: observers_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: observers
+    section: main
+    type: string
+    value: Science Aficionado
+    writeback: observer
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 564.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: Bandwidth
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [384, 188.0]
+    rotation: 0
+    state: enabled
+- name: telescope_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: telescope
+    section: main
+    type: string
+    value: Bubble Wrap Horn
+    writeback: Telescope
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 548.0]
+    rotation: 0
+    state: enabled
+- name: ymaxs
+  id: variable
+  parameters:
+    comment: ''
+    value: '[5., 10., 180., 80.]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1272, 20.0]
+    rotation: 0
+    state: enabled
+- name: ymins
+  id: variable
+  parameters:
+    comment: ''
+    value: '[ 0.01,  -20,  90.,-5.] '
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1264, 100.0]
+    rotation: 180
+    state: enabled
+- name: blocks_stream_to_vector_0_0
+  id: blocks_stream_to_vector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: fftsize
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 32.0]
+    rotation: 0
+    state: enabled
+- name: bokehgui_vector_sink_x_0
+  id: bokehgui_vector_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    average: '1.0'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'False'
+    label1: I
+    label10: ''
+    label2: Q
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: None
+    marker10: None
+    marker2: '''sx'''
+    marker3: None
+    marker4: None
+    marker5: None
+    marker6: None
+    marker7: None
+    marker8: None
+    marker9: None
+    maxhold: 'False'
+    name: '""'
+    nconnections: '1'
+    placement: (0,1,1,1)
+    style1: '"solid"'
+    style10: '"solid"'
+    style2: '"solid"'
+    style3: '"solid"'
+    style4: '"solid"'
+    style5: '"solid"'
+    style6: '"solid"'
+    style7: '"solid"'
+    style8: '"solid"'
+    style9: '"solid"'
+    type: complex
+    update_time: '1000'
+    vec_len: fftsize
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    x_values: (0,1)
+    xlabel: Time
+    xunit: '"Microseconds"'
+    ylabel: Inensity
+    ymax: '.9'
+    ymin: -.9
+    yunit: Counts
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [848, 244.0]
+    rotation: 0
+    state: true
+- name: note_1
+  id: note
+  parameters:
+    alias: ''
+    comment: ''
+    note: The sequence of vector medians removes temporary RFI
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [0, 188]
+    rotation: 0
+    state: enabled
+- name: radio_astro_detect_0
+  id: radio_astro_detect
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: Bandwidth
+    comment: ''
+    dms: nsigma
+    f_obs: Frequency
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mode: Detect
+    t_int: fftsize/Bandwidth
+    vec_length: fftsize
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [648, 4.0]
+    rotation: 0
+    state: enabled
+- name: radio_astro_ra_event_sink_0
+  id: radio_astro_ra_event_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    azimuth: Azimuth
+    bandwidth: Bandwidth
+    comment: ''
+    device: Device
+    elevation: Elevation
+    frequency: Frequency
+    gain1: float(IF_attn)
+    note: Event Detection
+    observer: Observer
+    record: EventMode
+    setup: ObsName+"Event.not"
+    telescope: Telescope
+    vlen: fftsize
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [856, 4.0]
+    rotation: 0
+    state: enabled
+- name: sdrplay3_rsp1a_0
+  id: sdrplay3_rsp1a
+  parameters:
+    AGC: 'False'
+    affinity: ''
+    agc_set_point: '-30'
+    alias: ''
+    bandwidth: 8000e3
+    biasT: bool(BiasOn)
+    center_freq: Frequency
+    comment: ''
+    dab_notch_filter: bool(DabNotch)
+    dc_offset_mode: bool(DcOffsetMode)
+    debug_mode: bool(DebugOn)
+    freq_corr: '0'
+    if_gRdB: Gain2
+    iq_balance_mode: bool(IQMode)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    output_type: fc32
+    rf_gRdB: Gain1
+    rf_notch_filter: bool(BroadcastNotch)
+    rsp_selector: ''
+    sample_rate: samp_rate
+    sample_sequence_gaps_check: 'False'
+    show_gain_changes: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 4.0]
+    rotation: 0
+    state: true
+
+connections:
+- [blocks_stream_to_vector_0_0, '0', radio_astro_detect_0, '0']
+- [radio_astro_detect_0, '0', bokehgui_vector_sink_x_0, '0']
+- [radio_astro_detect_0, '0', radio_astro_ra_event_sink_0, '0']
+- [sdrplay3_rsp1a_0, '0', blocks_stream_to_vector_0_0, '0']
+
+metadata:
+  file_format: 1
