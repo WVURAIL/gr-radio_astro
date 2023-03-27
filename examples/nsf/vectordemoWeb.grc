@@ -347,7 +347,7 @@ blocks:
     style8: '"solid"'
     style9: '"solid"'
     type: float
-    update_time: '500'
+    update_time: '2000'
     vec_len: fftsize
     width1: '1'
     width10: '1'
