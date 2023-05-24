@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 23May12 GIL shorten integration time and smooth
 # 23Mar13 GIL no more np.float()
 # 22Feb17 GIL when fitting a baseline average for exactly 5 seconds
 # 21Dec02 GIL Update forecast
@@ -46,6 +47,7 @@ import numpy as np
 from gnuradio import gr
 import copy
 from gnuradio.radio_astro import radioastronomy
+from gnuradio.radio_astro import filters
 
 # this block has 5 output spectra:
 # 1st is just the input spectrum
@@ -174,10 +176,13 @@ class ra_integrate(gr.sync_block):
         self.stoputc = now
         self.obs.utc = now
         self.printutc = now
+        self.refutc = now
+        self.refinterval = 1.    # update ref-fit often
         self.printinterval = 5.  # print averages every few seconds
         n32 = int(self.vlen/32)  # make an array of indices for baseline fitting
-        xa = np.arange(n32)+(3*n32)
-        xb = np.arange(n32)+(n32*28)        
+        # set baseline regiom for fitting
+        xa = np.arange(n32)+(4*n32)
+        xb = np.arange(n32)+(n32*25)        
         self.xfit = np.concatenate((xa,xb))      # indicies for fit 
         self.xindex = np.arange(self.vlen)       # array of integers
         self.yfit = self.obs.ydataA[self.xfit]   # sub-array of fittable data
@@ -217,8 +222,8 @@ class ra_integrate(gr.sync_block):
         spectrum.xdata = np.zeros(self.vlen)
         spectrum.nChan = self.vlen
         n32 = int(self.vlen/32)  # make an array of indices for baseline fitting
-        xa = np.arange(n32)+(3*n32)
-        xb = np.arange(n32)+(n32*28)        
+        xa = np.arange(n32)+(4*n32)
+        xb = np.arange(n32)+(n32*27)        
         self.xfit = np.concatenate((xa,xb))      # indicies for fit 
         self.xindex = np.arange(self.vlen)       # array of integers
         self.yfit = self.obs.ydataA[self.xfit]   # sub-array of fittable data
@@ -226,6 +231,7 @@ class ra_integrate(gr.sync_block):
         self.shortave = np.zeros(self.vlen)
         self.shortlast = np.zeros(self.vlen)
         self.nshort=0
+        self.nlast=0
         self.obs.nchan = self.vlen
         self.obs.refchan = self.vlen/2.
 
@@ -511,7 +517,7 @@ class ra_integrate(gr.sync_block):
         ncp = min(li, self.vlen)  # don't copy more required (not used)
         n6 = int(ncp/6)
         n56 = 5*n6
-
+        
         if li != self.vlen:
             print('spectrum length changed! %d => %d' % (self.vlen, li))
             self.vlen = li
@@ -672,28 +678,34 @@ class ra_integrate(gr.sync_block):
                     else:
                         self.shortave = self.shortave + spec
                         self.nshort = self.nshort + 1
-                # time to end short sum.
-                dt = now - self.printutc
-                # recompute the short average 
-                if dt.total_seconds() > self.printinterval and \
-                  self.nshort > 0:
-                    oneovern = 1./float(self.nshort)
-                    self.shortlast = oneovern * self.shortave
-                    self.shortlast = TSYS * self.shortlast * oneoverhot
-                    self.yfit = self.shortlast[self.xfit]
-                    thefit = np.polyfit( self.xfit, self.yfit, 1)
-                    temps = self.shortlast - ((self.xindex*thefit[0]) + thefit[1])
-                    # hanning smooth
-                    refs = 2.*temps
-                    refs[1:self.vlen-1] += (temps[0:self.vlen-2] + temps[2:self.vlen])
-                    refs = 0.25*refs
-                    # will keep showing last short reference until next is ready
-                    self.shortlast = refs
-                    self.nshort = 0   # restart sum on next cycle
-                    print("\nNew Ref\n")
-                else:
-                    refs = self.shortlast
-                    # end if subtracting baseline
+                    # if time to plot short sum.
+                    dt = now - self.refutc
+                    # recompute the short average 
+                    if dt.total_seconds() > self.refinterval and \
+                        self.nshort > 100:
+                        oneovern = 1./float(self.nshort)
+                        self.shortlast = oneovern * self.shortave
+                        self.shortlast = TSYS * self.shortlast * oneoverhot
+                        # median filter smooth
+                        temps = filters.median(self.shortlast,2)
+
+                        # fit the baseline
+                        self.yfit = temps[self.xfit]
+                        thefit = np.polyfit( self.xfit, self.yfit, 1)
+                        # subtract the baseline
+                        temp2s = temps - ((self.xindex*thefit[0]) + thefit[1])
+                        
+                        refs = filters.smooth( temp2s, 3)
+                
+                        # will show last short reference until next is ready
+                        self.shortlast = refs
+                        # keep number last averaged for print
+                        self.nlast = self.nshort
+                        self.nshort = 0   # restart sum on next cycle
+                        self.refutc = now
+                    else:
+                        refs = self.shortlast
+                # end if subtracting baseline
                 out[nout] = outs
                 ave[nout] = aves
                 ref[nout] = refs
@@ -717,6 +729,8 @@ class ra_integrate(gr.sync_block):
                 vmed = np.median(avespec)
 
                 label = radioastronomy.unitlabels[self.units]
+                if self.units == radioastronomy.UNITBASELINE:
+                    print("New Ref (%d)\n" % (self.nlast))
                 if self.units == 0:
                     print("%s Max %9.3f Min: %9.3f Median: %9.3f %s " % (yymmdd, vmax, vmin, vmed, label))
                 elif self.units == 1:

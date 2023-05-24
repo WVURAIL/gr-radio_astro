@@ -36,6 +36,7 @@ GR_PYTHON_INSTALL(
     ra_integrate.py
     ra_vave.py
     ra_vmedian.py 
+    filters.py
     powerSpectrum.py
     integration.py
     vector_moving_average.py
