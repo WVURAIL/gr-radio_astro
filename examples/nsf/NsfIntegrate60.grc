@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: Average Astronomical Obs.'
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -326,10 +327,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -526,10 +527,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -573,10 +574,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -1269,9 +1270,9 @@ blocks:
     alpha9: '1.0'
     autoscale: 'False'
     average: '1.0'
-    color1: '"black"'
+    color1: '"yellow"'
     color10: '"dark blue"'
-    color2: '"dark green"'
+    color2: '"green"'
     color3: '"red"'
     color4: '"blue"'
     color5: '"cyan"'
