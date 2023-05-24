@@ -6,12 +6,12 @@ options:
     cmake_opt: ''
     comment: ''
     copyright: ''
-    description: AIRSPY Mini at full speed 6 MHz samples
+    description: Astronomy with 6MHz Airspy Mini Events and Spectra
     gen_cmake: 'On'
     gen_linking: dynamic
-    generate_options: qt_gui
+    generate_options: no_gui
     hier_block_src_path: '.:'
-    id: NsfWatch60
+    id: NsfWatchNoGui60
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -19,11 +19,11 @@ options:
     realtime_scheduling: ''
     run: 'True'
     run_command: '{python} -u {filename}'
-    run_options: prompt
+    run_options: run
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: NSF Watch for Events whille recording spectra
-    window_size: (1000,1000)
+    title: 'Nsf Detect+Spectra: Airspy-mini 6MHz Astronomical Obs.'
+    window_size: (600,800)
   states:
     bus_sink: false
     bus_source: false
@@ -34,18 +34,15 @@ options:
 
 blocks:
 - name: Azimuth
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 0,6,1,2
-    label: Azimuth
-    type: real
-    value: Azimuth_save
+    value: float(Azimuth_save)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [792, 432]
+    coordinate: [552, 132.0]
     rotation: 0
     state: enabled
 - name: Azimuth_save
@@ -62,22 +59,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [728, 948]
+    coordinate: [920, 956.0]
     rotation: 0
     state: enabled
 - name: Bandwidth
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 1,4,1,2
-    label: Bandwidth
-    type: real
-    value: Bandwidths
+    value: float(Bandwidths)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [672, 520]
+    coordinate: [456, 132.0]
     rotation: 0
     state: enabled
 - name: Bandwidths
@@ -85,7 +79,7 @@ blocks:
   parameters:
     comment: ''
     config_file: ConfigFile
-    option: Bandwidth
+    option: bandwidth
     section: main
     type: real
     value: 6.e6
@@ -94,7 +88,36 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1064, 948]
+    coordinate: [704, 652.0]
+    rotation: 0
+    state: enabled
+- name: BiasOn
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(BiasOn_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [544, 860.0]
+    rotation: 0
+    state: true
+- name: BiasOn_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: biason
+    section: main
+    type: bool
+    value: 'False'
+    writeback: BiasOn
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [528, 960]
     rotation: 0
     state: enabled
 - name: ConfigFile
@@ -106,37 +129,89 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [120, 176]
+    coordinate: [24, 124.0]
+    rotation: 0
+    state: enabled
+- name: DcOffsetMode
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(DcOffsetMode_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 868.0]
+    rotation: 0
+    state: true
+- name: DcOffsetMode_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: dcoffsetmode
+    section: main
+    type: bool
+    value: 'False'
+    writeback: DcOffsetMode
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [208, 940.0]
+    rotation: 0
+    state: enabled
+- name: DebugOn
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(DebugOn_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 868.0]
+    rotation: 0
+    state: true
+- name: DebugOn_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: debugon
+    section: main
+    type: bool
+    value: 'False'
+    writeback: DebugOn
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 960]
     rotation: 0
     state: enabled
 - name: Device
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 2,0,1,2
-    label: Dev
-    type: string
     value: device_save
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [440, 616]
+    coordinate: [512, 428.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Elevation
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 1,6,1,2
-    label: Elevation
-    type: real
-    value: Elevation_save
+    value: float(Elevation_save)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [800, 520]
+    coordinate: [552, 204.0]
     rotation: 0
     state: enabled
 - name: Elevation_save
@@ -153,52 +228,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [896, 948]
-    rotation: 0
-    state: enabled
-- name: EventMode
-  id: variable_qtgui_chooser
-  parameters:
-    comment: ''
-    gui_hint: 2 ,4, 1, 2
-    label: Event Mode
-    label0: '! ! Wait ! !'
-    label1: Write
-    label2: Write
-    label3: ''
-    label4: ''
-    labels: '[]'
-    num_opts: '2'
-    option0: '0'
-    option1: '1'
-    option2: '3'
-    option3: '3'
-    option4: '4'
-    options: '[0, 1, 2]'
-    orient: Qt.QHBoxLayout
-    type: int
-    value: '1'
-    widget: radio_buttons
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [208, 728]
+    coordinate: [832, 468.0]
     rotation: 0
     state: enabled
 - name: Frequency
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 0,4,1,2
-    label: Freq. Hz
-    type: real
-    value: Frequencys
+    value: float(Frequencys)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [624, 432]
+    coordinate: [224, 124.0]
     rotation: 0
     state: enabled
 - name: Frequencys
@@ -209,30 +251,27 @@ blocks:
     option: Frequency
     section: main
     type: real
-    value: 1420.4e6
+    value: 1421.5e6
     writeback: Frequency
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1232, 948]
+    coordinate: [848, 652.0]
     rotation: 0
     state: enabled
 - name: Gain1
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 3,2,1,2
-    label: Gain1
-    type: real
     value: Gain1s
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [616, 616]
+    coordinate: [224, 436.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Gain1s
   id: variable_config
   parameters:
@@ -247,22 +286,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [864, 704]
+    coordinate: [1008, 316.0]
     rotation: 0
     state: enabled
 - name: Gain2
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 3,4,1,2
-    label: Gain2
-    type: real
-    value: Gain2s
+    value: float(Gain2s)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [752, 616]
+    coordinate: [664, 228.0]
     rotation: 0
     state: enabled
 - name: Gain2s
@@ -279,22 +315,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [882, 744]
+    coordinate: [1024, 364.0]
     rotation: 0
     state: enabled
 - name: Gain3
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 3,6,1,2
-    label: Gain3
-    type: real
-    value: Gain3s
+    value: float(Gain3s)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [872, 616]
+    coordinate: [672, 300.0]
     rotation: 0
     state: enabled
 - name: Gain3s
@@ -311,7 +344,48 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 776]
+    coordinate: [1048, 396.0]
+    rotation: 0
+    state: enabled
+- name: H1
+  id: variable
+  parameters:
+    comment: ''
+    value: 1420.406E6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [792, 236.0]
+    rotation: 0
+    state: enabled
+- name: IQMode
+  id: variable
+  parameters:
+    comment: ''
+    value: bool(IQMode_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 868.0]
+    rotation: 0
+    state: true
+- name: IQMode_save
+  id: variable_config
+  parameters:
+    comment: ''
+    config_file: ConfigFile
+    option: iqmode
+    section: main
+    type: bool
+    value: 'False'
+    writeback: IQMode
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [344, 948.0]
     rotation: 0
     state: enabled
 - name: ObsName
@@ -323,52 +397,43 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [0, 176]
+    coordinate: [24, 444.0]
     rotation: 0
     state: enabled
-- name: Record
-  id: variable_qtgui_chooser
+- name: Observer
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 2,2,1,2
-    label: Spec. Mode
-    label0: '! ! Wait ! !'
-    label1: AVERAGE
-    label2: Save
-    label3: Ref
-    label4: ''
-    labels: '[]'
-    num_opts: '2'
-    option0: '0'
-    option1: '1'
-    option2: '2'
-    option3: '3'
-    option4: '4'
-    options: '[0, 1, 2]'
-    orient: Qt.QHBoxLayout
-    type: int
-    value: '1'
-    widget: radio_buttons
+    value: observers_save
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 704]
+    coordinate: [216, 260.0]
+    rotation: 0
+    state: enabled
+- name: Samples
+  id: variable
+  parameters:
+    comment: ''
+    value: int(fftsize_save)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [792, 300.0]
     rotation: 0
     state: enabled
 - name: Telescope
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 1,0,1,2
-    label: Tel
-    type: string
     value: telescope_save
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [296, 520]
+    coordinate: [216, 332.0]
     rotation: 0
     state: enabled
 - name: device_save
@@ -385,24 +450,21 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 948]
+    coordinate: [512, 492.0]
     rotation: 0
     state: enabled
 - name: fftsize
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 1,2,1,2
-    label: FFT_size
-    type: int
     value: fftsize_save
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 520]
+    coordinate: [696, 396.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: fftsize_save
   id: variable_config
   parameters:
@@ -411,28 +473,25 @@ blocks:
     option: fftsize
     section: main
     type: int
-    value: '2048'
+    value: '1024'
     writeback: fftsize
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [224, 948]
+    coordinate: [696, 468.0]
     rotation: 0
     state: enabled
 - name: nAve
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 0,2,1,2
-    label: N_Ave.
-    type: int
-    value: nAves
+    value: int(nAves)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 432]
+    coordinate: [296, 436.0]
     rotation: 0
     state: enabled
 - name: nAves
@@ -449,28 +508,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [560, 948]
+    coordinate: [560, 652.0]
     rotation: 0
     state: enabled
 - name: nsigma
-  id: variable_qtgui_range
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 2,6,1,2
-    label: N Sigma
-    min_len: '100'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '0.'
-    step: '.1'
-    stop: '10.'
-    value: nsigmas
-    widget: counter
+    value: float(nsigmas)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 736]
+    coordinate: [560, 268.0]
     rotation: 0
     state: enabled
 - name: nsigmas
@@ -487,24 +537,21 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [392, 944]
+    coordinate: [376, 340.0]
     rotation: 0
     state: enabled
 - name: observer
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 0,0,1,2
-    label: Who
-    type: string
     value: observers_save
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 432]
+    coordinate: [216, 500.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: observers_save
   id: variable_config
   parameters:
@@ -519,7 +566,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1064, 640]
+    coordinate: [200, 564.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: Bandwidth
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 204.0]
     rotation: 0
     state: enabled
 - name: telescope_save
@@ -536,23 +595,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1056, 464]
-    rotation: 0
-    state: enabled
-- name: blocks_complex_to_float_0
-  id: blocks_complex_to_float
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [536, 32]
+    coordinate: [8, 548.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_mag_squared_0
@@ -568,9 +611,26 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [613, 288]
+    coordinate: [504, 1228.0]
     rotation: 180
     state: enabled
+- name: blocks_null_sink_0
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: ''
+    num_inputs: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1016, 1168.0]
+    rotation: 0
+    state: true
 - name: blocks_stream_to_vector_0_0
   id: blocks_stream_to_vector
   parameters:
@@ -586,10 +646,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [560, 200]
+    coordinate: [504, 32.0]
     rotation: 0
     state: enabled
-- name: fft_vxx_0
+- name: fft_vxx_0_0
   id: fft_vxx
   parameters:
     affinity: ''
@@ -607,8 +667,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [814, 257]
-    rotation: 180
+    coordinate: [328, 1108.0]
+    rotation: 0
     state: enabled
 - name: note_1
   id: note
@@ -620,7 +680,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [0, 120]
+    coordinate: [0, 188]
     rotation: 0
     state: enabled
 - name: osmosdr_source_0
@@ -766,7 +826,7 @@ blocks:
     corr7: '0'
     corr8: '0'
     corr9: '0'
-    dc_offset_mode0: '0'
+    dc_offset_mode0: DcOffsetMode
     dc_offset_mode1: '0'
     dc_offset_mode10: '0'
     dc_offset_mode11: '0'
@@ -926,7 +986,7 @@ blocks:
     if_gain7: '20'
     if_gain8: '20'
     if_gain9: '20'
-    iq_balance_mode0: '0'
+    iq_balance_mode0: IQMode
     iq_balance_mode1: '0'
     iq_balance_mode10: '0'
     iq_balance_mode11: '0'
@@ -977,157 +1037,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 40]
-    rotation: 0
-    state: enabled
-- name: qtgui_histogram_sink_x_0
-  id: qtgui_histogram_sink_x
-  parameters:
-    accum: 'False'
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    autoscale: 'True'
-    axislabels: 'True'
-    bins: '100'
-    color1: '"blue"'
-    color10: '"dark blue"'
-    color2: '"red"'
-    color3: '"green"'
-    color4: '"black"'
-    color5: '"cyan"'
-    color6: '"magenta"'
-    color7: '"yellow"'
-    color8: '"dark red"'
-    color9: '"dark green"'
-    comment: ''
-    grid: 'False'
-    gui_hint: 4,0,2,4
-    label1: I
-    label10: ''
-    label2: Q
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    legend: 'True'
-    marker1: '-1'
-    marker10: '-1'
-    marker2: '-1'
-    marker3: '-1'
-    marker4: '-1'
-    marker5: '-1'
-    marker6: '-1'
-    marker7: '-1'
-    marker8: '-1'
-    marker9: '-1'
-    name: '""'
-    nconnections: '2'
-    size: fftsize
-    style1: '1'
-    style10: '1'
-    style2: '1'
-    style3: '1'
-    style4: '1'
-    style5: '1'
-    style6: '1'
-    style7: '1'
-    style8: '1'
-    style9: '1'
-    type: float
-    update_time: '1.'
-    width1: '1'
-    width10: '1'
-    width2: '1'
-    width3: '1'
-    width4: '1'
-    width5: '1'
-    width6: '1'
-    width7: '1'
-    width8: '1'
-    width9: '1'
-    xmax: '.4'
-    xmin: -.4
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [712, 0]
-    rotation: 0
-    state: enabled
-- name: qtgui_number_sink_0
-  id: qtgui_number_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    autoscale: 'False'
-    avg: '0'
-    color1: ("black", "black")
-    color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
-    color6: ("black", "black")
-    color7: ("black", "black")
-    color8: ("black", "black")
-    color9: ("black", "black")
-    comment: ''
-    factor1: '1'
-    factor10: '1'
-    factor2: '1'
-    factor3: '1'
-    factor4: '1'
-    factor5: '1'
-    factor6: '1'
-    factor7: '1'
-    factor8: '1'
-    factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 4,5,1,2
-    label1: 'T Remains:'
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    max: nAve * fftsize * 1024. / Bandwidth
-    min: '0.'
-    name: '""'
-    nconnections: '1'
-    type: float
-    unit1: (s)
-    unit10: ''
-    unit2: ''
-    unit3: ''
-    unit4: ''
-    unit5: ''
-    unit6: ''
-    unit7: ''
-    unit8: ''
-    unit9: ''
-    update_time: '1.'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [288, 616]
+    coordinate: [200, 12.0]
     rotation: 0
     state: enabled
 - name: radio_astro_detect_0
@@ -1141,14 +1051,14 @@ blocks:
     f_obs: Frequency
     maxoutbuf: '0'
     minoutbuf: '0'
-    mode: '2'
+    mode: 'True'
     t_int: fftsize/Bandwidth
     vec_length: fftsize
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 72]
+    coordinate: [720, 4.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_ascii_sink_0
@@ -1171,7 +1081,7 @@ blocks:
     nmedian: 4**5
     observers: observer
     obstype: '0'
-    record: Record
+    record: '1'
     setup: ObsName+".not"
     site: telescope_save
     vlen: fftsize
@@ -1179,24 +1089,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [48, 328]
-    rotation: 0
-    state: enabled
-- name: radio_astro_ra_event_log_0
-  id: radio_astro_ra_event_log
-  parameters:
-    affinity: ''
-    alias: ''
-    bandwidth: Bandwidth
-    comment: ''
-    logname: ''
-    note: Event Detection
-    vlen: fftsize
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1112, 304]
+    coordinate: [792, 1124.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_event_sink_0
@@ -1213,7 +1106,7 @@ blocks:
     gain1: float(Gain1)
     note: Event Detection
     observer: Observer
-    record: EventMode
+    record: 'True'
     setup: ObsName+"Event.not"
     telescope: Telescope
     vlen: fftsize
@@ -1221,7 +1114,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1088, 24]
+    coordinate: [912, 4.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0
@@ -1238,7 +1131,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [614, 353]
+    coordinate: [528, 1300.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0
@@ -1255,7 +1148,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [456, 352]
+    coordinate: [344, 1300.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0_0
@@ -1272,7 +1165,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 352]
+    coordinate: [160, 1300.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0_1
@@ -1289,7 +1182,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [456, 280]
+    coordinate: [344, 1220.0]
     rotation: 180
     state: enabled
 - name: radio_astro_vmedian_0_0_1_0
@@ -1306,27 +1199,50 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 280]
+    coordinate: [160, 1220.0]
     rotation: 180
     state: enabled
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: DataVector
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [720, 148.0]
+    rotation: 0
+    state: true
+- name: virtual_source_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: DataVector
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [104, 1140.0]
+    rotation: 0
+    state: true
 
 connections:
-- [blocks_complex_to_float_0, '0', qtgui_histogram_sink_x_0, '0']
-- [blocks_complex_to_float_0, '1', qtgui_histogram_sink_x_0, '1']
 - [blocks_complex_to_mag_squared_0, '0', radio_astro_vmedian_0_0_1, '0']
-- [blocks_stream_to_vector_0_0, '0', fft_vxx_0, '0']
 - [blocks_stream_to_vector_0_0, '0', radio_astro_detect_0, '0']
-- [fft_vxx_0, '0', blocks_complex_to_mag_squared_0, '0']
-- [osmosdr_source_0, '0', blocks_complex_to_float_0, '0']
+- [blocks_stream_to_vector_0_0, '0', virtual_sink_0, '0']
+- [fft_vxx_0_0, '0', blocks_complex_to_mag_squared_0, '0']
 - [osmosdr_source_0, '0', blocks_stream_to_vector_0_0, '0']
-- [radio_astro_detect_0, '0', radio_astro_ra_event_log_0, '0']
 - [radio_astro_detect_0, '0', radio_astro_ra_event_sink_0, '0']
-- [radio_astro_ra_ascii_sink_0, '0', qtgui_number_sink_0, '0']
+- [radio_astro_ra_ascii_sink_0, '0', blocks_null_sink_0, '0']
 - [radio_astro_vmedian_0, '0', radio_astro_ra_ascii_sink_0, '0']
 - [radio_astro_vmedian_0_0, '0', radio_astro_vmedian_0, '0']
 - [radio_astro_vmedian_0_0_0, '0', radio_astro_vmedian_0_0, '0']
 - [radio_astro_vmedian_0_0_1, '0', radio_astro_vmedian_0_0_1_0, '0']
 - [radio_astro_vmedian_0_0_1_0, '0', radio_astro_vmedian_0_0_0, '0']
+- [virtual_source_0, '0', fft_vxx_0_0, '0']
 
 metadata:
   file_format: 1

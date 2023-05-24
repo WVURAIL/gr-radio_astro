@@ -8,9 +8,9 @@
 # Title: NSF Watch for Events whille recording spectra
 # Author: Glen Langston
 # Description: AIRSPY Mini at full speed 6 MHz samples
-# GNU Radio version: 3.10.0.0-rc1
+# GNU Radio version: 3.10.1.1
 
-from distutils.version import StrictVersion
+from packaging.version import Version as StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -155,12 +155,12 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.nAve = nAve = nAves
         self.fftsize = fftsize = fftsize_save
         self.Telescope = Telescope = telescope_save
-        self.Record = Record = 0
+        self.Record = Record = 1
         self.Gain3 = Gain3 = Gain3s
         self.Gain2 = Gain2 = Gain2s
         self.Gain1 = Gain1 = Gain1s
         self.Frequency = Frequency = Frequencys
-        self.EventMode = EventMode = 0
+        self.EventMode = EventMode = 1
         self.Elevation = Elevation = Elevation_save
         self.Device = Device = device_save
         self.Bandwidth = Bandwidth = Bandwidths
@@ -225,17 +225,26 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._Record_labels = ['! ! Wait ! !', 'AVERAGE']
         # Create the combo box
-        self._Record_tool_bar = Qt.QToolBar(self)
-        self._Record_tool_bar.addWidget(Qt.QLabel("Spec. Mode" + ": "))
-        self._Record_combo_box = Qt.QComboBox()
-        self._Record_tool_bar.addWidget(self._Record_combo_box)
-        for _label in self._Record_labels: self._Record_combo_box.addItem(_label)
-        self._Record_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Record_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Record_options.index(i)))
-        self._Record_callback(self.Record)
-        self._Record_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_Record(self._Record_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._Record_tool_bar, 2, 2, 1, 2)
+        self._Record_group_box = Qt.QGroupBox("Spec. Mode" + ": ")
+        self._Record_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._Record_button_group = variable_chooser_button_group()
+        self._Record_group_box.setLayout(self._Record_box)
+        for i, _label in enumerate(self._Record_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._Record_box.addWidget(radio_button)
+            self._Record_button_group.addButton(radio_button, i)
+        self._Record_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Record_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._Record_options.index(i)))
+        self._Record_callback(self.Record)
+        self._Record_button_group.buttonClicked[int].connect(
+            lambda i: self.set_Record(self._Record_options[i]))
+        self.top_grid_layout.addWidget(self._Record_group_box, 2, 2, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 4):
@@ -289,17 +298,26 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._EventMode_labels = ['! ! Wait ! !', 'Write']
         # Create the combo box
-        self._EventMode_tool_bar = Qt.QToolBar(self)
-        self._EventMode_tool_bar.addWidget(Qt.QLabel("Event Mode" + ": "))
-        self._EventMode_combo_box = Qt.QComboBox()
-        self._EventMode_tool_bar.addWidget(self._EventMode_combo_box)
-        for _label in self._EventMode_labels: self._EventMode_combo_box.addItem(_label)
-        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._EventMode_options.index(i)))
-        self._EventMode_callback(self.EventMode)
-        self._EventMode_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_EventMode(self._EventMode_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._EventMode_tool_bar, 2, 4, 1, 2)
+        self._EventMode_group_box = Qt.QGroupBox("Event Mode" + ": ")
+        self._EventMode_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._EventMode_button_group = variable_chooser_button_group()
+        self._EventMode_group_box.setLayout(self._EventMode_box)
+        for i, _label in enumerate(self._EventMode_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._EventMode_box.addWidget(radio_button)
+            self._EventMode_button_group.addButton(radio_button, i)
+        self._EventMode_callback = lambda i: Qt.QMetaObject.invokeMethod(self._EventMode_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._EventMode_options.index(i)))
+        self._EventMode_callback(self.EventMode)
+        self._EventMode_button_group.buttonClicked[int].connect(
+            lambda i: self.set_EventMode(self._EventMode_options[i]))
+        self.top_grid_layout.addWidget(self._EventMode_group_box, 2, 4, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(4, 6):
@@ -462,12 +480,11 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
 
 
-
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
+        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_1, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.radio_astro_detect_0, 0))
