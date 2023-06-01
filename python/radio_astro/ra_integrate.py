@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 # HISTORY
+# 23Jun01 GIL when subtracting fit, overwrite hot with average of two shorts
 # 23May12 GIL shorten integration time and smooth
 # 23Mar13 GIL no more np.float()
 # 22Feb17 GIL when fitting a baseline average for exactly 5 seconds
@@ -131,6 +132,8 @@ class ra_integrate(gr.sync_block):
         self.obs.ydataB = np.zeros(self.vlen)
         self.shortave = np.zeros(self.vlen)
         self.shortlast = np.zeros(self.vlen)
+        self.lasttwo = np.zeros(self.vlen)       # save last two double time
+        self.nlast = 0
         self.nshort=0
         self.obs.nchan = self.vlen
         self.obs.refchan = self.vlen/2.
@@ -683,6 +686,9 @@ class ra_integrate(gr.sync_block):
                     # recompute the short average 
                     if dt.total_seconds() > self.refinterval and \
                         self.nshort > 100:
+                        # keep previous average 
+                        self.lasttwo = self.shortlast
+                        # now recalculate
                         oneovern = 1./float(self.nshort)
                         self.shortlast = oneovern * self.shortave
                         self.shortlast = TSYS * self.shortlast * oneoverhot
@@ -695,16 +701,19 @@ class ra_integrate(gr.sync_block):
                         # subtract the baseline
                         temp2s = temps - ((self.xindex*thefit[0]) + thefit[1])
                         
-                        refs = filters.smooth( temp2s, 3)
+                        refs = filters.smooth( temp2s, 2)
                 
                         # will show last short reference until next is ready
                         self.shortlast = refs
+                        # reuse hot for fit
+                        hot[nout] = 0.5 * (refs + self.lasttwo)
                         # keep number last averaged for print
                         self.nlast = self.nshort
                         self.nshort = 0   # restart sum on next cycle
                         self.refutc = now
                     else:
                         refs = self.shortlast
+                        hot[nout] = 0.5 * (refs + self.lasttwo)
                 # end if subtracting baseline
                 out[nout] = outs
                 ave[nout] = aves
