@@ -3,6 +3,8 @@
 Class defining a Radio Frequency Spectrum
 Includes reading and writing ascii files
 HISTORY
+23Sep25 GIL add filename to spectra structure 
+22Jun11 GIL if doComputeX is false, use pre-calculated X values
 21Dec21 GIL remove extra print(), fix ephem help
 21Oct26 GIL merge in separating header from the data 
 21Oct02 GIL merge in writing of Velocities
@@ -334,6 +336,7 @@ class Spectrum(object):
         ydataA = np.zeros(nData)
         ydataB = np.zeros(nData)
         #now fill out the spectrum structure.
+        self.filename = "                                                     "
         self.writecount = 0
         self.count = int(0)          # count of spectra summed
         self.noteA = str(noteA).strip()      # observing note A
@@ -503,6 +506,7 @@ class Spectrum(object):
         if self.writecount > 0:
             print("File %4d: %s (%d)" % (self.writecount, outname, self.count))
         outline = '# FILE      =  ' + outname + '\n'
+        self.filename = outname
         outfile.write(outline)
         self.noteA = self.noteA.replace('\n', '')
         self.noteA = self.noteA.strip()
@@ -699,9 +703,9 @@ class Spectrum(object):
             outline = "#       (Hz)    (%s) \n" % (self.bunit)
             outfile.write(outline)
         else:
-            outline = "# N Velocity  Intensity \n"
+            outline = "# N Velocity Intensity \n"
             outfile.write(outline)
-            outline = "#    (m/sec)  (%s) \n" % (self.bunit)
+            outline = "#   (m/sec)  (%s) \n" % (self.bunit)
             outfile.write(outline)
 
         # if a spectrum in this data stream
@@ -730,17 +734,31 @@ class Spectrum(object):
             # if I/Q spectra
             if self.nSpec > 1:
                 pformat = "%04d %s %.4f %.4f\n"
-                for i in range(min(self.nChan, leny)):
-                    outline = pformat % (i, str(int(x)), self.ydataA[i], self.ydataB[i])
-                    outfile.write(outline)
-                    x = x + dx
+                if doComputeX:
+                    for i in range(min(self.nChan, leny)):
+                        outline = pformat % (i, str(int(x)), self.ydataA[i], self.ydataB[i])
+                        outfile.write(outline)
+                        x = x + dx
+                else:
+                    for i in range(min(self.nChan, leny)):
+                        outline = pformat % (i, str(int(self.xdata[i])), self.ydataA[i], self.ydataB[i])
+                        outfile.write(outline)
+                        x = x + dx
             else:
+                # else just a spectrum
                 pformat = "%04d %s %.4f\n"
-                for i in range(min(self.nChan, leny)):
-                    outline = pformat % (i, str(int(x)), self.ydataA[i])
-                    outline = outline.replace('  ', ' ')
-                    outfile.write(outline)
-                    x = x + dx
+                if doComputeX:
+                    for i in range(min(self.nChan, leny)):
+                        outline = pformat % (i, str(int(x)), self.ydataA[i])
+                        outline = outline.replace('  ', ' ')
+                        outfile.write(outline)
+                        x = x + dx
+                else:
+                    # else not recompute X, velocities need a couple digitx
+                    for i in range(min(self.nChan, leny)):
+                        outline = pformat % (i, str(int(self.xdata[i])), self.ydataA[i])
+                        outline = outline.replace('  ', ' ')
+                        outfile.write(outline)
             del outline
         # if this is an event
         if self.nTime > 0:
@@ -1084,7 +1102,7 @@ class Spectrum(object):
             self.nChan = 0
             self.nSamples = 0
             return
-        
+        self.filename = fullname
 # read the whole file into a single variable, which is a list of every row of the file.
         inlines = f2.readlines()
         f2.close()
