@@ -31,7 +31,10 @@ include(GrPybind)
 list(APPEND radio_astro_python_files
     dedispersion_python.cc
     detect_python.cc
-    vmedian_python.cc python_bindings.cc)
+    vselect_python.cc
+    vmedian_python.cc
+    vsum_python.cc
+    python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(radio_astro
    ../../..
