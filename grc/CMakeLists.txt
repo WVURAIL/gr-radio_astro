@@ -23,6 +23,8 @@ install(FILES
     radio_astro_dedispersion.block.yml
     radio_astro_detect.block.yml
     radio_astro_vmedian.block.yml
+    radio_astro_vselect.block.yml
+    radio_astro_vsum.block.yml
     radio_astro_chart_recorder.block.yml
     radio_astro_correlate.block.yml
     radio_astro_csv_filesink.block.yml
