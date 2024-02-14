@@ -12,6 +12,11 @@ if(NOT radio_astro_sources)
     MESSAGE(STATUS "No C++ sources... skipping python bindings")
     return()
 endif(NOT radio_astro_sources)
+if(radio_astro_sources)
+    MESSAGE(STATUS "C++ found sources.")
+    MESSAGE(STATUS radio_astro_sources)
+    return()
+endif(radio_astro_sources)
 
 ########################################################################
 # Check for pygccxml
