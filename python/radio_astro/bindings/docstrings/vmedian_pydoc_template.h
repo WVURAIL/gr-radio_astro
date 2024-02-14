@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Free Software Foundation, Inc.
+ * Copyright 2024 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -19,15 +19,6 @@
  static const char *__doc_gr_radio_astro_vmedian = R"doc()doc";
 
 
- static const char *__doc_gr_radio_astro_vmedian_vmedian = R"doc()doc";
-
-
  static const char *__doc_gr_radio_astro_vmedian_make = R"doc()doc";
-
-  
- static const char *__doc_gr_radio_astro_vmedian_set_vlen = R"doc()doc";
-
-  
- static const char *__doc_gr_radio_astro_vmedian_set_mode = R"doc()doc";
 
   

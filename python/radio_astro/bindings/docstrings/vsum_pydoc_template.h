@@ -16,9 +16,9 @@
 
 
  
- static const char *__doc_gr_radio_astro_dedispersion = R"doc()doc";
+ static const char *__doc_gr_radio_astro_vsum = R"doc()doc";
 
 
- static const char *__doc_gr_radio_astro_dedispersion_make = R"doc()doc";
+ static const char *__doc_gr_radio_astro_vsum_make = R"doc()doc";
 
   
