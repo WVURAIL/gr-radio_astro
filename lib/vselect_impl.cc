@@ -103,12 +103,6 @@ namespace gr {
        invec_out_len = 1;
       }
 
-      if (vec_out_len + d_vec_begin > vlen) {
-         fprintf(stderr, "Selected %d channel end beyond %d\n",
-	      vec_out_len + d_vec_begin,
-	      vlen);
-	 vec_out_len = vlen - d_vec_begin;
-      }
       d_vec_out_len = vec_out_len;
       vec_out_len = vec_out_len;
     } // end of set_vec_out_len()
@@ -164,7 +158,7 @@ namespace gr {
        */
       int ii = 0, jj = 0;
 
-      for (jj = vec_begin; jj < vec_out_len; jj++) {
+      for (jj = vec_begin; ii < vec_out_len; jj++) {
 	 output[ii] = input[jj];
 	 ii ++;
       }
