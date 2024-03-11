@@ -12,11 +12,6 @@ if(NOT radio_astro_sources)
     MESSAGE(STATUS "No C++ sources... skipping python bindings")
     return()
 endif(NOT radio_astro_sources)
-if(radio_astro_sources)
-    MESSAGE(STATUS "C++ found sources.")
-    MESSAGE(STATUS radio_astro_sources)
-    return()
-endif(radio_astro_sources)
 
 ########################################################################
 # Check for pygccxml
@@ -36,10 +31,7 @@ include(GrPybind)
 list(APPEND radio_astro_python_files
     dedispersion_python.cc
     detect_python.cc
-    vselect_python.cc
-    vmedian_python.cc
-    vsum_python.cc
-    python_bindings.cc)
+    vmedian_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(radio_astro
    ../../..

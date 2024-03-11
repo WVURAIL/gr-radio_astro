@@ -24,8 +24,6 @@ namespace py = pybind11;
     void bind_dedispersion(py::module& m);
     void bind_detect(py::module& m);
     void bind_vmedian(py::module& m);
-    void bind_vsum(py::module& m);
-    void bind_vselect(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -57,7 +55,5 @@ PYBIND11_MODULE(radio_astro_python, m)
     bind_dedispersion(m);
     bind_detect(m);
     bind_vmedian(m);
-    bind_vselect(m);
-    bind_vsum(m);
     // ) END BINDING_FUNCTION_CALLS
 }

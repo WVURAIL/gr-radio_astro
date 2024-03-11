@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Free Software Foundation, Inc.
+ * Copyright 2021 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -17,6 +17,9 @@
 
  
  static const char *__doc_gr_radio_astro_dedispersion = R"doc()doc";
+
+
+ static const char *__doc_gr_radio_astro_dedispersion_dedispersion = R"doc()doc";
 
 
  static const char *__doc_gr_radio_astro_dedispersion_make = R"doc()doc";
