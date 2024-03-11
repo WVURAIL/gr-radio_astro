@@ -25,8 +25,5 @@ install(FILES
     api.h
     dedispersion.h
     detect.h
-    vmedian.h
-    vselect.h
-    vsum.h
-    DESTINATION include/radio_astro
+    vmedian.h DESTINATION include/radio_astro
 )
