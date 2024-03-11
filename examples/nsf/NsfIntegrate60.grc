@@ -23,6 +23,7 @@ options:
     sizing_mode: fixed
     thread_safe_setters: ''
     title: 'NsfIntegrate: Average Astronomical Obs.'
+    window_size: (1000,1000)
   states:
     bus_sink: false
     bus_source: false
@@ -44,7 +45,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [808, 400]
+    coordinate: [824, 388.0]
     rotation: 0
     state: enabled
 - name: Azimuth_save
@@ -76,7 +77,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [568, 488]
+    coordinate: [688, 492.0]
     rotation: 0
     state: enabled
 - name: Bandwidths
@@ -135,7 +136,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [816, 488]
+    coordinate: [816, 484.0]
     rotation: 0
     state: enabled
 - name: Elevation_save
@@ -167,7 +168,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [560, 400]
+    coordinate: [680, 396.0]
     rotation: 0
     state: enabled
 - name: Frequencys
@@ -326,10 +327,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -349,7 +350,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 488]
+    coordinate: [376, 492.0]
     rotation: 0
     state: enabled
 - name: Xaxis
@@ -371,10 +372,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: xaxis_save
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -411,7 +412,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 488]
+    coordinate: [552, 492.0]
     rotation: 0
     state: enabled
 - name: fftsize_save
@@ -443,7 +444,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [440, 400]
+    coordinate: [560, 396.0]
     rotation: 0
     state: enabled
 - name: nAves
@@ -487,7 +488,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 400]
+    coordinate: [376, 396.0]
     rotation: 0
     state: enabled
 - name: observers_save
@@ -526,10 +527,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -573,10 +574,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: '0'
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -1249,7 +1250,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 584]
+    coordinate: [216, 436.0]
     rotation: 0
     state: enabled
 - name: qtgui_vector_sink_f_0_0
@@ -1269,12 +1270,12 @@ blocks:
     alpha9: '1.0'
     autoscale: 'False'
     average: '1.0'
-    color1: '"black"'
+    color1: '"yellow"'
     color10: '"dark blue"'
     color2: '"dark green"'
     color3: '"red"'
     color4: '"blue"'
-    color5: '"cyan"'
+    color5: '"dark red"'
     color6: '"magenta"'
     color7: '"yellow"'
     color8: '"dark red"'
@@ -1353,7 +1354,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [48, 280]
+    coordinate: [24, 276.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_integrate_1

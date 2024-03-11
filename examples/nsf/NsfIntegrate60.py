@@ -8,9 +8,9 @@
 # Title: NsfIntegrate: Average Astronomical Obs.
 # Author: Glen Langston -- NSF 20 May 22
 # Description: Astronomy with AIRSPY-mini  Dongle
-# GNU Radio version: 3.10.0.0-rc1
+# GNU Radio version: 3.10.1.1
 
-from distutils.version import StrictVersion
+from packaging.version import Version as StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -180,17 +180,26 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._units_labels = ['Counts', 'dB', 'Kelvins', 'K - Fit']
         # Create the combo box
-        self._units_tool_bar = Qt.QToolBar(self)
-        self._units_tool_bar.addWidget(Qt.QLabel("Units" + ": "))
-        self._units_combo_box = Qt.QComboBox()
-        self._units_tool_bar.addWidget(self._units_combo_box)
-        for _label in self._units_labels: self._units_combo_box.addItem(_label)
-        self._units_callback = lambda i: Qt.QMetaObject.invokeMethod(self._units_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._units_options.index(i)))
-        self._units_callback(self.units)
-        self._units_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_units(self._units_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._units_tool_bar, 7, 0, 1, 2)
+        self._units_group_box = Qt.QGroupBox("Units" + ": ")
+        self._units_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._units_button_group = variable_chooser_button_group()
+        self._units_group_box.setLayout(self._units_box)
+        for i, _label in enumerate(self._units_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._units_box.addWidget(radio_button)
+            self._units_button_group.addButton(radio_button, i)
+        self._units_callback = lambda i: Qt.QMetaObject.invokeMethod(self._units_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._units_options.index(i)))
+        self._units_callback(self.units)
+        self._units_button_group.buttonClicked[int].connect(
+            lambda i: self.set_units(self._units_options[i]))
+        self.top_grid_layout.addWidget(self._units_group_box, 7, 0, 1, 2)
         for r in range(7, 8):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
@@ -200,17 +209,26 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._obstype_labels = ['Survey', 'Hot/Cold', 'Ref']
         # Create the combo box
-        self._obstype_tool_bar = Qt.QToolBar(self)
-        self._obstype_tool_bar.addWidget(Qt.QLabel("Obs" + ": "))
-        self._obstype_combo_box = Qt.QComboBox()
-        self._obstype_tool_bar.addWidget(self._obstype_combo_box)
-        for _label in self._obstype_labels: self._obstype_combo_box.addItem(_label)
-        self._obstype_callback = lambda i: Qt.QMetaObject.invokeMethod(self._obstype_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._obstype_options.index(i)))
-        self._obstype_callback(self.obstype)
-        self._obstype_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_obstype(self._obstype_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._obstype_tool_bar, 6, 0, 1, 2)
+        self._obstype_group_box = Qt.QGroupBox("Obs" + ": ")
+        self._obstype_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._obstype_button_group = variable_chooser_button_group()
+        self._obstype_group_box.setLayout(self._obstype_box)
+        for i, _label in enumerate(self._obstype_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._obstype_box.addWidget(radio_button)
+            self._obstype_button_group.addButton(radio_button, i)
+        self._obstype_callback = lambda i: Qt.QMetaObject.invokeMethod(self._obstype_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._obstype_options.index(i)))
+        self._obstype_callback(self.obstype)
+        self._obstype_button_group.buttonClicked[int].connect(
+            lambda i: self.set_obstype(self._obstype_options[i]))
+        self.top_grid_layout.addWidget(self._obstype_group_box, 6, 0, 1, 2)
         for r in range(6, 7):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
@@ -253,17 +271,26 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._Xaxis_labels = ['Frequency (MHz)', 'Velocity (km/sec)', 'Channels']
         # Create the combo box
-        self._Xaxis_tool_bar = Qt.QToolBar(self)
-        self._Xaxis_tool_bar.addWidget(Qt.QLabel("Xaxis" + ": "))
-        self._Xaxis_combo_box = Qt.QComboBox()
-        self._Xaxis_tool_bar.addWidget(self._Xaxis_combo_box)
-        for _label in self._Xaxis_labels: self._Xaxis_combo_box.addItem(_label)
-        self._Xaxis_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Xaxis_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Xaxis_options.index(i)))
-        self._Xaxis_callback(self.Xaxis)
-        self._Xaxis_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_Xaxis(self._Xaxis_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._Xaxis_tool_bar, 7, 3, 1, 3)
+        self._Xaxis_group_box = Qt.QGroupBox("Xaxis" + ": ")
+        self._Xaxis_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._Xaxis_button_group = variable_chooser_button_group()
+        self._Xaxis_group_box.setLayout(self._Xaxis_box)
+        for i, _label in enumerate(self._Xaxis_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._Xaxis_box.addWidget(radio_button)
+            self._Xaxis_button_group.addButton(radio_button, i)
+        self._Xaxis_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Xaxis_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._Xaxis_options.index(i)))
+        self._Xaxis_callback(self.Xaxis)
+        self._Xaxis_button_group.buttonClicked[int].connect(
+            lambda i: self.set_Xaxis(self._Xaxis_options[i]))
+        self.top_grid_layout.addWidget(self._Xaxis_group_box, 7, 3, 1, 3)
         for r in range(7, 8):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(3, 6):
@@ -284,17 +311,26 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._Record_labels = ['! ! Wait ! !', 'AVERAGE', 'Save']
         # Create the combo box
-        self._Record_tool_bar = Qt.QToolBar(self)
-        self._Record_tool_bar.addWidget(Qt.QLabel("Rec" + ": "))
-        self._Record_combo_box = Qt.QComboBox()
-        self._Record_tool_bar.addWidget(self._Record_combo_box)
-        for _label in self._Record_labels: self._Record_combo_box.addItem(_label)
-        self._Record_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Record_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Record_options.index(i)))
-        self._Record_callback(self.Record)
-        self._Record_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_Record(self._Record_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._Record_tool_bar, 5, 0, 1, 2)
+        self._Record_group_box = Qt.QGroupBox("Rec" + ": ")
+        self._Record_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._Record_button_group = variable_chooser_button_group()
+        self._Record_group_box.setLayout(self._Record_box)
+        for i, _label in enumerate(self._Record_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._Record_box.addWidget(radio_button)
+            self._Record_button_group.addButton(radio_button, i)
+        self._Record_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Record_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._Record_options.index(i)))
+        self._Record_callback(self.Record)
+        self._Record_button_group.buttonClicked[int].connect(
+            lambda i: self.set_Record(self._Record_options[i]))
+        self.top_grid_layout.addWidget(self._Record_group_box, 5, 0, 1, 2)
         for r in range(5, 6):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
@@ -416,8 +452,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
             1, 1, 1, 1, 1]
-        colors = ["gold", "dark green", "red", "blue", "cyan",
-            "magenta", "yellow", "dark red", "dark green", "dark blue"]
+        colors = ["gold", "dark green", "red", "blue", "dark red",
+            "magenta", "gold", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, 1.0]
 
@@ -541,23 +577,22 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
 
 
-
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
-        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
-        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
+        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
+        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
+        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0_0_0, 0))
