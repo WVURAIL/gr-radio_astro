@@ -694,6 +694,40 @@ blocks:
     coordinate: [704, 256]
     rotation: 180
     state: enabled
+- name: blocks_float_to_int_0
+  id: blocks_float_to_int
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '10.'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [80, 580.0]
+    rotation: 0
+    state: true
+- name: blocks_int_to_float_0
+  id: blocks_int_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '10.'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [80, 628.0]
+    rotation: 0
+    state: true
 - name: blocks_stream_to_vector_0_0
   id: blocks_stream_to_vector
   parameters:
@@ -1343,7 +1377,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     nave: nAve
-    nmedian: 4**5
+    nmedian: 4**4
     observers: observer
     obstype: obstype
     record: Record
@@ -1370,7 +1404,7 @@ blocks:
     inttype: Record
     maxoutbuf: '0'
     minoutbuf: '0'
-    nmedian: 4**5
+    nmedian: 4**4
     observers: observer
     obstype: obstype
     setup: ObsName+".not"
@@ -1419,23 +1453,6 @@ blocks:
     coordinate: [336, 320]
     rotation: 0
     state: enabled
-- name: radio_astro_vmedian_0_0_0
-  id: radio_astro_vmedian
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    n: '4'
-    vec_length: fftsize
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [520, 248]
-    rotation: 180
-    state: enabled
 - name: radio_astro_vmedian_0_0_0_0
   id: radio_astro_vmedian
   parameters:
@@ -1474,12 +1491,14 @@ blocks:
 connections:
 - [blocks_complex_to_float_0, '0', qtgui_histogram_sink_x_0, '0']
 - [blocks_complex_to_float_0, '1', qtgui_histogram_sink_x_0, '1']
-- [blocks_complex_to_mag_squared_0, '0', radio_astro_vmedian_0_0_0, '0']
+- [blocks_complex_to_mag_squared_0, '0', radio_astro_vmedian_0_0_0_0, '0']
+- [blocks_float_to_int_0, '0', blocks_int_to_float_0, '0']
+- [blocks_int_to_float_0, '0', qtgui_number_sink_0, '0']
 - [blocks_stream_to_vector_0_0, '0', fft_vxx_0, '0']
 - [fft_vxx_0, '0', blocks_complex_to_mag_squared_0, '0']
 - [osmosdr_source_0, '0', blocks_complex_to_float_0, '0']
 - [osmosdr_source_0, '0', blocks_stream_to_vector_0_0, '0']
-- [radio_astro_ra_ascii_sink_0, '0', qtgui_number_sink_0, '0']
+- [radio_astro_ra_ascii_sink_0, '0', blocks_float_to_int_0, '0']
 - [radio_astro_ra_integrate_1, '0', qtgui_vector_sink_f_0_0, '0']
 - [radio_astro_ra_integrate_1, '1', qtgui_vector_sink_f_0_0, '1']
 - [radio_astro_ra_integrate_1, '2', qtgui_vector_sink_f_0_0, '2']
@@ -1487,7 +1506,6 @@ connections:
 - [radio_astro_ra_integrate_1, '4', qtgui_vector_sink_f_0_0, '4']
 - [radio_astro_vmedian_0, '0', radio_astro_vmedian_0_1, '0']
 - [radio_astro_vmedian_0_0, '0', radio_astro_vmedian_0, '0']
-- [radio_astro_vmedian_0_0_0, '0', radio_astro_vmedian_0_0_0_0, '0']
 - [radio_astro_vmedian_0_0_0_0, '0', radio_astro_vmedian_0_0, '0']
 - [radio_astro_vmedian_0_1, '0', radio_astro_ra_ascii_sink_0, '0']
 - [radio_astro_vmedian_0_1, '0', radio_astro_ra_integrate_1, '0']
