@@ -1,5 +1,8 @@
 # gr-radio_astro
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14583457.svg)](https://doi.org/10.5281/zenodo.14583457)
+
+
 This package provides GNUradio OOT modules and `grc` flowgraphs that facilates Radio Astronomy Observations with software defined radio devices.
 
 There are two flavors of this projects:
