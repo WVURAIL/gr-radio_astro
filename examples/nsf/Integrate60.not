@@ -2,7 +2,7 @@
 # NOTEA     = Pi 4 Test
 # NOTEB     = Spectral Integration AIRSPY-mini Test
 # OBSERVER  = Science Aficionado
-# DEVICE    = airspy,bias=0
+# DEVICE    = airspy,bias=1
 # DATADIR   = ../data/
 # SITE      = Pi 4 Test
 # CITY      = Green Bank
@@ -36,10 +36,10 @@
 # EMJD      = 58568.808999981004 
 # REFCHAN   = 1024.0
 # REFSAMPL  = 256.0
-# NAVE      = 450
-# NMEDIAN   = 1024
+# NAVE      = 1380
+# NMEDIAN   = 256
 # Fft_rate  = 5000
-# UTC       = 2022-01-01 20:43:42.155526
+# UTC       = 2025-01-24 17:17:41.055203
 # SECONDS   =       0.0000000000 
 # LST       = 00:00:00.000
 # AZ        = 0.0
