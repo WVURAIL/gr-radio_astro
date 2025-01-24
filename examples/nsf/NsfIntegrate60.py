@@ -6,7 +6,7 @@
 #
 # GNU Radio Python Flow Graph
 # Title: NsfIntegrate: Average Astronomical Obs.
-# Author: Glen Langston -- NSF 20 May 22
+# Author: Glen Langston -- NSF 25 Jsan 24
 # Description: Astronomy with AIRSPY-mini  Dongle
 # GNU Radio version: 3.10.1.1
 
@@ -154,8 +154,13 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         except: Azimuth_save = 90.
         self.Azimuth_save = Azimuth_save
         self.yunits = yunits = ["Counts", "Power (dB)", "Intensity (Kelvins)", "Intensity (K)"]
+<<<<<<< HEAD
+        self.ymins = ymins = [ 0.01,  -20,  90.,-5.]
+        self.ymaxs = ymaxs = [10., 10., 200., 50.]
+=======
         self.ymins = ymins = [-.5,  -20,  90.,-3.]
         self.ymaxs = ymaxs = [12., 10., 200., 30.]
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
         self.xsteps = xsteps = [Bandwidth*1.E-6/fftsize, -Bandwidth*3.E5/(H1*fftsize), 1]
         self.xmins = xmins = [numin*1E-6, (H1 - numin)*(3E5/H1), 0 ]
         self.units = units = 0
@@ -271,17 +276,26 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         # Create the labels list
         self._Xaxis_labels = ['Frequency (MHz)', 'Velocity (km/sec)', 'Channels']
         # Create the combo box
-        self._Xaxis_tool_bar = Qt.QToolBar(self)
-        self._Xaxis_tool_bar.addWidget(Qt.QLabel("Xaxis" + ": "))
-        self._Xaxis_combo_box = Qt.QComboBox()
-        self._Xaxis_tool_bar.addWidget(self._Xaxis_combo_box)
-        for _label in self._Xaxis_labels: self._Xaxis_combo_box.addItem(_label)
-        self._Xaxis_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Xaxis_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Xaxis_options.index(i)))
-        self._Xaxis_callback(self.Xaxis)
-        self._Xaxis_combo_box.currentIndexChanged.connect(
-            lambda i: self.set_Xaxis(self._Xaxis_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._Xaxis_tool_bar, 7, 3, 1, 3)
+        self._Xaxis_group_box = Qt.QGroupBox("Xaxis" + ": ")
+        self._Xaxis_box = Qt.QHBoxLayout()
+        class variable_chooser_button_group(Qt.QButtonGroup):
+            def __init__(self, parent=None):
+                Qt.QButtonGroup.__init__(self, parent)
+            @pyqtSlot(int)
+            def updateButtonChecked(self, button_id):
+                self.button(button_id).setChecked(True)
+        self._Xaxis_button_group = variable_chooser_button_group()
+        self._Xaxis_group_box.setLayout(self._Xaxis_box)
+        for i, _label in enumerate(self._Xaxis_labels):
+            radio_button = Qt.QRadioButton(_label)
+            self._Xaxis_box.addWidget(radio_button)
+            self._Xaxis_button_group.addButton(radio_button, i)
+        self._Xaxis_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Xaxis_button_group, "updateButtonChecked", Qt.Q_ARG("int", self._Xaxis_options.index(i)))
+        self._Xaxis_callback(self.Xaxis)
+        self._Xaxis_button_group.buttonClicked[int].connect(
+            lambda i: self.set_Xaxis(self._Xaxis_options[i]))
+        self.top_grid_layout.addWidget(self._Xaxis_group_box, 7, 3, 1, 3)
         for r in range(7, 8):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(3, 6):
@@ -417,7 +431,10 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
+<<<<<<< HEAD
+=======
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
         self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, units, 295., 10.)
         self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
@@ -442,8 +459,13 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
             1, 1, 1, 1, 1]
+<<<<<<< HEAD
+        colors = ["gold", "green", "red", "blue", "dark blue",
+            "magenta", "gold", "dark red", "dark green", "dark blue"]
+=======
         colors = ["yellow", "green", "red", "blue", "dark blue",
             "magenta", "yellow", "dark red", "dark green", "dark blue"]
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, 1.0]
 
@@ -572,23 +594,39 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
+<<<<<<< HEAD
+        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_0_0, 0))
+=======
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_0_0, 0))
         self.connect((self.blocks_float_to_int_0, 0), (self.blocks_int_to_float_0, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.qtgui_number_sink_0, 0))
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
+<<<<<<< HEAD
+        self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
+        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
+=======
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.blocks_float_to_int_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
         self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
+        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
+<<<<<<< HEAD
+        self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
+        self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_1, 0))
+=======
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
         self.connect((self.radio_astro_vmedian_0_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_ascii_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_integrate_1, 0))
@@ -800,7 +838,6 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._fftsize_save_config.set('main', 'fftsize', str(self.fftsize))
         self._fftsize_save_config.write(open(self.ConfigFile, 'w'))
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
-        self.radio_astro_vmedian_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_1.set_vlen(self.fftsize)

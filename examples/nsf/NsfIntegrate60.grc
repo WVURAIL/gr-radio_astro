@@ -1,6 +1,6 @@
 options:
   parameters:
-    author: Glen Langston -- NSF 20 May 22
+    author: Glen Langston -- NSF 25 Jsan 24
     catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
@@ -372,10 +372,10 @@ blocks:
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: int
     value: xaxis_save
-    widget: combo_box
+    widget: radio_buttons
   states:
     bus_sink: false
     bus_source: false
@@ -630,7 +630,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '[3., 10., 200., 50.]'
+    value: '[10., 10., 200., 50.]'
   states:
     bus_sink: false
     bus_source: false
@@ -743,7 +743,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 112]
+    coordinate: [528, 152.0]
     rotation: 0
     state: enabled
 - name: fft_vxx_0
@@ -1419,23 +1419,6 @@ blocks:
     coordinate: [944, 200]
     rotation: 0
     state: enabled
-- name: radio_astro_vmedian_0
-  id: radio_astro_vmedian
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    n: '4'
-    vec_length: fftsize
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [504, 320]
-    rotation: 0
-    state: enabled
 - name: radio_astro_vmedian_0_0
   id: radio_astro_vmedian
   parameters:
@@ -1453,6 +1436,26 @@ blocks:
     coordinate: [336, 320]
     rotation: 0
     state: enabled
+<<<<<<< HEAD
+- name: radio_astro_vmedian_0_0_0
+  id: radio_astro_vmedian
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n: '4'
+    vec_length: fftsize
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [512, 316.0]
+    rotation: 0
+    state: enabled
+=======
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
 - name: radio_astro_vmedian_0_0_0_0
   id: radio_astro_vmedian
   parameters:
@@ -1484,7 +1487,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [720, 320]
+    coordinate: [712, 316.0]
     rotation: 0
     state: enabled
 
@@ -1492,8 +1495,11 @@ connections:
 - [blocks_complex_to_float_0, '0', qtgui_histogram_sink_x_0, '0']
 - [blocks_complex_to_float_0, '1', qtgui_histogram_sink_x_0, '1']
 - [blocks_complex_to_mag_squared_0, '0', radio_astro_vmedian_0_0_0_0, '0']
+<<<<<<< HEAD
+=======
 - [blocks_float_to_int_0, '0', blocks_int_to_float_0, '0']
 - [blocks_int_to_float_0, '0', qtgui_number_sink_0, '0']
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
 - [blocks_stream_to_vector_0_0, '0', fft_vxx_0, '0']
 - [fft_vxx_0, '0', blocks_complex_to_mag_squared_0, '0']
 - [osmosdr_source_0, '0', blocks_complex_to_float_0, '0']
@@ -1504,8 +1510,13 @@ connections:
 - [radio_astro_ra_integrate_1, '2', qtgui_vector_sink_f_0_0, '2']
 - [radio_astro_ra_integrate_1, '3', qtgui_vector_sink_f_0_0, '3']
 - [radio_astro_ra_integrate_1, '4', qtgui_vector_sink_f_0_0, '4']
+<<<<<<< HEAD
+- [radio_astro_vmedian_0_0, '0', radio_astro_vmedian_0_0_0, '0']
+- [radio_astro_vmedian_0_0_0, '0', radio_astro_vmedian_0_1, '0']
+=======
 - [radio_astro_vmedian_0, '0', radio_astro_vmedian_0_1, '0']
 - [radio_astro_vmedian_0_0, '0', radio_astro_vmedian_0, '0']
+>>>>>>> 3985bb18984a828044dff03b232a40a68f3925c9
 - [radio_astro_vmedian_0_0_0_0, '0', radio_astro_vmedian_0_0, '0']
 - [radio_astro_vmedian_0_1, '0', radio_astro_ra_ascii_sink_0, '0']
 - [radio_astro_vmedian_0_1, '0', radio_astro_ra_integrate_1, '0']
