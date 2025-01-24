@@ -14,6 +14,7 @@
 # GNU General Public License for more details.
 #
 # HISTORY
+# 25JAN01 GIL remove some extraneous comments and print outs
 # 20DEC29 GIL recompute LST,RA, Dec from average utc time
 # 20Aug16 GIL fix some print statements
 # 20Feb16 GIL remove normalization.  Do that in post processing
@@ -396,8 +397,6 @@ class ra_ascii_sink(gr.sync_block):
             self.obs.utc = middle
             self.obs.durationSec = duration
             # this removes component due non-gain part of spectrum
-            # avecount normaizes the counts of observations
-#            self.obs.ydataA[0:ncp] = self.sum[0:ncp]/float(self.avecount)
             self.obs.ydataA[0:ncp] = self.sum[0:ncp]
             self.obs.azel2radec()
             strnow = middle.isoformat()
@@ -446,8 +445,8 @@ class ra_ascii_sink(gr.sync_block):
         iout = iout+1
         
         # end for all input vectors
-        if (nv != iout):
-            print('Accumulation error:  ', nv, iout)
+#        if (nv != iout):
+#            print('Accumulation error:  ', nv, iout)
         return iout
     # end ascii_sink()
 
