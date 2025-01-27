@@ -1223,7 +1223,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     nave: nAve
-    nmedian: 4**5
+    nmedian: 4**4
     observers: observer
     obstype: obstype
     record: Record
@@ -1250,7 +1250,7 @@ blocks:
     inttype: Record
     maxoutbuf: '0'
     minoutbuf: '0'
-    nmedian: 4**5
+    nmedian: 4**4
     observers: observers_save
     obstype: obstype
     setup: ObsName+".not"
@@ -1263,23 +1263,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [944, 220]
-    rotation: 0
-    state: enabled
-- name: radio_astro_vmedian_0
-  id: radio_astro_vmedian
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    n: '4'
-    vec_length: fftsize
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [520, 312]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0
@@ -1396,8 +1379,7 @@ connections:
 - [radio_astro_ra_integrate_1, '2', qtgui_vector_sink_f_0_0, '2']
 - [radio_astro_ra_integrate_1, '3', qtgui_vector_sink_f_0_0, '3']
 - [radio_astro_ra_integrate_1, '4', qtgui_vector_sink_f_0_0, '4']
-- [radio_astro_vmedian_0, '0', radio_astro_vmedian_0_1, '0']
-- [radio_astro_vmedian_0_0, '0', radio_astro_vmedian_0, '0']
+- [radio_astro_vmedian_0_0, '0', radio_astro_vmedian_0_1, '0']
 - [radio_astro_vmedian_0_1, '0', radio_astro_ra_ascii_sink_0, '0']
 - [radio_astro_vmedian_0_1, '0', radio_astro_ra_integrate_1, '0']
 - [radio_astro_vmedian_0_2, '0', radio_astro_vmedian_0_2_0, '0']

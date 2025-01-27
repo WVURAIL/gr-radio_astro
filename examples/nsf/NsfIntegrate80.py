@@ -501,9 +501,8 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_2 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observers_save, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, 4**5, units, 295., 10.)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, 4**5, nAve, telescope_save, device_save, Gain1, float(Gain2), float(Gain2))
+        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observers_save, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, 4**4, units, 295., 10.)
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequencys, Bandwidths, Azimuth, Elevation, Record, obstype, 4**4, nAve, telescope_save, device_save, Gain1, float(Gain2), float(Gain2))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             xmins[Xaxis],
@@ -527,7 +526,7 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         widths = [1, 3, 2, 2, 3,
             1, 1, 1, 1, 1]
         colors = ["gold", "dark green", "red", "blue", "cyan",
-            "magenta", "yellow", "dark red", "dark green", "dark blue"]
+            "magenta", "gold", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, 1.0]
 
@@ -605,7 +604,7 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         widths = [1, 1, 1, 1, 1,
             1, 1, 1, 1, 1]
         colors = ["blue", "red", "green", "black", "cyan",
-            "magenta", "yellow", "dark red", "dark green", "dark blue"]
+            "magenta", "gold", "dark red", "dark green", "dark blue"]
         styles = [1, 1, 1, 1, 1,
             1, 1, 1, 1, 1]
         markers= [-1, -1, -1, -1, -1,
@@ -672,19 +671,18 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_2, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
-        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
-        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
+        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
         self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
-        self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_vmedian_0_1, 0))
-        self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
+        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
+        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
+        self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_ascii_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0_1, 0), (self.radio_astro_ra_integrate_1, 0))
         self.connect((self.radio_astro_vmedian_0_2, 0), (self.radio_astro_vmedian_0_2_0, 0))
@@ -943,7 +941,6 @@ class NsfIntegrate80(gr.top_block, Qt.QWidget):
         self._fftsize_save_config.set('main', 'fftsize', str(self.fftsize))
         self._fftsize_save_config.write(open(self.ConfigFile, 'w'))
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
-        self.radio_astro_vmedian_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_1.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_2.set_vlen(self.fftsize)
