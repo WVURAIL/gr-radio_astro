@@ -8,7 +8,7 @@
 # Title: NSF Watch for Events whille recording spectra
 # Author: Glen Langston
 # Description: AIRSPY Mini at full speed 6 MHz samples
-# GNU Radio version: 3.10.1.1
+# GNU Radio version: 3.10.5.1
 
 from packaging.version import Version as StrictVersion
 
@@ -169,6 +169,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
+
         self._observer_tool_bar = Qt.QToolBar(self)
         self._observer_tool_bar.addWidget(Qt.QLabel("Who" + ": "))
         self._observer_line_edit = Qt.QLineEdit(str(self.observer))
@@ -369,11 +370,10 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_1_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency, Bandwidth, EventMode, 'Event Detection', 'Observer', Telescope, Device, float(Gain1), Azimuth, Elevation)
         self.radio_astro_ra_event_log_0 = radio_astro.ra_event_log('', 'Event Detection', fftsize, Bandwidth)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, 0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, 0, (4**4), nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize/Bandwidth, 2)
         self.qtgui_number_sink_0 = qtgui.number_sink(
             gr.sizeof_float,
@@ -415,7 +415,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
             fftsize,
             100,
-            -.4,
+            (-.4),
             .4,
             "",
             2,
@@ -495,8 +495,7 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_ra_ascii_sink_0, 0))
-        self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
-        self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_1, 0), (self.radio_astro_vmedian_0_0_1_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_1_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
 
@@ -752,7 +751,6 @@ class NsfWatch60(gr.top_block, Qt.QWidget):
         self.radio_astro_ra_event_log_0.set_vlen(self.fftsize)
         self.radio_astro_ra_event_sink_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0.set_vlen(self.fftsize)
-        self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_1.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_1_0.set_vlen(self.fftsize)
