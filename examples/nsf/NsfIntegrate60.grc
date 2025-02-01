@@ -15,7 +15,7 @@ options:
     max_nouts: '0'
     output_language: python
     placement: (0,0)
-    qt_qss_theme: ''
+    qt_qss_theme: nsf.qss
     realtime_scheduling: ''
     run: 'True'
     run_command: '{python} -u {filename}'
@@ -709,7 +709,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 112]
+    coordinate: [544, 128.0]
     rotation: 0
     state: enabled
 - name: fft_vxx_0

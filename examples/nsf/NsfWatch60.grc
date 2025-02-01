@@ -15,7 +15,7 @@ options:
     max_nouts: '0'
     output_language: python
     placement: (0,0)
-    qt_qss_theme: ''
+    qt_qss_theme: nsf.qss
     realtime_scheduling: ''
     run: 'True'
     run_command: '{python} -u {filename}'
@@ -1312,4 +1312,3 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.5.1

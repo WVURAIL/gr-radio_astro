@@ -8,9 +8,9 @@
 # Title: Nsf Airspy Mini Event Detect: 6 MHz
 # Author: Glen Langston
 # Description: Event Detection using Airspy
-# GNU Radio version: 3.10.0.0-rc1
+# GNU Radio version: 3.10.1.1
 
-from distutils.version import StrictVersion
+from packaging.version import Version as StrictVersion
 
 if __name__ == '__main__':
     import ctypes
@@ -39,6 +39,7 @@ from gnuradio import radio_astro
 from gnuradio.qtgui import Range, RangeWidget
 from PyQt5 import QtCore
 import configparser
+import os
 import osmosdr
 import time
 
@@ -473,7 +474,6 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
 
 
-
         ##################################################
         # Connections
         ##################################################
@@ -495,6 +495,16 @@ class NsfDetect60(gr.top_block, Qt.QWidget):
         self.wait()
 
         event.accept()
+
+    def setStyleSheetFromFile(self, filename):
+        try:
+            if not os.path.exists(filename):
+                filename = os.path.join(
+                    gr.prefix(), "share", "gnuradio", "themes", filename)
+            with open(filename) as ss:
+                self.setStyleSheet(ss.read())
+        except Exception as e:
+            print(e, file=sys.stderr)
 
     def get_ObsName(self):
         return self.ObsName
@@ -874,6 +884,7 @@ def main(top_block_cls=NsfDetect60, options=None):
 
     tb.start()
 
+    tb.setStyleSheetFromFile("nsf.qss")
     tb.show()
 
     def sig_handler(sig=None, frame=None):

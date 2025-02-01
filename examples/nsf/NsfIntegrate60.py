@@ -8,7 +8,7 @@
 # Title: NsfIntegrate: Average Astronomical Obs.
 # Author: Glen Langston -- NSF 25 Jan 24
 # Description: Astronomy with AIRSPY-mini  Dongle - Speed up Plot
-# GNU Radio version: 3.10.5.1
+# GNU Radio version: 3.10.1.1
 
 from packaging.version import Version as StrictVersion
 
@@ -38,6 +38,7 @@ from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import radio_astro
 import configparser
+import os
 import osmosdr
 import time
 
@@ -175,7 +176,6 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-
         # Create the options list
         self._units_options = [0, 1, 2, 3]
         # Create the labels list
@@ -428,8 +428,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, (4**4), units, 295., 10.)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, (4**4), nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
+        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, units, 295., 10.)
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             xmins[Xaxis],
@@ -446,15 +446,14 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
         self.qtgui_vector_sink_f_0_0.set_x_axis_units("")
         self.qtgui_vector_sink_f_0_0.set_y_axis_units("")
-        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(ymins[units] + ymaxs[units])))
-
+        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(ymins[units] + ymaxs[units]))
 
         labels = ['Latest', 'Median', 'Hot', 'Cold', 'Ref',
             '', '', '', '', '']
         widths = [1, 3, 2, 2, 3,
             1, 1, 1, 1, 1]
-        colors = ["gold", "green", "red", "blue", "dark blue",
-            "magenta", "gold", "dark red", "dark green", "dark blue"]
+        colors = ["yellow", "green", "red", "blue", "dark blue",
+            "magenta", "yellow", "dark red", "dark green", "dark blue"]
         alphas = [2., 1.0, 1.0, 1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, 1.0]
 
@@ -513,7 +512,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
             fftsize,
             100,
-            (-.5),
+            -.5,
             .5,
             "",
             2,
@@ -532,7 +531,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         widths = [1, 1, 1, 1, 1,
             1, 1, 1, 1, 1]
         colors = ["blue", "red", "green", "black", "cyan",
-            "magenta", "gold", "dark red", "dark green", "dark blue"]
+            "magenta", "yellow", "dark red", "dark green", "dark blue"]
         styles = [1, 1, 1, 1, 1,
             1, 1, 1, 1, 1]
         markers= [-1, -1, -1, -1, -1,
@@ -581,19 +580,19 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
+        self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
-        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
-        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
-        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
+        self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
+        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
+        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
+        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0_0_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
@@ -608,6 +607,16 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.wait()
 
         event.accept()
+
+    def setStyleSheetFromFile(self, filename):
+        try:
+            if not os.path.exists(filename):
+                filename = os.path.join(
+                    gr.prefix(), "share", "gnuradio", "themes", filename)
+            with open(filename) as ss:
+                self.setStyleSheet(ss.read())
+        except Exception as e:
+            print(e, file=sys.stderr)
 
     def get_ObsName(self):
         return self.ObsName
@@ -874,7 +883,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_ymins(self, ymins):
         self.ymins = ymins
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
+        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
 
     def get_ymaxs(self):
         return self.ymaxs
@@ -882,7 +891,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_ymaxs(self, ymaxs):
         self.ymaxs = ymaxs
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
+        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
 
     def get_xsteps(self):
         return self.xsteps
@@ -905,7 +914,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.units = units
         self._units_callback(self.units)
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
+        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
         self.radio_astro_ra_integrate_1.set_units(self.units)
 
     def get_obstype(self):
@@ -1086,6 +1095,7 @@ def main(top_block_cls=NsfIntegrate60, options=None):
 
     tb.start()
 
+    tb.setStyleSheetFromFile("nsf.qss")
     tb.show()
 
     def sig_handler(sig=None, frame=None):
