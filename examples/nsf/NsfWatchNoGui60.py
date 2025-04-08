@@ -8,7 +8,7 @@
 # Title: Nsf Detect+Spectra: Airspy-mini 6MHz Astronomical Obs.
 # Author: Glen Langston
 # Description: Astronomy with 6MHz Airspy Mini Events and Spectra
-# GNU Radio version: 3.10.1.1
+# GNU Radio version: 3.10.5.1
 
 from gnuradio import blocks
 from gnuradio import fft
@@ -148,13 +148,13 @@ class NsfWatchNoGui60(gr.top_block):
         ##################################################
         # Blocks
         ##################################################
+
         self.radio_astro_vmedian_0_0_1_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_ra_event_sink_0 = radio_astro.ra_event_sink(ObsName+"Event.not", fftsize, Frequency, Bandwidth, True, 'Event Detection', Observer, Telescope, Device, float(Gain1), Azimuth, Elevation)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, 1, 0, 4**5, nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, 1, 0, (4**4), nAve, telescope_save, device_save, float(Gain1), float(Gain2), float(Gain3))
         self.radio_astro_detect_0 = radio_astro.detect(fftsize, nsigma, Frequency, Bandwidth, fftsize/Bandwidth, True)
         self.osmosdr_source_0 = osmosdr.source(
             args="numchan=" + str(1) + " " + Device
@@ -188,8 +188,7 @@ class NsfWatchNoGui60(gr.top_block):
         self.connect((self.radio_astro_detect_0, 0), (self.radio_astro_ra_event_sink_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.blocks_null_sink_0, 0))
         self.connect((self.radio_astro_vmedian_0, 0), (self.radio_astro_ra_ascii_sink_0, 0))
-        self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0, 0))
-        self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
+        self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_1, 0), (self.radio_astro_vmedian_0_0_1_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_1_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
 
@@ -511,7 +510,6 @@ class NsfWatchNoGui60(gr.top_block):
         self.radio_astro_detect_0.set_vlen(self.fftsize)
         self.radio_astro_ra_event_sink_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0.set_vlen(self.fftsize)
-        self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_1.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_1_0.set_vlen(self.fftsize)

@@ -1078,7 +1078,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     nave: nAve
-    nmedian: 4**5
+    nmedian: 4**4
     observers: observer
     obstype: '0'
     record: '1'
@@ -1132,23 +1132,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [528, 1300.0]
-    rotation: 0
-    state: enabled
-- name: radio_astro_vmedian_0_0
-  id: radio_astro_vmedian
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    n: '4'
-    vec_length: fftsize
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [344, 1300.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0_0
@@ -1238,11 +1221,11 @@ connections:
 - [radio_astro_detect_0, '0', radio_astro_ra_event_sink_0, '0']
 - [radio_astro_ra_ascii_sink_0, '0', blocks_null_sink_0, '0']
 - [radio_astro_vmedian_0, '0', radio_astro_ra_ascii_sink_0, '0']
-- [radio_astro_vmedian_0_0, '0', radio_astro_vmedian_0, '0']
-- [radio_astro_vmedian_0_0_0, '0', radio_astro_vmedian_0_0, '0']
+- [radio_astro_vmedian_0_0_0, '0', radio_astro_vmedian_0, '0']
 - [radio_astro_vmedian_0_0_1, '0', radio_astro_vmedian_0_0_1_0, '0']
 - [radio_astro_vmedian_0_0_1_0, '0', radio_astro_vmedian_0_0_0, '0']
 - [virtual_source_0, '0', fft_vxx_0_0, '0']
 
 metadata:
   file_format: 1
+  grc_version: 3.10.5.1
