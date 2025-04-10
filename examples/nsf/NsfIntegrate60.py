@@ -8,7 +8,7 @@
 # Title: NsfIntegrate: Average Astronomical Obs.
 # Author: Glen Langston -- NSF 25 Jan 24
 # Description: Astronomy with AIRSPY-mini  Dongle - Speed up Plot
-# GNU Radio version: 3.10.1.1
+# GNU Radio version: 3.10.5.1
 
 from packaging.version import Version as StrictVersion
 
@@ -84,6 +84,11 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         self.ObsName = ObsName = "Integrate60"
         self.ConfigFile = ConfigFile = ObsName+".conf"
+        self._fftsize_save_config = configparser.ConfigParser()
+        self._fftsize_save_config.read(ConfigFile)
+        try: fftsize_save = self._fftsize_save_config.getint('main', 'fftsize')
+        except: fftsize_save = 1024
+        self.fftsize_save = fftsize_save
         self._Frequencys_config = configparser.ConfigParser()
         self._Frequencys_config.read(ConfigFile)
         try: Frequencys = self._Frequencys_config.getfloat('main', 'Frequency')
@@ -94,11 +99,12 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         try: Bandwidths = self._Bandwidths_config.getfloat('main', 'Bandwidth')
         except: Bandwidths = 6.0e6
         self.Bandwidths = Bandwidths
-        self._fftsize_save_config = configparser.ConfigParser()
-        self._fftsize_save_config.read(ConfigFile)
-        try: fftsize_save = self._fftsize_save_config.getint('main', 'fftsize')
-        except: fftsize_save = 1024
-        self.fftsize_save = fftsize_save
+        self._nAves_config = configparser.ConfigParser()
+        self._nAves_config.read(ConfigFile)
+        try: nAves = self._nAves_config.getint('main', 'nave')
+        except: nAves = 20
+        self.nAves = nAves
+        self.fftsize = fftsize = fftsize_save
         self.Frequency = Frequency = Frequencys
         self.Bandwidth = Bandwidth = Bandwidths
         self._xaxis_save_config = configparser.ConfigParser()
@@ -111,18 +117,13 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         try: telescope_save = self._telescope_save_config.get('main', 'telescope')
         except: telescope_save = 'Bubble Wrap Horn'
         self.telescope_save = telescope_save
+        self.tAve = tAve = (int( nAves * fftsize * 256 / Bandwidth))
         self._observers_save_config = configparser.ConfigParser()
         self._observers_save_config.read(ConfigFile)
         try: observers_save = self._observers_save_config.get('main', 'observers')
         except: observers_save = 'Science Aficionado'
         self.observers_save = observers_save
         self.numin = numin = (Frequency - (Bandwidth/2.))
-        self._nAves_config = configparser.ConfigParser()
-        self._nAves_config.read(ConfigFile)
-        try: nAves = self._nAves_config.getint('main', 'nave')
-        except: nAves = 20
-        self.nAves = nAves
-        self.fftsize = fftsize = fftsize_save
         self._device_save_config = configparser.ConfigParser()
         self._device_save_config.read(ConfigFile)
         try: device_save = self._device_save_config.get('main', 'device')
@@ -162,7 +163,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.units = units = 0
         self.obstype = obstype = 0
         self.observer = observer = observers_save
-        self.nAve = nAve = nAves
+        self.nAve = nAve = int( tAve*Bandwidth/(fftsize*(4**4))) + 1
         self.Xaxis = Xaxis = xaxis_save
         self.Telescope = Telescope = telescope_save
         self.Record = Record = 0
@@ -176,6 +177,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
+
         # Create the options list
         self._units_options = [0, 1, 2, 3]
         # Create the labels list
@@ -245,23 +247,21 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._nAve_tool_bar = Qt.QToolBar(self)
-        self._nAve_tool_bar.addWidget(Qt.QLabel("N_Ave." + ": "))
-        self._nAve_line_edit = Qt.QLineEdit(str(self.nAve))
-        self._nAve_tool_bar.addWidget(self._nAve_line_edit)
-        self._nAve_line_edit.returnPressed.connect(
-            lambda: self.set_nAve(int(str(self._nAve_line_edit.text()))))
-        self.top_grid_layout.addWidget(self._nAve_tool_bar, 0, 2, 1, 2)
-        for r in range(0, 1):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 4):
-            self.top_grid_layout.setColumnStretch(c, 1)
+        # Create the options list
+        self._fftsize_options = [4096, 2048, 1024, 512, 256, 128]
+        # Create the labels list
+        self._fftsize_labels = map(str, self._fftsize_options)
+        # Create the combo box
         self._fftsize_tool_bar = Qt.QToolBar(self)
-        self._fftsize_tool_bar.addWidget(Qt.QLabel("FFT_size" + ": "))
-        self._fftsize_line_edit = Qt.QLineEdit(str(self.fftsize))
-        self._fftsize_tool_bar.addWidget(self._fftsize_line_edit)
-        self._fftsize_line_edit.returnPressed.connect(
-            lambda: self.set_fftsize(int(str(self._fftsize_line_edit.text()))))
+        self._fftsize_tool_bar.addWidget(Qt.QLabel("FFT Size" + ": "))
+        self._fftsize_combo_box = Qt.QComboBox()
+        self._fftsize_tool_bar.addWidget(self._fftsize_combo_box)
+        for _label in self._fftsize_labels: self._fftsize_combo_box.addItem(_label)
+        self._fftsize_callback = lambda i: Qt.QMetaObject.invokeMethod(self._fftsize_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._fftsize_options.index(i)))
+        self._fftsize_callback(self.fftsize)
+        self._fftsize_combo_box.currentIndexChanged.connect(
+            lambda i: self.set_fftsize(self._fftsize_options[i]))
+        # Create the radio buttons
         self.top_grid_layout.addWidget(self._fftsize_tool_bar, 1, 2, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -336,34 +336,61 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
+        # Create the options list
+        self._Gain3_options = [22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 0]
+        # Create the labels list
+        self._Gain3_labels = map(str, self._Gain3_options)
+        # Create the combo box
         self._Gain3_tool_bar = Qt.QToolBar(self)
         self._Gain3_tool_bar.addWidget(Qt.QLabel("Gain3" + ": "))
-        self._Gain3_line_edit = Qt.QLineEdit(str(self.Gain3))
-        self._Gain3_tool_bar.addWidget(self._Gain3_line_edit)
-        self._Gain3_line_edit.returnPressed.connect(
-            lambda: self.set_Gain3(eng_notation.str_to_num(str(self._Gain3_line_edit.text()))))
+        self._Gain3_combo_box = Qt.QComboBox()
+        self._Gain3_tool_bar.addWidget(self._Gain3_combo_box)
+        for _label in self._Gain3_labels: self._Gain3_combo_box.addItem(_label)
+        self._Gain3_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Gain3_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Gain3_options.index(i)))
+        self._Gain3_callback(self.Gain3)
+        self._Gain3_combo_box.currentIndexChanged.connect(
+            lambda i: self.set_Gain3(self._Gain3_options[i]))
+        # Create the radio buttons
         self.top_grid_layout.addWidget(self._Gain3_tool_bar, 2, 6, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
+        # Create the options list
+        self._Gain2_options = [22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 0]
+        # Create the labels list
+        self._Gain2_labels = map(str, self._Gain2_options)
+        # Create the combo box
         self._Gain2_tool_bar = Qt.QToolBar(self)
         self._Gain2_tool_bar.addWidget(Qt.QLabel("Gain2" + ": "))
-        self._Gain2_line_edit = Qt.QLineEdit(str(self.Gain2))
-        self._Gain2_tool_bar.addWidget(self._Gain2_line_edit)
-        self._Gain2_line_edit.returnPressed.connect(
-            lambda: self.set_Gain2(eng_notation.str_to_num(str(self._Gain2_line_edit.text()))))
+        self._Gain2_combo_box = Qt.QComboBox()
+        self._Gain2_tool_bar.addWidget(self._Gain2_combo_box)
+        for _label in self._Gain2_labels: self._Gain2_combo_box.addItem(_label)
+        self._Gain2_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Gain2_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Gain2_options.index(i)))
+        self._Gain2_callback(self.Gain2)
+        self._Gain2_combo_box.currentIndexChanged.connect(
+            lambda i: self.set_Gain2(self._Gain2_options[i]))
+        # Create the radio buttons
         self.top_grid_layout.addWidget(self._Gain2_tool_bar, 2, 4, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
+        # Create the options list
+        self._Gain1_options = [22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 0]
+        # Create the labels list
+        self._Gain1_labels = map(str, self._Gain1_options)
+        # Create the combo box
         self._Gain1_tool_bar = Qt.QToolBar(self)
         self._Gain1_tool_bar.addWidget(Qt.QLabel("Gain1" + ": "))
-        self._Gain1_line_edit = Qt.QLineEdit(str(self.Gain1))
-        self._Gain1_tool_bar.addWidget(self._Gain1_line_edit)
-        self._Gain1_line_edit.returnPressed.connect(
-            lambda: self.set_Gain1(eng_notation.str_to_num(str(self._Gain1_line_edit.text()))))
+        self._Gain1_combo_box = Qt.QComboBox()
+        self._Gain1_tool_bar.addWidget(self._Gain1_combo_box)
+        for _label in self._Gain1_labels: self._Gain1_combo_box.addItem(_label)
+        self._Gain1_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Gain1_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Gain1_options.index(i)))
+        self._Gain1_callback(self.Gain1)
+        self._Gain1_combo_box.currentIndexChanged.connect(
+            lambda i: self.set_Gain1(self._Gain1_options[i]))
+        # Create the radio buttons
         self.top_grid_layout.addWidget(self._Gain1_tool_bar, 2, 2, 1, 2)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -380,12 +407,21 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
+        # Create the options list
+        self._Elevation_options = [90, 80, 70, 60, 50, 40, 30, 20, 10, 0, -50, -90]
+        # Create the labels list
+        self._Elevation_labels = map(str, self._Elevation_options)
+        # Create the combo box
         self._Elevation_tool_bar = Qt.QToolBar(self)
         self._Elevation_tool_bar.addWidget(Qt.QLabel("Elevation" + ": "))
-        self._Elevation_line_edit = Qt.QLineEdit(str(self.Elevation))
-        self._Elevation_tool_bar.addWidget(self._Elevation_line_edit)
-        self._Elevation_line_edit.returnPressed.connect(
-            lambda: self.set_Elevation(eng_notation.str_to_num(str(self._Elevation_line_edit.text()))))
+        self._Elevation_combo_box = Qt.QComboBox()
+        self._Elevation_tool_bar.addWidget(self._Elevation_combo_box)
+        for _label in self._Elevation_labels: self._Elevation_combo_box.addItem(_label)
+        self._Elevation_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Elevation_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Elevation_options.index(i)))
+        self._Elevation_callback(self.Elevation)
+        self._Elevation_combo_box.currentIndexChanged.connect(
+            lambda i: self.set_Elevation(self._Elevation_options[i]))
+        # Create the radio buttons
         self.top_grid_layout.addWidget(self._Elevation_tool_bar, 1, 6, 1, 2)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
@@ -413,23 +449,43 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
+        # Create the options list
+        self._Azimuth_options = [0, 45, 90, 135, 180, 225, 270, 315]
+        # Create the labels list
+        self._Azimuth_labels = map(str, self._Azimuth_options)
+        # Create the combo box
         self._Azimuth_tool_bar = Qt.QToolBar(self)
         self._Azimuth_tool_bar.addWidget(Qt.QLabel("Azimuth" + ": "))
-        self._Azimuth_line_edit = Qt.QLineEdit(str(self.Azimuth))
-        self._Azimuth_tool_bar.addWidget(self._Azimuth_line_edit)
-        self._Azimuth_line_edit.returnPressed.connect(
-            lambda: self.set_Azimuth(eng_notation.str_to_num(str(self._Azimuth_line_edit.text()))))
+        self._Azimuth_combo_box = Qt.QComboBox()
+        self._Azimuth_tool_bar.addWidget(self._Azimuth_combo_box)
+        for _label in self._Azimuth_labels: self._Azimuth_combo_box.addItem(_label)
+        self._Azimuth_callback = lambda i: Qt.QMetaObject.invokeMethod(self._Azimuth_combo_box, "setCurrentIndex", Qt.Q_ARG("int", self._Azimuth_options.index(i)))
+        self._Azimuth_callback(self.Azimuth)
+        self._Azimuth_combo_box.currentIndexChanged.connect(
+            lambda i: self.set_Azimuth(self._Azimuth_options[i]))
+        # Create the radio buttons
         self.top_grid_layout.addWidget(self._Azimuth_tool_bar, 0, 6, 1, 2)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(6, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self._tAve_tool_bar = Qt.QToolBar(self)
+        self._tAve_tool_bar.addWidget(Qt.QLabel("T Ave (s)" + ": "))
+        self._tAve_line_edit = Qt.QLineEdit(str(self.tAve))
+        self._tAve_tool_bar.addWidget(self._tAve_line_edit)
+        self._tAve_line_edit.returnPressed.connect(
+            lambda: self.set_tAve(eng_notation.str_to_num(str(self._tAve_line_edit.text()))))
+        self.top_grid_layout.addWidget(self._tAve_tool_bar, 0, 2, 1, 2)
+        for r in range(0, 1):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(2, 4):
+            self.top_grid_layout.setColumnStretch(c, 1)
         self.radio_astro_vmedian_0_1 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, units, 295., 10.)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
+        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, (4**4), units, 295., 10.)
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, (4**4), nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             xmins[Xaxis],
@@ -446,7 +502,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
         self.qtgui_vector_sink_f_0_0.set_x_axis_units("")
         self.qtgui_vector_sink_f_0_0.set_y_axis_units("")
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(ymins[units] + ymaxs[units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(ymins[units] + ymaxs[units])))
+
 
         labels = ['Latest', 'Median', 'Hot', 'Cold', 'Ref',
             '', '', '', '', '']
@@ -472,47 +529,10 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(2, 8):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.qtgui_number_sink_0 = qtgui.number_sink(
-            gr.sizeof_float,
-            0,
-            qtgui.NUM_GRAPH_NONE,
-            1,
-            None # parent
-        )
-        self.qtgui_number_sink_0.set_update_time(1.)
-        self.qtgui_number_sink_0.set_title("")
-
-        labels = ['T Remains:', '', '', '', '',
-            '', '', '', '', '']
-        units = ['(s)', '', '', '', '',
-            '', '', '', '', '']
-        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
-            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
-        factor = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
-
-        for i in range(1):
-            self.qtgui_number_sink_0.set_min(i, 0.)
-            self.qtgui_number_sink_0.set_max(i, nAve * fftsize * 1024. / Bandwidth)
-            self.qtgui_number_sink_0.set_color(i, colors[i][0], colors[i][1])
-            if len(labels[i]) == 0:
-                self.qtgui_number_sink_0.set_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_number_sink_0.set_label(i, labels[i])
-            self.qtgui_number_sink_0.set_unit(i, units[i])
-            self.qtgui_number_sink_0.set_factor(i, factor[i])
-
-        self.qtgui_number_sink_0.enable_autoscale(False)
-        self._qtgui_number_sink_0_win = sip.wrapinstance(self.qtgui_number_sink_0.qwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_number_sink_0_win, 7, 6, 1, 2)
-        for r in range(7, 8):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(6, 8):
-            self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
             fftsize,
             100,
-            -.5,
+            (-.5),
             .5,
             "",
             2,
@@ -563,8 +583,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_sample_rate(Bandwidth)
         self.osmosdr_source_0.set_center_freq(Frequency, 0)
         self.osmosdr_source_0.set_freq_corr(0, 0)
-        self.osmosdr_source_0.set_dc_offset_mode(2, 0)
-        self.osmosdr_source_0.set_iq_balance_mode(2, 0)
+        self.osmosdr_source_0.set_dc_offset_mode(1, 0)
+        self.osmosdr_source_0.set_iq_balance_mode(1, 0)
         self.osmosdr_source_0.set_gain_mode(False, 0)
         self.osmosdr_source_0.set_gain(float(Gain1), 0)
         self.osmosdr_source_0.set_if_gain(float(Gain2), 0)
@@ -575,6 +595,43 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.blocks_stream_to_vector_0_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fftsize)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(fftsize)
         self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
+        self.Tremain = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_HORIZ,
+            1,
+            None # parent
+        )
+        self.Tremain.set_update_time(1.)
+        self.Tremain.set_title("")
+
+        labels = ['T:', '', '', '', '',
+            '', '', '', '', '']
+        units = ['(s)', '', '', '', '',
+            '', '', '', '', '']
+        colors = [("black", "red"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+
+        for i in range(1):
+            self.Tremain.set_min(i, 0.)
+            self.Tremain.set_max(i, nAve * fftsize * 1024. / Bandwidth)
+            self.Tremain.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.Tremain.set_label(i, "Data {0}".format(i))
+            else:
+                self.Tremain.set_label(i, labels[i])
+            self.Tremain.set_unit(i, units[i])
+            self.Tremain.set_factor(i, factor[i])
+
+        self.Tremain.enable_autoscale(True)
+        self._Tremain_win = sip.wrapinstance(self.Tremain.qwidget(), Qt.QWidget)
+        self.top_grid_layout.addWidget(self._Tremain_win, 7, 6, 1, 2)
+        for r in range(7, 8):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(6, 8):
+            self.top_grid_layout.setColumnStretch(c, 1)
 
 
         ##################################################
@@ -587,12 +644,12 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
-        self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.qtgui_number_sink_0, 0))
+        self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.Tremain, 0))
+        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
         self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
-        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
-        self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
         self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
+        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0_0_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
@@ -711,6 +768,13 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._xaxis_save_config.set('main', 'Xaxis', str(self.Xaxis))
         self._xaxis_save_config.write(open(self.ConfigFile, 'w'))
 
+    def get_fftsize_save(self):
+        return self.fftsize_save
+
+    def set_fftsize_save(self, fftsize_save):
+        self.fftsize_save = fftsize_save
+        self.set_fftsize(self.fftsize_save)
+
     def get_Frequencys(self):
         return self.Frequencys
 
@@ -725,12 +789,32 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.Bandwidths = Bandwidths
         self.set_Bandwidth(self.Bandwidths)
 
-    def get_fftsize_save(self):
-        return self.fftsize_save
+    def get_nAves(self):
+        return self.nAves
 
-    def set_fftsize_save(self, fftsize_save):
-        self.fftsize_save = fftsize_save
-        self.set_fftsize(self.fftsize_save)
+    def set_nAves(self, nAves):
+        self.nAves = nAves
+        self.set_tAve((int( self.nAves * self.fftsize * 256 / self.Bandwidth)))
+
+    def get_fftsize(self):
+        return self.fftsize
+
+    def set_fftsize(self, fftsize):
+        self.fftsize = fftsize
+        self._fftsize_callback(self.fftsize)
+        self._fftsize_save_config = configparser.ConfigParser()
+        self._fftsize_save_config.read(self.ConfigFile)
+        if not self._fftsize_save_config.has_section('main'):
+        	self._fftsize_save_config.add_section('main')
+        self._fftsize_save_config.set('main', 'fftsize', str(self.fftsize))
+        self._fftsize_save_config.write(open(self.ConfigFile, 'w'))
+        self.set_nAve(int( self.tAve*self.Bandwidth/(self.fftsize*(4**4))) + 1)
+        self.set_tAve((int( self.nAves * self.fftsize * 256 / self.Bandwidth)))
+        self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
+        self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
+        self.radio_astro_vmedian_0_0_0.set_vlen(self.fftsize)
+        self.radio_astro_vmedian_0_0_0_0.set_vlen(self.fftsize)
+        self.radio_astro_vmedian_0_1.set_vlen(self.fftsize)
 
     def get_Frequency(self):
         return self.Frequency
@@ -761,7 +845,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         	self._Bandwidths_config.add_section('main')
         self._Bandwidths_config.set('main', 'Bandwidth', str(self.Bandwidth))
         self._Bandwidths_config.write(open(self.ConfigFile, 'w'))
+        self.set_nAve(int( self.tAve*self.Bandwidth/(self.fftsize*(4**4))) + 1)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
+        self.set_tAve((int( self.nAves * self.fftsize * 256 / self.Bandwidth)))
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
         self.osmosdr_source_0.set_sample_rate(self.Bandwidth)
         self.osmosdr_source_0.set_bandwidth(self.Bandwidth, 0)
@@ -782,6 +868,14 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.telescope_save = telescope_save
         self.set_Telescope(self.telescope_save)
 
+    def get_tAve(self):
+        return self.tAve
+
+    def set_tAve(self, tAve):
+        self.tAve = tAve
+        self.set_nAve(int( self.tAve*self.Bandwidth/(self.fftsize*(4**4))) + 1)
+        Qt.QMetaObject.invokeMethod(self._tAve_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.tAve)))
+
     def get_observers_save(self):
         return self.observers_save
 
@@ -795,31 +889,6 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_numin(self, numin):
         self.numin = numin
         self.set_xmins([self.numin*1E-6, (self.H1 - self.numin)*(3E5/self.H1), 0 ])
-
-    def get_nAves(self):
-        return self.nAves
-
-    def set_nAves(self, nAves):
-        self.nAves = nAves
-        self.set_nAve(self.nAves)
-
-    def get_fftsize(self):
-        return self.fftsize
-
-    def set_fftsize(self, fftsize):
-        self.fftsize = fftsize
-        Qt.QMetaObject.invokeMethod(self._fftsize_line_edit, "setText", Qt.Q_ARG("QString", str(self.fftsize)))
-        self._fftsize_save_config = configparser.ConfigParser()
-        self._fftsize_save_config.read(self.ConfigFile)
-        if not self._fftsize_save_config.has_section('main'):
-        	self._fftsize_save_config.add_section('main')
-        self._fftsize_save_config.set('main', 'fftsize', str(self.fftsize))
-        self._fftsize_save_config.write(open(self.ConfigFile, 'w'))
-        self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
-        self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
-        self.radio_astro_vmedian_0_0_0.set_vlen(self.fftsize)
-        self.radio_astro_vmedian_0_0_0_0.set_vlen(self.fftsize)
-        self.radio_astro_vmedian_0_1.set_vlen(self.fftsize)
 
     def get_device_save(self):
         return self.device_save
@@ -883,7 +952,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_ymins(self, ymins):
         self.ymins = ymins
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
 
     def get_ymaxs(self):
         return self.ymaxs
@@ -891,7 +960,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_ymaxs(self, ymaxs):
         self.ymaxs = ymaxs
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
 
     def get_xsteps(self):
         return self.xsteps
@@ -914,7 +983,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.units = units
         self._units_callback(self.units)
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
         self.radio_astro_ra_integrate_1.set_units(self.units)
 
     def get_obstype(self):
@@ -946,7 +1015,6 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_nAve(self, nAve):
         self.nAve = nAve
-        Qt.QMetaObject.invokeMethod(self._nAve_line_edit, "setText", Qt.Q_ARG("QString", str(self.nAve)))
         self._nAves_config = configparser.ConfigParser()
         self._nAves_config.read(self.ConfigFile)
         if not self._nAves_config.has_section('main'):
@@ -997,7 +1065,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_Gain3(self, Gain3):
         self.Gain3 = Gain3
-        Qt.QMetaObject.invokeMethod(self._Gain3_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain3)))
+        self._Gain3_callback(self.Gain3)
         self._Gain3s_config = configparser.ConfigParser()
         self._Gain3s_config.read(self.ConfigFile)
         if not self._Gain3s_config.has_section('main'):
@@ -1012,7 +1080,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_Gain2(self, Gain2):
         self.Gain2 = Gain2
-        Qt.QMetaObject.invokeMethod(self._Gain2_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain2)))
+        self._Gain2_callback(self.Gain2)
         self._Gain2s_config = configparser.ConfigParser()
         self._Gain2s_config.read(self.ConfigFile)
         if not self._Gain2s_config.has_section('main'):
@@ -1027,7 +1095,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_Gain1(self, Gain1):
         self.Gain1 = Gain1
-        Qt.QMetaObject.invokeMethod(self._Gain1_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Gain1)))
+        self._Gain1_callback(self.Gain1)
         self._Gain1s_config = configparser.ConfigParser()
         self._Gain1s_config.read(self.ConfigFile)
         if not self._Gain1s_config.has_section('main'):
@@ -1042,7 +1110,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_Elevation(self, Elevation):
         self.Elevation = Elevation
-        Qt.QMetaObject.invokeMethod(self._Elevation_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Elevation)))
+        self._Elevation_callback(self.Elevation)
         self._Elevation_save_config = configparser.ConfigParser()
         self._Elevation_save_config.read(self.ConfigFile)
         if not self._Elevation_save_config.has_section('main'):
@@ -1071,7 +1139,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_Azimuth(self, Azimuth):
         self.Azimuth = Azimuth
-        Qt.QMetaObject.invokeMethod(self._Azimuth_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.Azimuth)))
+        self._Azimuth_callback(self.Azimuth)
         self._Azimuth_save_config = configparser.ConfigParser()
         self._Azimuth_save_config.read(self.ConfigFile)
         if not self._Azimuth_save_config.has_section('main'):

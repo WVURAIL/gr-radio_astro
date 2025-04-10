@@ -12,7 +12,7 @@ QwtPlot
 }
 
 DisplayPlot {
-    qproperty-zoomer_color: green;
+    qproperty-zoomer_color: #00FF00;
 /*    qproperty-marker_alpha1: 150;*/
 /*    qproperty-marker_alpha2: 150;*/
 /*    qproperty-marker_alpha3: 150;*/
@@ -98,6 +98,7 @@ FrequencyDisplayPlot {
     qproperty-line_width6: 3;
     qproperty-max_fft_color: palegreen;
     qproperty-min_fft_color: darkblue;
+    qproperty-marker_alpha: 255;
     qproperty-marker_lower_intensity_color: white;
     qproperty-marker_upper_intensity_color: red;
     qproperty-marker_lower_intensity_visible: false;

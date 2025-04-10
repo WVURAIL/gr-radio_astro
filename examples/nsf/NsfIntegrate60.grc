@@ -34,20 +34,35 @@ options:
 
 blocks:
 - name: Azimuth
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
     gui_hint: 0,6,1,2
     label: Azimuth
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0,45, 90, 135, 180, 225, 270, 315]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Azimuth_save
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [808, 400]
+    coordinate: [448, 392.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Azimuth_save
   id: variable_config
   parameters:
@@ -77,7 +92,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [568, 488]
+    coordinate: [336, 400.0]
     rotation: 0
     state: enabled
 - name: Bandwidths
@@ -121,24 +136,39 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 584]
+    coordinate: [16, 432.0]
     rotation: 0
     state: enabled
 - name: Elevation
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
     gui_hint: 1,6,1,2
     label: Elevation
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[90,80,70,60,50,40,30,20,10,0,-50,-90]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Elevation_save
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [816, 488]
+    coordinate: [600, 392.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Elevation_save
   id: variable_config
   parameters:
@@ -168,7 +198,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [560, 400]
+    coordinate: [192, 384.0]
     rotation: 0
     state: enabled
 - name: Frequencys
@@ -189,20 +219,35 @@ blocks:
     rotation: 0
     state: enabled
 - name: Gain1
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
     gui_hint: 2,2,1,2
     label: Gain1
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[22,21,20,19,18,17,16,15,14,13,12,11,0]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Gain1s
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [608, 584]
+    coordinate: [304, 536.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Gain1s
   id: variable_config
   parameters:
@@ -217,24 +262,39 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [976, 464]
+    coordinate: [920, 660.0]
     rotation: 0
     state: enabled
 - name: Gain2
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
     gui_hint: 2,4,1,2
     label: Gain2
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[22,21,20,19,18,17,16,15,14,13,12,11,0]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Gain2s
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [728, 584]
+    coordinate: [464, 536.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Gain2s
   id: variable_config
   parameters:
@@ -249,24 +309,39 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [992, 512]
+    coordinate: [1056, 500.0]
     rotation: 0
     state: enabled
 - name: Gain3
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
     gui_hint: 2,6,1,2
     label: Gain3
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[22,21,20,19,18,17,16,15,14,13,12,11,0]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Gain3s
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [848, 584]
+    coordinate: [624, 536.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Gain3s
   id: variable_config
   parameters:
@@ -281,7 +356,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1016, 544]
+    coordinate: [1048, 660.0]
     rotation: 0
     state: enabled
 - name: H1
@@ -350,7 +425,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 488]
+    coordinate: [8, 344.0]
     rotation: 0
     state: enabled
 - name: Xaxis
@@ -380,7 +455,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [522, 681]
+    coordinate: [432, 676.0]
     rotation: 0
     state: enabled
 - name: device_save
@@ -401,20 +476,35 @@ blocks:
     rotation: 0
     state: enabled
 - name: fftsize
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
     gui_hint: 1,2,1,2
-    label: FFT_size
+    label: FFT Size
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[4096, 2048, 1024, 512, 256, 128]'
+    orient: Qt.QVBoxLayout
     type: int
     value: fftsize_save
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 488]
+    coordinate: [136, 528.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: fftsize_save
   id: variable_config
   parameters:
@@ -433,18 +523,15 @@ blocks:
     rotation: 0
     state: enabled
 - name: nAve
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 0,2,1,2
-    label: N_Ave.
-    type: int
-    value: nAves
+    value: int( tAve*Bandwidth/(fftsize*(4**4))) + 1
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [440, 400]
+    coordinate: [16, 544.0]
     rotation: 0
     state: enabled
 - name: nAves
@@ -488,7 +575,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 400]
+    coordinate: [8, 256.0]
     rotation: 0
     state: enabled
 - name: observers_save
@@ -538,6 +625,21 @@ blocks:
     coordinate: [128, 680]
     rotation: 0
     state: enabled
+- name: tAve
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    gui_hint: 0,2,1,2
+    label: T Ave (s)
+    type: real
+    value: int( nAves * fftsize * 256 / Bandwidth)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 288.0]
+    rotation: 0
+    state: enabled
 - name: telescope_save
   id: variable_config
   parameters:
@@ -552,7 +654,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [712, 712]
+    coordinate: [576, 676.0]
     rotation: 0
     state: enabled
 - name: units
@@ -599,7 +701,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1008, 720]
+    coordinate: [744, 676.0]
     rotation: 0
     state: enabled
 - name: xmins
@@ -662,6 +764,69 @@ blocks:
     coordinate: [1200, 680]
     rotation: 0
     state: enabled
+- name: Tremain
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "red")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: 7,6,1,2
+    label1: 'T:'
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: nAve * fftsize * 1024. / Bandwidth
+    min: '0.'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: (s)
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '1.'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1048, 392.0]
+    rotation: 0
+    state: enabled
 - name: blocks_complex_to_float_0
   id: blocks_complex_to_float
   parameters:
@@ -691,7 +856,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [704, 256]
+    coordinate: [672, 256.0]
     rotation: 180
     state: enabled
 - name: blocks_stream_to_vector_0_0
@@ -889,7 +1054,7 @@ blocks:
     corr7: '0'
     corr8: '0'
     corr9: '0'
-    dc_offset_mode0: '2'
+    dc_offset_mode0: '1'
     dc_offset_mode1: '0'
     dc_offset_mode10: '0'
     dc_offset_mode11: '0'
@@ -1049,7 +1214,7 @@ blocks:
     if_gain7: '20'
     if_gain8: '20'
     if_gain9: '20'
-    iq_balance_mode0: '2'
+    iq_balance_mode0: '1'
     iq_balance_mode1: '0'
     iq_balance_mode10: '0'
     iq_balance_mode11: '0'
@@ -1190,69 +1355,6 @@ blocks:
     coordinate: [712, 0]
     rotation: 0
     state: enabled
-- name: qtgui_number_sink_0
-  id: qtgui_number_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    autoscale: 'False'
-    avg: '0'
-    color1: ("black", "black")
-    color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
-    color6: ("black", "black")
-    color7: ("black", "black")
-    color8: ("black", "black")
-    color9: ("black", "black")
-    comment: ''
-    factor1: '1'
-    factor10: '1'
-    factor2: '1'
-    factor3: '1'
-    factor4: '1'
-    factor5: '1'
-    factor6: '1'
-    factor7: '1'
-    factor8: '1'
-    factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 7,6,1,2
-    label1: 'T Remains:'
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    max: nAve * fftsize * 1024. / Bandwidth
-    min: '0.'
-    name: '""'
-    nconnections: '1'
-    type: float
-    unit1: (s)
-    unit10: ''
-    unit2: ''
-    unit3: ''
-    unit4: ''
-    unit5: ''
-    unit6: ''
-    unit7: ''
-    unit8: ''
-    unit9: ''
-    update_time: '1.'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [280, 584]
-    rotation: 0
-    state: enabled
 - name: qtgui_vector_sink_f_0_0
   id: qtgui_vector_sink_f
   parameters:
@@ -1293,6 +1395,7 @@ blocks:
     label7: ''
     label8: ''
     label9: ''
+    legend: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
@@ -1323,7 +1426,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1192, 240.0]
+    coordinate: [1176, 192.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_ascii_sink_0
@@ -1354,7 +1457,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [48, 280]
+    coordinate: [776, 328.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_integrate_1
@@ -1382,7 +1485,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [944, 200]
+    coordinate: [936, 148.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0
@@ -1399,7 +1502,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [336, 320]
+    coordinate: [384, 320.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0_0
@@ -1416,7 +1519,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [520, 248]
+    coordinate: [536, 248.0]
     rotation: 180
     state: enabled
 - name: radio_astro_vmedian_0_0_0_0
@@ -1433,7 +1536,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [328, 248]
+    coordinate: [384, 248.0]
     rotation: 180
     state: enabled
 - name: radio_astro_vmedian_0_1
@@ -1450,7 +1553,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [720, 320]
+    coordinate: [544, 320.0]
     rotation: 0
     state: enabled
 
@@ -1462,7 +1565,7 @@ connections:
 - [fft_vxx_0, '0', blocks_complex_to_mag_squared_0, '0']
 - [osmosdr_source_0, '0', blocks_complex_to_float_0, '0']
 - [osmosdr_source_0, '0', blocks_stream_to_vector_0_0, '0']
-- [radio_astro_ra_ascii_sink_0, '0', qtgui_number_sink_0, '0']
+- [radio_astro_ra_ascii_sink_0, '0', Tremain, '0']
 - [radio_astro_ra_integrate_1, '0', qtgui_vector_sink_f_0_0, '0']
 - [radio_astro_ra_integrate_1, '1', qtgui_vector_sink_f_0_0, '1']
 - [radio_astro_ra_integrate_1, '2', qtgui_vector_sink_f_0_0, '2']
@@ -1476,3 +1579,4 @@ connections:
 
 metadata:
   file_format: 1
+  grc_version: 3.10.5.1
