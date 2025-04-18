@@ -37,7 +37,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,6,1,2
+    gui_hint: 0,4,1,2
     label: Azimuth
     type: real
     value: Azimuth_save
@@ -69,7 +69,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,4,1,2
+    gui_hint: 1,2,1,2
     label: Bandwidth
     type: real
     value: Bandwidths
@@ -113,7 +113,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 2,0,1,2
+    gui_hint: 2,0,1,1
     label: Dev
     type: string
     value: device_save
@@ -128,7 +128,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,6,1,2
+    gui_hint: 1,4,1,2
     label: Elevation
     type: real
     value: Elevation_save
@@ -160,7 +160,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 2 ,4, 1, 2
+    gui_hint: 4 ,1, 1, 1
     label: Event Mode
     label0: '! ! Wait ! !'
     label1: Write
@@ -190,7 +190,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,4,1,2
+    gui_hint: 0,2,1,2
     label: Freq. Hz
     type: real
     value: Frequencys
@@ -219,20 +219,35 @@ blocks:
     rotation: 0
     state: enabled
 - name: Gain1
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 3,2,1,2
+    gui_hint: 2,1,1,1
     label: Gain1
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[22,21,20,19,18,17,16,15,14,13,12,11,0]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Gain1s
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [616, 616]
+    coordinate: [512, 748.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Gain1s
   id: variable_config
   parameters:
@@ -241,30 +256,45 @@ blocks:
     option: gain1
     section: main
     type: real
-    value: '21.'
+    value: '14'
     writeback: Gain1
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [864, 704]
+    coordinate: [1048, 724.0]
     rotation: 0
     state: enabled
 - name: Gain2
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 3,4,1,2
+    gui_hint: 2,3,1,1
     label: Gain2
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[22,21,20,19,18,17,16,15,14,13,12,11,0]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Gain2s
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [752, 616]
+    coordinate: [672, 748.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Gain2s
   id: variable_config
   parameters:
@@ -273,30 +303,45 @@ blocks:
     option: gain2
     section: main
     type: real
-    value: '0.'
+    value: '12'
     writeback: Gain2
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [882, 744]
+    coordinate: [1120, 788.0]
     rotation: 0
     state: enabled
 - name: Gain3
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 3,6,1,2
+    gui_hint: 2,4,1,2
     label: Gain3
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[22,21,20,19,18,17,16,15,14,13,12,11,0]'
+    orient: Qt.QVBoxLayout
     type: real
     value: Gain3s
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [872, 616]
+    coordinate: [832, 748.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: Gain3s
   id: variable_config
   parameters:
@@ -305,13 +350,13 @@ blocks:
     option: gain3
     section: main
     type: real
-    value: '0.'
+    value: '13.'
     writeback: Gain3
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 776]
+    coordinate: [1176, 724.0]
     rotation: 0
     state: enabled
 - name: ObsName
@@ -330,7 +375,7 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 2,2,1,2
+    gui_hint: 3,1,1,1
     label: Spec. Mode
     label0: '! ! Wait ! !'
     label1: AVERAGE
@@ -353,14 +398,14 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 704]
+    coordinate: [56, 740.0]
     rotation: 0
     state: enabled
 - name: Telescope
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 1,0,1,2
+    gui_hint: 1,0,1,1
     label: Tel
     type: string
     value: telescope_save
@@ -389,20 +434,35 @@ blocks:
     rotation: 0
     state: enabled
 - name: fftsize
-  id: variable_qtgui_entry
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 1,2,1,2
-    label: FFT_size
+    gui_hint: 1,1,1,1
+    label: FFT Size
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[4096, 2048, 1024, 512, 256, 128]'
+    orient: Qt.QVBoxLayout
     type: int
     value: fftsize_save
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 520]
+    coordinate: [480, 492.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: fftsize_save
   id: variable_config
   parameters:
@@ -421,18 +481,15 @@ blocks:
     rotation: 0
     state: enabled
 - name: nAve
-  id: variable_qtgui_entry
+  id: variable
   parameters:
     comment: ''
-    gui_hint: 0,2,1,2
-    label: N_Ave.
-    type: int
-    value: nAves
+    value: int( tAve*Bandwidth/(fftsize*(4**4))) + 1
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 432]
+    coordinate: [632, 636.0]
     rotation: 0
     state: enabled
 - name: nAves
@@ -456,7 +513,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 2,6,1,2
+    gui_hint: 3,3,1,1
     label: N Sigma
     min_len: '100'
     orient: QtCore.Qt.Horizontal
@@ -494,7 +551,7 @@ blocks:
   id: variable_qtgui_entry
   parameters:
     comment: ''
-    gui_hint: 0,0,1,2
+    gui_hint: 0,0,1,1
     label: Who
     type: string
     value: observers_save
@@ -519,7 +576,22 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1064, 640]
+    coordinate: [944, 548.0]
+    rotation: 0
+    state: enabled
+- name: tAve
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    gui_hint: 0,1,1,1
+    label: T Ave (s)
+    type: real
+    value: int( nAves * fftsize * 256 / Bandwidth)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [480, 420.0]
     rotation: 0
     state: enabled
 - name: telescope_save
@@ -536,7 +608,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1056, 464]
+    coordinate: [944, 404.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_float_0
@@ -607,7 +679,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [814, 257]
+    coordinate: [840, 228.0]
     rotation: 180
     state: enabled
 - name: note_1
@@ -1011,7 +1083,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 4,0,2,4
+    gui_hint: 4,0,1,1
     label1: I
     label10: ''
     label2: Q
@@ -1072,9 +1144,9 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    autoscale: 'False'
+    autoscale: 'True'
     avg: '0'
-    color1: ("black", "black")
+    color1: ("blue", "red")
     color10: ("black", "black")
     color2: ("black", "black")
     color3: ("black", "black")
@@ -1096,7 +1168,7 @@ blocks:
     factor8: '1'
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: 4,5,1,2
+    gui_hint: 4,3,1,1
     label1: 'T Remains:'
     label10: ''
     label2: ''
@@ -1238,7 +1310,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [614, 353]
+    coordinate: [448, 348.0]
     rotation: 0
     state: enabled
 - name: radio_astro_vmedian_0_0_0

@@ -309,7 +309,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1056, 500.0]
+    coordinate: [992, 732.0]
     rotation: 0
     state: enabled
 - name: Gain3
@@ -387,8 +387,8 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 5,0,1,2
-    label: Rec
+    gui_hint: 4,0,1,1
+    label: Record
     label0: '! ! Wait ! !'
     label1: AVERAGE
     label2: Save
@@ -432,8 +432,8 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 7,3,1,3
-    label: Xaxis
+    gui_hint: 7,2,1,4
+    label: X
     label0: Frequency (MHz)
     label1: Velocity (km/sec)
     label2: Channels
@@ -599,8 +599,8 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 6,0,1,2
-    label: Obs
+    gui_hint: 5,0,1,1
+    label: Observation
     label0: Survey
     label1: Hot/Cold
     label2: Ref
@@ -661,9 +661,9 @@ blocks:
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 7,0,1,2
+    gui_hint: 6,0,1,1
     label: Units
-    label0: Counts
+    label0: Count
     label1: dB
     label2: Kelvins
     label3: K - Fit
@@ -771,7 +771,7 @@ blocks:
     alias: ''
     autoscale: 'True'
     avg: '0'
-    color1: ("black", "red")
+    color1: ("black", "white")
     color10: ("black", "black")
     color2: ("black", "black")
     color3: ("black", "black")
@@ -793,7 +793,7 @@ blocks:
     factor8: '1'
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_HORIZ
-    gui_hint: 7,6,1,2
+    gui_hint: 7,0,1,1
     label1: 'T:'
     label10: ''
     label2: ''
@@ -819,7 +819,7 @@ blocks:
     unit7: ''
     unit8: ''
     unit9: ''
-    update_time: '1.'
+    update_time: '2'
   states:
     bus_sink: false
     bus_source: false
@@ -1299,7 +1299,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 3,0,2,2
+    gui_hint: 3,0,1,1
     label1: I
     label10: ''
     label2: Q
@@ -1384,7 +1384,7 @@ blocks:
     color9: '"dark green"'
     comment: ''
     grid: 'False'
-    gui_hint: 3,2,4,6
+    gui_hint: 3,1,4,7
     label1: Latest
     label10: ''
     label2: Median
@@ -1395,7 +1395,6 @@ blocks:
     label7: ''
     label8: ''
     label9: ''
-    legend: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
@@ -1579,4 +1578,3 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.5.1
