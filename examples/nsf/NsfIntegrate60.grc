@@ -51,10 +51,10 @@ blocks:
     option2: '2'
     option3: '3'
     option4: '4'
-    options: '[0,45, 90, 135, 180, 225, 270, 315]'
+    options: '[0,30,45,60, 90,120, 135,150, 180, 210, 225,240, 270,300, 315, 330]'
     orient: Qt.QVBoxLayout
     type: real
-    value: Azimuth_save
+    value: int(int(Azimuth_save/5)*5)
     widget: combo_box
   states:
     bus_sink: false
@@ -160,7 +160,7 @@ blocks:
     options: '[90,80,70,60,50,40,30,20,10,0,-50,-90]'
     orient: Qt.QVBoxLayout
     type: real
-    value: Elevation_save
+    value: int(int(Elevation_save/10.)*10.)
     widget: combo_box
   states:
     bus_sink: false
@@ -792,7 +792,7 @@ blocks:
     factor7: '1'
     factor8: '1'
     factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_HORIZ
+    graph_type: qtgui.NUM_GRAPH_NONE
     gui_hint: 7,0,1,1
     label1: 'T:'
     label10: ''
@@ -806,7 +806,7 @@ blocks:
     label9: ''
     max: nAve * fftsize * 1024. / Bandwidth
     min: '0.'
-    name: '""'
+    name: Tremain
     nconnections: '1'
     type: float
     unit1: (s)
@@ -1054,7 +1054,7 @@ blocks:
     corr7: '0'
     corr8: '0'
     corr9: '0'
-    dc_offset_mode0: '1'
+    dc_offset_mode0: 'True'
     dc_offset_mode1: '0'
     dc_offset_mode10: '0'
     dc_offset_mode11: '0'
@@ -1150,7 +1150,7 @@ blocks:
     gain7: '10'
     gain8: '10'
     gain9: '10'
-    gain_mode0: 'False'
+    gain_mode0: 'True'
     gain_mode1: 'False'
     gain_mode10: 'False'
     gain_mode11: 'False'
@@ -1214,7 +1214,7 @@ blocks:
     if_gain7: '20'
     if_gain8: '20'
     if_gain9: '20'
-    iq_balance_mode0: '1'
+    iq_balance_mode0: 'True'
     iq_balance_mode1: '0'
     iq_balance_mode10: '0'
     iq_balance_mode11: '0'
@@ -1395,6 +1395,7 @@ blocks:
     label7: ''
     label8: ''
     label9: ''
+    legend: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
@@ -1578,3 +1579,4 @@ connections:
 
 metadata:
   file_format: 1
+  grc_version: 3.10.5.1

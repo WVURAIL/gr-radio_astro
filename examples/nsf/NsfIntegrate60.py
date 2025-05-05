@@ -8,7 +8,7 @@
 # Title: NsfIntegrate: Average Astronomical Obs.
 # Author: Glen Langston -- NSF 25 Jan 24
 # Description: Astronomy with AIRSPY-mini  Dongle - Speed up Plot
-# GNU Radio version: 3.10.1.1
+# GNU Radio version: 3.10.5.1
 
 from packaging.version import Version as StrictVersion
 
@@ -117,7 +117,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         try: telescope_save = self._telescope_save_config.get('main', 'telescope')
         except: telescope_save = 'Bubble Wrap Horn'
         self.telescope_save = telescope_save
-        self.tAve = tAve = int( nAves * fftsize * 256 / Bandwidth)
+        self.tAve = tAve = (int( nAves * fftsize * 256 / Bandwidth))
         self._observers_save_config = configparser.ConfigParser()
         self._observers_save_config.read(ConfigFile)
         try: observers_save = self._observers_save_config.get('main', 'observers')
@@ -170,13 +170,14 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.Gain3 = Gain3 = Gain3s
         self.Gain2 = Gain2 = Gain2s
         self.Gain1 = Gain1 = Gain1s
-        self.Elevation = Elevation = Elevation_save
+        self.Elevation = Elevation = (int(int(Elevation_save/10.)*10.))
         self.Device = Device = device_save
-        self.Azimuth = Azimuth = Azimuth_save
+        self.Azimuth = Azimuth = (int(int(Azimuth_save/5)*5))
 
         ##################################################
         # Blocks
         ##################################################
+
         # Create the options list
         self._units_options = [0, 1, 2, 3]
         # Create the labels list
@@ -449,7 +450,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         for c in range(4, 6):
             self.top_grid_layout.setColumnStretch(c, 1)
         # Create the options list
-        self._Azimuth_options = [0, 45, 90, 135, 180, 225, 270, 315]
+        self._Azimuth_options = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330]
         # Create the labels list
         self._Azimuth_labels = map(str, self._Azimuth_options)
         # Create the combo box
@@ -483,8 +484,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.radio_astro_vmedian_0_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0_0 = radio_astro.vmedian(fftsize, 4)
         self.radio_astro_vmedian_0_0 = radio_astro.vmedian(fftsize, 4)
-        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, units, 295., 10.)
-        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, 4**4, nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
+        self.radio_astro_ra_integrate_1 = radio_astro.ra_integrate(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, (4**4), units, 295., 10.)
+        self.radio_astro_ra_ascii_sink_0 = radio_astro.ra_ascii_sink(ObsName+".not", observer, fftsize, Frequency, Bandwidth, Azimuth, Elevation, Record, obstype, (4**4), nAve, Telescope, Device, float(Gain1), float(Gain2), float(Gain3))
         self.qtgui_vector_sink_f_0_0 = qtgui.vector_sink_f(
             fftsize,
             xmins[Xaxis],
@@ -501,7 +502,8 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.qtgui_vector_sink_f_0_0.enable_grid(False)
         self.qtgui_vector_sink_f_0_0.set_x_axis_units("")
         self.qtgui_vector_sink_f_0_0.set_y_axis_units("")
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(ymins[units] + ymaxs[units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(ymins[units] + ymaxs[units])))
+
 
         labels = ['Latest', 'Median', 'Hot', 'Cold', 'Ref',
             '', '', '', '', '']
@@ -530,7 +532,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.qtgui_histogram_sink_x_0 = qtgui.histogram_sink_f(
             fftsize,
             100,
-            -.5,
+            (-.5),
             .5,
             "",
             2,
@@ -581,9 +583,9 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_sample_rate(Bandwidth)
         self.osmosdr_source_0.set_center_freq(Frequency, 0)
         self.osmosdr_source_0.set_freq_corr(0, 0)
-        self.osmosdr_source_0.set_dc_offset_mode(1, 0)
-        self.osmosdr_source_0.set_iq_balance_mode(1, 0)
-        self.osmosdr_source_0.set_gain_mode(False, 0)
+        self.osmosdr_source_0.set_dc_offset_mode(True, 0)
+        self.osmosdr_source_0.set_iq_balance_mode(True, 0)
+        self.osmosdr_source_0.set_gain_mode(True, 0)
         self.osmosdr_source_0.set_gain(float(Gain1), 0)
         self.osmosdr_source_0.set_if_gain(float(Gain2), 0)
         self.osmosdr_source_0.set_bb_gain(float(Gain3), 0)
@@ -596,12 +598,12 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.Tremain = qtgui.number_sink(
             gr.sizeof_float,
             0,
-            qtgui.NUM_GRAPH_HORIZ,
+            qtgui.NUM_GRAPH_NONE,
             1,
             None # parent
         )
         self.Tremain.set_update_time(2)
-        self.Tremain.set_title("")
+        self.Tremain.set_title('Tremain')
 
         labels = ['T:', '', '', '', '',
             '', '', '', '', '']
@@ -635,19 +637,19 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_float_0, 0), (self.qtgui_histogram_sink_x_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.qtgui_histogram_sink_x_0, 1))
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.radio_astro_vmedian_0_0_0, 0))
         self.connect((self.blocks_stream_to_vector_0_0, 0), (self.fft_vxx_0, 0))
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.radio_astro_ra_ascii_sink_0, 0), (self.Tremain, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
+        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_ra_integrate_1, 3), (self.qtgui_vector_sink_f_0_0, 3))
         self.connect((self.radio_astro_ra_integrate_1, 0), (self.qtgui_vector_sink_f_0_0, 0))
-        self.connect((self.radio_astro_ra_integrate_1, 1), (self.qtgui_vector_sink_f_0_0, 1))
         self.connect((self.radio_astro_ra_integrate_1, 4), (self.qtgui_vector_sink_f_0_0, 4))
+        self.connect((self.radio_astro_ra_integrate_1, 2), (self.qtgui_vector_sink_f_0_0, 2))
         self.connect((self.radio_astro_vmedian_0_0, 0), (self.radio_astro_vmedian_0_1, 0))
         self.connect((self.radio_astro_vmedian_0_0_0, 0), (self.radio_astro_vmedian_0_0_0_0, 0))
         self.connect((self.radio_astro_vmedian_0_0_0_0, 0), (self.radio_astro_vmedian_0_0, 0))
@@ -792,7 +794,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_nAves(self, nAves):
         self.nAves = nAves
-        self.set_tAve(int( self.nAves * self.fftsize * 256 / self.Bandwidth))
+        self.set_tAve((int( self.nAves * self.fftsize * 256 / self.Bandwidth)))
 
     def get_fftsize(self):
         return self.fftsize
@@ -807,7 +809,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._fftsize_save_config.set('main', 'fftsize', str(self.fftsize))
         self._fftsize_save_config.write(open(self.ConfigFile, 'w'))
         self.set_nAve(int( self.tAve*self.Bandwidth/(self.fftsize*(4**4))) + 1)
-        self.set_tAve(int( self.nAves * self.fftsize * 256 / self.Bandwidth))
+        self.set_tAve((int( self.nAves * self.fftsize * 256 / self.Bandwidth)))
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
         self.radio_astro_vmedian_0_0.set_vlen(self.fftsize)
         self.radio_astro_vmedian_0_0_0.set_vlen(self.fftsize)
@@ -845,7 +847,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self._Bandwidths_config.write(open(self.ConfigFile, 'w'))
         self.set_nAve(int( self.tAve*self.Bandwidth/(self.fftsize*(4**4))) + 1)
         self.set_numin((self.Frequency - (self.Bandwidth/2.)))
-        self.set_tAve(int( self.nAves * self.fftsize * 256 / self.Bandwidth))
+        self.set_tAve((int( self.nAves * self.fftsize * 256 / self.Bandwidth)))
         self.set_xsteps([self.Bandwidth*1.E-6/self.fftsize, -self.Bandwidth*3.E5/(self.H1*self.fftsize), 1])
         self.osmosdr_source_0.set_sample_rate(self.Bandwidth)
         self.osmosdr_source_0.set_bandwidth(self.Bandwidth, 0)
@@ -929,14 +931,14 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
 
     def set_Elevation_save(self, Elevation_save):
         self.Elevation_save = Elevation_save
-        self.set_Elevation(self.Elevation_save)
+        self.set_Elevation((int(int(self.Elevation_save/10.)*10.)))
 
     def get_Azimuth_save(self):
         return self.Azimuth_save
 
     def set_Azimuth_save(self, Azimuth_save):
         self.Azimuth_save = Azimuth_save
-        self.set_Azimuth(self.Azimuth_save)
+        self.set_Azimuth((int(int(self.Azimuth_save/5)*5)))
 
     def get_yunits(self):
         return self.yunits
@@ -950,7 +952,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_ymins(self, ymins):
         self.ymins = ymins
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
 
     def get_ymaxs(self):
         return self.ymaxs
@@ -958,7 +960,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
     def set_ymaxs(self, ymaxs):
         self.ymaxs = ymaxs
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
 
     def get_xsteps(self):
         return self.xsteps
@@ -981,7 +983,7 @@ class NsfIntegrate60(gr.top_block, Qt.QWidget):
         self.units = units
         self._units_callback(self.units)
         self.qtgui_vector_sink_f_0_0.set_y_axis(self.ymins[self.units], self.ymaxs[self.units])
-        self.qtgui_vector_sink_f_0_0.set_ref_level(0.5*(self.ymins[self.units] + self.ymaxs[self.units]))
+        self.qtgui_vector_sink_f_0_0.set_ref_level((0.5*(self.ymins[self.units] + self.ymaxs[self.units])))
         self.radio_astro_ra_integrate_1.set_units(self.units)
 
     def get_obstype(self):
