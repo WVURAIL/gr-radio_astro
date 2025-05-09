@@ -806,7 +806,7 @@ blocks:
     label9: ''
     max: nAve * fftsize * 1024. / Bandwidth
     min: '0.'
-    name: Tremain
+    name: ''
     nconnections: '1'
     type: float
     unit1: (s)
@@ -824,7 +824,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1048, 392.0]
+    coordinate: [1024, 492.0]
     rotation: 0
     state: enabled
 - name: blocks_complex_to_float_0
@@ -1054,7 +1054,7 @@ blocks:
     corr7: '0'
     corr8: '0'
     corr9: '0'
-    dc_offset_mode0: 'True'
+    dc_offset_mode0: '2'
     dc_offset_mode1: '0'
     dc_offset_mode10: '0'
     dc_offset_mode11: '0'
@@ -1150,7 +1150,7 @@ blocks:
     gain7: '10'
     gain8: '10'
     gain9: '10'
-    gain_mode0: 'True'
+    gain_mode0: 'False'
     gain_mode1: 'False'
     gain_mode10: 'False'
     gain_mode11: 'False'
@@ -1214,7 +1214,7 @@ blocks:
     if_gain7: '20'
     if_gain8: '20'
     if_gain9: '20'
-    iq_balance_mode0: 'True'
+    iq_balance_mode0: '2'
     iq_balance_mode1: '0'
     iq_balance_mode10: '0'
     iq_balance_mode11: '0'
@@ -1457,7 +1457,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [776, 328.0]
+    coordinate: [792, 300.0]
     rotation: 0
     state: enabled
 - name: radio_astro_ra_integrate_1
