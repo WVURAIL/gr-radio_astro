@@ -10,6 +10,8 @@ from gnuradio import gr
 import time
 from datetime import datetime
 try:
+    import matplotlib
+    matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     canPlot = True
 except:
