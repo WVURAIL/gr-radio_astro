@@ -36,5 +36,6 @@ install(FILES
     radio_astro_ra_vmedian.block.yml
     radio_astro_integration.block.yml
     radio_astro_vector_moving_average.block.yml
-    radio_astro_png_print_spectrum.block.yml DESTINATION share/gnuradio/grc/blocks
+    radio_astro_png_print_spectrum.block.yml
+    radio_astro_comparator.block.yml DESTINATION share/gnuradio/grc/blocks
 )

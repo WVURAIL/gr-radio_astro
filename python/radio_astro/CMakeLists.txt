@@ -41,7 +41,7 @@ GR_PYTHON_INSTALL(
     integration.py
     vector_moving_average.py
     png_print_spectrum.py
-    DESTINATION ${GR_PYTHON_DIR}/gnuradio/radio_astro
+    comparator.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/radio_astro
 )
 
 ########################################################################
