@@ -32,11 +32,12 @@ class triggered_save_csv(gr.sync_block):
         #print(input_items)
         in0 = input_items[0]
         in1 = input_items[1]
-        print(np.sum(np.abs(in1[0])))  # Debugging line
-        print(in0[0])
-        print(self.triggered)
+        #print(np.sum(np.abs(in1[0])))  # Debugging line
+        #print(in0[0])
+        #print(self.triggered)
         if in0[0] == 1:  # Trigger condition    
             self.triggered = True
+            print("in triggered state")
         if self.triggered:
             if self.saved_samples < self.save_length:
                 self.output_array[self.saved_samples] = in1[0]

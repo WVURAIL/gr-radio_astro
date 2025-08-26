@@ -37,4 +37,5 @@ from .vector_moving_average import vector_moving_average
 from .png_print_spectrum import png_print_spectrum
 from .comparator import comparator
 from .triggered_save_csv import triggered_save_csv
+from .running_norm_std import running_norm_std
 #
