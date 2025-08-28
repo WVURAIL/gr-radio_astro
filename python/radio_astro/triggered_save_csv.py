@@ -15,7 +15,7 @@ class triggered_save_csv(gr.sync_block):
     """
     docstring for block triggered_save_csv
     """
-    def __init__(self, save_length=20, vec_length=4096):
+    def __init__(self, save_length=20, vec_length=4096, notes="_"):
         gr.sync_block.__init__(self,
             name="triggered_save_csv",
             in_sig=[np.int32, (np.complex64,vec_length)],
@@ -25,6 +25,7 @@ class triggered_save_csv(gr.sync_block):
         self.saved_samples = 0
         self.vec_length = int(vec_length)
         self.save_length = save_length
+        self.notes = notes
         self.output_array = np.zeros((self.save_length, self.vec_length), dtype=np.complex64)
 
 
@@ -46,7 +47,7 @@ class triggered_save_csv(gr.sync_block):
                 # Reset the trigger and saved samples if save_length is reached
                 self.triggered = False
                 self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
-                self.textfilename = self.timenow + "_timestream.csv"
+                self.textfilename = self.timenow + "_" + self.notes + "_timestream.csv"
                 print("Saving to file:", self.textfilename)
                 np.savetxt(self.textfilename, self.output_array.flatten(), delimiter=',')
                 self.saved_samples = 0

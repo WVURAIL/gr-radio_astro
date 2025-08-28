@@ -4,7 +4,7 @@ category: '[radio_astro]'
 
 templates:
   imports: from gnuradio import radio_astro
-  make: radio_astro.triggered_save_csv(${save_length}, ${vec_length})
+  make: radio_astro.triggered_save_csv(${save_length}, ${vec_length}, ${notes})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -21,6 +21,11 @@ parameters:
   label: vec_length
   dtype: int
   default: 4096
+
+- id: notes
+  label: notes
+  dtype: string
+  default: "_"
 #- id: ...
 #  label: ...
 #  dtype: ...
