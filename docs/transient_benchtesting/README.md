@@ -106,7 +106,8 @@ to a maximum of 10e6 samples per second when using 100 DMs. This is due to the P
 ## A note added in 2026
 
 This directory came off the `dedisperse` branch, where it sat unmerged from
-October 2019 until the branch audit. The write-up and the figures are worth
+October 2019 until the branch audit. That branch has since been replaced by the
+tag **`v2019.10-dedisperse`**, which holds all nine of its commits. The write-up and the figures are worth
 keeping; the flowgraphs need a caveat.
 
 **The five `.grc` files here are GNU Radio 3.7 XML** — `Benchtesting.grc`,
@@ -121,5 +122,8 @@ blocks, their SWIG bindings and the `.xml` block definitions — was **not**
 merged. It is 3.7-era code that would have dragged the pre-3.8 module layout
 back in: `swig/`, a flat `python/`, and `include/radio_astro/` alongside the
 current `include/gnuradio/radio_astro/`. Anyone reviving this work should start
-from the branch and port it, rather than expecting these figures to correspond
-to code in `main`.
+from `v2019.10-dedisperse` and port it, rather than expecting these figures to
+correspond to code in `main`:
+
+    git checkout -b dedisperse-port v2019.10-dedisperse
+
