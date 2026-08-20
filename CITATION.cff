@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software or instrumentation blocks in your research, please cite it as below."
+title: "gr-radio_astro: GNU Radio Out-of-Tree Modules for Radio Astronomy"
+authors:
+  - name: "WVU Radio Astronomy Instrumentation Lab"
+    website: "https://github.com/WVURAIL"
+repository-code: "https://github.com/WVURAIL/gr-radio_astro"
+url: "https://wvurail.github.io"
+keywords:
+  - "gnu-radio"
+  - "radio-astronomy"
+  - "dsp"
+  - "sdr"
+  - "instrumentation"
