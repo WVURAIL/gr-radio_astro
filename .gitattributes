@@ -1,0 +1,16 @@
+# GNU Radio records an MD5 of each bound header inside the generated pybind
+# binding and compares it against the file on disk at configure time. If a
+# checkout rewrites line endings, that hash stops matching and cmake refuses to
+# configure with "Python bindings for <header> are out of sync" - on that
+# machine only, for a repository that is perfectly fine.
+#
+# So the sources are LF everywhere, whatever core.autocrlf says locally.
+* text=auto eol=lf
+
+# Binary, never touch.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.zip binary
+*.gz  binary
