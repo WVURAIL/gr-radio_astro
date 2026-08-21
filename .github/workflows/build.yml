@@ -1,0 +1,143 @@
+# Does the module still build, and do its own tests still pass?
+#
+# Why this exists: it did not build. `cmake ..` stopped with "Python bindings
+# for dedispersion.h are out of sync" - GNU Radio records an MD5 of each bound
+# header inside the generated binding and refuses to configure when they differ.
+# All three C++ blocks were in that state, so anyone following the install
+# instructions in the README hit a wall on the first command. Nothing was
+# watching, so nothing said so.
+#
+# The eighteen qa_*.py tests were already registered with GR_ADD_TEST and had
+# been for years. They had simply never been run anywhere. One of them was still
+# the stub gr_modtool generates, and running it turned up a block that raised
+# NameError the moment it was constructed.
+#
+# ubuntu-latest carries GNU Radio 3.10 in apt, which is the version
+# CMakeLists.txt asks for, so no PPA or source build is needed.
+name: Build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build against GNU Radio 3.10 and run the QA suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install GNU Radio and build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gnuradio-dev \
+            cmake build-essential pkg-config \
+            libboost-all-dev libgmp-dev liborc-0.4-dev \
+            python3-dev python3-numpy python3-h5py python3-ephem \
+            pybind11-dev python3-pybind11 doxygen
+          echo "gnuradio: $(python3 -c 'from gnuradio import gr; print(gr.version())')"
+
+      # A stale binding hash fails at configure time with a message that reads
+      # like a build error rather than a "somebody edited a header" error, so
+      # say which file and what to do about it before cmake gets there.
+      - name: Python bindings are in step with their headers
+        run: |
+          set -euo pipefail
+          fail=0
+          for cc in python/radio_astro/bindings/*_python.cc; do
+            hdr=$(grep -oP 'BINDTOOL_HEADER_FILE\(\K[^)]+' "$cc" | head -1) || continue
+            rec=$(grep -oP 'BINDTOOL_HEADER_FILE_HASH\(\K[0-9a-f]+' "$cc" | head -1) || continue
+            path="include/gnuradio/radio_astro/$hdr"
+            if [ ! -f "$path" ]; then
+              echo "::error::$cc binds $hdr, which does not exist"
+              fail=1; continue
+            fi
+            act=$(md5sum "$path" | cut -d' ' -f1)
+            if [ "$rec" != "$act" ]; then
+              echo "::error::$hdr changed since $(basename "$cc") was generated."
+              echo "  recorded $rec, header is now $act."
+              echo "  If the public API changed, regenerate with 'gr_modtool bind'."
+              echo "  If it did not - a comment or licence header moved - update"
+              echo "  BINDTOOL_HEADER_FILE_HASH in $cc to $act."
+              fail=1
+            fi
+          done
+          echo "bound headers checked: $(ls python/radio_astro/bindings/*_python.cc | wc -l)"
+          exit $fail
+
+      - name: Configure
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -j"$(nproc)"
+
+      - name: Run the QA suite
+        working-directory: build
+        run: ctest --output-on-failure
+
+      # `import numpy` where the file then says `np.` compiles, installs and
+      # imports without complaint, and raises NameError the moment somebody
+      # drops the block into a flowgraph. running_norm_std shipped that way,
+      # exported from __init__.py and offered in GRC. pyflakes finds it without
+      # having to construct anything.
+      #
+      # It also reports "imported but unused" for every line of __init__.py,
+      # which is a re-export module and is supposed to look like that, so this
+      # gates on undefined names only.
+      - name: No undefined names in the Python blocks
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet pyflakes
+          # The module is what cmake installs plus what __init__.py imports.
+          # tsys.py and getchrony.py are neither: not installed, not imported,
+          # and tsys.py still has a Python 2 implicit relative import. They are
+          # tracked as an issue rather than gating this build.
+          files=$(ls python/radio_astro/*.py                   | grep -vE '/(tsys|getchrony)\.py$')
+          echo "$files" | sed 's|^|  checking |'
+          python3 -m pyflakes $files > /tmp/pyflakes.txt || true
+          # "undefined name 'np'" is a real one. "unable to detect undefined
+          # names" is pyflakes noting a star import in __init__.py, which is
+          # how a re-export module is supposed to look. The quote tells them
+          # apart.
+          if grep -E "undefined name '" /tmp/pyflakes.txt; then
+            echo "::error::a block uses a name it never defined or imported"
+            exit 1
+          fi
+          echo "no undefined names in $(echo "$files" | wc -l) files"
+
+      # Weaker than the check above and worth keeping anyway: this one proves
+      # the package that was actually built loads, which catches a missing
+      # file or a broken relative import that pyflakes cannot see.
+      - name: The built package imports
+        working-directory: build
+        run: |
+          set -euo pipefail
+          PYTHONPATH="$PWD/test_modules" python3 - <<'PY'
+          import importlib, pathlib, re, sys
+          init = pathlib.Path("../python/radio_astro/__init__.py").read_text()
+          names = re.findall(r"^from \.(\w+) import (\w+)", init, re.M)
+          bad = []
+          for module, symbol in names:
+              try:
+                  m = importlib.import_module("gnuradio.radio_astro.%s" % module)
+                  getattr(m, symbol)
+              except Exception as e:
+                  bad.append("%s.%s: %s: %s" % (module, symbol, type(e).__name__, e))
+          for b in bad:
+              print("::error::" + b)
+          print("%d python blocks exported from __init__.py, %d import cleanly"
+                % (len(names), len(names) - len(bad)))
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Install, and check it lands somewhere importable
+        run: |
+          sudo cmake --install build
+          sudo ldconfig
+          python3 -c "from gnuradio import radio_astro; print('import ok:', radio_astro.__file__)"

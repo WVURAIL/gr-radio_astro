@@ -7,7 +7,7 @@
 #
 
 
-import numpy
+import numpy as np
 from gnuradio import gr
 
 class running_norm_std(gr.sync_block):
