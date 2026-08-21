@@ -41,7 +41,9 @@ GR_PYTHON_INSTALL(
     integration.py
     vector_moving_average.py
     png_print_spectrum.py
-    DESTINATION ${GR_PYTHON_DIR}/gnuradio/radio_astro
+    comparator.py
+    triggered_save_csv.py
+    running_norm_std.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/radio_astro
 )
 
 ########################################################################
@@ -76,3 +78,4 @@ GR_ADD_TEST(qa_ra_vmedian ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra
 GR_ADD_TEST(qa_integration ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_integration.py)
 GR_ADD_TEST(qa_vector_moving_average ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_vector_moving_average.py)
 #GR_ADD_TEST(qa_png_print_spectrum ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_png_print_spectrum.py)
+GR_ADD_TEST(qa_running_norm_std ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_running_norm_std.py)
