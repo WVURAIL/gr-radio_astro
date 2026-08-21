@@ -6,7 +6,7 @@
 This package provides GNU Radio OOT modules and `grc` flowgraphs that facilitate radio astronomy observations with software-defined radio devices.
 
 Historical branches were reviewed and consolidated in 2026. See
-[`BRANCH_HISTORY.md`](BRANCH_HISTORY.md) for the disposition of all 25 branch
+[`BRANCH_HISTORY.md`](docs/BRANCH_HISTORY.md) for the disposition of all 25 branch
 tips and for the migration record from the archived
 [`gr-dspira`](https://github.com/WVURAIL/gr-dspira) prototypes.
 
@@ -18,7 +18,7 @@ There are two flavors of this projects:
 # Installing from Source
 
 1. Install GNUradio
-2. 2. Install gnuradio external python dependencies and SDR drivers by typing the following and hit enter:
+2. Install gnuradio external python dependencies and SDR drivers by typing the following and hit enter:
    ```
       sudo apt install gnuradio gr-osmosdr airspy python3-h5py python3-ephem git cmake liborc-0.4-dev -y
    ```
@@ -36,8 +36,8 @@ git clone https://github.com/WVURAIL/gr-radio_astro.git
       ```
 **Additional Steps for setting the proper Python environment:**
    
-8. Edit your `.bashrc` file and add this to the bottom to set Python path: `export PYTHONPATH=/usr/local/lib/python3/dist-packages:/usr/local/lib/python3.10/dist-packages:$PYTHONPATH`
-9. Additionally you can create appropriate symbolic links
+7. Edit your `.bashrc` file and add this to the bottom to set Python path: `export PYTHONPATH=/usr/local/lib/python3/dist-packages:/usr/local/lib/python3.10/dist-packages:$PYTHONPATH`
+8. Additionally you can create appropriate symbolic links
    1.  Check which python is the installed version of GNURadio by opening  `gnuradio-companion` in a terminal window and click on `Help --> About` and noting the python version on the dialog box that opens.  
    2.  Go to the following by typing: `cd /usr/local/lib/python3.10/dist-packages` or `cd /usr/local/lib/python3.9/dist-packages` for the appropriate python version. 
    3.  Type `ln -s /usr/local/lib/python3/dist-packages/radio_astro`   
