@@ -1,17 +1,40 @@
-title: The RADIO_ASTRO OOT Module
-brief: Short description of gr-radio_astro
-tags: # Tags are arbitrary, but look at CGRAN what other authors are using
+title: gr-radio_astro
+brief: GNU Radio out-of-tree blocks and flowgraphs for radio astronomy with software-defined radios.
+tags:
   - sdr
+  - radio astronomy
+  - gnuradio
+  - dsp
+  - instrumentation
+  - hydrogen line
 author:
-  - Author Name <authors@email.address>
+  - WVU Radio Astronomy Instrumentation Lab <wvurail@gmail.com>
+  - Glen Langston
+  - Kevin Bandura
+  - John Makous
+  - Pranav Sanghavi
 copyright_owner:
-  - Copyright Owner 1
-license:
-gr_supported_version: # Put a comma separated list of supported GR versions here
-#repo: # Put the URL of the repository here, or leave blank for default
-#website: <module_website> # If you have a separate project website, put it here
-#icon: <icon_url> # Put a URL to a square image here that will be used as an icon on CGRAN
+  - WVU Radio Astronomy Instrumentation Lab
+license: GPL-3.0
+gr_supported_version: v3.10
+repo: https://github.com/WVURAIL/gr-radio_astro
+website: https://wvurail.org/
 ---
-A longer, multi-line description of gr-radio_astro.
-You may use some *basic* Markdown here.
-If left empty, it will try to find a README file instead.
+Blocks and GNU Radio Companion flowgraphs for doing radio astronomy with a
+software-defined radio: integration and averaging, calibration against hot and
+cold loads, event detection and dedispersion, correlation for two-element
+interferometry, and sinks that write spectra to CSV, HDF5 and PNG.
+
+The module carries two related bodies of work. The **NSF Integrate and Detect**
+software supports neutral-hydrogen measurements and transient event detection,
+and is documented in the
+[LightWork memo series](https://wvurail.org/lightwork/). The **DSPIRA**
+software was written for and by the high school teachers of the NSF Research
+Experiences for Teachers site at West Virginia University; the curriculum built
+on it is at [dspira-lessons](https://wvurail.org/dspira-lessons/).
+
+Requires GNU Radio 3.10 or newer.
+
+Licensing is not uniform across the repository: some files are GPL-3.0-only,
+some GPL-3.0-or-later, and a few retained utility files carry BSD terms. See
+NOTICE, and the notice in each file, which remain the authoritative terms.
