@@ -8,7 +8,7 @@ tags:
   - instrumentation
   - hydrogen line
 author:
-  - WVU Radio Astronomy Instrumentation Lab <wvurail@gmail.com>
+  - WVU Radio Astronomy Instrumentation Lab <rail@wvu.edu>
   - Glen Langston
   - Kevin Bandura
   - John Makous
