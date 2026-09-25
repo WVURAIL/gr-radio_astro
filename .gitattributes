@@ -14,3 +14,4 @@
 *.pdf binary
 *.zip binary
 *.gz  binary
+*.bin binary

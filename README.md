@@ -79,4 +79,10 @@ This image requires a minimum of 16GB of space on the SD card.
    6. Click write. 
    7. See the current [Raspberry Pi installation documentation](https://www.raspberrypi.com/documentation/computers/getting-started.html#installing-the-operating-system) and this [video](https://www.youtube.com/watch?v=ntaXWS8Lk34).
 4. Insert SD card to Raspberry Pi and power it up.
-5. The default user name is `pi`, with password `raspberry`. Change the password after first boot. 
+5. The default user name is `pi`, with password `raspberry`. Change the password after first boot.
+
+## Transient research examples
+
+[Transient simulations](examples/transients/) include three complementary notebooks, six reference datasets, and research notes.
+The catalog explains their limitations and links the existing bench flowgraphs and diagnostic plots.
+These exploratory examples are separate from the maintained GNU Radio blocks.
