@@ -1,0 +1,164 @@
+{
+  "date": "2026-09-25",
+  "files": [
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/Pulsar SImulator_10MHz_PSRB0329+54_correct dispersion_technique.ipynb",
+      "source_sha256": "fe30b7f14eff7d08a46aecf61509e009f1a0ef30f88ad7656f4b8ad540e9e2ad",
+      "bytes": 53435,
+      "destination": "examples/transients/pulsar-search-development.ipynb",
+      "changes": "Renamed; output paths made relative; linspace sample counts made integers; saved outputs cleared; setup and status cells added. Research algorithms unchanged.",
+      "destination_sha256": "0374970daf4c19206aca882b7ad2d6c9d1e0014ed946f1e7a4556bdb643ef761"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/Pulsar SImulator_10MHz_PSRB0329+54_final_before_optimization.ipynb",
+      "source_sha256": "51ab2a5e6603ae3c66d434bdf4ac7d58126b77771f85cae3def0ea469fff0e8f",
+      "bytes": 1856320,
+      "destination": "examples/transients/pulsar-simulation.ipynb",
+      "changes": "Renamed; output paths made relative; linspace sample counts made integers; saved outputs cleared; setup and status cells added. Research algorithms unchanged.",
+      "destination_sha256": "ec41c9b05e0179e81479357ba030297309c4443b35c7ef05002ac08eb9c68c1e"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/Pulsar SImulator_10MHz_PSRB0329+54_second_noise_reduction_technique.ipynb",
+      "source_sha256": "38d404e90866ed845eaf6373bc463af2a7f294793c2118d57d9cc1e931562fe9",
+      "bytes": 689111,
+      "destination": "examples/transients/pulsar-background-comparison.ipynb",
+      "changes": "Renamed; output paths made relative; linspace sample counts made integers; saved outputs cleared; setup and status cells added. Research algorithms unchanged.",
+      "destination_sha256": "365ca91ec5a0cf77d48d4e0f228b644d81ea8f2d77d3dbc19d50961f8560db1f"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long.bin",
+      "source_sha256": "e2d10f771c71f85551f44db26d1d282f7759d97e4858101e739e3922edaf7fee",
+      "bytes": 6000000,
+      "destination": "examples/transients/data/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long.bin",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "e2d10f771c71f85551f44db26d1d282f7759d97e4858101e739e3922edaf7fee"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_SNR.bin",
+      "source_sha256": "a19198e95f7514001f00047cc2081f154e45bac4231c888a238aa9cb9d595cc3",
+      "bytes": 20,
+      "destination": "examples/transients/data/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_SNR.bin",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "a19198e95f7514001f00047cc2081f154e45bac4231c888a238aa9cb9d595cc3"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_corr.bin",
+      "source_sha256": "1f375c6b3b0980df8affc63224331cf2f6008c18490a9849076e4054a8b3e152",
+      "bytes": 3000,
+      "destination": "examples/transients/data/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_corr.bin",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "1f375c6b3b0980df8affc63224331cf2f6008c18490a9849076e4054a8b3e152"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_dispersed.bin",
+      "source_sha256": "23bf0d0b1ff113064a2e193e9497bdeec8a59e7c2b6f0b13aec9dbf3b13fddcf",
+      "bytes": 15000,
+      "destination": "examples/transients/data/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_dispersed.bin",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "23bf0d0b1ff113064a2e193e9497bdeec8a59e7c2b6f0b13aec9dbf3b13fddcf"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_integrated_FFT.bin",
+      "source_sha256": "d9e0f51f36b5fcc220a895c96095c496633804992eb27b5002ad594533876f99",
+      "bytes": 1200000,
+      "destination": "examples/transients/data/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_integrated_FFT.bin",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "d9e0f51f36b5fcc220a895c96095c496633804992eb27b5002ad594533876f99"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_noise.bin",
+      "source_sha256": "da89c4a2b6c0c38f3fa9e38311a6933a03cf755b05fefe86045ed1a2b30eee10",
+      "bytes": 6000000,
+      "destination": "examples/transients/data/pulse_sim_10mhz_int16_5ms_period_60dm_1400MHz_center_150ms_long_noise.bin",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "da89c4a2b6c0c38f3fa9e38311a6933a03cf755b05fefe86045ed1a2b30eee10"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "gr_testbenches/Full_detection_Flowgraph.grc",
+      "source_sha256": "9ed7f6a1f14dc001505aad93890d7be5dc6dd63593f679d9279aeceaa22c1c99",
+      "bytes": 106480,
+      "destination": "examples/transients/dual-stream-detection.grc",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "9ed7f6a1f14dc001505aad93890d7be5dc6dd63593f679d9279aeceaa22c1c99"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "gr_testbenches/Full_detection_Flowgraph.grc.png",
+      "source_sha256": "fa2f1874d3e295e058cd278758085f5127c9f0413ae4afbe8572a73a9b52c9b4",
+      "bytes": 298213,
+      "destination": "examples/transients/dual-stream-detection.grc.png",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "fa2f1874d3e295e058cd278758085f5127c9f0413ae4afbe8572a73a9b52c9b4"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "jupyter/README.md",
+      "source_sha256": "ff992192da24e8646b1b59ac9e8efcfe610d88f312c5d5d76613307e15177d47",
+      "bytes": 14308,
+      "destination": "examples/transients/simulation-notes.md",
+      "changes": "Historical-context notice added; original research notes retained.",
+      "destination_sha256": "ae8469a8c744d71fadfd80b89696a26e1cbca1280f0cb30b82bf88dba3e2d27d"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "gr_testbenches/README.md",
+      "source_sha256": "c07b7aa8877ef4329d998558ea96670ee9b860591b7781a5a72c3a9e303699d4",
+      "bytes": 6154,
+      "destination": "examples/transients/bench-notes.md",
+      "changes": "Historical-context notice added; original research notes retained.",
+      "destination_sha256": "400195087e6d59da9b4c2aae1772f2d692d432fd1c0ff7d48493817beca51a97"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "documentation/README.md",
+      "source_sha256": "37bc411ff60287570a69b4921d514ab7be9e29fa0a1890378a9f8cc19156542e",
+      "bytes": 1299,
+      "destination": "examples/transients/plot-notes.md",
+      "changes": "Image links updated to the existing shared-library plots.",
+      "destination_sha256": "71956952b5008b2bd9d85205d49fd1a90de307bea137f0ec02f60ced2a176726"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "NOTICE",
+      "source_sha256": "52bb161a60c786c383e9744e0c95481211746279d218d1e78f7ef143bf907a69",
+      "bytes": 1168,
+      "destination": "examples/transients/SOURCE-NOTICE.txt",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "52bb161a60c786c383e9744e0c95481211746279d218d1e78f7ef143bf907a69"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "CONTRIBUTORS.md",
+      "source_sha256": "e4d4932732d0d16e52e21657fad8492d9f158c9f4335afea76fbdf1a4f1e3cc1",
+      "bytes": 660,
+      "destination": "examples/transients/CONTRIBUTORS.md",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "e4d4932732d0d16e52e21657fad8492d9f158c9f4335afea76fbdf1a4f1e3cc1"
+    },
+    {
+      "source_repository": "gr-transient",
+      "source_path": "LICENSE",
+      "source_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149,
+      "destination": "examples/transients/LICENSE.txt",
+      "changes": "None; original bytes retained.",
+      "destination_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    }
+  ],
+  "source_commits": {
+    "dspira-archive": "a1835060b2dca0c077e00714c922436da8245124",
+    "cra": "9e60fa3f05d0e428f4fcee9b62756954bb936b5e",
+    "gr-dspira": "13a2f311143247019be691bd7bef21352389237f",
+    "gr-transient": "7505f42afb22db82f025ee1e56d0b82e6f024a84"
+  }
+}

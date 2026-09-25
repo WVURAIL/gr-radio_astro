@@ -1,0 +1,25 @@
+gr-transient notices
+
+This repository is a historical research record. Copyright and licensing are
+file-specific.
+
+The top-level LICENSE is the text of GNU General Public License version 3.
+Project Python files generally state GPL version 3 or later, although several
+retain an unfilled generated copyright-owner placeholder. This notice does not
+assign ownership or replace any per-file notice.
+
+The GNU Radio out-of-tree module directories contain generated or copied
+scaffolding with notices attributed to the Free Software Foundation.
+CMakeParseArgumentsCopy.cmake and UseSWIG.cmake in each module retain BSD
+notices attributed to Alexander Neundorf, Kitware, Inc., and Mathieu
+Malaterre. LICENSE-CMake.txt reproduces the accompanying CMake 2.8.12.2
+copyright and license text referenced by those files. Their per-file terms
+remain controlling.
+
+Notebooks, flowgraphs, figures, PDFs, and generated binary data do not
+consistently contain individual license notices. Their inclusion records
+project provenance; this notice neither expands nor narrows any applicable
+rights.
+
+See CONTRIBUTORS.md for project attribution and individual files for
+third-party notices.
