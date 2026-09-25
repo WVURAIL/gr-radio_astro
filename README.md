@@ -10,10 +10,17 @@ Historical branches were reviewed and consolidated in 2026. See
 tips and for the migration record from the archived
 [`gr-dspira`](https://github.com/WVURAIL/gr-dspira) prototypes.
 
-There are two flavors of this projects:
+## What belongs here
 
-1. NSF Integrate and Detect softwares that allow for HI measurements and also event detections from cosmic ray detections, developed by Dr. Glen Langston. See [here](https://github.com/WVURAIL/gr-radio_astro/wiki/Nsf-gr-radio_astro) and the [lightwork memo series](https://wvurail.org/lightwork/) for more details. 
-2. DSPIRA software developed for and by High School Teachers part of the [NSF funded RET program called Digital Signal Processing in Radio Astronomy (DSPIRA)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1611114) at WVU university from the summers of 2017 to 2021. For more details visit the [webpage](https://wvurail.org/dspira-lessons/about/) and the companion website called [dspira-lessons](https://wvurail.org/dspira-lessons/) that has lessons, guides and more material help one to use radio astronomy in a high school classroom. This material is designed by the High School teachers part of this program. 
+This repository owns the reusable GNU Radio blocks and the NSF research
+applications. Classroom applications are maintained in
+[dspira-software](https://github.com/WVURAIL/dspira-software).
+They use this library without copying it. Board and fabrication files belong in
+[dspira-hardware](https://github.com/WVURAIL/dspira-hardware).
+
+The [DSPIRA website](https://wvurail.org/dspira/) brings the lessons, software,
+and hardware guides together. The
+[LightWork memo series](https://wvurail.org/lightwork/) documents related research.
 
 # Installing from Source
 
@@ -45,7 +52,7 @@ git clone https://github.com/WVURAIL/gr-radio_astro.git
 
 # Running from a bootable USB Flash Drive with preinstalled software:
 
-[Instructions to set up a persistant USB flash with preinstalled software drive are here](https://wvurail.org//dspira-lessons/Install_Ubuntu_spectrometer_onFlashdrive)
+[Instructions to set up a persistant USB flash with preinstalled software drive are here](https://wvurail.org/dspira/Install_Ubuntu_spectrometer_onFlashdrive)
 
 ---- 
 TODO: Update for 3.10 below the instructions are for 3.8

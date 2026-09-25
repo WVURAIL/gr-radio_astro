@@ -25,16 +25,19 @@ software-defined radio: integration and averaging, calibration against hot and
 cold loads, event detection and dedispersion, correlation for two-element
 interferometry, and sinks that write spectra to CSV, HDF5 and PNG.
 
-The module carries two related bodies of work. The **NSF Integrate and Detect**
+The module supplies shared blocks for two related bodies of work. The **NSF Integrate and Detect**
 software supports neutral-hydrogen measurements and transient event detection,
 and is documented in the
 [LightWork memo series](https://wvurail.org/lightwork/). The **DSPIRA**
 software was written for and by the high school teachers of the NSF Research
 Experiences for Teachers site at West Virginia University; the curriculum built
-on it is at [dspira-lessons](https://wvurail.org/dspira-lessons/).
+on it is at [DSPIRA](https://wvurail.org/dspira/).
 
 Requires GNU Radio 3.10 or newer.
 
 Licensing is not uniform across the repository: some files are GPL-3.0-only,
 some GPL-3.0-or-later, and a few retained utility files carry BSD terms. See
 NOTICE, and the notice in each file, which remain the authoritative terms.
+
+Classroom flowgraphs are maintained separately in
+[dspira-software](https://github.com/WVURAIL/dspira-software).
