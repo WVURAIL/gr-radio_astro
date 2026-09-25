@@ -1,19 +1,4 @@
-# Does the module still build, and do its own tests still pass?
-#
-# Why this exists: it did not build. `cmake ..` stopped with "Python bindings
-# for dedispersion.h are out of sync" - GNU Radio records an MD5 of each bound
-# header inside the generated binding and refuses to configure when they differ.
-# All three C++ blocks were in that state, so anyone following the install
-# instructions in the README hit a wall on the first command. Nothing was
-# watching, so nothing said so.
-#
-# The eighteen qa_*.py tests were already registered with GR_ADD_TEST and had
-# been for years. They had simply never been run anywhere. One of them was still
-# the stub gr_modtool generates, and running it turned up a block that raised
-# NameError the moment it was constructed.
-#
-# ubuntu-latest carries GNU Radio 3.10 in apt, which is the version
-# CMakeLists.txt asks for, so no PPA or source build is needed.
+# Build the research module and run its remaining QA tests.
 name: Build and test
 
 on:
@@ -81,15 +66,7 @@ jobs:
         working-directory: build
         run: ctest --output-on-failure
 
-      # `import numpy` where the file then says `np.` compiles, installs and
-      # imports without complaint, and raises NameError the moment somebody
-      # drops the block into a flowgraph. running_norm_std shipped that way,
-      # exported from __init__.py and offered in GRC. pyflakes finds it without
-      # having to construct anything.
-      #
-      # It also reports "imported but unused" for every line of __init__.py,
-      # which is a re-export module and is supposed to look like that, so this
-      # gates on undefined names only.
+      # Catch undefined names in the installed research blocks.
       - name: No undefined names in the Python blocks
         run: |
           set -euo pipefail

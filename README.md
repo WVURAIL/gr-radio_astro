@@ -1,88 +1,61 @@
-# gr-radio_astro
+# Radio research software
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14583457.svg)](https://doi.org/10.5281/zenodo.14583457)
 
-
-This package provides GNU Radio OOT modules and `grc` flowgraphs that facilitate radio astronomy observations with software-defined radio devices.
-
-Historical branches were reviewed and consolidated in 2026. See
-[`BRANCH_HISTORY.md`](docs/BRANCH_HISTORY.md) for the disposition of all 25 branch
-tips and for the migration record from the archived
-[`gr-dspira`](https://github.com/WVURAIL/dspira/releases/download/preserved-repositories-2026-09-25/gr-dspira-preserved.zip) prototypes.
+Research applications and GNU Radio blocks for radio astronomy with software-defined receivers.
+This repository was formerly named `gr-radio_astro`.
 
 ## What belongs here
 
-This repository owns the reusable GNU Radio blocks and the NSF research
-applications. Classroom applications are maintained in
+- NSF Integrate and Detect applications for spectral acquisition and event recording.
+- Research blocks for integration, event detection, median filtering, and dedispersion.
+- Transient simulation notebooks, reference data, and historical bench experiments.
+
+Classroom telescope applications and all twelve DSPIRA processing blocks now live in
 [dspira-software](https://github.com/WVURAIL/dspira-software).
-They use this library without copying it. Board and fabrication files belong in
-[dspira-hardware](https://github.com/WVURAIL/dspira-hardware).
+They are installed together from that repository.
+Board designs belong in [dspira-hardware](https://github.com/WVURAIL/dspira-hardware).
 
-The [DSPIRA website](https://wvurail.org/dspira/) brings the lessons, software,
-and hardware guides together. The
-[LightWork memo series](https://wvurail.org/lightwork/) documents related research.
+The [DSPIRA website](https://wvurail.org/dspira/) provides classroom installation and observing instructions.
+The [LightWork memo series](https://wvurail.org/lightwork/) documents research and instrument development.
 
-# Installing from Source
+## Installing from source
 
-1. Install GNUradio
-2. Install gnuradio external python dependencies and SDR drivers by typing the following and hit enter:
-   ```
-      sudo apt install gnuradio gr-osmosdr airspy python3-h5py python3-ephem git cmake liborc-0.4-dev -y
-   ```
-3. To clone the repository:
+The research package targets GNU Radio 3.10. On Ubuntu, install dependencies:
+
+```sh
+sudo apt-get update
+sudo apt-get install gnuradio-dev gr-osmosdr airspy cmake build-essential libboost-all-dev python3-h5py python3-ephem python3-pybind11 pybind11-dev
 ```
-git clone https://github.com/WVURAIL/gr-radio_astro.git
+
+Clone, build, test, and install:
+
+```sh
+git clone https://github.com/WVURAIL/radio-research-software.git
+cd radio-research-software
+cmake -S . -B build -DPYTHON_EXECUTABLE=/usr/bin/python3
+cmake --build build
+ctest --test-dir build --output-on-failure
+sudo cmake --install build
+sudo ldconfig
+python3 -c "from gnuradio import radio_astro; print(radio_astro.__file__)"
 ```
-4. Switch to the gr-radio_astro directory: `cd gr-radio_astro`
-5. Make a build directory: `mkdir build`, and then move to it: `cd build`  
-6. Then run the following in the build directory:
-      ```
-      cmake ..
-      sudo make
-      sudo make install
-      ```
-**Additional Steps for setting the proper Python environment:**
-   
-7. Edit your `.bashrc` file and add this to the bottom to set Python path: `export PYTHONPATH=/usr/local/lib/python3/dist-packages:/usr/local/lib/python3.10/dist-packages:$PYTHONPATH`
-8. Additionally you can create appropriate symbolic links
-   1.  Check which python is the installed version of GNURadio by opening  `gnuradio-companion` in a terminal window and click on `Help --> About` and noting the python version on the dialog box that opens.  
-   2.  Go to the following by typing: `cd /usr/local/lib/python3.10/dist-packages` or `cd /usr/local/lib/python3.9/dist-packages` for the appropriate python version. 
-   3.  Type `ln -s /usr/local/lib/python3/dist-packages/radio_astro`   
 
+The Python module remains `gnuradio.radio_astro` for compatibility with research applications.
+The repository name does not change the research block identifiers or C++ interface.
+Keep the old repository name unused so GitHub's repository redirect continues working.
 
-# Running from a bootable USB Flash Drive with preinstalled software:
+## Applications and examples
 
-[Instructions to set up a persistant USB flash with preinstalled software drive are here](https://wvurail.org/dspira/Install_Ubuntu_spectrometer_onFlashdrive)
+See [the example catalog](examples/README.md) for NSF applications.
+[Transient simulations](examples/transients/) include notebooks, reference datasets, and research notes.
+Their catalog explains limitations and links the historical bench material.
+Some older bench examples use the HDF5 recorder now installed by DSPIRA software.
+See [the classroom block move](docs/DSPIRA_BLOCK_MOVE.md) before using those examples.
 
----- 
-TODO: Update for 3.10 below the instructions are for 3.8
+## History
 
-# Installing on a Raspberry Pi. 
-
-## Supported Raspberry Pi Devices
-
-*All devices must have RAM greater than 4GB*
-1. Raspberry Pi 4 Model B
-2. Raspberry Pi 400
-
-
-## Installing Ubuntu image with radio astronomy preinstalled  on a Raspberry Pi
-This image requires a minimum of 16GB of space on the SD card. 
-1. Download the image [here](https://drive.google.com/file/d/1KzfgMEwgwTTZUaCeNR5kRgLj9MfMKyAh/view?usp=sharing)
-2. Unzip the `.zip` file.
-3. Use [Raspberry Pi Imager](https://www.raspberrypi.com/software/) to install this image.
-   1. Insert SD card into your card reader on your computer
-   2. Open Raspberry Pi Imager.
-   3. Click `Choose OS`, and choose `Use Custom`. 
-   4. Select the correct image file downloaded in step 1 and 2 from your system.
-   5. Click `Choose storage` and select your inserted SD card.
-   6. Click write. 
-   7. See the current [Raspberry Pi installation documentation](https://www.raspberrypi.com/documentation/computers/getting-started.html#installing-the-operating-system) and this [video](https://www.youtube.com/watch?v=ntaXWS8Lk34).
-4. Insert SD card to Raspberry Pi and power it up.
-5. The default user name is `pi`, with password `raspberry`. Change the password after first boot.
-
-## Transient research examples
-
-[Transient simulations](examples/transients/) include three complementary notebooks, six reference datasets, and research notes.
-The catalog explains their limitations and links the existing bench flowgraphs and diagnostic plots.
-These exploratory examples are separate from the maintained GNU Radio blocks.
+Historical branches were reviewed and consolidated in 2026.
+[Branch history](docs/BRANCH_HISTORY.md) records their disposition and the earlier prototype migration.
+Old tags preserve earlier environments, including the GNU Radio 3.8 releases.
+The published DOI and original notices remain unchanged.

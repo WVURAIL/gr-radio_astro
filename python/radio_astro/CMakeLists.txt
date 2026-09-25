@@ -22,11 +22,6 @@ add_subdirectory(bindings)
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    systemp_calibration.py
-    chart_recorder.py
-    correlate.py
-    csv_filesink.py
-    hdf5_sink.py
     radioastronomy.py
     jdutil.py
     angles.py
@@ -37,13 +32,7 @@ GR_PYTHON_INSTALL(
     ra_vave.py
     ra_vmedian.py 
     filters.py
-    powerSpectrum.py
-    integration.py
-    vector_moving_average.py
-    png_print_spectrum.py
-    comparator.py
-    triggered_save_csv.py
-    running_norm_std.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/radio_astro
+    DESTINATION ${GR_PYTHON_DIR}/gnuradio/radio_astro
 )
 
 ########################################################################
@@ -60,22 +49,12 @@ add_custom_target(
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}
           ${CMAKE_BINARY_DIR}/test_modules/gnuradio/radio_astro/
 )
-GR_ADD_TEST(qa_systemp_calibration ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_systemp_calibration.py)
 GR_ADD_TEST(qa_dedispersion ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_dedispersion.py)
 GR_ADD_TEST(qa_detect ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_detect.py)
 GR_ADD_TEST(qa_vmedian ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_vmedian.py)
-GR_ADD_TEST(qa_chart_recorder ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_chart_recorder.py)
-GR_ADD_TEST(qa_correlate ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_correlate.py)
-GR_ADD_TEST(qa_csv_filesink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_csv_filesink.py)
-GR_ADD_TEST(qa_hdf5_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_hdf5_sink.py)
-GR_ADD_TEST(qa_powerSpectrum ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_powerSpectrum.py)
 GR_ADD_TEST(qa_ra_ascii_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_ascii_sink.py)
 GR_ADD_TEST(qa_ra_event_log ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_event_log.py)
 GR_ADD_TEST(qa_ra_event_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_event_sink.py)
 GR_ADD_TEST(qa_ra_integrate ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_integrate.py)
 GR_ADD_TEST(qa_ra_vave ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_vave.py)
 GR_ADD_TEST(qa_ra_vmedian ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ra_vmedian.py)
-GR_ADD_TEST(qa_integration ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_integration.py)
-GR_ADD_TEST(qa_vector_moving_average ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_vector_moving_average.py)
-#GR_ADD_TEST(qa_png_print_spectrum ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_png_print_spectrum.py)
-GR_ADD_TEST(qa_running_norm_std ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_running_norm_std.py)

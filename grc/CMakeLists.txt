@@ -19,25 +19,14 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    radio_astro_systemp_calibration.block.yml
     radio_astro_dedispersion.block.yml
     radio_astro_detect.block.yml
     radio_astro_vmedian.block.yml
-    radio_astro_chart_recorder.block.yml
-    radio_astro_correlate.block.yml
-    radio_astro_csv_filesink.block.yml
-    radio_astro_hdf5_sink.block.yml
-    radio_astro_powerSpectrum.block.yml
     radio_astro_ra_ascii_sink.block.yml
     radio_astro_ra_event_log.block.yml
     radio_astro_ra_event_sink.block.yml
     radio_astro_ra_integrate.block.yml
     radio_astro_ra_vave.block.yml
     radio_astro_ra_vmedian.block.yml
-    radio_astro_integration.block.yml
-    radio_astro_vector_moving_average.block.yml
-    radio_astro_png_print_spectrum.block.yml
-    radio_astro_comparator.block.yml
-    radio_astro_triggered_save_csv.block.yml
-    radio_astro_running_norm_std.block.yml DESTINATION share/gnuradio/grc/blocks
+    DESTINATION share/gnuradio/grc/blocks
 )

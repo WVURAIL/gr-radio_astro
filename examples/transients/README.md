@@ -1,7 +1,7 @@
 # Transient simulation examples
 
 Research notebooks, simulation data, and bench references from Andrew Dyck's 2019 transient project.
-These belong with the reusable astronomy library, not the classroom applications.
+These belong to the radio research collection. Classroom applications are maintained separately.
 
 ## Notebooks
 
