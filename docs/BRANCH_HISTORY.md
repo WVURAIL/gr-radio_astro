@@ -59,7 +59,7 @@ branch name because older DSPIRA installation instructions use
 
 ## Migration from gr-dspira
 
-The archived [`gr-dspira`](https://github.com/WVURAIL/gr-dspira) repository was
+The archived [`gr-dspira`](https://github.com/WVURAIL/dspira/releases/download/preserved-repositories-2026-09-25/gr-dspira-preserved.zip) repository was
 also compared file by file:
 
 - Its `systemp_calibration` implementation was transferred by the original
@@ -74,3 +74,10 @@ also compared file by file:
   DSPIRA lesson materials.
 
 No additional code or data needed to be migrated from `gr-dspira`.
+
+## Portable preservation
+
+The retired gr-dspira repository now contains a forwarding notice. Its complete
+source, history, branches, tags, and licensing are retained in the linked recovery
+package. Historical gr-transient variants, notebooks, data, and test benches
+are also available from the [DSPIRA history page](https://wvurail.org/dspira/history/).

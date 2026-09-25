@@ -8,7 +8,7 @@ This package provides GNU Radio OOT modules and `grc` flowgraphs that facilitate
 Historical branches were reviewed and consolidated in 2026. See
 [`BRANCH_HISTORY.md`](docs/BRANCH_HISTORY.md) for the disposition of all 25 branch
 tips and for the migration record from the archived
-[`gr-dspira`](https://github.com/WVURAIL/gr-dspira) prototypes.
+[`gr-dspira`](https://github.com/WVURAIL/dspira/releases/download/preserved-repositories-2026-09-25/gr-dspira-preserved.zip) prototypes.
 
 ## What belongs here
 
