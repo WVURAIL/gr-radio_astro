@@ -17,6 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Check repository catalogs and file locations
+        run: python3 scripts/check_repository.py
+
       - name: Install GNU Radio and build dependencies
         run: |
           sudo apt-get update
@@ -71,11 +74,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m pip install --quiet pyflakes
-          # The module is what cmake installs plus what __init__.py imports.
-          # tsys.py and getchrony.py are neither: not installed, not imported,
-          # and tsys.py still has a Python 2 implicit relative import. They are
-          # tracked as an issue rather than gating this build.
-          files=$(ls python/radio_astro/*.py                   | grep -vE '/(tsys|getchrony)\.py$')
+          files=$(ls python/radio_astro/*.py tests/qa_*.py)
           echo "$files" | sed 's|^|  checking |'
           python3 -m pyflakes $files > /tmp/pyflakes.txt || true
           # "undefined name 'np'" is a real one. "unable to detect undefined

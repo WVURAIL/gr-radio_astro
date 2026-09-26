@@ -1,9 +1,10 @@
-# Applications and examples
+# Examples and experiments
 
-`nsf/` contains NSF Integrate and Detect research applications. Their supporting
-materials are in the [wiki](https://github.com/WVURAIL/radio-research-software/wiki/Nsf-gr-radio_astro)
-and [LightWork](https://wvurail.org/lightwork/).
+- [Receiver checks](receivers/README.md): SDRplay and RSP1A experiments.
+- [Vector demonstrations](vectors/README.md): vector displays, complex signals, and web interfaces.
+- [Transient research](transients/README.md): pulsar notebooks, simulation samples, and historical bench graphs.
 
-Classroom applications moved to
-[dspira-software/applications](https://github.com/WVURAIL/dspira-software/tree/main/applications).
-The old `DSPIRA/` directory is a signpost, not a second application copy.
+The [NSF applications](../applications/nsf/README.md) have their own catalog and shared observing configuration.
+The installed library targets GNU Radio 3.10; individual research examples may require additional dependencies or porting.
+
+Classroom applications and processing blocks live in [DSPIRA software](https://github.com/WVURAIL/dspira-software).

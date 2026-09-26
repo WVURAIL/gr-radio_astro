@@ -45,17 +45,30 @@ The Python module remains `gnuradio.radio_astro` for compatibility with research
 The repository name does not change the research block identifiers or C++ interface.
 Keep the old repository name unused so GitHub's repository redirect continues working.
 
-## Applications and examples
+## Find what you need
 
-See [the example catalog](examples/README.md) for NSF applications.
-[Transient simulations](examples/transients/) include notebooks, reference datasets, and research notes.
-Their catalog explains limitations and links the historical bench material.
-Some older bench examples use the HDF5 recorder now installed by DSPIRA software.
-See [the classroom block move](docs/DSPIRA_BLOCK_MOVE.md) before using those examples.
+| Folder | Contents |
+| --- | --- |
+| [applications/nsf](applications/nsf/) | Spectral acquisition and event recording applications, with shared observing settings |
+| [examples](examples/) | Receiver and vector demonstrations, transient notebooks, reference data, and historical bench experiments |
+| [python/radio_astro](python/radio_astro/) | Installed Python blocks, astronomy utilities, and native bindings |
+| [lib](lib/) and [include](include/gnuradio/radio_astro/) | Native block implementations and public C++ headers |
+| [grc](grc/) | GNU Radio Companion block definitions |
+| [tests](tests/) | The nine research block QA tests |
+| [scripts](scripts/) | Repository catalog and naming checks |
+| [data](data/) | Timestamped telescope spectra |
+| [docs](docs/) | Research notes, figures, migration guidance, and history |
+| [reference](reference/) | Older timing configuration and uninstalled Python utilities |
+
+Start with the [NSF application catalog](applications/nsf/README.md) or the [example catalog](examples/README.md).
+Some historical flowgraphs require retired blocks or an older GNU Radio environment.
+Their catalogs distinguish these references from the tested library.
+
+See [organization and naming](docs/organization.md) for conventions and the old-to-new file map.
 
 ## History
 
 Historical branches were reviewed and consolidated in 2026.
-[Branch history](docs/BRANCH_HISTORY.md) records their disposition and the earlier prototype migration.
+[Branch history](docs/history/branch-history.md) records their disposition and the earlier prototype migration.
 Old tags preserve earlier environments, including the GNU Radio 3.8 releases.
 The published DOI and original notices remain unchanged.

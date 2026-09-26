@@ -21,7 +21,18 @@ The maintained C++ dedispersion and detect blocks are separate implementations, 
 
 ## Reference data
 
-The six files in data/ preserve their original bytes and filenames.
+The six files in [data/pulse-simulation-2019](data/pulse-simulation-2019/) preserve their original bytes.
+Shorter filenames describe each processing stage; the original names remain in the source manifest.
+
+| Current filename | Original suffix | Recorded writer format |
+| --- | --- | --- |
+| [signal-int16.bin](data/pulse-simulation-2019/signal-int16.bin) | `.bin` | Interleaved signed 16-bit complex samples |
+| [noise-int16.bin](data/pulse-simulation-2019/noise-int16.bin) | `_noise.bin` | Interleaved signed 16-bit complex samples |
+| [integrated-fft.bin](data/pulse-simulation-2019/integrated-fft.bin) | `_integrated_FFT.bin` | Version-dependent; see below |
+| [dispersed.bin](data/pulse-simulation-2019/dispersed.bin) | `_dispersed.bin` | Later notebook writes float32 |
+| [correlation.bin](data/pulse-simulation-2019/correlation.bin) | `_corr.bin` | Later notebook writes float32 |
+| [snr.bin](data/pulse-simulation-2019/snr.bin) | `_SNR.bin` | Producer not identified |
+
 The filename parameters are historical labels, not independently verified metadata.
 Notebook parameters changed during development, so rerunning them need not reproduce these samples.
 The .bin and _noise.bin writers use interleaved signed 16-bit real and imaginary samples.
@@ -29,16 +40,17 @@ Later notebooks write _integrated_FFT.bin, _dispersed.bin, and _corr.bin as floa
 The earlier search notebook instead writes integrated spectra as int16.
 The stored files have no headers; confirm layout, endianness, and producing version before analysis.
 The _SNR.bin producer was not identified during consolidation.
-See source-manifest.json for byte counts and checksums.
+See [source-manifest.json](source-manifest.json) for original paths, byte counts, and checksums.
+The [file map](../../docs/file-map.json) connects those paths to the current filenames.
 
 ## Notes and bench material
 
-- [Original simulation explanation](simulation-notes.md)
-- [Original bench procedure](bench-notes.md)
-- [Plot descriptions](plot-notes.md)
-- [Existing diagnostic plots](../../docs/transient_documentation/)
-- [Existing bench examples](../../docs/transient_benchtesting/)
-- [Full detection flowgraph](dual-stream-detection.grc)
+- [Original simulation explanation](../../docs/transients/simulation-notes.md)
+- [Original bench procedure](../../docs/transients/bench-notes.md)
+- [Plot descriptions](../../docs/transients/plot-notes.md)
+- [Existing diagnostic plots](../../docs/transients/pipeline.md)
+- [Existing bench examples](bench/README.md)
+- [Full detection flowgraph](bench/dual-stream-detection.grc)
 
 The original notes describe the older experiment and may reference its former paths.
 The full detection flowgraph uses retired GNU Radio 3.7 blocks and absolute file paths.
@@ -49,4 +61,4 @@ Original credits and notices are retained in CONTRIBUTORS.md and SOURCE-NOTICE.t
 See LICENSE.txt and notices within individual files for licensing.
 
 The imported dual-stream graph retains separate signal and noise processing paths.
-The existing Full_detection_Flowgraph.grc uses a different shared-block variant and remains unchanged.
+The existing bench/full-detection-flowgraph.grc uses a different shared-block variant and remains unchanged.
