@@ -68,7 +68,6 @@ See [organization and naming](docs/organization.md) for conventions and the old-
 
 ## History
 
-Historical branches were reviewed and consolidated in 2026.
-[Branch history](docs/history/branch-history.md) records their disposition and the earlier prototype migration.
+Earlier import records and branch notes remain available in Git history.
 Old tags preserve earlier environments, including the GNU Radio 3.8 releases.
 The published DOI and original notices remain unchanged.

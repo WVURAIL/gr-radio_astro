@@ -7,7 +7,6 @@
 - [Imported plot descriptions](transients/plot-notes.md)
 - [Classroom block migration](dspira-block-move.md)
 - [Repository organization](organization.md)
-- [Branch history](history/branch-history.md)
 
 Research figures live in [images](images/README.md).
 Runnable material belongs in [applications](../applications/) or [examples](../examples/), alongside its usage notes.

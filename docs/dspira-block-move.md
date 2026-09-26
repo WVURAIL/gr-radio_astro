@@ -11,9 +11,8 @@ The twelve classroom blocks now have one maintained home in
 `systemp_calibration`, `triggered_save_csv`, and `vector_moving_average`.
 
 Their Python implementations were moved unchanged, together with the GRC definitions,
-copyright notices, and existing tests. The destination's `docs/block-migration.json`
-records source paths and checksums from revision
-`cdbda4f577b538c0750b882241f8a36ecc2e88f8`.
+copyright notices, and existing tests. Their source revision is
+`cdbda4f577b538c0750b882241f8a36ecc2e88f8`; earlier migration records remain in Git history.
 
 The destination installs `gnuradio.dspira`. GRC identifiers retain their previous
 `radio_astro_` names so saved flowgraphs still load; generated Python imports
@@ -21,7 +20,7 @@ the new module. Reopen and regenerate a saved flowgraph after installing the new
 Previously generated Python files do not update themselves.
 
 The historical `examples/transients/bench/noise-collection.grc` and
-`Pulsar_file_detection.grc` use the HDF5 recorder. Install DSPIRA software to obtain
+`examples/transients/bench/pulsar-file-detection.grc` use the HDF5 recorder. Install DSPIRA software to obtain
 that block when porting those older examples. They already require compatibility
 work and are not part of the supported application test set.
 

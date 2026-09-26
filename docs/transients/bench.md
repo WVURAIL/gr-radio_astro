@@ -130,5 +130,3 @@ from `v2019.10-dedisperse` and port it, rather than expecting these figures to
 correspond to code in `main`:
 
     git checkout -b dedisperse-port v2019.10-dedisperse
-
-See the [branch history](../history/branch-history.md) for the full 2026 branch audit.
