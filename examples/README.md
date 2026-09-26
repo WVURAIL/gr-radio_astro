@@ -5,5 +5,5 @@ materials are in the [wiki](https://github.com/WVURAIL/radio-research-software/w
 and [LightWork](https://wvurail.org/lightwork/).
 
 Classroom applications moved to
-[dspira-software/flowgraphs](https://github.com/WVURAIL/dspira-software/tree/main/flowgraphs).
+[dspira-software/applications](https://github.com/WVURAIL/dspira-software/tree/main/applications).
 The old `DSPIRA/` directory is a signpost, not a second application copy.
