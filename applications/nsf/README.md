@@ -87,7 +87,7 @@ Run any ported version from the same shared `configuration` directory.
 
 - [Observing notes](https://github.com/WVURAIL/radio-research-software/wiki/Nsf-gr-radio_astro)
 - [NSF instrument figures](../../docs/images/nsf/)
-- [LightWork memos](https://wvurail.org/lightwork/)
+- [LightWork memos](https://rail.wvu.edu/lightwork/)
 - [Former filenames](../../docs/file-map.json)
 
 ## Generation checks
