@@ -18,13 +18,13 @@ copyright_owner:
 license: GPL-3.0
 gr_supported_version: v3.10
 repo: https://github.com/WVURAIL/radio-research-software
-website: https://wvurail.org/
+website: https://rail.wvu.edu/
 ---
 Research blocks and GNU Radio applications for spectral acquisition, transient detection,
 dedispersion, integration, and event recording with software-defined receivers.
 
 The NSF Integrate and Detect applications are documented in the
-[LightWork memo series](https://wvurail.org/lightwork/).
+[LightWork memo series](https://rail.wvu.edu/lightwork/).
 Classroom applications and DSPIRA processing blocks are maintained together in
 [dspira-software](https://github.com/WVURAIL/dspira-software).
 

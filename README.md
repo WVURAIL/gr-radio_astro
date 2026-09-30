@@ -16,8 +16,8 @@ Classroom telescope applications and all twelve DSPIRA processing blocks now liv
 They are installed together from that repository.
 Board designs belong in [dspira-hardware](https://github.com/WVURAIL/dspira-hardware).
 
-The [DSPIRA website](https://wvurail.org/dspira/) provides classroom installation and observing instructions.
-The [LightWork memo series](https://wvurail.org/lightwork/) documents research and instrument development.
+The [DSPIRA website](https://rail.wvu.edu/dspira/) provides classroom installation and observing instructions.
+The [LightWork memo series](https://rail.wvu.edu/lightwork/) documents research and instrument development.
 
 ## Installing from source
 

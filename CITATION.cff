@@ -5,7 +5,7 @@ authors:
   - name: "WVU Radio Astronomy Instrumentation Lab"
     website: "https://github.com/WVURAIL"
 repository-code: "https://github.com/WVURAIL/radio-research-software"
-url: "https://wvurail.org/"
+url: "https://rail.wvu.edu/"
 keywords:
   - "gnu-radio"
   - "radio-astronomy"
