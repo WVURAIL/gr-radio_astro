@@ -4,3 +4,9 @@ utility files include BSD terms. The GPL-3.0 text in LICENSE is supplied for
 the GPL-covered portions of the repository; it does not replace the notices in
 individual files. Those file-level notices remain the authoritative terms for
 their contents.
+
+The historical Buckhannon field-test record in docs/rfi/buckhannon-field-test-2018
+and its plots in docs/images/rfi/buckhannon-field-test-2018 retain their source
+attributions and notices. See that record's README.md for the template license
+and original licensing status. Their inclusion does not apply the software's
+GPL license to these historical documents.
