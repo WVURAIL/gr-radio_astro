@@ -1,0 +1,61 @@
+{
+  "source_repository": "https://github.com/WVURAIL/memos",
+  "source_commit": "8da9c9a522b3934222913d00c295ffaf49cda47d",
+  "author": "Pranav Sanghavi",
+  "import_date": "2026-09-30",
+  "files": [
+    {
+      "source_path": "2018_05_18/2018_05_18.pdf",
+      "destination_path": "docs/rfi/buckhannon-field-test-2018/report.pdf",
+      "source_sha256": "0ae140ee7063492b96758d28bd5e556cca95cf4677e0319d1e90b69a18eff77a",
+      "destination_sha256": "0ae140ee7063492b96758d28bd5e556cca95cf4677e0319d1e90b69a18eff77a",
+      "changes": []
+    },
+    {
+      "source_path": "2018_05_18/2018_05_18.tex",
+      "destination_path": "docs/rfi/buckhannon-field-test-2018/report.tex",
+      "source_sha256": "f72e152b7ca018f6de2d9e26ce9e1bc7f3a93e0df321e78ae6c88c64c9fd6b98",
+      "destination_sha256": "43fc67c39eb24a8cd29a40cb2409306e1ed4a683791b6465dd8b3800c0d359ba",
+      "changes": [
+        {
+          "from": "\\usepackage{researchdiary_png}",
+          "to": "\\usepackage{research-diary}"
+        },
+        {
+          "from": "{Figure_1-1}",
+          "to": "{../../images/rfi/buckhannon-field-test-2018/signal-levels.png}"
+        },
+        {
+          "from": "{Figure_1-2}",
+          "to": "{../../images/rfi/buckhannon-field-test-2018/signal-levels-detail.png}"
+        }
+      ]
+    },
+    {
+      "source_path": "2018_05_18/researchdiary_png.sty",
+      "destination_path": "docs/rfi/buckhannon-field-test-2018/research-diary.sty",
+      "source_sha256": "d6428b7bb8dfd5f1e5f7398007dd893c3197bd2a26a222b1180febb9571bd80c",
+      "destination_sha256": "efdcf2952d20d7061aa5f5829535ccf73825ffe2af1fc25eaec116f74c5c8408",
+      "changes": [
+        {
+          "from": "\\ProvidesPackage{researchdiary_png}",
+          "to": "\\ProvidesPackage{research-diary}"
+        }
+      ]
+    },
+    {
+      "source_path": "2018_05_18/Figure_1-1.png",
+      "destination_path": "docs/images/rfi/buckhannon-field-test-2018/signal-levels.png",
+      "source_sha256": "cf9f2d77902cfebb6bee296b271cbfe1a7ddd1036f0307c428b93c45251b1bfa",
+      "destination_sha256": "cf9f2d77902cfebb6bee296b271cbfe1a7ddd1036f0307c428b93c45251b1bfa",
+      "changes": []
+    },
+    {
+      "source_path": "2018_05_18/Figure_1-2.png",
+      "destination_path": "docs/images/rfi/buckhannon-field-test-2018/signal-levels-detail.png",
+      "source_sha256": "686b1bec244a5782bce04883bf328aa836de554c25942baae59b9fef3e8a5238",
+      "destination_sha256": "686b1bec244a5782bce04883bf328aa836de554c25942baae59b9fef3e8a5238",
+      "changes": []
+    }
+  ]
+}
