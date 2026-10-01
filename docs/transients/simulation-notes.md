@@ -1,6 +1,3 @@
-> Historical research notes by Andrew Dyck (2019). Equations, numerical claims, and obsolete block interfaces remain unvalidated.
-> See [the current example guide](../../examples/transients/README.md) before using these notes.
-
 # Jupyter Notebooks
 The entire process of FRB and pulsar detection, from pulse simulation to dedispersion is simulated through the latest python document, which as of now is "Pulsar SImulator_10MHz_PSRB0329+54_final_before_optimization.ipynb". To begin, the initial parameters for the pulse are chosen. They are as follows:
 

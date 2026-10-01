@@ -100,33 +100,3 @@ This section will be explaining how the completed flowgraph of the detection wor
 
 Some final notes about the time sinks and outputs and limitations of the program. The vector output for the dedisperse block is the number of timesamples times the number of DMs, while the output for the detection block has a vector length of the number of time samples. The time sinks must have a sample rate equal to that of the throttle. Additionally, the throttle rate for the flowgraph is limited
 to a maximum of 10e6 samples per second when using 100 DMs. This is due to the Pulsar detection block not being written in C, which will be updated in the next iteration of the program.
-
----
-
-## Archive note (2026)
-
-This directory came off the `dedisperse` branch, where it sat unmerged from
-October 2019 until the branch audit. That branch has since been replaced by the
-tag **`v2019.10-dedisperse`**, which holds all nine of its commits. The write-up
-and figures are retained as historical documentation; the flowgraphs need a
-compatibility caveat.
-
-**The five original `.grc` files in [the bench folder](../../examples/transients/bench/) are GNU Radio 3.7 XML** — `../../examples/transients/bench/pipeline-comparison.grc`,
-`../../examples/transients/bench/full-detection-flowgraph.grc`, `../../examples/transients/bench/noise-collection.grc`,
-`../../examples/transients/bench/pulsar-file-detection.grc` and `../../examples/transients/bench/spectrometer-bench.grc` all carry
-`created='3.7.11'`. Current GNU Radio Companion releases can attempt to convert
-that XML. With GNU Radio 3.10.9.2, `../../examples/transients/bench/spectrometer-bench.grc` converts with deprecated
-block warnings; the other four still have unresolved or disconnected legacy
-ports after conversion. Treat them as a record of what was built, not as
-supported examples. The generated `../../examples/transients/bench/legacy_bench.py` is likewise a Python 2-era
-artifact retained for provenance, not a current Python program.
-
-The rest of the `dedisperse` branch — the `dedispersed` and `dedispersion_old`
-blocks, their SWIG bindings and the `.xml` block definitions — was **not**
-merged. It is 3.7-era code that would have dragged the pre-3.8 module layout
-back in: `swig/`, a flat `python/`, and `include/radio_astro/` alongside the
-current `include/gnuradio/radio_astro/`. Anyone reviving this work should start
-from `v2019.10-dedisperse` and port it, rather than expecting these figures to
-correspond to code in `main`:
-
-    git checkout -b dedisperse-port v2019.10-dedisperse

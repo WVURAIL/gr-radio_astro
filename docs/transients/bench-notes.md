@@ -1,6 +1,3 @@
-> Historical research notes by Andrew Dyck (2019). Equations, numerical claims, and obsolete block interfaces remain unvalidated.
-> See [the current example guide](../../examples/transients/README.md) before using these notes.
-
 # GNURadio Test Benches
 
 ## List of Flow-graphs

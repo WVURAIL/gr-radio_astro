@@ -1,8 +1,6 @@
-# Telescope timing configuration references
+# gr-radio_astro/misc
 
-These configurations and the setup notes below are retained from the 2020 radio-telescope timing experiment. They originally lived in `gr-radio_astro/misc` and now live in `reference/timing/`. The kernel version, host address, and hardware assumptions describe that historical setup.
-
-## Original setup notes
+##  This sub-directory contains files associated with synchronizing multiple radio telescopes
 
 These files contain configurations to be copied to a Raspberry pi /etc directory
 
