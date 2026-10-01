@@ -5,6 +5,7 @@
 - [Bench comparisons](transients/bench.md)
 - [Imported bench procedure](transients/bench-notes.md)
 - [Imported plot descriptions](transients/plot-notes.md)
+- [Buckhannon RFI field test, 2018](rfi/buckhannon-field-test-2018/README.md)
 - [Classroom block migration](dspira-block-move.md)
 - [Repository organization](organization.md)
 
