@@ -1,0 +1,7 @@
+# Local CMake builds
+build/
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
