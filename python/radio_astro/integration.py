@@ -20,6 +20,7 @@
 #
 
 
+import operator
 import numpy as np
 from gnuradio import gr
 
@@ -28,6 +29,7 @@ class integration(gr.decim_block):
     docstring for block integration
     """
     def __init__(self, vec_length, n_integrations):
+        n_integrations = self._validate_integrations(n_integrations)
         gr.decim_block.__init__(self,
             name="integration",
             in_sig=[(np.float32, int(vec_length))],
@@ -35,26 +37,27 @@ class integration(gr.decim_block):
             decim = n_integrations)
         self.n_integrations = n_integrations
         self.vec_length = vec_length
-        self.set_relative_rate(1.0/n_integrations)
-        self.sum = np.zeros(self.vec_length)
-        self.integration_count = 0
 
+    @staticmethod
+    def _validate_integrations(value):
+        value = operator.index(value)
+        if value < 1:
+            raise ValueError("n_integrations must be positive")
+        return value
 
     def work(self, input_items, output_items):
         in0 = input_items[0]
         out = output_items[0]
-        for inp0 in in0:
-            if self.integration_count < self.n_integrations:
-                self.sum = self.sum + inp0
-                self.integration_count += 1
-            else:
-                out[:] = self.sum[:]/self.n_integrations
-                self.sum = np.zeros(self.vec_length)
-                self.integration_count = 0
-        return len(output_items[0])
+        n = self.n_integrations
+        count = min(len(out), len(in0) // n)
+        if count:
+            windows = in0[:count * n].reshape(count, n, self.vec_length)
+            out[:count] = windows.mean(axis=1, dtype=np.float64)
+        return count
 
     def set_n_integrations(self, n_integrations):
-        self.n_integrations = n_integrations
-        self.set_relative_rate(1.0/n_integrations)
-        print("Rate Updated")
-
+        n = self._validate_integrations(n_integrations)
+        self.n_integrations = n
+        # The Python decimator uses this value when consuming input items.
+        self._decim = n
+        self.set_relative_rate(1, n)

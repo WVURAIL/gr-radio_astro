@@ -22,6 +22,8 @@
 #include "config.h"
 #endif
 
+#include <algorithm>
+#include <cstdint>
 #include <gnuradio/io_signature.h>
 #include "dedispersion_impl.h"
 
@@ -75,18 +77,13 @@ namespace gr {
     {
       const float *in = (const float *) input_items[0];
       float *out = (float *) output_items[0];
-      int success;
-      success = dedisperse(in, out);
-      std::cout << success;
-      //std::cout << out[0*d_dms+ 0] << " " << out[31*d_dms+49] <<"\n";
-
-      // Do <+signal processing+>
-      // Tell runtime system how many input items we consumed on
-      // each input stream.
-      consume_each (noutput_items);
-
-      // Tell runtime system how many output items we produced.
-      return noutput_items;
+      const int count = std::min(noutput_items, ninput_items[0]);
+      const size_t input_stride = size_t(d_vec_length) * d_nt;
+      for (int i = 0; i < count; ++i) {
+        dedisperse(in + size_t(i) * input_stride, out + size_t(i) * d_nt);
+      }
+      consume_each(count);
+      return count;
     }
 
     int
@@ -95,7 +92,6 @@ namespace gr {
       //outbuf = (float *) //create fresh one if necessary
       float dmk = 4148808/d_t_int;
       int shift;
-      unsigned int y;
       float f_low = d_f_obs - d_bw/2;
       float inv_f_low_sq = 1/(f_low*f_low);
       //std::cout << input[10*d_vec_length + 20] << " " << input[31*d_vec_length + 0] <<"\n";
@@ -107,7 +103,8 @@ namespace gr {
           for(unsigned int j=0; j < d_vec_length; j++){
             shift = round( dmk * d_dms * (inv_f_low_sq - 1/((d_bw*j/d_vec_length + f_low)*(d_bw*j/d_vec_length + f_low) )));
             for(unsigned int k=0; k < d_nt; k++){
-              y = (k-shift) % d_nt;
+              const int64_t offset = int64_t(k) - shift;
+              const int y = int((offset % d_nt + d_nt) % d_nt);
               output[k] += input[y*d_vec_length+j];
             }
           }

@@ -63,33 +63,38 @@ class csv_filesink(gr.sync_block):
 
             if self.save_toggle == "True":     #If true, capture the spectrum to a new .csv text file each integration.
                 if self.integration_select == 0:
-                    current_time = time.time()
-                    self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
-                    #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
-                    # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
-                    self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
-                    self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
-                    self.data_array[:,1] = np.round(in0, decimals=4)
-                    np.savetxt(self.textfilename, self.data_array, delimiter=',')
+                    self._save_spectrum(in0)
 
                     self.N_long_counter = self.N_long_counter + 1  #Increase counter for long integration print to .csv
 
                 else:
                     if self.N_long_counter >= self.short_long_time_scale-1:
-                        current_time = time.time()
-                        self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
-                        #write (freq, output) as a column array to a text file, titled e.g. "2018-07-24_15.15.49_spectrum.txt"
-                        # The "prefix", i.e. the file path, is defined in the prefix variable box in the .grc program.
-                        self.textfilename = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev + "_spectrum.csv"
-                        self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
-                        self.data_array[:,1] = np.round(in0, decimals=4)
-                        np.savetxt(self.textfilename, self.data_array, delimiter=',')
+                        self._save_spectrum(in0)
                         #
                         self.N_long_counter = 0
                     else:
                         self.N_long_counter = self.N_long_counter + 1  #Increase counter for long integration print to .csv
             
-            return len(input_items[0])
+        return len(input_items[0])
+
+    def _save_spectrum(self, spectrum):
+        self.timenow = datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")[:-5]
+        stem = self.prefix + self.timenow + "_" + self.location + "_" + self.az + "_" + self.elev
+        self.data_array[:,0] = np.round(self.frequencies/1e6, decimals=4)
+        self.data_array[:,1] = np.round(spectrum, decimals=4)
+        suffix = 0
+        while True:
+            name = stem + ("_" + str(suffix) if suffix else "") + "_spectrum.csv"
+            try:
+                # Exclusive creation also protects files from earlier captures.
+                destination = open(name, 'x')
+            except FileExistsError:
+                suffix += 1
+                continue
+            with destination:
+                np.savetxt(destination, self.data_array, delimiter=',')
+            self.textfilename = name
+            break
 
     def set_save_toggle(self, save_toggle):
         self.save_toggle = save_toggle

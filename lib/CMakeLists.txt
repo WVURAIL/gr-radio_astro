@@ -66,6 +66,11 @@ message(STATUS "Building for version: ${VERSION} / ${LIBVER}")
 ########################################################################
 include(GrTest)
 
+find_package(Gnuradio "3.10" REQUIRED COMPONENTS blocks)
+add_executable(qa_dedispersion qa_dedispersion.cc)
+target_link_libraries(qa_dedispersion gnuradio-radio_astro gnuradio::gnuradio-blocks)
+add_test(NAME radio_astro_qa_dedispersion COMMAND qa_dedispersion)
+
 # If your unit tests require special include paths, add them here
 #include_directories()
 # List all files that contain Boost.UTF unit tests here

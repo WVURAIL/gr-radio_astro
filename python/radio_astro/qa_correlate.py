@@ -19,22 +19,33 @@
 # Boston, MA 02110-1301, USA.
 #
 
-from gnuradio import gr, gr_unittest
-# from gnuradio import blocks
+import numpy as np
+from gnuradio import gr, gr_unittest, blocks
 from correlate import correlate
 
+
 class qa_correlate(gr_unittest.TestCase):
+    def test_distinct_rows_in_flowgraph(self):
+        block = correlate(2, 2)
+        first = blocks.vector_source_c([1+1j, 2, 3, 4j], False, 2)
+        second = blocks.vector_source_c([2, 1j, 5j, 2], False, 2)
+        sink = blocks.vector_sink_c(6)
+        tb = gr.top_block()
+        tb.connect(first, (block, 0))
+        tb.connect(second, (block, 1))
+        tb.connect(block, sink)
+        tb.run()
+        expected = [2, 4, 2+2j, -2j, 4, 1, 9, 16, -15j, 8j, 25, 4]
+        self.assertComplexTuplesAlmostEqual(expected, sink.data())
 
-    def setUp(self):
-        self.tb = gr.top_block()
+    def test_output_capacity(self):
+        block = correlate(2, 2)
+        inputs = [np.asarray([[1, 2], [9, 9]], dtype=np.complex64),
+                  np.asarray([[3, 4], [9, 9]], dtype=np.complex64)]
+        output = np.zeros((1, 6), dtype=np.complex64)
+        self.assertEqual(block.work(inputs, [output]), 1)
+        np.testing.assert_array_equal(output, [[1, 4, 3, 8, 9, 16]])
 
-    def tearDown(self):
-        self.tb = None
-
-    def test_001_t(self):
-        # set up fg
-        self.tb.run()
-        # check data
 
 
 if __name__ == '__main__':

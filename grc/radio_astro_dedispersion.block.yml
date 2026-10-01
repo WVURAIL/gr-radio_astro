@@ -42,7 +42,7 @@ inputs:
 - label: in
   domain: stream
   dtype: float
-  vlen: ${nt}
+  vlen: ${vec_length * nt}
 
 
 outputs:

@@ -25,9 +25,10 @@ from gnuradio import gr
 
 
 def _corr(in_dat, out_size, vec_length, in1_indices, in2_indices ):
-    out_arr = np.zeros((out_size, vec_length), dtype=np.complex64)
+    nitems = len(in_dat[0])
+    out_arr = np.zeros((nitems, out_size, vec_length), dtype=np.complex64)
     for i in range(in1_indices.size):
-        out_arr[i] = in_dat[in1_indices[i]][0]*in_dat[in2_indices[i]][0].conjugate()
+        out_arr[:, i, :] = in_dat[in1_indices[i]] * in_dat[in2_indices[i]].conjugate()
     return out_arr
 
 
@@ -41,7 +42,7 @@ class correlate(gr.sync_block):
         gr.sync_block.__init__(self,
             name="correlate",
             in_sig=n_inputs*[(np.complex64, vec_length)],
-            out_sig=[(np.complex64, vec_length*(n_inputs+1)*n_inputs/2)])
+            out_sig=[(np.complex64, vec_length*(n_inputs+1)*n_inputs//2)])
         self.n_inputs = n_inputs
         self.vec_length = vec_length
         self.in1_indices, self.in2_indices =  np.triu_indices(n_inputs)
@@ -51,10 +52,12 @@ class correlate(gr.sync_block):
     def work(self, input_items, output_items):
         out = output_items[0]
         #current_time = time.time()
-        out_arr = _corr(input_items, self.out_size, self.vec_length, self.in1_indices, self.in2_indices)
-        out[:] = out_arr.flatten()
+        count = min(len(out), *(len(stream) for stream in input_items))
+        out_arr = _corr([stream[:count] for stream in input_items], self.out_size,
+                        self.vec_length, self.in1_indices, self.in2_indices)
+        out[:count] = out_arr.reshape(count, self.out_size * self.vec_length)
         #new_time = time.time()
         #time_difference = new_time-current_time
         #print(time_difference)
-        return len(output_items[0])
+        return count
 
