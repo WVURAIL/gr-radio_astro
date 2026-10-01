@@ -70,7 +70,8 @@ The build tests the research library; hardware acquisition requires a separate o
 
 These XML graphs and older generated programs remain as design references.
 They require conversion, dependency review, and testing before use with GNU Radio 3.10.
-The Python-only Integrate 90 variant has no matching source graph in this repository.
+The earlier Integrate 90 source graph is available from the historical source link below.
+The saved Python program and historical graph are separate revisions; their behavior has not been established as identical.
 Run any ported version from the same shared `configuration` directory.
 
 | Application | Source graph | Saved Python |
@@ -79,7 +80,7 @@ Run any ported version from the same shared `configuration` directory.
 | `nsf_detect_60_histogram` | [Graph](flowgraphs/legacy/nsf_detect_60_histogram.grc) | Not retained |
 | `nsf_detect_60_log` | [Graph](flowgraphs/legacy/nsf_detect_60_log.grc) | [Python](python/legacy/nsf_detect_60_log.py) |
 | `nsf_detect_90` | [Graph](flowgraphs/legacy/nsf_detect_90.grc) | [Python](python/legacy/nsf_detect_90.py) |
-| `nsf_integrate_90` | Not retained | [Python](python/legacy/nsf_integrate_90.py) |
+| `nsf_integrate_90` | [Historical graph](https://raw.githubusercontent.com/WVURAIL/radio-research-software/9011f194a58e6d7f5f14bd908b4468dec440ed13/examples/NsfIntegrate90.grc) | [Python](python/legacy/nsf_integrate_90.py) |
 | `nsf_watch_90` | [Graph](flowgraphs/legacy/nsf_watch_90.grc) | [Python](python/legacy/nsf_watch_90.py) |
 | `nsf_watch_90_no_gui` | [Graph](flowgraphs/legacy/nsf_watch_90_no_gui.grc) | [Python](python/legacy/nsf_watch_90_no_gui.py) |
 
