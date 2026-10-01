@@ -832,7 +832,7 @@ class Spectrum(object):
                     print("read_spec_ascii input error!")
                     print("")
                     print("First Line: %s" % ( parts[1]))
-                    print("Input not an NSF Spectrum file: %s" % (fullname))
+                    print("Input not an NSF Spectrum file")
                     exit()
             linecount = linecount + 1
 # if a very short or blank line

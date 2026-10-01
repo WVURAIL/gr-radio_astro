@@ -1,17 +1,34 @@
-title: The RADIO_ASTRO OOT Module
-brief: Short description of gr-radio_astro
-tags: # Tags are arbitrary, but look at CGRAN what other authors are using
+title: radio-research-software
+brief: GNU Radio out-of-tree blocks and flowgraphs for radio astronomy with software-defined radios.
+tags:
   - sdr
+  - radio astronomy
+  - gnuradio
+  - dsp
+  - instrumentation
+  - hydrogen line
 author:
-  - Author Name <authors@email.address>
+  - WVU Radio Astronomy Instrumentation Lab <rail@wvu.edu>
+  - Glen Langston
+  - Kevin Bandura
+  - John Makous
+  - Pranav Sanghavi
 copyright_owner:
-  - Copyright Owner 1
-license:
-gr_supported_version: # Put a comma separated list of supported GR versions here
-#repo: # Put the URL of the repository here, or leave blank for default
-#website: <module_website> # If you have a separate project website, put it here
-#icon: <icon_url> # Put a URL to a square image here that will be used as an icon on CGRAN
+  - WVU Radio Astronomy Instrumentation Lab
+license: GPL-3.0
+gr_supported_version: v3.10
+repo: https://github.com/WVURAIL/radio-research-software
+website: https://rail.wvu.edu/
 ---
-A longer, multi-line description of gr-radio_astro.
-You may use some *basic* Markdown here.
-If left empty, it will try to find a README file instead.
+Research blocks and GNU Radio applications for spectral acquisition, transient detection,
+dedispersion, integration, and event recording with software-defined receivers.
+
+The NSF Integrate and Detect applications are documented in the
+[LightWork memo series](https://rail.wvu.edu/lightwork/).
+Classroom applications and DSPIRA processing blocks are maintained together in
+[dspira-software](https://github.com/WVURAIL/dspira-software).
+
+Requires GNU Radio 3.10. The research Python module remains `gnuradio.radio_astro`
+for compatibility with existing applications.
+
+Licensing varies by file. See NOTICE and the original notices in each source file.

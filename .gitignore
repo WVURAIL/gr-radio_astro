@@ -1,7 +1,22 @@
-# Local CMake builds
+# CMake / GNU Radio out-of-tree build output
 build/
+/CMakeCache.txt
+/CMakeFiles/
+/cmake_install.cmake
+/install_manifest.txt
+/Makefile
 
-# Python caches
+# Python
 __pycache__/
 *.pyc
 *.pyo
+*.egg-info/
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
